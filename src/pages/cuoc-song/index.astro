@@ -15,7 +15,7 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
       </p>
     </div>
 
-    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="posts-grid-container grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {sortedPosts.map((post) => (
         <article data-post-slug={post.id} class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-200 group flex flex-col justify-between overflow-hidden">
           <div>
@@ -62,7 +62,7 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
       ))}
 
       {sortedPosts.length === 0 && (
-        <div class="col-span-full p-8 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-center text-slate-500">
+        <div class="posts-empty-state col-span-full p-8 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-center text-slate-500">
           Đang cập nhật các bài viết mới...
         </div>
       )}
@@ -73,15 +73,82 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     try {
-      const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+      // 1. Sanitize deleted_post_slugs in localStorage
+      let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+      const broadCategories = ['cuoc-song', 'marketing', 'ai'];
+      const cleanedDeletedSlugs = deletedSlugs.filter((s: string) => !broadCategories.includes(s));
+      if (cleanedDeletedSlugs.length !== deletedSlugs.length) {
+        localStorage.setItem('deleted_post_slugs', JSON.stringify(cleanedDeletedSlugs));
+        deletedSlugs = cleanedDeletedSlugs;
+      }
+
+      // 2. Hide deleted posts cleanly with exact match
       if (deletedSlugs.length > 0) {
         document.querySelectorAll('[data-post-slug]').forEach(el => {
-          const slug = el.getAttribute('data-post-slug') || '';
-          if (slug && (deletedSlugs.includes(slug) || deletedSlugs.some((s: string) => slug.includes(s) || s.includes(slug)))) {
+          const fullId = el.getAttribute('data-post-slug') || '';
+          const slugOnly = fullId.split('/').pop() || '';
+          if (deletedSlugs.includes(fullId) || deletedSlugs.includes(slugOnly)) {
             el.remove();
           }
         });
       }
-    } catch (e) {}
+
+      // 3. Render custom posts saved from Admin
+      const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+      const categoryPosts = customPosts.filter((p: any) => p.category === 'cuoc-song' && !deletedSlugs.includes(p.slug) && !deletedSlugs.includes(p.id));
+      
+      const gridContainer = document.querySelector('.posts-grid-container');
+      const emptyStateContainer = document.querySelector('.posts-empty-state');
+
+      if (categoryPosts.length > 0 && gridContainer) {
+        if (emptyStateContainer) emptyStateContainer.remove();
+        
+        categoryPosts.forEach((post: any) => {
+          const postSlug = post.slug || post.id?.split('/').pop() || '';
+          if (!postSlug) return;
+
+          const existingCard = document.querySelector(`[data-post-slug="${post.id}"]`) || document.querySelector(`[data-post-slug="${postSlug}"]`);
+          if (existingCard) return;
+
+          const articleEl = document.createElement('article');
+          articleEl.setAttribute('data-post-slug', postSlug);
+          articleEl.className = 'rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-200 group flex flex-col justify-between overflow-hidden';
+          
+          const pubDateObj = post.pubDate ? new Date(post.pubDate) : new Date();
+          const formattedDate = pubDateObj.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+
+          const imageHtml = post.image ? `
+            <div class="aspect-video w-full overflow-hidden border-b border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+              <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300" />
+            </div>
+          ` : '';
+
+          articleEl.innerHTML = `
+            <div>
+              ${imageHtml}
+              <div class="p-6">
+                <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                  <time datetime="${pubDateObj.toISOString()}">${formattedDate}</time>
+                  <span>•</span>
+                  <span class="font-semibold text-gold-accent">Cuộc sống</span>
+                </div>
+                <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-gold-accent transition-colors">
+                  <a href="/cuoc-song/${postSlug}">${post.title}</a>
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">${post.description}</p>
+              </div>
+            </div>
+            <div class="px-6 pb-6">
+              <a href="/cuoc-song/${postSlug}" class="inline-flex items-center text-sm font-semibold text-brand-600 dark:text-brand-500 hover:underline">
+                Đọc tiếp &rarr;
+              </a>
+            </div>
+          `;
+          gridContainer.prepend(articleEl);
+        });
+      }
+    } catch (e) {
+      console.error('Render cuoc-song posts error:', e);
+    }
   });
 </script>
