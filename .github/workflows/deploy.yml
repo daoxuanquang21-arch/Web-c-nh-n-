@@ -1,0 +1,23 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: '180.93.136.93'
+          username: 'root'
+          password: '#wF?*tyPs^j4'
+          script: |
+            cd /var/www/blog
+            git pull origin main
+            npm install
+            npm run build
+            systemctl reload nginx
