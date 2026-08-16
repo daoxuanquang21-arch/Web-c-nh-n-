@@ -99,5 +99,90 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
 
     <!-- Footer -->
     {!hideNavFooter && <Footer />}
+
+    <!-- Dynamic Article Fallback Renderer -->
+    <script>
+      document.addEventListener('DOMContentLoaded', async () => {
+        try {
+          const pathname = window.location.pathname.replace(/\/$/, '');
+          const parts = pathname.split('/').filter(Boolean);
+          const validCategories = ['cuoc-song', 'marketing', 'ai'];
+
+          // If URL is /category/slug
+          if (parts.length === 2 && validCategories.includes(parts[0])) {
+            const category = parts[0];
+            const slug = parts[1];
+
+            // Check if actual article detail h1 is missing on page
+            const existingArticleTitle = document.querySelector('article h1');
+            if (!existingArticleTitle) {
+              let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+              let post = customPosts.find((p: any) => p.slug === slug || p.id === `${category}/${slug}` || p.id === slug);
+
+              if (!post) {
+                try {
+                  const res = await fetch('/api/posts');
+                  if (res.ok) {
+                    const data = await res.json();
+                    if (data.posts) {
+                      post = data.posts.find((p: any) => p.slug === slug || p.id === `${category}/${slug}`);
+                    }
+                  }
+                } catch (e) {}
+              }
+
+              if (post) {
+                const mainContainer = document.querySelector('main');
+                if (mainContainer) {
+                  document.title = `${post.title} | daoxuanquang.com.vn`;
+                  const pubDateObj = post.pubDate ? new Date(post.pubDate) : new Date();
+                  const formattedDate = pubDateObj.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+                  const catLabel = category === 'cuoc-song' ? 'Cuộc sống' : (category === 'ai' ? 'AI & Agent' : 'Marketing');
+
+                  let formattedContent = post.content || '';
+                  if (!formattedContent.trim().startsWith('<')) {
+                    formattedContent = formattedContent
+                      .split('\n\n')
+                      .filter((p: string) => p.trim())
+                      .map((p: string) => `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${p.trim().replace(/\n/g, '<br/>')}</p>`)
+                      .join('');
+                  }
+
+                  const imageHtml = post.image ? `<img src="${post.image}" alt="${post.title}" class="w-full max-h-96 object-cover rounded-2xl mb-8 shadow-md" />` : '';
+
+                  mainContainer.innerHTML = `
+                    <article class="py-12 px-4 max-w-3xl mx-auto min-h-[70vh] w-full">
+                      <a href="/${category}" class="text-sm font-semibold text-brand-600 dark:text-brand-500 hover:underline mb-6 inline-block">&larr; Quay lại danh sách ${catLabel}</a>
+                      
+                      <header class="mb-10">
+                        <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                          <time datetime="${pubDateObj.toISOString()}">${formattedDate}</time>
+                          <span>•</span>
+                          <span class="font-semibold text-gold-accent">${catLabel}</span>
+                        </div>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
+                          ${post.title}
+                        </h1>
+                        <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed italic">
+                          ${post.description}
+                        </p>
+                      </header>
+
+                      ${imageHtml}
+
+                      <div class="prose max-w-none text-slate-800 dark:text-slate-200">
+                        ${formattedContent}
+                      </div>
+                    </article>
+                  `;
+                }
+              }
+            }
+          }
+        } catch (e) {
+          console.error('Fallback article renderer error:', e);
+        }
+      });
+    </script>
   </body>
 </html>
