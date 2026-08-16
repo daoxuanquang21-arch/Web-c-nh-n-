@@ -141,11 +141,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
 
                   let formattedContent = post.content || '';
                   if (!formattedContent.trim().startsWith('<')) {
-                    formattedContent = formattedContent
-                      .split('\n\n')
-                      .filter((p: string) => p.trim())
-                      .map((p: string) => `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${p.trim().replace(/\n/g, '<br/>')}</p>`)
-                      .join('');
+                    const rawBlocks = formattedContent.split(/\n\s*\n/).filter((b: string) => b.trim());
+                    formattedContent = rawBlocks.map((block: string) => {
+                      const trimmed = block.trim();
+                      const lines = trimmed.split('\n').map((l: string) => l.trim()).filter(Boolean);
+                      return lines.map((line: string) => {
+                        const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
+                        const isHeading = (cleanLine.length > 5 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase() && /[A-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine)) || line.startsWith('#');
+                        if (isHeading) {
+                          return `<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-3 leading-snug">${cleanLine}</h2>`;
+                        }
+                        return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
+                      }).join('');
+                    }).join('');
                   }
 
                   const imageHtml = post.image ? `<img src="${post.image}" alt="${post.title}" class="w-full max-h-96 object-cover rounded-2xl mb-8 shadow-md" />` : '';
@@ -170,7 +178,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
 
                       ${imageHtml}
 
-                      <div class="prose max-w-none text-slate-800 dark:text-slate-200 whitespace-pre-line leading-relaxed sm:text-lg">
+                      <div class="prose max-w-none text-slate-800 dark:text-slate-200 leading-relaxed sm:text-lg">
                         ${formattedContent}
                       </div>
                     </article>
