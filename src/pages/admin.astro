@@ -863,7 +863,12 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             const data = await postsRes.json();
             if (data.success) {
               const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
-              currentPosts = data.posts.filter((p: any) => !deletedSlugs.includes(p.slug) && !deletedSlugs.includes(p.id));
+              currentPosts = data.posts.filter((p: any) => 
+                !deletedSlugs.includes(p.slug) && 
+                !deletedSlugs.includes(p.id) && 
+                !deletedSlugs.includes(p.title) &&
+                !deletedSlugs.includes(`${p.category}/${p.slug}`)
+              );
               renderPosts();
             }
           }
