@@ -122,8 +122,8 @@ export async function POST({ request }: { request: Request }) {
           headers: { 'Content-Type': 'application/json' }
         });
       } else {
-        return new Response(JSON.stringify({ success: false, error: 'Post not found' }), {
-          status: 444,
+        return new Response(JSON.stringify({ success: true, message: 'Post not found or already deleted' }), {
+          status: 200,
           headers: { 'Content-Type': 'application/json' }
         });
       }

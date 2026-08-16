@@ -1216,7 +1216,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         };
 
         // Attach lead delete events
-        document.querySelectorAll('.delete-lead-lead-btn').forEach(btn => {
+        document.querySelectorAll('.delete-lead-btn').forEach(btn => {
           btn.addEventListener('click', async (e) => {
             e.preventDefault();
             const email = btn.getAttribute('data-email') || '';
