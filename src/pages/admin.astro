@@ -1458,10 +1458,38 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         }
       }
 
-      // Attach event listeners for real-time analysis
+      function generateVietnameseSlug(str: string): string {
+        return str
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[đĐ]/g, 'd')
+          .replace(/([^0-9a-z-\s])/g, '')
+          .trim()
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-');
+      }
+
+      let isSlugManuallyEdited = false;
+
+      if (pSlug) {
+        pSlug.addEventListener('input', () => {
+          isSlugManuallyEdited = true;
+        });
+      }
+
+      // Attach event listeners for real-time analysis & auto-slug
       const pKeywordInput = document.getElementById('post-primary-keyword');
       if (pKeywordInput) pKeywordInput.addEventListener('input', runRealtimeSEOAnalyzer);
-      if (pTitle) pTitle.addEventListener('input', runRealtimeSEOAnalyzer);
+      
+      if (pTitle) {
+        pTitle.addEventListener('input', () => {
+          if (!isEditMode && !isSlugManuallyEdited && pSlug) {
+            pSlug.value = generateVietnameseSlug(pTitle.value);
+          }
+          runRealtimeSEOAnalyzer();
+        });
+      }
       if (pDesc) pDesc.addEventListener('input', runRealtimeSEOAnalyzer);
       if (pContent) pContent.addEventListener('input', runRealtimeSEOAnalyzer);
 
@@ -1506,6 +1534,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
       function resetForm() {
         if (postForm) postForm.reset();
         isEditMode = false;
+        isSlugManuallyEdited = false;
         editPostId = '';
         if (editorTitleText) editorTitleText.textContent = '✍️ Soạn Thảo Bài Viết Mới Chuẩn SEO v3.0';
         const now = new Date();
