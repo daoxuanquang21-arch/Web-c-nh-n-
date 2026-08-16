@@ -47,43 +47,47 @@ import Layout from '../layouts/Layout.astro';
     <!-- MAIN DASHBOARD SCREEN (HIDDEN BY DEFAULT) -->
     <div id="dashboard" class="hidden min-h-screen flex flex-col md:flex-row relative z-10">
       
-      <!-- SIDEBAR -->
-      <aside class="w-full md:w-64 shrink-0 bg-slate-900/40 border-b md:border-b-0 md:border-r border-slate-800/80 backdrop-blur-md flex flex-col justify-between p-6">
-        <div class="space-y-8">
-          <!-- Logo Brand -->
-          <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-xl bg-brand-green text-white font-extrabold text-xl flex items-center justify-center">
-              Q
+      <!-- SIDEBAR / MOBILE NAVIGATION TOP HEADER -->
+      <aside class="w-full md:w-64 shrink-0 bg-slate-900/60 border-b md:border-b-0 md:border-r border-slate-800/80 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6 space-y-4 md:space-y-8">
+        <div class="space-y-4 md:space-y-8">
+          <!-- Logo Brand & Logout Mobile Row -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="h-10 w-10 rounded-xl bg-brand-green text-white font-extrabold text-xl flex items-center justify-center shadow-md">
+                Q
+              </div>
+              <div>
+                <span class="font-extrabold text-base sm:text-lg tracking-tight block text-white">daoxuanquang.com.vn</span>
+                <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Admin Panel</span>
+              </div>
             </div>
-            <div>
-              <span class="font-extrabold text-lg tracking-tight block text-white">daoxuanquang.com.vn</span>
-              <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Admin Panel</span>
-            </div>
+            <button id="logout-btn-mobile" class="md:hidden text-xs font-bold text-slate-400 hover:text-rose-400 p-2 rounded-lg bg-slate-800/60 cursor-pointer">
+              🚪 Thoát
+            </button>
           </div>
 
-          <!-- Navigation Links -->
-          <nav class="space-y-1">
-            <button data-tab="overview" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn active">
+          <!-- Touch Scrollable Tabs for Mobile & Vertical for Desktop -->
+          <nav class="flex md:flex-col overflow-x-auto no-scrollbar gap-2 pb-1 md:pb-0 md:space-y-1">
+            <button data-tab="overview" class="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn active whitespace-nowrap">
               📊 Tổng quan
             </button>
-            <button data-tab="posts" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
-              ✍️ Quản lý bài viết
+            <button data-tab="posts" class="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn whitespace-nowrap">
+              ✍️ Bài viết
             </button>
-
-            <button data-tab="subscribers" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
-              📨 Đăng ký bản tin
+            <button data-tab="subscribers" class="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn whitespace-nowrap">
+              📨 Đăng ký
             </button>
-            <button data-tab="leads" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
-              🤝 Yêu cầu kèm cặp
+            <button data-tab="leads" class="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn whitespace-nowrap">
+              🤝 Khảo sát
             </button>
-            <button data-tab="products" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
-              📦 Quản lý sản phẩm
+            <button data-tab="products" class="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn whitespace-nowrap">
+              📦 Sản phẩm
             </button>
           </nav>
         </div>
 
         <!-- Sidebar footer info -->
-        <div class="border-t border-slate-800/60 pt-6">
+        <div class="hidden md:block border-t border-slate-800/60 pt-6">
           <button id="logout-btn" class="w-full text-left text-xs font-bold text-slate-400 hover:text-rose-400 transition-colors flex items-center gap-2 cursor-pointer">
             🚪 Đăng xuất quản trị
           </button>
@@ -716,13 +720,14 @@ import Layout from '../layouts/Layout.astro';
       }
 
       // Logout handler
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-          localStorage.removeItem('admin_auth_token');
-          checkAuth();
-          showToast('Đã đăng xuất khỏi hệ thống!');
-        });
-      }
+      const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+      const handleLogout = () => {
+        localStorage.removeItem('admin_auth_token');
+        checkAuth();
+        showToast('Đã đăng xuất khỏi hệ thống!');
+      };
+      if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+      if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleLogout);
 
       // TABS MANAGER
       const tabBtns = document.querySelectorAll('.tab-btn');
