@@ -1,0 +1,1787 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Bảng Điều Khiển Quản Trị | daoxuanquang.vn" description="Hệ thống quản lý nội dung bài viết, danh sách khách hàng đăng ký và thiết lập website." noindex={true} hideNavFooter={true}>
+  <div class="min-h-screen bg-slate-950 text-slate-100 relative overflow-hidden font-['Be_Vietnam_Pro'] antialiased">
+    <!-- Ambient glowing backgrounds -->
+    <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-brand-green/5 blur-[150px] pointer-events-none"></div>
+    <div class="absolute bottom-20 -right-20 w-[600px] h-[600px] rounded-full bg-brand-blue/5 blur-[150px] pointer-events-none"></div>
+
+    <!-- LOCKSCREEN (LOGIN) SCREEN -->
+    <div id="lockscreen" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/90 backdrop-blur-xl transition-all duration-500">
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.03),transparent_70%)] pointer-events-none"></div>
+      
+      <div class="w-full max-w-md p-8 rounded-3xl bg-slate-900/60 border border-slate-800 shadow-2xl relative z-10 text-center space-y-6 backdrop-blur-md">
+        <!-- Logo / Icon -->
+        <div class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-tr from-brand-green to-emerald-400 text-white text-3xl font-bold shadow-lg shadow-brand-green/20 mx-auto">
+          🔒
+        </div>
+        
+        <div class="space-y-2">
+          <h2 class="text-2xl font-extrabold tracking-tight">Hệ Thống Quản Trị</h2>
+          <p class="text-sm text-slate-400">Vui lòng nhập mật khẩu bảo mật để truy cập bảng điều khiển.</p>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div class="relative">
+            <input 
+              type="password" 
+              id="password" 
+              required 
+              placeholder="Nhập mật khẩu truy cập..." 
+              class="w-full px-5 py-4 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green text-center text-lg tracking-widest placeholder:tracking-normal placeholder:text-sm transition-all"
+            />
+          </div>
+          <button 
+            type="submit" 
+            class="w-full py-4 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.02] shadow-lg shadow-brand-green/10 cursor-pointer"
+          >
+            Đăng Nhập Hệ Thống &rarr;
+          </button>
+        </form>
+        <p id="login-error" class="text-xs text-rose-500 font-medium hidden">⚠️ Mật khẩu không chính xác. Vui lòng thử lại!</p>
+      </div>
+    </div>
+
+    <!-- MAIN DASHBOARD SCREEN (HIDDEN BY DEFAULT) -->
+    <div id="dashboard" class="hidden min-h-screen flex flex-col md:flex-row relative z-10">
+      
+      <!-- SIDEBAR -->
+      <aside class="w-full md:w-64 shrink-0 bg-slate-900/40 border-b md:border-b-0 md:border-r border-slate-800/80 backdrop-blur-md flex flex-col justify-between p-6">
+        <div class="space-y-8">
+          <!-- Logo Brand -->
+          <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-xl bg-brand-green text-white font-extrabold text-xl flex items-center justify-center">
+              Q
+            </div>
+            <div>
+              <span class="font-extrabold text-lg tracking-tight block text-white">daoxuanquang.vn</span>
+              <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Admin Panel</span>
+            </div>
+          </div>
+
+          <!-- Navigation Links -->
+          <nav class="space-y-1">
+            <button data-tab="overview" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn active">
+              📊 Tổng quan
+            </button>
+            <button data-tab="posts" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
+              ✍️ Quản lý bài viết
+            </button>
+
+            <button data-tab="subscribers" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
+              📨 Đăng ký bản tin
+            </button>
+            <button data-tab="leads" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
+              🤝 Yêu cầu kèm cặp
+            </button>
+            <button data-tab="products" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn">
+              📦 Quản lý sản phẩm
+            </button>
+          </nav>
+        </div>
+
+        <!-- Sidebar footer info -->
+        <div class="border-t border-slate-800/60 pt-6">
+          <button id="logout-btn" class="w-full text-left text-xs font-bold text-slate-400 hover:text-rose-400 transition-colors flex items-center gap-2 cursor-pointer">
+            🚪 Đăng xuất quản trị
+          </button>
+        </div>
+      </aside>
+
+      <!-- CONTENT AREA -->
+      <main class="flex-grow p-6 md:p-10 space-y-8 overflow-y-auto max-h-screen">
+        <!-- Top bar -->
+        <header class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-6">
+          <div>
+            <h1 id="page-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">📊 Tổng Quan Dashboard</h1>
+            <p class="text-slate-300 text-sm mt-1 font-medium">Xin chào Quảng, chúc một ngày làm việc tự động hóa hiệu quả!</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <a href="/" class="px-4 py-2 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+              🌐 Xem trang chủ
+            </a>
+            <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-[10px] font-mono text-emerald-400 font-bold flex items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+              Live Server Active
+            </span>
+          </div>
+        </header>
+
+        <!-- TAB CONTENT: OVERVIEW -->
+        <section id="tab-overview" class="tab-pane space-y-8">
+          <!-- Stats Grid -->
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Stat card 1 -->
+            <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/90 hover:border-slate-700 transition-all flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs text-slate-300 font-bold uppercase tracking-wider block">Bài viết Blog</span>
+                <span id="stat-posts-count" class="text-4xl font-extrabold text-white block">0</span>
+              </div>
+              <span class="text-2xl p-3 bg-emerald-500/10 text-emerald-400 rounded-xl border border-emerald-500/20">✍️</span>
+            </div>
+            <!-- Stat card 2 -->
+            <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/90 hover:border-slate-700 transition-all flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs text-slate-300 font-bold uppercase tracking-wider block">Đăng ký bản tin</span>
+                <span id="stat-subscribers-count" class="text-4xl font-extrabold text-white block">0</span>
+              </div>
+              <span class="text-2xl p-3 bg-blue-500/10 text-blue-400 rounded-xl border border-blue-500/20">📨</span>
+            </div>
+            <!-- Stat card 3 -->
+            <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/90 hover:border-slate-700 transition-all flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs text-slate-300 font-bold uppercase tracking-wider block">Yêu cầu kèm cặp</span>
+                <span id="stat-leads-count" class="text-4xl font-extrabold text-white block">0</span>
+              </div>
+              <span class="text-2xl p-3 bg-indigo-500/10 text-indigo-400 rounded-xl border border-indigo-500/20">🤝</span>
+            </div>
+            <!-- Stat card 4 -->
+            <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/90 hover:border-slate-700 transition-all flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs text-slate-300 font-bold uppercase tracking-wider block">Sản phẩm & công cụ</span>
+                <span id="stat-products-count" class="text-4xl font-extrabold text-white block">0</span>
+              </div>
+              <span class="text-2xl p-3 bg-amber-500/10 text-amber-400 rounded-xl border border-amber-500/20">📦</span>
+            </div>
+          </div>
+
+
+        </section>
+
+        <!-- TAB CONTENT: POSTS -->
+        <section id="tab-posts" class="tab-pane space-y-8 hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <!-- Search & Filters -->
+            <div class="flex flex-wrap items-center gap-3">
+              <select id="post-category-filter" class="px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 text-sm focus:outline-none focus:border-brand-green cursor-pointer">
+                <option value="all">Tất cả chuyên mục</option>
+                <option value="ai">AI</option>
+                <option value="marketing">Marketing</option>
+                <option value="cuoc-song">Cuộc sống</option>
+              </select>
+            </div>
+            <!-- Add New Post Button -->
+            <button id="add-post-btn" onclick="window.openPostEditorModal && window.openPostEditorModal()" class="px-5 py-2.5 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.02] shadow-md flex items-center gap-2 cursor-pointer">
+              <span>➕</span> Viết Bài Mới
+            </button>
+          </div>
+
+          <!-- Post Editor Form Modal Overlay (Hidden by default) -->
+          <div id="post-editor-modal" class="hidden fixed inset-0 z-[300] bg-slate-950/85 backdrop-blur-md p-4 sm:p-6 md:p-8 overflow-y-auto justify-center items-start">
+            <div class="w-full max-w-7xl my-auto rounded-3xl bg-slate-900 border border-slate-800 p-6 md:p-8 space-y-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <h3 id="editor-title" class="text-xl font-bold flex items-center gap-2 text-white">
+                  ✍️ Soạn Thảo Bài Viết Mới Chuẩn SEO v3.0
+                </h3>
+                <button type="button" id="close-editor-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition-all cursor-pointer">✖ Đóng form</button>
+              </div>
+
+              <form id="post-form" class="space-y-6">
+                <!-- 1. Top Metadata Row: 4 inline columns -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 bg-slate-950/50 p-4 rounded-2xl border border-slate-800/80">
+                  <div>
+                    <label for="post-slug" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">ĐƯỜNG DẪN TĨNH (SLUG) *</label>
+                    <input type="text" id="post-slug" required placeholder="vd: cam-nang-marketing-automation" class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 focus:outline-none focus:border-brand-green font-mono text-sm text-slate-200" />
+                  </div>
+                  <div>
+                    <label for="post-category" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">DANH MỤC *</label>
+                    <select id="post-category" required class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 focus:outline-none focus:border-brand-green text-sm cursor-pointer text-slate-200 font-medium">
+                      <option value="">-- Chọn danh mục --</option>
+                      <option value="ai">AI & Agent</option>
+                      <option value="marketing">Digital Marketing</option>
+                      <option value="cuoc-song">Cuộc sống & Tư duy</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="post-status" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">CHẾ ĐỘ HIỂN THỊ *</label>
+                    <select id="post-status" required class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 focus:outline-none focus:border-brand-green text-sm cursor-pointer font-bold text-emerald-400">
+                      <option value="public">Công khai (Public)</option>
+                      <option value="private">Riêng tư / Nháp (Draft)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="post-pubdate" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">NGÀY/GIỜ ĐĂNG BÀI</label>
+                    <input type="datetime-local" id="post-pubdate" class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 focus:outline-none focus:border-brand-green text-sm text-slate-200" />
+                  </div>
+                </div>
+
+                <!-- 2. SEO Primary Keyword Banner Row -->
+                <div class="p-4 rounded-2xl bg-slate-950/80 border border-teal-500/30 flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                  <div class="flex-grow space-y-1.5">
+                    <label for="post-primary-keyword" class="block text-xs font-extrabold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>✨</span> TỪ KHÓA CHÍNH (SEO PRIMARY KEYWORD) *
+                    </label>
+                    <input type="text" id="post-primary-keyword" placeholder="Nhập từ khóa chính bài viết..." class="w-full px-4 py-2.5 rounded-xl border border-teal-500/30 bg-slate-900 focus:outline-none focus:border-teal-400 text-sm font-semibold text-white placeholder:font-normal placeholder:text-slate-500" />
+                  </div>
+                  <button type="button" id="copy-modal-seo-prompt-btn" class="md:self-end px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-xs transition-all shadow-md flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer">
+                    ⚡ Tạo Mẫu Prompt SEO v3.0
+                  </button>
+                </div>
+
+                <!-- 3. Main Grid: Left Editor & Right SEO Analyzer -->
+                <div class="grid lg:grid-cols-12 gap-6 items-start">
+                  <!-- Left side: Main Editor fields -->
+                  <div class="lg:col-span-7 space-y-4">
+                    <div>
+                      <label for="post-title" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">TIÊU ĐỀ BÀI VIẾT * (TITLE)</label>
+                      <input type="text" id="post-title" required placeholder="Nhập tiêu đề bài viết..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm font-bold text-white" />
+                    </div>
+
+                    <div>
+                      <label for="post-description" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">TÓM TẮT NGẮN / SAPO * (SEO DESCRIPTION)</label>
+                      <textarea id="post-description" required rows="3" placeholder="Nhập tóm tắt Sapo chuẩn 145-160 ký tự..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm leading-relaxed text-slate-200"></textarea>
+                    </div>
+
+                    <div>
+                      <label for="post-content" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">NỘI DUNG CHI TIẾT HTML / MARKDOWN *</label>
+                      <textarea id="post-content" required rows="16" placeholder="Soạn thảo nội dung bài viết HTML / Markdown chuẩn SEO v3.0 ở đây..." class="w-full px-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green font-mono text-xs leading-relaxed text-slate-200"></textarea>
+                    </div>
+
+                    <!-- Submit Action Button -->
+                    <div class="pt-2">
+                      <button type="submit" id="save-post-btn" class="w-full py-3.5 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-extrabold text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer">
+                        Xuất bản
+                      </button>
+                    </div>
+                  </div>
+
+              <!-- Right side: REAL-TIME SEO V3.0 ANALYZER & PROMPT ENGINE WIDGET -->
+              <div class="lg:col-span-5 space-y-4 bg-slate-950/70 border border-slate-800/80 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between max-h-[750px] overflow-y-auto">
+                <div class="space-y-4">
+                  <!-- Tab Header Switcher inside Post Modal -->
+                  <div class="grid grid-cols-2 gap-2 border-b border-slate-800 pb-3">
+                    <button type="button" id="btn-modal-seo-analyzer" class="py-2 px-2.5 rounded-lg text-xs font-bold bg-brand-green/20 text-brand-green border border-brand-green/30 transition-all cursor-pointer text-center">
+                      📊 Phân Tích Realtime
+                    </button>
+                    <button type="button" id="btn-modal-seo-prompt" class="py-2 px-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 transition-all cursor-pointer text-center">
+                      🚀 Tiêu Chuẩn & Prompt v3.0
+                    </button>
+                  </div>
+
+                  <!-- SUB-PANEL 1: Realtime Analyzer -->
+                  <div id="modal-seo-analyzer-panel" class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-800/60 pb-2">
+                      <span class="text-xs font-extrabold uppercase tracking-wider text-slate-300">13 Tiêu Chuẩn Realtime</span>
+                      <span id="seo-score-badge" class="px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-xs font-mono font-bold text-slate-300">
+                        0/13 Tiêu chuẩn
+                      </span>
+                    </div>
+
+                    <!-- Real-time Checklist Items Container -->
+                    <div id="seo-checklist-container" class="space-y-3 text-xs divide-y divide-slate-800/40">
+                      <!-- Item 1 -->
+                      <div id="seo-item-1" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-rose-500 font-bold text-base leading-none shrink-0 mt-0.5">✕</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Từ khóa chính xuất hiện trong tiêu đề</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Tiêu đề nên chứa từ khóa chính</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 2 -->
+                      <div id="seo-item-2" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Độ dài tiêu đề tốt (6-12 từ, hiện tại: 0 từ)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Tiêu đề lý tưởng là từ 6-12 từ</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 3 -->
+                      <div id="seo-item-3" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-rose-500 font-bold text-base leading-none shrink-0 mt-0.5">✕</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Từ khóa chính xuất hiện trong Sapo</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Sapo cần chứa từ khóa chính</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 4 -->
+                      <div id="seo-item-4" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Từ khóa nằm trong 60 ký tự đầu Sapo</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Đẩy từ khóa lên đầu Sapo giúp AI dễ nhận biết hơn</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 5 -->
+                      <div id="seo-item-5" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Độ dài Sapo tối ưu (145-160 ký tự, hiện tại: 0)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Nên điều chỉnh Sapo về khoảng 145-160 ký tự</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 6 -->
+                      <div id="seo-item-6" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Sapo chứa tên thương hiệu hoặc tác giả</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Nên chèn tác giả (e.g. Đào Xuân Quảng) tăng E-E-A-T</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 7 -->
+                      <div id="seo-item-7" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Bài viết chuyên sâu (Tối thiểu 1500 từ, hiện tại: 0 từ)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Nên triển khai nội dung chi tiết hơn (đích: 2200-4000 từ)</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 8 -->
+                      <div id="seo-item-8" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-emerald-400 font-bold text-base leading-none shrink-0 mt-0.5">✓</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Không có ký tự cấm (!, ngoặc kép, bold markdown **)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Đã kiểm tra ký tự cấm</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 9 -->
+                      <div id="seo-item-9" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-emerald-400 font-bold text-base leading-none shrink-0 mt-0.5">✓</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Không sử dụng từ ngữ bị cấm (cam kết, 100%, tuyệt đối...)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Đã kiểm tra từ ngữ bị cấm</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 10 -->
+                      <div id="seo-item-10" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Tất cả headings H2, H3 là câu hỏi (?)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Bổ sung dấu ? cho tất cả H2, H3</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 11 -->
+                      <div id="seo-item-11" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Có Quote-box Featured Snippet</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Bổ sung class='quote-box' sau các H2</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 12 -->
+                      <div id="seo-item-12" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Số lượng internal links (Tối thiểu 8 links, hiện tại: 0)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Bổ sung thêm links liên kết</span>
+                        </div>
+                      </div>
+
+                      <!-- Item 13 -->
+                      <div id="seo-item-13" class="pt-2 flex items-start gap-3">
+                        <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
+                        <div class="space-y-0.5">
+                          <span class="seo-title font-bold block text-slate-200">Có internal links được in đậm (strong/bold)</span>
+                          <span class="seo-desc text-[11px] text-slate-400 block">Cần bôi đậm (strong) liên kết để AI dễ quét</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- SUB-PANEL 2: SEO v3.0 Prompt Engine & Cheat Sheet -->
+                  <div id="modal-seo-prompt-panel" class="hidden space-y-4 text-xs">
+                    <div class="p-4 rounded-xl bg-purple-500/10 border border-purple-500/30 space-y-3">
+                      <div class="flex items-center justify-between">
+                        <span class="font-extrabold text-purple-300 uppercase tracking-wider text-[11px]">⚡ BỘ TẠO PROMPT AI SEO V3.0</span>
+                        <span class="text-[10px] text-purple-400 font-mono font-bold">Wepower Group</span>
+                      </div>
+                      <p class="text-slate-300 text-[11px] leading-relaxed">
+                        Tự động trích xuất <strong>Từ khóa chính</strong> và <strong>Tiêu đề bài viết</strong> đang nhập để tạo Prompt Master 10 Module v3.0 cho AI Writer trong 1-click!
+                      </p>
+                      <button type="button" id="copy-modal-seo-prompt-btn" class="w-full py-2.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                        📋 Copy Prompt SEO v3.0 Bài Viết Này
+                      </button>
+                    </div>
+
+                    <div class="space-y-3 text-slate-300 leading-relaxed">
+                      <h5 class="font-bold text-slate-100 uppercase tracking-wider text-[11px] border-b border-slate-800 pb-2">
+                        📖 Tóm Tắt 10 Module Tiêu Chuẩn SEO v3.0 (Nguyễn Hữu Thi)
+                      </h5>
+                      <ul class="space-y-2 text-[11px]">
+                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 1 (Title):</strong> Từ khóa chính đứng đầu hoặc trong 30 ký tự đầu. Độ dài 6-12 từ. Không dùng ký tự cấm (!, ", **).</li>
+                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 2 (Sapo):</strong> Độ dài 145-160 ký tự. Từ khóa xuất hiện trong 60 ký tự đầu. Chứa tác giả "Đào Xuân Quảng" / "daoxuanquang.vn".</li>
+                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 3 (Nội dung):</strong> Tối thiểu 1500 từ. Có ít nhất 3 H2 và 5 H3. Tất cả H2 dạng câu hỏi phải có dấu chấm hỏi (?).</li>
+                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 4 (Featured Snippets):</strong> Ngay sau mỗi H2 câu hỏi phải có 1 Quote-box 40-60 từ cô đọng câu trả lời cho Google Search.</li>
+                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 5 (Internal Links):</strong> Đúng 8 links. BẮT BUỘC in đậm anchor text <code>&lt;strong&gt;&lt;a href="..."&gt;...&lt;/a&gt;&lt;/strong&gt;</code>.</li>
+                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 6 (Từ cấm):</strong> Tuyệt đối không dùng từ phóng đại: <i>cam kết, 100%, tuyệt đối, số 1, tốt nhất</i>.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+
+          <!-- Posts Table Card -->
+          <div class="rounded-2xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-950/40">
+                    <th class="p-4">Tiêu đề bài viết</th>
+                    <th class="p-4">Chuyên mục</th>
+                    <th class="p-4">Ngày đăng</th>
+                    <th class="p-4">Thẻ tags</th>
+                    <th class="p-4 text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="posts-table-body" class="divide-y divide-slate-800/60 text-sm">
+                  <!-- Posts rows loaded dynamically -->
+                  <tr>
+                    <td colspan="5" class="p-8 text-center text-slate-400">Đang tải dữ liệu bài viết...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB CONTENT: SUBSCRIBERS -->
+        <section id="tab-subscribers" class="tab-pane space-y-8 hidden">
+          <div class="rounded-2xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-950/40">
+                    <th class="p-4">Độc giả</th>
+                    <th class="p-4">Địa chỉ Email</th>
+                    <th class="p-4">Ngày đăng ký</th>
+                    <th class="p-4 text-right">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="subscribers-table-body" class="divide-y divide-slate-800/60 text-sm">
+                  <tr>
+                    <td colspan="4" class="p-8 text-center text-slate-400">Đang tải danh sách đăng ký...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB CONTENT: LEADS -->
+        <section id="tab-leads" class="tab-pane space-y-8 hidden">
+          <div class="rounded-2xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-950/40">
+                    <th class="p-4">Học viên</th>
+                    <th class="p-4">Liên hệ (SĐT/Zalo/Email)</th>
+                    <th class="p-4">Thông tin khảo sát (Vị thế/Cam kết)</th>
+                    <th class="p-4">Bài toán tự động hóa</th>
+                    <th class="p-4">Thời gian</th>
+                    <th class="p-4 text-right">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody id="leads-table-body" class="divide-y divide-slate-800/60 text-sm">
+                  <tr>
+                    <td colspan="6" class="p-8 text-center text-slate-400">Đang tải danh sách khảo sát...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB CONTENT: PRODUCTS -->
+        <section id="tab-products" class="tab-pane space-y-8 hidden">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <p class="text-slate-400 text-sm">Quản lý danh sách sản phẩm, công cụ số hiển thị tại trang /san-pham.</p>
+            </div>
+            <!-- Add New Product Button -->
+            <button id="add-product-btn" class="px-5 py-2.5 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.02] shadow-md flex items-center gap-2 cursor-pointer">
+              <span>➕</span> Thêm Sản Phẩm Mới
+            </button>
+          </div>
+
+          <!-- Product Editor Form Modal (Hidden by default) -->
+          <div id="product-editor-modal" class="hidden rounded-2xl bg-slate-900/50 border border-slate-800 p-6 md:p-8 space-y-6 backdrop-blur-md">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+              <h3 id="product-editor-title" class="text-xl font-bold">📦 Soạn Thảo Sản Phẩm Mới</h3>
+              <button id="close-product-editor-btn" class="text-slate-400 hover:text-white font-bold text-sm cursor-pointer">✖ Đóng form</button>
+            </div>
+
+            <form id="product-form" class="grid md:grid-cols-3 gap-6">
+              <!-- Left side inputs -->
+              <div class="md:col-span-2 space-y-4">
+                <div>
+                  <label for="product-title" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tên sản phẩm *</label>
+                  <input type="text" id="product-title" required placeholder="Ví dụ: B2B Cold Email Automator" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
+                </div>
+                <div>
+                  <label for="product-description" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mô tả sản phẩm *</label>
+                  <textarea id="product-description" required rows="4" placeholder="Nhập mô tả ngắn về tính năng và giá trị sản phẩm..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm leading-relaxed"></textarea>
+                </div>
+              </div>
+
+              <!-- Right side parameters -->
+              <div class="space-y-4">
+                <div>
+                  <label for="product-id" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mã định danh * (ID / Slug)</label>
+                  <input type="text" id="product-id" required placeholder="vi-du-email-automator" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green font-mono text-sm" />
+                </div>
+                <div>
+                  <label for="product-type" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phân loại * (Type)</label>
+                  <input type="text" id="product-type" required placeholder="Ví dụ: SaaS / Tool, AI System, Digital Product" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
+                </div>
+                <div>
+                  <label for="product-status" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Trạng thái hiển thị * (Status)</label>
+                  <select id="product-status" required class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm cursor-pointer">
+                    <option value="">-- Chọn trạng thái --</option>
+                    <option value="Đang hoạt động">Đang hoạt động</option>
+                    <option value="Sắp ra mắt">Sắp ra mắt</option>
+                    <option value="Nội bộ">Nội bộ</option>
+                    <option value="Miễn phí">Miễn phí</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="product-price" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Giá hiển thị * (Price / Display price)</label>
+                  <input type="text" id="product-price" required placeholder="Ví dụ: Liên hệ, Miễn phí, 990k" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
+                </div>
+                <div>
+                  <label for="product-icon" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Biểu tượng * (Emoji Icon)</label>
+                  <input type="text" id="product-icon" required placeholder="Ví dụ: ✉️, 🎨, ✍️" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm text-center" />
+                </div>
+                <div class="pt-4">
+                  <button type="submit" id="save-product-btn" class="w-full py-3.5 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.02] shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                    💾 Lưu sản phẩm
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Products Table Card -->
+          <div class="rounded-2xl bg-slate-900/40 border border-slate-800/80 backdrop-blur-md overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-800 text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-950/40">
+                    <th class="p-4">Icon & Tên sản phẩm</th>
+                    <th class="p-4">Phân loại</th>
+                    <th class="p-4">Giá bán</th>
+                    <th class="p-4">Mô tả chi tiết</th>
+                    <th class="p-4">Trạng thái</th>
+                    <th class="p-4 text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="products-table-body" class="divide-y divide-slate-800/60 text-sm">
+                  <tr>
+                    <td colspan="5" class="p-8 text-center text-slate-400">Đang tải danh sách sản phẩm...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Toast Notification Widget -->
+    <div id="toast" class="fixed bottom-6 left-6 z-[200] transform translate-y-20 opacity-0 bg-slate-900 border border-slate-800 text-slate-100 text-sm px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 pointer-events-none">
+      <span id="toast-icon">✓</span>
+      <span id="toast-message">Đăng nhập thành công!</span>
+    </div>
+  </div>
+
+  <!-- CLIENT-SIDE CONTROLLERS AND ACTIONS -->
+  <script>
+    // Config login password hash (SHA-256 of 'admin123')
+    const PASS_HASH = 'e82788e0c8b0e7740f90e54d896944200f688005b63bc05e55e09f5bbf920367';
+
+    async function sha256(message: string): Promise<string> {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    const initAdmin = () => {
+      const lockscreen = document.getElementById('lockscreen');
+      const dashboard = document.getElementById('dashboard');
+      const loginForm = document.getElementById('login-form');
+      const passwordInput = document.getElementById('password') as HTMLInputElement;
+      const loginError = document.getElementById('login-error');
+      const logoutBtn = document.getElementById('logout-btn');
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toast-message');
+      const toastIcon = document.getElementById('toast-icon');
+
+      // Toast utility function
+      function showToast(message: string, isError = false) {
+        if (!toast || !toastMessage || !toastIcon) return;
+        toastMessage.textContent = message;
+        toastIcon.textContent = isError ? '⚠️' : '✓';
+        toast.className = `fixed bottom-6 left-6 z-[200] bg-slate-900 border ${isError ? 'border-rose-800 text-rose-200' : 'border-emerald-800 text-emerald-200'} text-sm px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-0 opacity-100`;
+        
+        setTimeout(() => {
+          toast.className = `fixed bottom-6 left-6 z-[200] transform translate-y-20 opacity-0 bg-slate-900 border border-slate-800 text-slate-100 text-sm px-6 py-4 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 pointer-events-none`;
+        }, 3000);
+      }
+
+      // Auth validation
+      function checkAuth() {
+        const token = localStorage.getItem('admin_auth_token');
+        if (token === PASS_HASH) {
+          if (lockscreen) lockscreen.classList.add('hidden');
+          if (dashboard) dashboard.classList.remove('hidden');
+          loadAllData();
+        } else {
+          if (lockscreen) lockscreen.classList.remove('hidden');
+          if (dashboard) dashboard.classList.add('hidden');
+        }
+      }
+
+      // Login form handling
+      if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          if (!passwordInput) return;
+          const pass = passwordInput.value;
+          const hash = await sha256(pass);
+          if (hash === PASS_HASH) {
+            localStorage.setItem('admin_auth_token', PASS_HASH);
+            if (loginError) loginError.classList.add('hidden');
+            checkAuth();
+            showToast('Đăng nhập quản trị an toàn thành công!');
+          } else {
+            if (loginError) loginError.classList.remove('hidden');
+            passwordInput.focus();
+            passwordInput.value = '';
+          }
+        });
+      }
+
+      // Logout handler
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('admin_auth_token');
+          checkAuth();
+          showToast('Đã đăng xuất khỏi hệ thống!');
+        });
+      }
+
+      // TABS MANAGER
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+      const pageTitle = document.getElementById('page-title');
+
+      const titles: Record<string, string> = {
+        overview: '📊 Tổng quan Dashboard',
+        posts: '✍️ Quản Lý Bài Viết',
+        'seo-prompt': '🚀 Tiêu Chuẩn & Bộ Tạo Prompt SEO Blog v3.0 (Wepower Group)',
+        subscribers: '📨 Đăng Ký Bản Tin',
+        leads: '🤝 Yêu Cầu Chuyển Giao 1-1',
+        products: '📦 Quản lý sản phẩm & công cụ số'
+      };
+
+      // SEO STANDARDS V3.0 CONTROLLERS
+      const copyFullSystemPromptBtn = document.getElementById('copy-full-system-prompt-btn');
+      const copyMasterChecklistBtn = document.getElementById('copy-master-checklist-btn');
+
+      if (copyFullSystemPromptBtn) {
+        copyFullSystemPromptBtn.addEventListener('click', () => {
+          const fullPrompt = `PROMPT SEO BLOG CONTENT - PHIÊN BẢN 3.0 HOÀN CHỈNH
+© 2026 Wepower Group | Tác giả: Nguyễn Hữu Thi | Đơn vị áp dụng: daoxuanquang.vn
+
+Bạn là chuyên gia SEO Content Writer hàng đầu với 10+ năm kinh nghiệm. Hãy đóng vai chuyên gia sáng tạo nội dung chuẩn SEO cho website daoxuanquang.vn và viết bài viết chuẩn HTML theo bộ tiêu chuẩn 10 Module v3.0 dưới đây:
+
+THÔNG TIN BÀI VIẾT (INPUT VARIABLES):
+- Title (Tiêu đề): \${title}
+- Primary Keyword (Từ khóa chính): \${keywords}
+- URL Slug: \${url}
+- Search Intent: \${intent}
+- Phễu Topic Cluster: \${funnel}
+- Internal Links Keywords (groupKey): \${groupKey}
+- Tác giả (Author): \${author}
+- Website Domain: \${website}
+- Số từ mục tiêu (Word Count): \${wordCount} từ
+- Giọng văn (Tone of Voice): \${tone}
+
+4 TRỤ CỘT AI-ERA SEO (BẮT BUỘC TUÂN THỦ):
+1. AIO (Artificial Intelligence Optimization):
+   - Ngôn ngữ trực tiếp, đi thẳng vào vấn đề.
+   - Headers logic (H2, H3), bullet points <= 7 items.
+   - Data Anchoring: Mọi tuyên bố đều có số liệu cụ thể (ví dụ: "Theo Semrush 2024, 68% traffic đến từ organic search").
+2. GEO (Generative Engine Optimization):
+   - Cấu trúc Topic Cluster chuyên sâu.
+   - Tín hiệu E-E-A-T rõ ràng (Experience, Expertise, Authoritativeness, Trust). Danh xưng tác giả: "\${author}".
+3. AEO (Answer Engine Optimization):
+   - Answer-First Structure: Ngay sau MỖI H2 (dạng câu hỏi chứa dấu ?) BẮT BUỘC có 1 Quote-box 40-60 từ trả lời trực tiếp cho Featured Snippet.
+4. SXO (Search Experience Optimization):
+   - Mobile-first formatting, ngắt đoạn 3-5 câu (tối đa 3-4 dòng trên điện thoại).
+
+QUY TẮC INTERNAL LINKING (ĐÚNG 8 LINKS):
+- Định dạng: Font-weight bold (in đậm) cho tất cả anchor text.
+- Phân bổ 8 links: 
+  + Sapo (2 links): Link 1 (\${keywords} -> https://\${website}/\${url}), Link 2 (\${author} -> https://\${website}/)
+  + Mở bài (1 link): Topic Cluster (Pillar)
+  + Thân bài (4 links): Dẫn dắt User Journey & Semantic keywords tự nhiên
+  + Kết bài (1 link): CTA / Homepage (https://\${website}/)
+
+CẤU TRÚC SAPO (META DESCRIPTION):
+<p class="sapo-paragraph">
+  [Số] [benefit] về <a href="https://\${website}/\${url}" class="link-highlight">\${keywords}</a>... <a href="https://\${website}/" class="link-highlight">\${author}</a> sẽ hướng dẫn...
+</p>
+
+RÀO CẢN TUYỆT ĐỐI CẤM (CONSTRAINTS):
+❌ TUYỆT ĐỐI CẤM ký tự: Dấu chấm cảm (!), dấu ngoặc kép (" "), xuống dòng \\n trong text, in đậm markdown (**text**), dấu dẫn nguồn [1], [2].
+❌ TUYỆT ĐỐI CẤM từ ngữ: "100%", "chắc chắn", "tuyệt đối", "cam kết", "thần tốc", "tuyệt vời", "Chào bạn", "Hello", "Bạn sẽ không tin".
+❌ TUYỆT ĐỐI CẤM HTML wrapper tags (<html>, <head>, <body>) hoặc CSS comment.
+
+Vui lòng xuất mã HTML thuần chuẩn theo template v3.0 ngay bây giờ.`;
+          navigator.clipboard.writeText(fullPrompt);
+          showToast('📄 Đã sao chép Prompt Gốc v3.0 thành công!');
+        });
+      }
+
+      if (copyMasterChecklistBtn) {
+        copyMasterChecklistBtn.addEventListener('click', () => {
+          const checklistText = `MASTER CHECKLIST REVIEW SEO BLOG CONTENT v3.0 (Wepower Group)
+1. SEO Performance: Từ khóa chính trong 60 ký tự đầu Sapo, 8 Internal links in đậm, H2 dạng câu hỏi có Quote-box 40-60 từ.
+2. Quality Check: Số từ 2200-4000, không ký tự cấm (!, "", **, \\n, [1]), không từ cấm (100%, chắc chắn, tuyệt vời, cam kết, Chào bạn).
+3. AI-Ready: Data Anchoring có số liệu nguồn, Answer-First structure, Schema/FAQ sẵn sàng.`;
+          navigator.clipboard.writeText(checklistText);
+          showToast('📋 Đã sao chép Master Checklist v3.0!');
+        });
+      }
+
+      // MODAL SEO SUB-TABS & PROMPT GENERATOR
+      const btnModalSeoAnalyzer = document.getElementById('btn-modal-seo-analyzer');
+      const btnModalSeoPrompt = document.getElementById('btn-modal-seo-prompt');
+      const modalSeoAnalyzerPanel = document.getElementById('modal-seo-analyzer-panel');
+      const modalSeoPromptPanel = document.getElementById('modal-seo-prompt-panel');
+      const copyModalSeoPromptBtn = document.getElementById('copy-modal-seo-prompt-btn');
+
+      const switchModalSeoSubTab = (tab: 'analyzer' | 'prompt') => {
+        if (!btnModalSeoAnalyzer || !btnModalSeoPrompt || !modalSeoAnalyzerPanel || !modalSeoPromptPanel) return;
+        if (tab === 'analyzer') {
+          btnModalSeoAnalyzer.className = 'py-2 px-2.5 rounded-lg text-xs font-bold bg-brand-green/20 text-brand-green border border-brand-green/30 transition-all cursor-pointer text-center';
+          btnModalSeoPrompt.className = 'py-2 px-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 transition-all cursor-pointer text-center';
+          modalSeoAnalyzerPanel.classList.remove('hidden');
+          modalSeoPromptPanel.classList.add('hidden');
+        } else {
+          btnModalSeoPrompt.className = 'py-2 px-2.5 rounded-lg text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 transition-all cursor-pointer text-center';
+          btnModalSeoAnalyzer.className = 'py-2 px-2.5 rounded-lg text-xs font-bold bg-slate-900 text-slate-400 hover:text-slate-200 border border-slate-800 transition-all cursor-pointer text-center';
+          modalSeoPromptPanel.classList.remove('hidden');
+          modalSeoAnalyzerPanel.classList.add('hidden');
+        }
+      };
+
+      if (btnModalSeoAnalyzer) btnModalSeoAnalyzer.addEventListener('click', () => switchModalSeoSubTab('analyzer'));
+      if (btnModalSeoPrompt) btnModalSeoPrompt.addEventListener('click', () => switchModalSeoSubTab('prompt'));
+
+      if (copyModalSeoPromptBtn) {
+        copyModalSeoPromptBtn.addEventListener('click', () => {
+          const titleVal = (document.getElementById('post-title') as HTMLInputElement)?.value.trim() || '[Tiêu đề bài viết]';
+          const kwVal = (document.getElementById('post-primary-keyword') as HTMLInputElement)?.value.trim() || '[Từ khóa chính]';
+          const slugVal = (document.getElementById('post-slug') as HTMLInputElement)?.value.trim() || '[url-slug]';
+
+          const generatedPrompt = `PROMPT AI VIẾT BÀI BLOG CHUẨN SEO V3.0 (WEPOWER GROUP)
+Đơn vị áp dụng: daoxuanquang.vn | Tác giả: Nguyễn Hữu Thi
+
+THÔNG TIN BÀI VIẾT:
+- Tiêu đề (Title): ${titleVal}
+- Từ khóa chính (Primary Keyword): ${kwVal}
+- URL Slug: ${slugVal}
+- Tác giả: Đào Xuân Quảng (daoxuanquang.vn)
+
+YÊU CẦU NỘI DUNG V3.0 (TUÂN THỦ 100%):
+1. AIO & GEO: Viết bài chuẩn HTML tối thiểu 1500 từ. Data Anchoring có số liệu minh chứng.
+2. ANSWER-FIRST: Ngay sau mỗi H2 dạng câu hỏi (chứa dấu ?), BẮT BUỘC có Quote-box <blockquote class="quote-box"> dài 40-60 từ trả lời trực tiếp cho Google Snippet.
+3. INTERNAL LINKS: Phân bổ đúng 8 internal links và in đậm <strong><a href="...">...</a></strong>.
+4. SAPO META: 145-160 ký tự, từ khóa "${kwVal}" nằm trong 60 ký tự đầu tiên, chứa thương hiệu "Đào Xuân Quảng".
+5. RÀO CẢN CẤM: Không dùng !, ", **, không dùng từ cấm (cam kết, 100%, tuyệt đối, số 1, tốt nhất).
+
+Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thông tin trên ngay bây giờ.`;
+
+          navigator.clipboard.writeText(generatedPrompt);
+          showToast('⚡ Đã copy Prompt AI SEO v3.0 cho bài viết!');
+        });
+      }
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.getAttribute('data-tab');
+          if (!tab) return;
+
+          // Toggle buttons
+          tabBtns.forEach(b => b.classList.remove('active', 'bg-slate-800', 'text-white'));
+          btn.classList.add('active', 'bg-slate-800', 'text-white');
+
+          // Toggle content panes
+          tabPanes.forEach(pane => pane.classList.add('hidden'));
+          const targetPane = document.getElementById(`tab-${tab}`);
+          if (targetPane) targetPane.classList.remove('hidden');
+
+          // Update header title
+          if (pageTitle && titles[tab]) pageTitle.textContent = titles[tab];
+        });
+      });
+
+      // DATA STATE STORAGE
+      let currentPosts: any[] = [];
+      let currentSubscribers: any[] = [];
+      let currentLeads: any[] = [];
+      let currentProducts: any[] = [];
+
+      // API loading function
+      async function loadAllData() {
+        try {
+          // 1. Fetch Posts
+          const postsRes = await fetch('/api/posts');
+          if (postsRes.ok) {
+            const data = await postsRes.json();
+            if (data.success) {
+              const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+              currentPosts = data.posts.filter((p: any) => !deletedSlugs.includes(p.slug) && !deletedSlugs.includes(p.id));
+              renderPosts();
+            }
+          }
+
+          // 2. Fetch Subscribers
+          const subRes = await fetch('/api/subscribe');
+          if (subRes.ok) {
+            const data = await subRes.json();
+            if (data.success) {
+              const deletedSubs = JSON.parse(localStorage.getItem('deleted_sub_emails') || '[]');
+              currentSubscribers = data.subscribers.filter((s: any) => !deletedSubs.includes(s.email));
+              renderSubscribers();
+            }
+          }
+
+          // 3. Fetch Leads
+          const leadsRes = await fetch('/api/leads');
+          if (leadsRes.ok) {
+            const data = await leadsRes.json();
+            if (data.success) {
+              const deletedLeads = JSON.parse(localStorage.getItem('deleted_lead_emails') || '[]');
+              currentLeads = data.leads.filter((l: any) => !deletedLeads.includes(l.email));
+              renderLeads();
+            }
+          }
+
+          // 4. Fetch Products
+          const prodRes = await fetch('/api/products');
+          if (prodRes.ok) {
+            const data = await prodRes.json();
+            if (data.success) {
+              const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
+              currentProducts = data.products.filter((p: any) => !deletedIds.includes(p.id));
+              renderProducts();
+            }
+          }
+
+          // 5. Update Stats Overview counts
+          updateOverviewStats();
+        } catch (error) {
+          console.error('Error loading API data:', error);
+          showToast('Không kết nối được local API, đang dùng dữ liệu cache.', true);
+        }
+      };
+
+      function updateOverviewStats() {
+        const postsCount = document.getElementById('stat-posts-count');
+        const subsCount = document.getElementById('stat-subscribers-count');
+        const leadsCount = document.getElementById('stat-leads-count');
+        const prodsCount = document.getElementById('stat-products-count');
+
+        if (postsCount) postsCount.textContent = String(currentPosts.length);
+        if (subsCount) subsCount.textContent = String(currentSubscribers.length);
+        if (leadsCount) leadsCount.textContent = String(currentLeads.length);
+        if (prodsCount) prodsCount.textContent = String(currentProducts.length);
+
+        // Render Recent Activity Feed
+        renderRecentActivity();
+      }
+
+      function renderRecentActivity() {
+        const list = document.getElementById('recent-activity-list');
+        if (!list) return;
+
+        const allActivities: any[] = [];
+
+        currentSubscribers.forEach(sub => {
+          allActivities.push({
+            type: 'sub',
+            name: sub.name,
+            email: sub.email,
+            date: new Date(sub.date),
+            desc: `đăng ký bản tin từ trang chủ.`
+          });
+        });
+
+        currentLeads.forEach(lead => {
+          allActivities.push({
+            type: 'lead',
+            name: lead.name,
+            email: lead.email,
+            date: new Date(lead.date),
+            desc: `đăng ký khảo sát nhận chuyển giao hệ thống 1-1.`
+          });
+        });
+
+        // Sort by date desc
+        allActivities.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+        if (allActivities.length === 0) {
+          list.innerHTML = `
+            <div class="text-center py-6 text-slate-500 text-xs">
+              Chưa ghi nhận hoạt động nào gần đây.
+            </div>
+          `;
+          return;
+        }
+
+        list.innerHTML = allActivities.slice(0, 10).map(act => {
+          const icon = act.type === 'sub' ? '📨' : '🤝';
+          const badgeClass = act.type === 'sub' ? 'text-blue-400 bg-blue-500/10' : 'text-indigo-400 bg-indigo-500/10';
+          const timeStr = act.date.toLocaleDateString('vi-VN', {
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+
+          return `
+            <div class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-800/20 transition-all border border-transparent hover:border-slate-800/40">
+              <span class="text-lg p-2 rounded-lg ${badgeClass}">${icon}</span>
+              <div class="flex-grow space-y-0.5">
+                <p class="text-xs font-bold text-slate-200">
+                  ${act.name} <span class="font-normal text-slate-400">(${act.email})</span>
+                </p>
+                <p class="text-[11px] text-slate-400">${act.desc}</p>
+                <span class="text-[9px] text-slate-500 font-mono block">${timeStr}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      };
+
+      // POST RENDERING
+      function renderPosts() {
+        const tbody = document.getElementById('posts-table-body');
+        const filter = (document.getElementById('post-category-filter') as HTMLSelectElement)?.value || 'all';
+        if (!tbody) return;
+
+        const filtered = filter === 'all' 
+          ? currentPosts 
+          : currentPosts.filter(p => p.category === filter);
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="5" class="p-8 text-center text-slate-500">Không tìm thấy bài viết nào.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map(post => {
+          const tagsStr = post.tags && post.tags.length > 0
+            ? post.tags.map((t: string) => `<span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 font-mono">${t}</span>`).join(' ')
+            : '<span class="text-slate-600 text-xs">-</span>';
+
+          const catBadgeClass = post.category === 'ai' 
+            ? 'bg-purple-500/10 text-purple-400 border border-purple-500/20' 
+            : post.category === 'marketing'
+            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+            : 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+
+          const isScheduled = post.pubDate && new Date(post.pubDate).getTime() > Date.now();
+          const statusBadge = post.status === 'private' || post.draft
+            ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20">🔒 Riêng tư</span>'
+            : isScheduled
+            ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-blue-500/10 text-blue-400 border border-blue-500/20">⏰ Hẹn giờ đăng</span>'
+            : '<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">🌐 Công khai</span>';
+
+          let formattedPubDate = post.pubDate || '';
+          if (post.pubDate) {
+            try {
+              const d = new Date(post.pubDate);
+              if (!isNaN(d.getTime())) {
+                const datePart = d.toLocaleDateString('vi-VN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                const timePart = d.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+                formattedPubDate = `${datePart} ${timePart}`;
+              }
+            } catch (e) {}
+          }
+
+          return `
+            <tr class="hover:bg-slate-900/20 transition-all">
+              <td class="p-4 font-bold text-slate-200">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="block text-base">${post.title}</span>
+                  ${statusBadge}
+                </div>
+                <span class="text-xs font-mono text-slate-500 font-normal">slug: ${post.slug}</span>
+              </td>
+              <td class="p-4">
+                <span class="px-2 py-1 rounded text-xs font-bold uppercase tracking-wider ${catBadgeClass}">
+                  ${post.category}
+                </span>
+              </td>
+              <td class="p-4 font-mono text-xs text-slate-300 font-semibold">${formattedPubDate}</td>
+              <td class="p-4 flex flex-wrap gap-1 items-center max-w-[200px]">${tagsStr}</td>
+              <td class="p-4 text-right">
+                <div class="flex gap-2 justify-end">
+                  <button data-id="${post.id}" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold transition-all edit-post-btn cursor-pointer">Sửa</button>
+                  <button onclick="window.deletePostItem('${post.id}', '${post.category}', '${post.slug}')" data-id="${post.id}" data-category="${post.category}" data-slug="${post.slug}" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-xs font-bold transition-all delete-post-btn cursor-pointer">Xóa</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Attach action events
+        attachPostEvents();
+      };
+
+      // Filter change event
+      const categoryFilter = document.getElementById('post-category-filter');
+      if (categoryFilter) {
+        categoryFilter.addEventListener('change', renderPosts);
+      }
+
+      // SUBSCRIBERS RENDERING
+      function renderSubscribers() {
+        const tbody = document.getElementById('subscribers-table-body');
+        if (!tbody) return;
+
+        if (currentSubscribers.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="4" class="p-8 text-center text-slate-500">Chưa có ai đăng ký nhận bản tin.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = currentSubscribers.map(sub => {
+          const timeStr = new Date(sub.date).toLocaleDateString('vi-VN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+
+          return `
+            <tr class="hover:bg-slate-900/20 transition-all">
+              <td class="p-4 font-bold text-slate-200">${sub.name}</td>
+              <td class="p-4 font-mono text-slate-300">${sub.email}</td>
+              <td class="p-4 text-slate-400 text-xs font-mono">${timeStr}</td>
+              <td class="p-4 text-right">
+                <button onclick="window.deleteSubItem('${sub.email}')" data-email="${sub.email}" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-xs font-bold transition-all delete-sub-btn cursor-pointer">Xóa</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Global Delete Subscriber Handler
+        (window as any).deleteSubItem = async (email: string) => {
+          if (!email) return;
+          const deletedSubs = JSON.parse(localStorage.getItem('deleted_sub_emails') || '[]');
+          if (!deletedSubs.includes(email)) {
+            deletedSubs.push(email);
+            localStorage.setItem('deleted_sub_emails', JSON.stringify(deletedSubs));
+          }
+
+          currentSubscribers = currentSubscribers.filter(s => s.email !== email);
+          renderSubscribers();
+          updateOverviewStats();
+          showToast('Đã xóa người nhận bản tin!');
+
+          try {
+            await fetch('/api/subscribe', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'delete', email })
+            });
+          } catch (err) {
+            console.error('Delete sub fetch error:', err);
+          }
+        };
+
+        // Attach subscriber delete events
+        document.querySelectorAll('.delete-sub-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = btn.getAttribute('data-email') || '';
+            (window as any).deleteSubItem(email);
+          });
+        });
+      }
+
+      // LEADS RENDERING
+      function renderLeads() {
+        const tbody = document.getElementById('leads-table-body');
+        if (!tbody) return;
+
+        if (currentLeads.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6" class="p-8 text-center text-slate-500">Chưa có bài đăng ký chuyển giao nào.</td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = currentLeads.map(lead => {
+          const timeStr = new Date(lead.date).toLocaleDateString('vi-VN', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+          });
+
+          return `
+            <tr class="hover:bg-slate-900/20 transition-all align-top text-xs md:text-sm">
+              <td class="p-4 font-bold text-slate-200">
+                <span class="block">${lead.name}</span>
+              </td>
+              <td class="p-4 space-y-1">
+                <span class="block text-slate-300 font-mono">📱 SĐT: ${lead.contact}</span>
+                <span class="block text-slate-400 font-mono">📧 Email: ${lead.email}</span>
+              </td>
+              <td class="p-4 space-y-1">
+                <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 font-bold block w-fit">${lead.position}</span>
+                <span class="text-[10px] text-brand-green font-bold block">${lead.commitment === 'Yes' ? '✓ Cam kết 2h/ngày' : '✗ Không cam kết'}</span>
+              </td>
+              <td class="p-4 max-w-xs whitespace-pre-wrap leading-relaxed text-xs text-slate-300">${lead.problem}</td>
+              <td class="p-4 font-mono text-[10px] text-slate-400">${timeStr}</td>
+              <td class="p-4 text-right">
+                <button onclick="window.deleteLeadItem('${lead.email}', '${lead.date}')" data-email="${lead.email}" data-date="${lead.date}" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-[11px] font-bold transition-all delete-lead-btn cursor-pointer">Xóa</button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Global Delete Lead Handler
+        (window as any).deleteLeadItem = async (email: string, date: string) => {
+          if (!email) return;
+          const deletedLeads = JSON.parse(localStorage.getItem('deleted_lead_emails') || '[]');
+          if (!deletedLeads.includes(email)) {
+            deletedLeads.push(email);
+            localStorage.setItem('deleted_lead_emails', JSON.stringify(deletedLeads));
+          }
+
+          currentLeads = currentLeads.filter(l => l.email !== email);
+          renderLeads();
+          updateOverviewStats();
+          showToast('Đã xóa yêu cầu chuyển giao học viên!');
+
+          try {
+            await fetch('/api/leads', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'delete', email, date })
+            });
+          } catch (err) {
+            console.error('Delete lead fetch error:', err);
+          }
+        };
+
+        // Attach lead delete events
+        document.querySelectorAll('.delete-lead-lead-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const email = btn.getAttribute('data-email') || '';
+            const date = btn.getAttribute('data-date') || '';
+            (window as any).deleteLeadItem(email, date);
+          });
+        });
+      };
+
+      // POST EDIT OR CREATE DIALOG TRIGGER
+      const postModal = document.getElementById('post-editor-modal');
+      const addPostBtn = document.getElementById('add-post-btn');
+      const closeEditorBtn = document.getElementById('close-editor-btn');
+      const postForm = document.getElementById('post-form') as HTMLFormElement;
+      
+      const pTitle = document.getElementById('post-title') as HTMLInputElement;
+      const pDesc = document.getElementById('post-description') as HTMLTextAreaElement;
+      const pContent = document.getElementById('post-content') as HTMLTextAreaElement;
+      const pCat = document.getElementById('post-category') as HTMLSelectElement;
+      const pSlug = document.getElementById('post-slug') as HTMLInputElement;
+      const pPubDate = document.getElementById('post-pubdate') as HTMLInputElement;
+      const pStatus = document.getElementById('post-status') as HTMLSelectElement;
+      const pImg = document.getElementById('post-image') as HTMLInputElement | null;
+      const pTags = document.getElementById('post-tags') as HTMLInputElement | null;
+      const editorTitleText = document.getElementById('editor-title');
+      const savePostBtn = document.getElementById('save-post-btn');
+
+      let isEditMode = false;
+      let editPostId = '';
+
+      function runRealtimeSEOAnalyzer() {
+        try {
+          const pKeyword = document.getElementById('post-primary-keyword') as HTMLInputElement;
+          const kw = (pKeyword?.value || '').trim().toLowerCase();
+          const title = (pTitle?.value || '').trim();
+          const desc = (pDesc?.value || '').trim();
+          const content = (pContent?.value || '').trim();
+
+          let passedCount = 0;
+
+          const setItem = (id: string, status: 'pass' | 'warn' | 'fail', titleText: string, descText: string) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const icon = el.querySelector('.seo-icon');
+            const titleEl = el.querySelector('.seo-title');
+            const descEl = el.querySelector('.seo-desc');
+
+            if (titleEl) titleEl.textContent = titleText;
+            if (descEl) descEl.textContent = descText;
+
+            if (status === 'pass') {
+              passedCount++;
+              if (icon) {
+                icon.textContent = '✓';
+                icon.className = 'seo-icon text-emerald-400 font-bold text-base leading-none shrink-0 mt-0.5';
+              }
+            } else if (status === 'warn') {
+              if (icon) {
+                icon.textContent = '⚠️';
+                icon.className = 'seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5';
+              }
+            } else {
+              if (icon) {
+                icon.textContent = '✕';
+                icon.className = 'seo-icon text-rose-500 font-bold text-base leading-none shrink-0 mt-0.5';
+              }
+            }
+          };
+
+          // 1. Primary keyword in title
+          if (!kw) {
+            setItem('seo-item-1', 'fail', 'Từ khóa chính xuất hiện trong tiêu đề', 'Vui lòng nhập từ khóa chính ở trên');
+          } else if (title.toLowerCase().includes(kw)) {
+            setItem('seo-item-1', 'pass', 'Từ khóa chính xuất hiện trong tiêu đề', `Từ khóa '${kw}' đã có trong tiêu đề`);
+          } else {
+            setItem('seo-item-1', 'fail', 'Từ khóa chính xuất hiện trong tiêu đề', `Tiêu đề nên chứa từ khóa '${kw}'`);
+          }
+
+          // 2. Title length (6-12 words)
+          const titleWords = title ? title.split(/\s+/).filter(Boolean).length : 0;
+          if (titleWords >= 6 && titleWords <= 12) {
+            setItem('seo-item-2', 'pass', `Độ dài tiêu đề tốt (6-12 từ, hiện tại: ${titleWords} từ)`, 'Tiêu đề đạt độ dài lý tưởng');
+          } else {
+            setItem('seo-item-2', 'warn', `Độ dài tiêu đề tốt (6-12 từ, hiện tại: ${titleWords} từ)`, 'Tiêu đề lý tưởng là từ 6-12 từ');
+          }
+
+          // 3. Primary keyword in Sapo
+          if (!kw) {
+            setItem('seo-item-3', 'fail', 'Từ khóa chính xuất hiện trong Sapo', 'Vui lòng nhập từ khóa chính');
+          } else if (desc.toLowerCase().includes(kw)) {
+            setItem('seo-item-3', 'pass', 'Từ khóa chính xuất hiện trong Sapo', `Sapo đã chứa từ khóa '${kw}'`);
+          } else {
+            setItem('seo-item-3', 'fail', 'Từ khóa chính xuất hiện trong Sapo', `Sapo cần chứa từ khóa '${kw}'`);
+          }
+
+          // 4. Primary keyword in first 60 chars of Sapo
+          if (kw && desc.toLowerCase().indexOf(kw) >= 0 && desc.toLowerCase().indexOf(kw) < 60) {
+            setItem('seo-item-4', 'pass', 'Từ khóa nằm trong 60 ký tự đầu Sapo', 'Từ khóa nằm ở vị trí ưu tiên đầu Sapo');
+          } else {
+            setItem('seo-item-4', 'warn', 'Từ khóa nằm trong 60 ký tự đầu Sapo', 'Đẩy từ khóa lên đầu Sapo giúp AI dễ nhận biết hơn');
+          }
+
+          // 5. Sapo length (145-160 chars)
+          const descLen = desc.length;
+          if (descLen >= 145 && descLen <= 160) {
+            setItem('seo-item-5', 'pass', `Độ dài Sapo tối ưu (145-160 ký tự, hiện tại: ${descLen})`, 'Độ dài Sapo đã đạt chuẩn SEO');
+          } else {
+            setItem('seo-item-5', 'warn', `Độ dài Sapo tối ưu (145-160 ký tự, hiện tại: ${descLen})`, 'Nên điều chỉnh Sapo về khoảng 145-160 ký tự');
+          }
+
+          // 6. Sapo contains brand / author
+          const brandRegex = /(quảng|đào xuân quảng|daoxuanquang|anna|wepower)/i;
+          if (brandRegex.test(desc)) {
+            setItem('seo-item-6', 'pass', 'Sapo chứa tên thương hiệu hoặc tác giả', 'Đã có thông tin tác giả/thương hiệu tăng E-E-A-T');
+          } else {
+            setItem('seo-item-6', 'warn', 'Sapo chứa tên thương hiệu hoặc tác giả', 'Nên chèn tác giả (e.g. Đào Xuân Quảng) tăng E-E-A-T');
+          }
+
+          // 7. In-depth content (>= 1500 words)
+          const contentWords = content ? content.split(/\s+/).filter(Boolean).length : 0;
+          if (contentWords >= 1500) {
+            setItem('seo-item-7', 'pass', `Bài viết chuyên sâu (Tối thiểu 1500 từ, hiện tại: ${contentWords} từ)`, 'Đã đạt độ dài chuyên sâu chuẩn v3.0');
+          } else {
+            setItem('seo-item-7', 'warn', `Bài viết chuyên sâu (Tối thiểu 1500 từ, hiện tại: ${contentWords} từ)`, 'Nên triển khai nội dung chi tiết hơn (đích: 2200-4000 từ)');
+          }
+
+          // 8. No forbidden characters (!, ngoặc kép, bold markdown **)
+          const forbiddenCharsRegex = /[!"“”]|\*\*/;
+          if (!forbiddenCharsRegex.test(content) && !forbiddenCharsRegex.test(title) && !forbiddenCharsRegex.test(desc)) {
+            setItem('seo-item-8', 'pass', 'Không có ký tự cấm (!, ngoặc kép, bold markdown **)', 'Nội dung sạch, không vi phạm ký tự cấm');
+          } else {
+            setItem('seo-item-8', 'fail', 'Có ký tự cấm (!, ngoặc kép, bold markdown **)', 'Vui lòng xóa !, ngoặc kép hoặc markdown **');
+          }
+
+          // 9. No forbidden words (cam kết, 100%, tuyệt đối, chắc chắn, thần tốc, tuyệt vời)
+          const forbiddenWordsRegex = /(cam kết|100%|tuyệt đối|chắc chắn|thần tốc|tuyệt vời|chữa khỏi|trị dứt điểm)/i;
+          if (!forbiddenWordsRegex.test(content) && !forbiddenWordsRegex.test(title) && !forbiddenWordsRegex.test(desc)) {
+            setItem('seo-item-9', 'pass', 'Không sử dụng từ ngữ bị cấm (cam kết, 100%, tuyệt đối...)', 'Nội dung không chứa từ ngữ quảng cáo quá đà');
+          } else {
+            setItem('seo-item-9', 'fail', 'Sử dụng từ ngữ bị cấm (cam kết, 100%, tuyệt đối...)', 'Phát hiện từ ngữ bị cấm trong bài viết');
+          }
+
+          // 10. All H2, H3 headings are questions (?)
+          const headings = content.match(/<h[23][^>]*>(.*?)<\/h[23]>|#{2,3}\s+(.*)/gi) || [];
+          const questionHeadings = headings.filter(h => h.trim().endsWith('?') || h.trim().endsWith('?</span>') || h.includes('?'));
+          if (headings.length > 0 && questionHeadings.length === headings.length) {
+            setItem('seo-item-10', 'pass', 'Tất cả headings H2, H3 là câu hỏi (?)', '100% headings H2/H3 đã có dấu ?');
+          } else {
+            setItem('seo-item-10', 'warn', 'Tất cả headings H2, H3 là câu hỏi (?)', 'Bổ sung dấu ? cho tất cả H2, H3');
+          }
+
+          // 11. Has Quote-box Featured Snippet
+          if (/class=['"]quote-box['"]|quote-box/i.test(content)) {
+            setItem('seo-item-11', 'pass', 'Có Quote-box Featured Snippet', 'Đã có Quote-box 40-60 từ tối ưu Featured Snippet');
+          } else {
+            setItem('seo-item-11', 'warn', 'Có Quote-box Featured Snippet', 'Bổ sung class=\'quote-box\' sau các H2');
+          }
+
+          // 12. Internal links count (>= 8 links)
+          const linkMatches = content.match(/<a\s+[^>]*href=["'][^"']+["'][^>]*>|\[.*?\]\(.*?\)/gi) || [];
+          const internalLinkCount = linkMatches.length;
+          if (internalLinkCount >= 8) {
+            setItem('seo-item-12', 'pass', `Số lượng internal links (Tối thiểu 8 links, hiện tại: ${internalLinkCount})`, 'Đã đủ 8 internal links phân bổ chuẩn');
+          } else {
+            setItem('seo-item-12', 'warn', `Số lượng internal links (Tối thiểu 8 links, hiện tại: ${internalLinkCount})`, 'Bổ sung thêm links liên kết');
+          }
+
+          // 13. Bold internal links (strong/bold)
+          if (/<strong[^>]*>\s*<a|<a[^>]*>\s*<strong|<b>\s*<a|<a[^>]*>\s*<b>|\*\*\[.*?\]\(.*?\)\*\*/i.test(content)) {
+            setItem('seo-item-13', 'pass', 'Có internal links được in đậm (strong/bold)', 'Đã bôi đậm internal links cho AI dễ quét');
+          } else {
+            setItem('seo-item-13', 'warn', 'Có internal links được in đậm (strong/bold)', 'Cần bôi đậm (strong) liên kết để AI dễ quét');
+          }
+
+          // Score badge update
+          const scoreBadge = document.getElementById('seo-score-badge');
+          if (scoreBadge) {
+            scoreBadge.textContent = `${passedCount}/13 Tiêu chuẩn`;
+            if (passedCount >= 10) {
+              scoreBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-xs font-mono font-bold text-emerald-400';
+            } else if (passedCount >= 5) {
+              scoreBadge.className = 'px-2.5 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-xs font-mono font-bold text-amber-400';
+            } else {
+              scoreBadge.className = 'px-2.5 py-1 rounded-full bg-rose-500/20 border border-rose-500/40 text-xs font-mono font-bold text-rose-400';
+            }
+          }
+        } catch (err) {
+          console.error('Realtime SEO analyzer calculation error:', err);
+        }
+      }
+
+      // Attach event listeners for real-time analysis
+      const pKeywordInput = document.getElementById('post-primary-keyword');
+      if (pKeywordInput) pKeywordInput.addEventListener('input', runRealtimeSEOAnalyzer);
+      if (pTitle) pTitle.addEventListener('input', runRealtimeSEOAnalyzer);
+      if (pDesc) pDesc.addEventListener('input', runRealtimeSEOAnalyzer);
+      if (pContent) pContent.addEventListener('input', runRealtimeSEOAnalyzer);
+
+      function resetForm() {
+        if (postForm) postForm.reset();
+        isEditMode = false;
+        editPostId = '';
+        if (editorTitleText) editorTitleText.textContent = '✍️ Soạn Thảo Bài Viết Mới Chuẩn SEO v3.0';
+        const now = new Date();
+        const nowIso = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+        if (pPubDate) pPubDate.value = nowIso;
+        if (pStatus) pStatus.value = 'public';
+        if (pSlug) pSlug.readOnly = false;
+        if (pCat) pCat.disabled = false;
+        runRealtimeSEOAnalyzer();
+      }
+
+      const handleOpenPostModal = (e?: Event) => {
+        if (e) e.preventDefault();
+        resetForm();
+        if (postModal) {
+          postModal.classList.remove('hidden');
+          postModal.classList.add('flex');
+        }
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => pTitle?.focus(), 50);
+      };
+
+      const handleClosePostModal = () => {
+        if (postModal) {
+          postModal.classList.add('hidden');
+          postModal.classList.remove('flex');
+        }
+        document.body.style.overflow = 'auto';
+        resetForm();
+      };
+
+      (window as any).openPostEditorModal = handleOpenPostModal;
+
+      if (addPostBtn) {
+        addPostBtn.addEventListener('click', handleOpenPostModal);
+      }
+
+      if (closeEditorBtn) {
+        closeEditorBtn.addEventListener('click', handleClosePostModal);
+      }
+
+      if (postModal) {
+        postModal.addEventListener('click', (e) => {
+          if (e.target === postModal) {
+            handleClosePostModal();
+          }
+        });
+      }
+
+      // Generate markdown string helper
+
+
+      // Form Submit Handler
+      if (postForm) {
+        postForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          if (!pTitle.value || !pDesc.value || !pContent.value || !pCat.value || !pSlug.value) {
+            showToast('Vui lòng điền đầy đủ các trường bắt buộc (*)!', true);
+            return;
+          }
+
+          const tagsArr = pTags?.value ? pTags.value.split(',').map(t => t.trim()).filter(Boolean) : [];
+
+          const payload = {
+            title: pTitle.value,
+            description: pDesc.value,
+            category: pCat.value,
+            slug: pSlug.value,
+            pubDate: pPubDate.value,
+            status: pStatus?.value || 'public',
+            tags: tagsArr,
+            content: pContent.value,
+            author: 'Quang',
+            image: pImg?.value || ''
+          };
+
+          try {
+            if (savePostBtn) savePostBtn.disabled = true;
+            
+            const res = await fetch('/api/posts', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            const result = await res.json();
+            if (result.success) {
+              showToast(isEditMode ? 'Bài viết đã cập nhật thành công!' : 'Đã tạo bài viết thành công vào Content Collections!');
+              handleClosePostModal();
+              loadAllData();
+            } else {
+              showToast(result.error || 'Có lỗi xảy ra khi lưu bài viết', true);
+            }
+          } catch (err: any) {
+            showToast('Lỗi API: ' + err.message, true);
+          } finally {
+            if (savePostBtn) savePostBtn.disabled = false;
+          }
+        });
+      }
+
+      // Edit & Delete Post click attachments
+      function attachPostEvents() {
+        // Edit Post
+        document.querySelectorAll('.edit-post-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const post = currentPosts.find(p => p.id === id);
+            if (!post) return;
+
+            isEditMode = true;
+            editPostId = id || '';
+            
+            if (editorTitleText) editorTitleText.textContent = `✍️ Chỉnh Sửa Bài Viết: ${post.title}`;
+            
+            pTitle.value = post.title;
+            pDesc.value = post.description;
+            pContent.value = post.content || '';
+            pCat.value = post.category;
+            pSlug.value = post.slug;
+            let pubVal = post.pubDate || '';
+            if (pubVal && !pubVal.includes('T')) {
+              pubVal = `${pubVal}T09:00`;
+            }
+            if (pPubDate) pPubDate.value = pubVal.slice(0, 16);
+            if (pStatus) pStatus.value = post.status || (post.draft ? 'private' : 'public');
+            if (pImg) pImg.value = post.image || '';
+            if (pTags) pTags.value = post.tags ? post.tags.join(', ') : '';
+
+            // Block editing of slug and category in edit mode to prevent file moving/clashing errors
+            pSlug.readOnly = true;
+            pCat.disabled = true;
+
+            if (postModal) {
+              postModal.classList.remove('hidden');
+              postModal.classList.add('flex');
+            }
+            document.body.style.overflow = 'hidden';
+            runRealtimeSEOAnalyzer();
+            pTitle.focus();
+          });
+        });
+
+        // Global Delete Post Helper Function
+        (window as any).deletePostItem = async (id: string, category: string, slug: string) => {
+          if (!slug && !id) return;
+          const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+          if (slug && !deletedSlugs.includes(slug)) deletedSlugs.push(slug);
+          if (id && !deletedSlugs.includes(id)) deletedSlugs.push(id);
+          localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
+
+          currentPosts = currentPosts.filter(p => p.slug !== slug && p.id !== id);
+          renderPosts();
+          updateOverviewStats();
+          showToast('Bài viết đã được xóa thành công!');
+
+          try {
+            await fetch('/api/posts', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'delete', category, slug, title: slug })
+            });
+          } catch (err) {
+            console.error('Delete post fetch error:', err);
+          }
+        };
+
+        // Delete Post Button Listener
+        document.querySelectorAll('.delete-post-btn').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const id = btn.getAttribute('data-id') || '';
+            const category = btn.getAttribute('data-category') || '';
+            const slug = btn.getAttribute('data-slug') || '';
+            (window as any).deletePostItem(id, category, slug);
+          });
+        });
+      };
+
+      // ==========================================
+      // PRODUCTS MANAGER CONTROLLER
+      // ==========================================
+      const productModal = document.getElementById('product-editor-modal');
+      const addProductBtn = document.getElementById('add-product-btn');
+      const closeProductEditorBtn = document.getElementById('close-product-editor-btn');
+      const productForm = document.getElementById('product-form') as HTMLFormElement;
+      
+      const prId = document.getElementById('product-id') as HTMLInputElement;
+      const prTitle = document.getElementById('product-title') as HTMLInputElement;
+      const prDesc = document.getElementById('product-description') as HTMLTextAreaElement;
+      const prType = document.getElementById('product-type') as HTMLInputElement;
+      const prStatus = document.getElementById('product-status') as HTMLSelectElement;
+      const prPrice = document.getElementById('product-price') as HTMLInputElement;
+      const prIcon = document.getElementById('product-icon') as HTMLInputElement;
+      const productEditorTitle = document.getElementById('product-editor-title');
+      const saveProductBtn = document.getElementById('save-product-btn');
+
+      let isProductEditMode = false;
+
+      function resetProductForm() {
+        if (productForm) productForm.reset();
+        isProductEditMode = false;
+        if (productEditorTitle) productEditorTitle.textContent = '📦 Soạn Thảo Sản Phẩm Mới';
+        if (prId) prId.readOnly = false;
+      }
+
+      if (addProductBtn) {
+        addProductBtn.addEventListener('click', () => {
+          resetProductForm();
+          if (productModal) productModal.classList.remove('hidden');
+          prTitle.focus();
+        });
+      }
+
+      if (closeProductEditorBtn) {
+        closeProductEditorBtn.addEventListener('click', () => {
+          if (productModal) productModal.classList.add('hidden');
+          resetProductForm();
+        });
+      }
+
+      function renderProducts() {
+        const tbody = document.getElementById('products-table-body');
+        if (!tbody) return;
+
+        if (currentProducts.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="5" class="p-8 text-center text-slate-500">Chưa có sản phẩm nào. Bấm nút Thêm sản phẩm mới!</td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = currentProducts.map(prod => {
+          const statusBadgeClass = prod.status === 'Đang hoạt động' || prod.status === 'Miễn phí'
+            ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+            : prod.status === 'Sắp ra mắt'
+            ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+            : 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+
+          return `
+            <tr class="hover:bg-slate-900/20 transition-all align-top">
+              <td class="p-4 font-bold text-slate-200">
+                <span class="text-xl mr-2">${prod.icon || '📦'}</span> ${prod.title}
+                <span class="block text-xs font-mono text-slate-500 font-normal">id: ${prod.id}</span>
+              </td>
+              <td class="p-4 text-xs font-bold text-slate-300 font-mono">${prod.type}</td>
+              <td class="p-4 text-xs font-semibold text-slate-200 font-mono">${prod.price || 'Liên hệ'}</td>
+              <td class="p-4 text-xs text-slate-300 max-w-sm whitespace-pre-wrap leading-relaxed">${prod.description}</td>
+              <td class="p-4">
+                <span class="px-2 py-1 rounded text-xs font-bold whitespace-nowrap uppercase tracking-wider ${statusBadgeClass}">
+                  ${prod.status}
+                </span>
+              </td>
+              <td class="p-4 text-right">
+                <div class="flex gap-2 justify-end">
+                  <button data-id="${prod.id}" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold transition-all edit-product-btn cursor-pointer">Sửa</button>
+                  <button onclick="window.deleteProductItem && window.deleteProductItem('${prod.id}')" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-xs font-bold transition-all delete-product-btn cursor-pointer">Xóa</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        // Attach product click events
+        attachProductEvents();
+      }
+
+      function attachProductEvents() {
+        // Edit Product click
+        document.querySelectorAll('.edit-product-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const prod = currentProducts.find(p => p.id === id);
+            if (!prod) return;
+
+            isProductEditMode = true;
+            if (productEditorTitle) productEditorTitle.textContent = `📦 Chỉnh Sửa Sản Phẩm: ${prod.title}`;
+
+            prId.value = prod.id;
+            prTitle.value = prod.title;
+            prDesc.value = prod.description;
+            prType.value = prod.type;
+            prStatus.value = prod.status;
+            prPrice.value = prod.price || 'Liên hệ';
+            prIcon.value = prod.icon || '';
+
+            // Block id edit in edit mode
+            prId.readOnly = true;
+
+            if (productModal) productModal.classList.remove('hidden');
+            prTitle.focus();
+            window.scrollTo({ top: productModal.offsetTop - 100, behavior: 'smooth' });
+          });
+        });
+
+        // Delete Product click
+        (window as any).deleteProductItem = async (id: string) => {
+          if (!id) return;
+          try {
+            const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
+            if (!deletedIds.includes(id)) {
+              deletedIds.push(id);
+              localStorage.setItem('deleted_product_ids', JSON.stringify(deletedIds));
+            }
+            currentProducts = currentProducts.filter(p => p.id !== id);
+            renderProducts();
+            updateOverviewStats();
+            showToast('Đã xóa sản phẩm thành công!');
+
+            await fetch('/api/products', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'delete', id })
+            });
+          } catch (err: any) {
+            console.error('Delete product error:', err);
+          }
+        };
+
+        document.querySelectorAll('.delete-product-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            if (id) (window as any).deleteProductItem(id);
+          });
+        });
+      };
+
+      if (productForm) {
+        productForm.addEventListener('submit', async (e) => {
+          e.preventDefault();
+
+          if (!prId.value || !prTitle.value || !prDesc.value || !prType.value || !prStatus.value || !prPrice.value || !prIcon.value) {
+            showToast('Vui lòng điền đầy đủ các trường bắt buộc (*)!', true);
+            return;
+          }
+
+          const payload = {
+            id: prId.value,
+            title: prTitle.value,
+            description: prDesc.value,
+            type: prType.value,
+            status: prStatus.value,
+            price: prPrice.value,
+            icon: prIcon.value
+          };
+
+          try {
+            if (saveProductBtn) saveProductBtn.disabled = true;
+            const res = await fetch('/api/products', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+            const result = await res.json();
+            if (result.success) {
+              showToast('Lưu thông tin sản phẩm thành công!');
+              if (productModal) productModal.classList.add('hidden');
+              resetProductForm();
+              loadAllData();
+            } else {
+              showToast(result.error || 'Lỗi khi lưu sản phẩm', true);
+            }
+          } catch (err: any) {
+            showToast(err.message, true);
+          } finally {
+            if (saveProductBtn) saveProductBtn.disabled = false;
+          }
+        });
+      }
+
+      // Start auth check
+      checkAuth();
+    };
+
+    // Run immediately since Astro modules are deferred
+    initAdmin();
+    
+    // Support ViewTransitions if added later
+    document.addEventListener('astro:page-load', initAdmin);
+  </script>
+</Layout>

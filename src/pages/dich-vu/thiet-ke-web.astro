@@ -1,0 +1,578 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const faqs = [
+  {
+    question: "Tôi chưa từng làm website và không biết gì về kỹ thuật thì có vận hành được không?",
+    answer: "Hoàn toàn được. Tôi thiết kế website với tiêu chí tối giản và dễ sử dụng nhất. Sau khi hoàn thành, bạn sẽ được bàn giao kèm bộ tài liệu SOP (video ngắn hướng dẫn từng bước): từ cách đăng bài viết mới, chỉnh sửa hình ảnh đến quản lý thông tin khách hàng. Bạn chỉ cần xem qua 1 giờ là có thể tự tin làm chủ website của mình."
+  },
+  {
+    question: "Ngoài chi phí thiết kế, tôi có phải đóng phí duy trì hàng tháng không?",
+    answer: "Không. Bạn chỉ thanh toán chi phí thiết kế một lần duy nhất. Đối với chi phí duy trì tên miền (domain) và máy chủ lưu trữ (hosting), tôi sẽ hướng dẫn bạn đăng ký tài khoản chính chủ trực tiếp với các nhà cung cấp uy tín với chi phí cực kỳ rẻ (chỉ khoảng vài chục nghìn đến hơn 100k/tháng), trả trực tiếp cho nhà cung cấp để bạn nắm toàn quyền sở hữu website vĩnh viễn."
+  },
+  {
+    question: "Quy trình thiết kế website diễn ra thế nào?",
+    answer: "Quy trình làm việc gồm 4 bước đơn giản cho người mới bắt đầu: (1) Tư vấn xác định mục tiêu và lên cấu trúc trang, (2) Thiết kế giao diện UI/UX độc bản bằng công cụ AI hiện đại, (3) Lập trình tối ưu hóa mã nguồn và tốc độ tải trang, (4) Chạy thử nghiệm hiệu năng, cấu hình SEO và bàn giao tài liệu hướng dẫn."
+  },
+  {
+    question: "Thời gian hoàn thiện website là bao lâu?",
+    answer: "Thời gian bàn giao tiêu chuẩn là từ 7 đến 14 ngày làm việc kể từ khi thống nhất phương án giao diện, đảm bảo website được xây dựng chỉn chu và tối ưu nhất trước khi đưa vào hoạt động."
+  },
+  {
+    question: "Website có giúp tôi dễ dàng tìm kiếm khách hàng trên Google không?",
+    answer: "Có. Tôi tối ưu hóa chuẩn SEO On-page ngay từ khi viết code: cài đặt thẻ meta tiêu chuẩn, tối ưu hình ảnh nhẹ, tạo sitemap tự động và khai báo website với Google Search Console để website của bạn dễ dàng được tìm thấy khi khách hàng gõ từ khóa liên quan trên Google."
+  }
+];
+---
+
+<Layout title="Thiết Kế Website Chuyên Nghiệp Cho Cá Nhân & Doanh Nghiệp | daoxuanquang.vn" description="Dịch vụ thiết kế website chuyên nghiệp chuẩn SEO, tối ưu tỷ lệ chuyển đổi cho cá nhân và doanh nghiệp chưa có website riêng, bàn giao trọn gói trong 7-14 ngày.">
+  <div class="bg-brand-navy-deep text-white py-3 px-4 text-center text-xs sm:text-sm font-semibold border-b border-white/10 relative z-50">🔥 CHỈ CÒN 3 SUẤT THIẾT KẾ TRONG THÁNG NÀY: Tặng kèm tài liệu SOP quản trị nội dung & Kịch bản tối ưu hóa chuyển đổi trang đích cho người mới.</div>
+  
+  <section class="relative bg-brand-paper overflow-hidden py-20 md:py-32 border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-4xl mx-auto space-y-6">
+        <a href="/dich-vu" class="inline-flex items-center gap-2 text-xs font-bold text-brand-blue-dark uppercase tracking-widest hover:underline mb-2">&larr; Quay lại danh sách dịch vụ</a>
+        <h1 class="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-bold text-brand-navy-deep tracking-tight leading-[1.15]"><span class="block text-xs sm:text-sm font-bold text-brand-blue-dark uppercase tracking-widest mb-3">Dịch vụ thiết kế Website chuyên nghiệp</span>Bạn đang bỏ lỡ bao nhiêu khách hàng mỗi ngày vì <span class="text-brand-danger">chưa sở hữu Website</span> riêng?</h1>
+        <p class="text-base sm:text-xl text-brand-text max-w-3xl mx-auto leading-relaxed">Giải pháp thiết kế Website chuyên nghiệp trọn gói từ con số 0 cho cá nhân & doanh nghiệp: Sở hữu văn phòng số độc quyền, chuẩn SEO Google, nâng cao uy tín thương hiệu và thu hút khách hàng chủ động.</p>
+        <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
+          <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-base transition-all transform hover:scale-[1.02] text-center shadow-md">Tư vấn thiết kế website cho tôi &rarr;</a>
+          <a href="#pain" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-brand-line bg-white hover:bg-slate-50 text-brand-navy-deep font-semibold text-base transition-colors text-center">Tìm hiểu thêm</a>
+        </div>
+      </div>
+    </div>
+    <!-- Background grid decoration -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#eaf6fb_1px,transparent_1px),linear-gradient(to_bottom,#eaf6fb_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-60"></div>
+  </section>
+
+  <section class="py-10 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs font-bold text-brand-muted uppercase tracking-widest mb-6">TIÊU CHUẨN THIẾT KẾ WEBSITE CHẤT LƯỢNG CAO</p>
+      <div class="flex flex-nowrap justify-start md:justify-center items-center gap-6 sm:gap-8 md:gap-12 overflow-x-auto scrollbar-none pb-4 md:pb-0 opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+        <span class="font-display font-extrabold text-xs sm:text-sm md:text-base text-brand-navy-deep tracking-wider whitespace-nowrap shrink-0">RESPONSIVE DESIGN</span>
+        <span class="font-display font-extrabold text-xs sm:text-sm md:text-base text-brand-navy-deep tracking-wider whitespace-nowrap shrink-0">SEO OPTIMIZED</span>
+        <span class="font-display font-extrabold text-xs sm:text-sm md:text-base text-brand-navy-deep tracking-wider whitespace-nowrap shrink-0">EASY MANAGEMENT</span>
+        <span class="font-display font-extrabold text-xs sm:text-sm md:text-base text-brand-navy-deep tracking-wider whitespace-nowrap shrink-0">SECURE CODE</span>
+        <span class="font-display font-extrabold text-xs sm:text-sm md:text-base text-brand-navy-deep tracking-wider whitespace-nowrap shrink-0">UX/UI FIRST</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="pain" class="py-24 bg-brand-paper border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-navy-deep tracking-tight leading-tight">
+          Tại sao bạn vẫn chưa có Website riêng<br class="hidden sm:inline" /> để làm đại diện thương hiệu?
+        </h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Lớp 1: Triệu chứng (Symptom) -->
+        <div class="p-8 rounded-2xl bg-white border border-brand-line shadow-sm relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-2 h-full bg-brand-amber"></div>
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-4">Lệ thuộc mạng xã hội</h3>
+          <p class="text-sm text-brand-text leading-relaxed">Bạn đang phụ thuộc 100% vào Facebook, Zalo, TikTok. Thuật toán thay đổi liên tục bóp nghẹt lượt tiếp cận, nguy cơ bị khóa tài khoản hoặc mất kênh liên lạc với khách hàng tiềm năng luôn hiện hữu bất kỳ lúc nào.</p>
+        </div>
+        <!-- Lớp 2: Hậu quả (Consequence) -->
+        <div class="p-8 rounded-2xl bg-white border border-brand-line shadow-sm relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-2 h-full bg-brand-danger"></div>
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-4">Mất khách trên Google</h3>
+          <p class="text-sm text-brand-text leading-relaxed">Mỗi tháng có hàng ngàn người gõ tìm kiếm dịch vụ/sản phẩm của bạn trên Google, nhưng họ chỉ tìm thấy đối thủ của bạn. Không có website đồng nghĩa với việc bạn tự tay dâng tặng toàn bộ lượng khách hàng chủ động này cho đối thủ cạnh tranh.</p>
+        </div>
+        <!-- Lớp 3: Bản sắc (Identity) -->
+        <div class="p-8 rounded-2xl bg-white border border-brand-line shadow-sm relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-2 h-full bg-brand-navy"></div>
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-4">Thiếu sự chuyên nghiệp</h3>
+          <p class="text-sm text-brand-text leading-relaxed">Mặc dù năng lực và dịch vụ của bạn rất xuất sắc, nhưng việc không có một "văn phòng số chính thức" khiến khách hàng nghi ngờ về quy mô và uy tín của bạn, làm giảm đáng kể vị thế cạnh tranh trên thị trường số.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-brand-paper border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep tracking-tight">Giải Pháp Thiết Kế Website Chuyên Nghiệp</h2>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-8">
+        <!-- 1. Là gì -->
+        <div class="p-6 bg-white rounded-xl border border-brand-line shadow-sm">
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-2">1. Định nghĩa dịch vụ</h3>
+          <p class="text-sm sm:text-base text-brand-text">Đây là dịch vụ thiết kế và xây dựng website trọn gói chuẩn SEO từ con số 0, tập trung tối ưu hóa giao diện hiển thị chuyên nghiệp và tích hợp sẵn bộ công cụ thu thập khách hàng đăng ký tự động.</p>
+        </div>
+        <!-- 2. Cho ai -->
+        <div class="p-6 bg-white rounded-xl border border-brand-line shadow-sm">
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-2">2. Đối tượng phục vụ</h3>
+          <ul class="list-disc pl-6 space-y-2 text-sm sm:text-base text-brand-text">
+            <li><strong>Khách hàng cá nhân:</strong> Các chuyên gia, KOLs, blogger, freelancer chưa từng có website, muốn tạo một ngôi nhà số riêng để định vị thương hiệu bản thân vững chắc.</li>
+            <li><strong>Khách hàng doanh nghiệp:</strong> Các công ty B2B, cơ sở kinh doanh muốn tạo website giới thiệu dịch vụ/sản phẩm bài bản, xây dựng lòng tin chuyên nghiệp với đối tác.</li>
+          </ul>
+        </div>
+        <!-- 3. Làm được gì -->
+        <div class="p-6 bg-white rounded-xl border border-brand-line shadow-sm">
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-2">3. Kết quả đầu ra</h3>
+          <p class="text-sm sm:text-base text-brand-text">Sở hữu website giao diện độc bản hiển thị tuyệt đẹp trên di động, chuẩn cấu trúc SEO Google, biểu mẫu đăng ký liên hệ thông minh tự động đồng bộ hóa thông tin khách hàng về Email/Telegram hoặc Zalo của bạn tức thời.</p>
+        </div>
+        <!-- 4. Không phải là gì -->
+        <div class="p-6 bg-white rounded-xl border border-brand-line shadow-sm">
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-2">4. Những gì tôi từ chối làm</h3>
+          <p class="text-sm sm:text-base text-brand-text">Tôi <strong>không làm web giá rẻ</strong> ăn xổi sử dụng các template lỗi thời chứa mã độc. Tôi chỉ thiết kế website độc bản, lập trình sạch sẽ để đảm bảo an toàn tuyệt đối và giúp bạn xây dựng tài sản số lâu dài.</p>
+        </div>
+        <!-- 5. Trong gói có gì -->
+        <div class="p-6 bg-white rounded-xl border border-brand-line shadow-sm">
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-2">5. Chi tiết sản phẩm bàn giao (Deliverables)</h3>
+          <ul class="grid sm:grid-cols-2 gap-4 list-disc pl-6 text-sm sm:text-base text-brand-text">
+            <li>Bản phác thảo thiết kế giao diện UI/UX độc bản bằng công cụ AI.</li>
+            <li>Mã nguồn website hoàn chỉnh đã tối ưu hóa tốc độ tải trang.</li>
+            <li>Tối ưu cấu trúc On-page SEO cho toàn bộ các trang con.</li>
+            <li>Tích hợp trang quản trị bài viết và sản phẩm trực quan.</li>
+            <li>Bộ tài liệu SOP (Video hướng dẫn chi tiết) giúp tự cập nhật nội dung.</li>
+            <li>Hỗ trợ kỹ thuật đồng hành và bảo hành 3 tháng sau bàn giao.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep tracking-tight">Website chuyên nghiệp mang lại giá trị gì cho bạn?</h2>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <!-- Lớp 1: Functional -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm">
+          <span class="text-3xl mb-4 block">📈</span>
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-3">Lợi ích Chức năng</h3>
+          <p class="text-sm text-brand-text leading-relaxed">Hệ thống tự động tiếp nhận thông tin khách hàng tiềm năng 24/7. Trình quản trị nội dung dễ sử dụng giúp bạn chủ động đăng tin tức, bài viết bất cứ khi nào.</p>
+        </div>
+        <!-- Lớp 2: Emotional -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm">
+          <span class="text-3xl mb-4 block">🧘</span>
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-3">Lợi ích Cảm xúc</h3>
+          <p class="text-sm text-brand-text leading-relaxed">Sự tự tin và an tâm tuyệt đối khi gửi thông tin giới thiệu dịch vụ cho đối tác lớn. Bạn không còn cảm thấy ngần ngại hay lo sợ bị lỗi giao diện hiển thị.</p>
+        </div>
+        <!-- Lớp 3: Social -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm">
+          <span class="text-3xl mb-4 block">🤝</span>
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-3">Lợi ích Xã hội</h3>
+          <p class="text-sm text-brand-text leading-relaxed">Khẳng định uy tín cá nhân và vị thế doanh nghiệp một cách chỉn chu trên môi trường số. Xây dựng thương hiệu bền vững vượt trội so với các đối thủ cùng ngành.</p>
+        </div>
+        <!-- Lớp 4: Identity -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm">
+          <span class="text-3xl mb-4 block">🔑</span>
+          <h3 class="text-lg font-bold text-brand-navy-deep mb-3">Lợi ích Bản sắc</h3>
+          <p class="text-sm text-brand-text leading-relaxed">Bạn chính thức sở hữu và làm chủ 100% một ngôi nhà số độc quyền của riêng mình, không còn phải lệ thuộc vào các nền tảng mạng xã hội thay đổi thuật toán.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-brand-navy-deep text-white border-b border-brand-line relative overflow-hidden">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-3xl mx-auto text-center space-y-6">
+        <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">Khi bạn có một ngôi nhà số chính thức...</h2>
+        <p class="text-base sm:text-xl text-brand-blue-soft/80 leading-relaxed italic">"Bạn tự tin in địa chỉ website lên danh thiếp, gửi link giới thiệu cho mọi đối tác tiềm năng. Giao diện chuyên nghiệp, tốc độ tải nhanh như điện tạo ấn tượng tốt đẹp ngay từ cái nhìn đầu tiên. Khách hàng dễ dàng tìm hiểu thông tin và chủ động liên hệ hợp tác với bạn mà không cần bạn phải túc trực chat tay 24/7."</p>
+      </div>
+    </div>
+    <!-- Background subtle glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-green/20 rounded-full blur-[120px]"></div>
+  </section>
+
+  <section class="py-24 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="space-y-12 max-w-6xl mx-auto">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-brand-navy-deep tracking-tight text-center leading-snug max-w-5xl mx-auto">
+          Bí mật đằng sau những "cỗ máy in tiền"<br class="hidden sm:inline" /> tự động của các doanh nghiệp số
+        </h2>
+        <div class="grid lg:grid-cols-12 gap-8 items-center">
+          <!-- Left: Image / Mockup -->
+          <div class="lg:col-span-6 flex items-center justify-center">
+            <img src="/images/11.png" alt="Bí mật đằng sau những cỗ máy in tiền của các doanh nghiệp số" class="w-full h-auto rounded-3xl border border-brand-line shadow-md hover:shadow-lg transition-all duration-300">
+          </div>
+          <!-- Right: Story Content -->
+          <div class="lg:col-span-6 flex">
+            <div class="relative p-6 sm:p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm w-full flex items-center">
+              <div class="text-sm sm:text-base text-brand-text leading-relaxed space-y-4 relative z-10 w-full">
+                <p>Có một sự thật thế này: Trong khi phần lớn mọi người đang ngày đêm bận rộn cày tương tác trên Facebook, quay dựng clip TikTok hay đi spam link trong các hội nhóm với hy vọng kiếm được vài đơn hàng bấp bênh, thì các doanh nghiệp số và những nhà kinh doanh bài bản trên internet lại đang âm thầm chơi một cuộc chơi hoàn toàn khác.</p>
+                <p>Họ không bán sức lao động để đổi lấy những đồng tiền ngắn hạn trên "đất thuê" của người khác. Bí mật lớn nhất của họ là sở hữu những Website riêng biệt – những bất động sản số thực thụ chạy ngầm 24/7. Họ hiểu rằng mạng xã hội có thể khóa tài khoản của bạn bất cứ lúc nào, bóp tương tác chỉ sau một đêm, nhưng Website chính chủ thì không ai có thể cướp đi được.</p>
+                <p>Nó giống như một nhân viên bán hàng xuất sắc nhất, không bao giờ đòi tăng lương, làm việc bền bỉ cả ngày lẫn đêm để tự động thu hút khách hàng tiềm năng từ Google và chuyển đổi họ thành doanh thu chảy thẳng vào túi bạn ngay cả khi bạn đang ngủ.</p>
+                <p>Khoản đầu tư cho một ngôi nhà số chính chủ thực chất chưa bằng vài ly cà phê mỗi tháng, nhưng sự khác biệt giữa người có tài sản số vĩnh viễn và người đi làm thuê trên mạng xã hội chính là chìa khóa quyết định ai sẽ thực sự làm chủ cuộc chơi tài chính dài hạn.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio" class="py-24 bg-brand-paper border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep tracking-tight">Sản phẩm thực tế đã triển khai</h2>
+        <p class="text-sm sm:text-base text-brand-text mt-2">Dưới đây là một số giao diện độc bản, tối ưu hiệu năng tối đa được thiết kế chuẩn chỉnh.</p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Project 1 -->
+        <div class="bg-white rounded-3xl border border-brand-line p-6 sm:p-8 shadow-sm flex flex-col justify-between group">
+          <div class="space-y-6">
+            <!-- Browser Mockup -->
+            <div class="w-full rounded-xl border border-brand-line overflow-hidden shadow-sm bg-slate-900 text-slate-400 font-sans text-xs">
+              <div class="bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-slate-700">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                </div>
+                <div class="mx-auto bg-slate-800/80 px-6 py-0.5 rounded text-[10px] text-slate-500 select-none">nhakhoatre.vn</div>
+              </div>
+              <div class="relative bg-slate-950 aspect-[16/9] overflow-hidden flex items-center justify-center">
+                <img 
+                  src="/images/nhakhoatre_mockup.jpg" 
+                  alt="Giao diện nhakhoatre.vn" 
+                  class="w-full h-auto absolute top-0 left-0 transition-transform duration-[5000ms] ease-in-out origin-top group-hover:-translate-y-[75%]"
+                />
+                <!-- Floating Badge for Lighthouse Score & Live Site -->
+                <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center bg-slate-950/80 backdrop-blur-sm p-2 rounded-lg border border-white/10 z-10">
+                  <span class="text-[9px] text-slate-400 font-medium">Lighthouse Score: 98%</span>
+                  <span class="px-2 py-0.5 rounded bg-brand-green/20 text-brand-green text-[9px] font-bold">LIVE SITE</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="space-y-3">
+              <div class="flex gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-brand-green-soft text-brand-green-dark text-xs font-bold">Website chuẩn SEO</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-brand-blue-soft text-brand-blue-dark text-xs font-bold">Hệ thống đặt lịch</span>
+              </div>
+              <h3 class="text-xl font-bold text-brand-navy-deep">Nha Khoa Trẻ</h3>
+              <p class="text-sm text-brand-text leading-relaxed">
+                Thiết kế giao diện tối ưu On-page SEO toàn diện, tập trung vào trải nghiệm khách hàng và tỷ lệ chuyển đổi. Tích hợp cổng đăng ký đặt lịch hẹn trực tuyến tự động và hệ thống quản lý lịch khám thông minh.
+              </p>
+            </div>
+          </div>
+          <div class="pt-6 border-t border-brand-line mt-6 flex justify-between items-center">
+            <span class="text-xs text-brand-muted font-semibold">Tốc độ tải trang: <strong>0.5 giây</strong></span>
+            <span class="text-xs text-brand-green-dark font-bold">Đã bàn giao SOP ✓</span>
+          </div>
+        </div>
+        
+        <!-- Project 2 -->
+        <div class="bg-white rounded-3xl border border-brand-line p-6 sm:p-8 shadow-sm flex flex-col justify-between group">
+          <div class="space-y-6">
+            <!-- Browser Mockup -->
+            <div class="w-full rounded-xl border border-brand-line overflow-hidden shadow-sm bg-slate-900 text-slate-400 font-sans text-xs">
+              <div class="bg-slate-800 px-4 py-2 flex items-center gap-2 border-b border-slate-700">
+                <div class="flex gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                </div>
+                <div class="mx-auto bg-slate-800/80 px-6 py-0.5 rounded text-[10px] text-slate-500 select-none">zenandtech.com</div>
+              </div>
+              <div class="p-6 bg-slate-900 text-white min-h-[160px] flex flex-col justify-between relative overflow-hidden group-hover:bg-slate-850 transition-colors duration-300">
+                <div class="space-y-2">
+                  <div class="text-[10px] text-brand-blue font-bold uppercase tracking-widest">ZEN & TECH</div>
+                  <div class="text-base font-extrabold text-white leading-tight">Nơi công nghệ gặp gỡ lối sống tối giản</div>
+                  <div class="w-12 h-1 bg-brand-blue rounded"></div>
+                </div>
+                <div class="flex justify-between items-center pt-4 border-t border-slate-800">
+                  <span class="text-[9px] text-slate-400">Lighthouse Score: 99%</span>
+                  <span class="px-2 py-0.5 rounded bg-brand-blue/20 text-brand-blue text-[9px] font-bold">LIVE SITE</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="space-y-3">
+              <div class="flex gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-brand-blue-soft text-brand-blue-dark text-xs font-bold">Blog Cá Nhân</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 text-xs font-bold">Bản sắc số</span>
+              </div>
+              <h3 class="text-xl font-bold text-brand-navy-deep">Zen & Tech Blog</h3>
+              <p class="text-sm text-brand-text leading-relaxed">
+                Trang blog cá nhân tối giản dành cho chuyên gia công nghệ. Tập trung vào trải nghiệm đọc (Typography), hỗ trợ chế độ Dark Mode tự động theo hệ điều hành và tối ưu hóa SEO bài viết chuyên sâu.
+              </p>
+            </div>
+          </div>
+          <div class="pt-6 border-t border-brand-line mt-6 flex justify-between items-center">
+            <span class="text-xs text-brand-muted font-semibold">Tốc độ tải trang: <strong>0.3 giây</strong></span>
+            <span class="text-xs text-brand-green-dark font-bold">Đã bàn giao SOP ✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep tracking-tight">Quy trình triển khai dự án</h2>
+        <p class="text-sm sm:text-base text-brand-text mt-2">Đảm bảo tiến độ chỉn chu và chất lượng cao nhất cho ngôi nhà số của bạn.</p>
+      </div>
+      <div class="max-w-2xl mx-auto space-y-12">
+        <!-- Bước 1 -->
+        <div class="relative pl-16 sm:pl-20">
+          <div class="absolute left-0 top-0 w-12 h-12 bg-brand-line flex items-center justify-center shadow-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">
+            <div class="w-[44px] h-[44px] bg-brand-green text-white flex items-center justify-center font-extrabold text-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">01</div>
+          </div>
+          <div class="space-y-3">
+            <div class="inline-flex bg-brand-green text-white font-bold px-6 py-2 text-xs sm:text-sm uppercase tracking-wider" style="clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);">TƯ VẤN - KHẢO SÁT</div>
+            <p class="text-sm sm:text-base text-brand-text leading-relaxed">Tiến hành khảo sát, trao đổi trực tiếp với khách hàng. Nắm bắt các nội dung, yếu tố thiết yếu cho dự án.</p>
+          </div>
+        </div>
+        <!-- Bước 2 -->
+        <div class="relative pl-16 sm:pl-20">
+          <div class="absolute left-0 top-0 w-12 h-12 bg-brand-line flex items-center justify-center shadow-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">
+            <div class="w-[44px] h-[44px] bg-brand-green text-white flex items-center justify-center font-extrabold text-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">02</div>
+          </div>
+          <div class="space-y-3">
+            <div class="inline-flex bg-brand-green text-white font-bold px-6 py-2 text-xs sm:text-sm uppercase tracking-wider" style="clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);">THIẾT KẾ GIAO DIỆN UI/UX</div>
+            <p class="text-sm sm:text-base text-brand-text leading-relaxed">Phác thảo và thiết kế giao diện độc bản hoàn toàn bằng công cụ AI hiện đại. Tối ưu hóa trải nghiệm người dùng (UX) và giao diện trực quan (UI) phù hợp định vị thương hiệu.</p>
+          </div>
+        </div>
+        <!-- Bước 3 -->
+        <div class="relative pl-16 sm:pl-20">
+          <div class="absolute left-0 top-0 w-12 h-12 bg-brand-line flex items-center justify-center shadow-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">
+            <div class="w-[44px] h-[44px] bg-brand-green text-white flex items-center justify-center font-extrabold text-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">03</div>
+          </div>
+          <div class="space-y-3">
+            <div class="inline-flex bg-brand-green text-white font-bold px-6 py-2 text-xs sm:text-sm uppercase tracking-wider" style="clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);">LẬP TRÌNH & TỐI ƯU</div>
+            <p class="text-sm sm:text-base text-brand-text leading-relaxed">Lập trình mã nguồn tối giản, tối ưu tốc độ load trang nhanh nhất và tương thích hoàn hảo trên mọi thiết bị di động, máy tính bảng và máy tính.</p>
+          </div>
+        </div>
+        <!-- Bước 4 -->
+        <div class="relative pl-16 sm:pl-20">
+          <div class="absolute left-0 top-0 w-12 h-12 bg-brand-line flex items-center justify-center shadow-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">
+            <div class="w-[44px] h-[44px] bg-brand-green text-white flex items-center justify-center font-extrabold text-sm" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);">04</div>
+          </div>
+          <div class="space-y-3">
+            <div class="inline-flex bg-brand-green text-white font-bold px-6 py-2 text-xs sm:text-sm uppercase tracking-wider" style="clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);">KIỂM THỬ & BÀN GIAO</div>
+            <p class="text-sm sm:text-base text-brand-text leading-relaxed">Cấu hình các tiêu chuẩn SEO Google, đo lường tốc độ, kiểm thử bảo mật và chuyển giao tài liệu SOP (Video hướng dẫn chi tiết) để bạn làm chủ 100% website.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing" class="py-24 bg-brand-paper border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-5xl mx-auto mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-navy-deep tracking-tight whitespace-nowrap">Bảng giá thiết kế Website theo yêu cầu</h2>
+        <p class="text-sm sm:text-base text-brand-text mt-2">Lựa chọn cấu hình phù hợp với quy mô và mục tiêu kinh doanh của bạn.</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-stretch pt-4">
+        <!-- Gói Basic -->
+        <div class="pt-4 flex flex-col">
+          <div class="bg-white rounded-3xl border border-brand-line p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow flex-1 relative">
+            <div>
+              <div class="text-center mb-6">
+                <span class="inline-block px-6 py-1.5 rounded-full bg-slate-100 border border-brand-line text-brand-navy-deep text-xs font-extrabold uppercase tracking-wider mb-4">BASIC</span>
+                <div class="text-base sm:text-lg lg:text-xl font-extrabold text-brand-navy-deep whitespace-nowrap h-12 flex items-center justify-center">5.000.000đ - 7.000.000đ</div>
+              </div>
+              <div class="space-y-4">
+                <div class="text-xs font-bold text-brand-navy-deep uppercase tracking-wider border-b border-brand-line pb-2 text-center">ƯU ĐÃI GÓI:</div>
+                <ul class="space-y-3 text-sm sm:text-base text-brand-text">
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Miễn phí miền .com năm đầu</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Miễn phí hosting năm đầu</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Băng thông không giới hạn</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Website chuẩn SEO</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu tốc độ load trang</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Hỗ trợ cài đặt SSL free</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Bảo hành miễn phí 01 năm</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Giao diện chuẩn UX/UI</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu giao diện máy tính</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu giao diện điện thoại</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Hỗ trợ backup 1 lần /tháng</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Data 3GB</span></li>
+                  <li class="flex items-start gap-2 text-brand-green-dark font-semibold"><span class="text-brand-green font-bold">🎁</span><span>Hỗ trợ setup 1 chiến dịch Google Ads</span></li>
+                  <li class="flex items-start gap-2 text-slate-400 font-normal"><span class="text-slate-300 font-bold">✕</span><span class="line-through">Hỗ trợ đăng bài viết/sản phẩm</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="pt-8 mt-6 border-t border-brand-line">
+              <a href="https://zalo.me/0702286928" class="w-full px-4 py-3.5 rounded-xl border border-brand-line bg-white hover:bg-slate-50 text-brand-navy-deep font-bold text-sm transition-colors text-center block">Chọn gói Basic &rarr;</a>
+            </div>
+          </div>
+        </div>
+        <!-- Gói Medium -->
+        <div class="relative pt-4 flex flex-col">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-brand-green text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow-sm z-10">PHỔ BIẾN NHẤT</div>
+          <div class="bg-white rounded-3xl border border-brand-line p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow flex-1 relative">
+            <div>
+              <div class="text-center mb-6">
+                <span class="inline-block px-6 py-1.5 rounded-full bg-brand-green text-white text-xs font-extrabold uppercase tracking-wider mb-4">MEDIUM</span>
+                <div class="text-base sm:text-lg lg:text-xl font-extrabold text-brand-green-dark whitespace-nowrap h-12 flex items-center justify-center">8.000.000đ - 10.000.000đ</div>
+              </div>
+              <div class="space-y-4">
+                <div class="text-xs font-bold text-brand-navy-deep uppercase tracking-wider border-b border-brand-line pb-2 text-center">ƯU ĐÃI GÓI:</div>
+                <ul class="space-y-3 text-sm sm:text-base text-brand-text">
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Miễn phí miền .com năm đầu</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Miễn phí hosting năm đầu</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Băng thông không giới hạn</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Website chuẩn SEO</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu tốc độ load trang</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Hỗ trợ cài đặt SSL free</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Bảo hành miễn phí 01 năm</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Giao diện chuẩn UX/UI</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu giao diện máy tính</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu giao diện điện thoại</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Hỗ trợ backup 1 lần /tháng</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Data 5GB</span></li>
+                  <li class="flex items-start gap-2 text-brand-green-dark font-semibold"><span class="text-brand-green font-bold">🎁</span><span>Hỗ trợ setup 2 chiến dịch Google Ads</span></li>
+                  <li class="flex items-start gap-2 text-brand-green-dark font-semibold"><span class="text-brand-green font-bold">🎁</span><span>Hỗ trợ đăng 5 bài viết/sản phẩm</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="pt-8 mt-6 border-t border-brand-line">
+              <a href="https://zalo.me/0702286928" class="w-full px-8 py-3.5 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.01] text-center block shadow-sm">Chọn gói Medium &rarr;</a>
+            </div>
+          </div>
+        </div>
+        <!-- Gói Premium -->
+        <div class="pt-4 flex flex-col">
+          <div class="bg-white rounded-3xl border border-brand-line p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow flex-1 relative">
+            <div>
+              <div class="text-center mb-6">
+                <span class="inline-block px-6 py-1.5 rounded-full bg-slate-100 border border-brand-line text-brand-navy-deep text-xs font-extrabold uppercase tracking-wider mb-4">PREMIUM</span>
+                <div class="text-base sm:text-lg lg:text-xl font-extrabold text-brand-navy-deep whitespace-nowrap h-12 flex items-center justify-center">Tư vấn chi tiết</div>
+              </div>
+              <div class="space-y-4">
+                <div class="text-xs font-bold text-brand-navy-deep uppercase tracking-wider border-b border-brand-line pb-2 text-center">ƯU ĐÃI GÓI:</div>
+                <ul class="space-y-3 text-sm sm:text-base text-brand-text">
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Miễn phí miền .com năm đầu</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Miễn phí hosting năm đầu</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Băng thông không giới hạn</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Website chuẩn SEO</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu tốc độ load trang</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Hỗ trợ cài đặt SSL free</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Bảo hành miễn phí 01 năm</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Giao diện chuẩn UX/UI</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu giao diện máy tính</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Tối ưu giao diện điện thoại</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Hỗ trợ backup 1 lần /tháng</span></li>
+                  <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Data 7GB</span></li>
+                  <li class="flex items-start gap-2 text-brand-green-dark font-semibold"><span class="text-brand-green font-bold">🎁</span><span>Hỗ trợ setup 3 chiến dịch Google Ads</span></li>
+                  <li class="flex items-start gap-2 text-brand-green-dark font-semibold"><span class="text-brand-green font-bold">🎁</span><span>Hỗ trợ đăng 10 bài viết/sản phẩm</span></li>
+                </ul>
+              </div>
+            </div>
+            <div class="pt-8 mt-6 border-t border-brand-line">
+              <a href="https://zalo.me/0702286928" class="w-full px-4 py-3.5 rounded-xl border border-brand-line bg-white hover:bg-slate-50 text-brand-navy-deep font-bold text-sm transition-colors text-center block">Liên hệ tư vấn ngay &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-4xl mx-auto mt-12 text-center space-y-3">
+        <p class="text-xs sm:text-sm text-brand-muted italic">* Khoản đầu tư một lần tương đương chi phí tiếp khách ngắn hạn, nhưng sở hữu tài sản số sinh lời bền vững 24/7.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto rounded-2xl bg-brand-green-soft border border-brand-green/20 p-8 sm:p-12 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+        <span class="text-6xl md:text-8xl">🛡️</span>
+        <div class="space-y-4">
+          <span class="inline-block px-3 py-1 rounded-full bg-brand-green text-white text-xs font-bold uppercase tracking-wider">BẢO ĐẢM HIỆU NĂNG</span>
+          <h3 class="text-2xl sm:text-3xl font-bold text-brand-navy-deep">Cam kết hài lòng 100% về tốc độ tải trang</h3>
+          <p class="text-sm sm:text-base text-brand-text leading-relaxed">Tôi cam kết lập trình website tối ưu mã nguồn tinh gọn nhất để trang web của bạn tải tức thời. Nếu trong 30 ngày đầu tiên vận hành thực tế, website gặp bất kỳ sự cố nào về lỗi giao diện hoặc điểm hiệu năng Lighthouse dưới 90 điểm mà tôi không thể tinh chỉnh đạt chuẩn, tôi cam kết hỗ trợ xử lý triệt để hoặc hoàn tiền 100% chi phí lập trình cho bạn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-brand-paper border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Is For -->
+        <div class="p-8 rounded-2xl bg-white border border-brand-green/20 shadow-sm">
+          <h3 class="text-xl font-bold text-brand-green mb-6 flex items-center gap-2"><span class="text-2xl">✅</span> Rất phù hợp với bạn nếu:</h3>
+          <ul class="space-y-4 text-sm sm:text-base text-brand-text">
+            <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Bạn là cá nhân hoặc doanh nghiệp chưa có website riêng, muốn số hóa quy trình thu hút khách hàng chuyên nghiệp.</span></li>
+            <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Bạn muốn xây dựng thương hiệu cá nhân/doanh nghiệp uy tín, chỉn chu trên internet.</span></li>
+            <li class="flex items-start gap-2"><span class="text-brand-green font-bold">✓</span><span>Bạn muốn nắm giữ toàn bộ mã nguồn website vĩnh viễn mà không muốn bị phụ thuộc vào bên thứ ba.</span></li>
+          </ul>
+        </div>
+        <!-- Not For -->
+        <div class="p-8 rounded-2xl bg-white border border-brand-danger/20 shadow-sm">
+          <h3 class="text-xl font-bold text-brand-danger mb-6 flex items-center gap-2"><span class="text-2xl">✗</span> Tôi sẽ từ chối nếu:</h3>
+          <ul class="space-y-4 text-sm sm:text-base text-brand-text">
+            <li class="flex items-start gap-2"><span class="text-brand-danger font-bold">✗</span><span>Bạn muốn làm website giá rẻ chắp vá, không coi trọng chất lượng hiển thị và trải nghiệm khách hàng.</span></li>
+            <li class="flex items-start gap-2"><span class="text-brand-danger font-bold">✗</span><span>Bạn chỉ muốn bán hàng ăn xổi trên mạng xã hội mà không muốn đầu tư bài bản cho tài sản số lâu dài.</span></li>
+            <li class="flex items-start gap-2"><span class="text-brand-danger font-bold">✗</span><span>Bạn không sẵn lòng dành ra 1 giờ đồng hồ để xem tài liệu SOP hướng dẫn để làm chủ website.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pt-24 pb-12 bg-brand-paper border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <!-- Contact Form Box -->
+        <div id="contact" class="p-8 sm:p-12 rounded-3xl bg-white border border-brand-line shadow-md scroll-mt-24">
+          <div class="text-center max-w-2xl mx-auto mb-8">
+            <h3 class="text-2xl sm:text-3xl font-bold text-brand-navy-deep">Bắt đầu sở hữu website chuyên nghiệp của bạn</h3>
+            <p class="text-sm sm:text-base text-brand-text mt-2">Hãy để lại thông tin liên hệ, tôi sẽ trực tiếp tư vấn lộ trình xây dựng website thương hiệu tối ưu nhất cho bạn trong 24h.</p>
+          </div>
+          <form action="https://formspree.io/f/xvggpzoz" method="POST" class="space-y-6 max-w-xl mx-auto">
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Họ & Tên *</label>
+                <input type="text" name="name" id="name" required class="w-full px-4 py-3 rounded-lg border border-brand-line focus:outline-none focus:border-brand-green bg-brand-paper text-sm" placeholder="Nguyễn Văn A">
+              </div>
+              <div>
+                <label for="phone" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Số điện thoại / Zalo *</label>
+                <input type="tel" name="phone" id="phone" required class="w-full px-4 py-3 rounded-lg border border-brand-line focus:outline-none focus:border-brand-green bg-brand-paper text-sm" placeholder="0987654321">
+              </div>
+            </div>
+            <div>
+              <label for="email" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Địa chỉ Email *</label>
+              <input type="email" name="email" id="email" required class="w-full px-4 py-3 rounded-lg border border-brand-line focus:outline-none focus:border-brand-green bg-brand-paper text-sm" placeholder="name@company.com">
+            </div>
+            <div>
+              <label for="message" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Thông tin dự án / Mong muốn của bạn</label>
+              <textarea name="message" id="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-brand-line focus:outline-none focus:border-brand-green bg-brand-paper text-sm" placeholder="Hãy chia sẻ ngắn gọn về lĩnh vực kinh doanh của bạn hoặc mong muốn đối với website mới..."></textarea>
+            </div>
+            <button type="submit" class="w-full py-4 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-base transition-all transform hover:scale-[1.01] shadow-md">Đăng Ký Tư Vấn Ngay &rarr;</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-navy-deep tracking-tight">Các câu hỏi thường gặp trước khi bắt đầu</h2>
+      </div>
+      <div class="max-w-3xl mx-auto space-y-4">
+        {faqs.map((faq) => (
+          <details class="group bg-white rounded-2xl border border-brand-line p-6 shadow-sm [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+            <summary class="flex items-center justify-between gap-4 font-bold text-base sm:text-lg text-brand-navy-deep cursor-pointer select-none">
+              <div class="flex-1 text-left" set:html={faq.question}></div>
+              <span class="shrink-0 transition-transform duration-300 group-open:rotate-180">
+                <svg class="h-5 w-5 text-brand-text" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </summary>
+            <div class="mt-4 text-sm sm:text-base text-brand-text leading-relaxed border-t border-brand-line pt-4 text-left" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Dynamic JSON-LD FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  })} />
+</Layout>

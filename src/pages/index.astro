@@ -1,0 +1,518 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+// Fetch articles from the content collections dynamically
+const cuocSongPosts = await getCollection('cuoc-song');
+const marketingPosts = await getCollection('marketing');
+const aiPosts = await getCollection('ai');
+
+// Get the latest post in each category to showcase in cards
+const latestCuocSong = cuocSongPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())[0];
+const latestMarketing = marketingPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())[0];
+const latestAi = aiPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())[0];
+
+// FAQ items for the blog context
+const faqs = [
+  {
+    question: "Những kiến thức chia sẻ trên blog này có thực sự áp dụng được không?",
+    answer: "<strong>Tôi chỉ viết về những gì tôi đã thực sự làm, đã sai và tự bỏ tiền túi ra chạy thử nghiệm.</strong> Không lý thuyết sáo rỗng hay dịch lại tài liệu nước ngoài. Các case study về Affiliate, Ads Tracking hay tự động hóa bằng AI đều được rút ra từ các dự án thực tế tôi đang vận hành hàng ngày."
+  },
+  {
+    question: "Tôi có phải trả phí để đọc bài viết hay tải tài liệu SOP không?",
+    answer: "<strong>100% nội dung chia sẻ trên blog này là hoàn toàn miễn phí.</strong> Các quy trình làm việc (SOP), file thiết kế hay kịch bản cấu hình AI Agent mà tôi chia sẻ đều được mở công khai. Tôi tin rằng giá trị lớn nhất của kiến thức là được chia sẻ và áp dụng thực tế."
+  },
+  {
+    question: "Mối quan hệ giữa Blog này với hệ thống bán hàng tự động và các dịch vụ đi kèm của anh là gì?",
+    answer: "<strong>Blog là nơi tôi chia sẻ, còn hệ thống bán hàng tự động và các dịch vụ đi kèm là giải pháp giúp bạn đi nhanh hơn.</strong> Tôi chỉ nhận tư vấn và trực tiếp đồng hành thiết lập hệ thống bán hàng tự động cho một số rất ít đối tác thực sự phù hợp."
+  },
+  {
+    question: "Làm thế nào để tôi có thể kết nối hoặc thảo luận sâu hơn với tác giả?",
+    answer: "<strong>Tôi luôn trân trọng những cuộc hội thoại sâu (Deep Talk) với những người cùng tần số.</strong> Bạn có thể nhắn tin trực tiếp cho tôi qua các kênh mạng xã hội ở chân trang. Nếu bạn có một bài toán vận hành thú vị hoặc đơn giản là muốn chia sẻ góc nhìn cuộc sống, tôi rất sẵn lòng hẹn một buổi cà phê."
+  }
+];
+---
+
+<Layout title="Đào Xuân Quảng - Triết Lý Vận Hành, AI & Dòng Tiền">
+  
+  <!-- [1] Hero Section: Mặt tiền & Định vị -->
+  <section class="relative bg-brand-navy-deep text-white lg:min-h-[calc(100vh-4rem)] py-8 sm:py-10 lg:py-12 xl:py-16 flex items-center border-b border-[#164f70] overflow-hidden">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
+      <div class="grid lg:grid-cols-12 gap-8 xl:gap-12 items-center">
+        <!-- Left Column: Copy & Badges -->
+        <div class="lg:col-span-8">
+          
+          <!-- Headline -->
+          <h1 class="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-white leading-[1.25] mb-4 lg:mb-5 tracking-tight text-balance">
+            Tối ưu hóa <span class="text-brand-green whitespace-nowrap">Digital Marketing</span> và<br class="hidden lg:inline" />
+            tự động hóa vận hành bằng <span class="text-brand-green whitespace-nowrap">AI</span>
+          </h1>
+          
+          <!-- Sub-headline -->
+          <p class="text-base sm:text-lg lg:text-lg xl:text-xl text-brand-blue-soft/90 leading-relaxed max-w-3xl mb-6 lg:mb-8 font-light">
+            Xin chào, tôi là Đào Xuân Quảng. Đây là nơi tôi chia sẻ trải nghiệm xây hệ thống Affiliate Global, tự động hóa vận hành bằng AI và câu chuyện cuộc sống.
+          </p>
+          
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <a 
+              href="#chapters" 
+              class="px-8 py-4 rounded-full bg-brand-green text-white font-extrabold text-center hover:bg-brand-green-dark transition-all duration-200 uppercase tracking-wider text-sm cursor-pointer"
+            >
+              Khám phá Blog
+            </a>
+            <a 
+              href="/dich-vu" 
+              class="px-8 py-4 rounded-full border border-white/20 text-white hover:bg-white/5 font-extrabold text-center transition-all duration-200 uppercase tracking-wider text-sm cursor-pointer"
+            >
+              Dự án & Dịch vụ
+            </a>
+          </div>
+
+
+        </div>
+
+        <!-- Right Column: Pre-Travel Case File Card Mapping -->
+        <div class="lg:col-span-4 flex justify-center w-full">
+          <div class="relative w-full max-w-md lg:max-w-none bg-slate-950/40 backdrop-blur-md border border-white/10 p-5 sm:p-6 rounded-3xl shadow-2xl text-left">
+            <!-- Tag at top right of the card -->
+            <span class="absolute -top-3 right-6 bg-brand-green text-white font-mono text-[11px] font-bold uppercase tracking-wider px-3.5 py-1 rounded-full">
+              BLOG CHIA SẺ
+            </span>
+            
+            <!-- Card Header -->
+            <h3 class="text-xl font-bold text-white mb-4 lg:mb-5">Nhật ký Vận hành & AI</h3>
+            
+            <!-- 1-column list of details -->
+            <div class="grid grid-cols-1 gap-3 mb-4 lg:mb-5">
+              <div class="p-2.5 sm:p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between gap-4">
+                <span class="text-[10px] font-mono text-brand-blue font-bold uppercase tracking-wider">TÁC GIẢ</span>
+                <span class="text-sm font-bold text-white whitespace-nowrap">Đào Xuân Quảng</span>
+              </div>
+              <div class="p-2.5 sm:p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between gap-4">
+                <span class="text-[10px] font-mono text-brand-blue font-bold uppercase tracking-wider">CHỦ ĐỀ CHÍNH</span>
+                <span class="text-sm font-bold text-white whitespace-nowrap">Cuộc sống, Marketing & AI</span>
+              </div>
+              <div class="p-2.5 sm:p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between gap-4">
+                <span class="text-[10px] font-mono text-brand-blue font-bold uppercase tracking-wider">PHƯƠNG CHÂM</span>
+                <span class="text-sm font-bold text-white whitespace-nowrap">Trải nghiệm thực tế</span>
+              </div>
+              <div class="p-2.5 sm:p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between gap-4">
+                <span class="text-[10px] font-mono text-brand-blue font-bold uppercase tracking-wider">TẦN SUẤT ĐĂNG</span>
+                <span class="text-sm font-bold text-white whitespace-nowrap">Hàng tuần</span>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- [3] Section: Hệ Tư Tưởng & Hành Trình (Weaving Philosophy, Milestones and Blog posts) -->
+  <section id="chapters" class="pt-12 md:pt-16 pb-12 md:pb-16 bg-white text-brand-text border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-20">
+
+        <h2 class="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold text-brand-navy-deep tracking-tight">Hành trình & Ba chương tư tưởng</h2>
+        <p class="text-sm sm:text-base text-brand-muted mt-4 leading-relaxed">
+          Tôi không chia tách cuộc đời mình thành các trang mục độc lập. Con người, marketing và công nghệ là các dòng chảy xuyên suốt đan xen vào nhau.
+        </p>
+      </div>
+
+      <!-- Vertical Editorial Layout (Blending Timeline, Thoughts, and Latest Articles) -->
+      <div class="space-y-20 max-w-5xl mx-auto">
+        
+        <!-- Chapter 1: Cuộc sống -->
+        <div class="relative pl-8 md:pl-16 border-l border-brand-line">
+          <span class="absolute -left-2.5 top-1.5 h-5 w-5 rounded-full bg-brand-green ring-8 ring-white"></span>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="space-y-2">
+              <span class="font-mono text-xs text-brand-green font-bold block">// CHƯƠNG I - TỪ 2023</span>
+              <h3 class="text-2xl font-bold text-brand-navy-deep">Cuộc Sống</h3>
+            </div>
+            <div class="md:col-span-2 space-y-6">
+              <p class="text-sm sm:text-base text-brand-text leading-relaxed">
+                Năm 2023, ngay khi vừa tốt nghiệp, tôi quyết định xin làm việc không lương cho một người anh thành đạt. Tại môi trường đó, tôi may mắn được gặp gỡ và làm việc cùng những con người vô cùng giỏi giang và chân thành. Dù xuất phát điểm của tôi lúc ấy rất thấp – thứ duy nhất tôi mang theo chỉ là tinh thần cầu tiến, sự chăm chỉ và lòng chân thành – nhưng họ vẫn luôn bao bọc, nâng đỡ và đối xử với tôi như một người em trong nhà. Họ tận tình chỉ dạy cho tôi từ tư duy, marketing đến tài chính – những bài học vô giá mà lẽ ra tôi phải đánh đổi bằng rất nhiều năm tháng và tiền bạc mới có thể tiếp cận được. Tôi biết ơn sâu sắc những con người tử tế ấy, những người đã đặt nền móng vững chắc để tôi tiếp tục tiến lên trong hiện tại. Và giờ đây, tôi muốn chia sẻ lại toàn bộ những trải nghiệm đó với bạn, hy vọng chúng sẽ là điểm tựa hữu ích giúp bạn rút ngắn con đường tìm kiếm của riêng mình.
+              </p>
+              {latestCuocSong && (
+                <div class="p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors">
+                  <div>
+                    <span class="font-bold text-brand-blue-dark block mb-1 text-xs">Chiêm nghiệm mới nhất:</span>
+                    <a href={`/cuoc-song/${latestCuocSong.id}`} class="text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
+                      {latestCuocSong.data.title}
+                    </a>
+                  </div>
+                  <a href="/cuoc-song" class="text-brand-green font-bold text-[10px] sm:text-xs uppercase tracking-wider pl-4 whitespace-nowrap">
+                    Vào trang &rarr;
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 2: Marketing -->
+        <div class="relative pl-8 md:pl-16 border-l border-brand-line">
+          <span class="absolute -left-2.5 top-1.5 h-5 w-5 rounded-full bg-brand-blue ring-8 ring-white"></span>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="space-y-2">
+              <span class="font-mono text-xs text-brand-blue-dark font-bold block">// CHƯƠNG II - TỪ 2024</span>
+              <h3 class="text-2xl font-bold text-brand-navy-deep">Marketing</h3>
+            </div>
+            <div class="md:col-span-2 space-y-6">
+              <p class="text-sm sm:text-base text-brand-text leading-relaxed">
+                Sau khi tích lũy đủ tri thức từ những người đi trước, tôi quyết định tự đứng trên đôi chân của mình bằng việc bước chân vào thị trường Global Ads và Affiliate Marketing. Tại đây, tôi áp dụng triết lý "tư duy bất cân đối" (Asymmetric Payoff) – tập trung thiết kế các chiến dịch thông minh với chi phí và rủi ro tối thiểu, nhằm khai thác biên độ lợi nhuận tối đa từ nguồn traffic quốc tế. Đây là bước đi quan trọng giúp tôi thấu hiểu sức mạnh của dòng tiền tự động.
+              </p>
+              {latestMarketing && (
+                <div class="p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors">
+                  <div>
+                    <span class="font-bold text-brand-blue-dark block mb-1 text-xs">Case study mới nhất:</span>
+                    <a href={`/marketing/${latestMarketing.id}`} class="text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
+                      {latestMarketing.data.title}
+                    </a>
+                  </div>
+                  <a href="/marketing" class="text-brand-blue-dark font-bold text-[10px] sm:text-xs uppercase tracking-wider pl-4 whitespace-nowrap">
+                    Vào trang &rarr;
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 3: AI -->
+        <div class="relative pl-8 md:pl-16 border-l border-brand-line">
+          <span class="absolute -left-2.5 top-1.5 h-5 w-5 rounded-full bg-brand-navy-deep ring-8 ring-white"></span>
+          <div class="grid md:grid-cols-3 gap-8">
+            <div class="space-y-2">
+              <span class="font-mono text-xs text-brand-blue-dark font-bold block">// CHƯƠNG III - TỪ 2026</span>
+              <h3 class="text-2xl font-bold text-brand-navy-deep">Kỷ Nguyên AI Agent</h3>
+            </div>
+            <div class="md:col-span-2 space-y-6">
+              <p class="text-sm sm:text-base text-brand-text leading-relaxed">
+                Khi quy mô hệ thống Marketing tăng trưởng nhanh chóng, tôi nhận ra những giới hạn của việc vận hành thủ công. Đó là lúc tôi chủ động đón đầu làn sóng Vibe Coding và bước vào kỷ nguyên AI Agent. Tôi ngừng viết mã thủ công, dịch chuyển hoàn toàn sang vai trò Kiến trúc sư Hệ thống để huấn luyện và điều phối các AI tự vận hành, tối ưu hóa hiệu suất và giải phóng tối đa sức lao động.
+              </p>
+              {latestAi && (
+                <div class="p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors">
+                  <div>
+                    <span class="font-bold text-brand-blue-dark block mb-1 text-xs">Bài viết mới nhất:</span>
+                    <a href={`/ai/${latestAi.id}`} class="text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
+                      {latestAi.data.title}
+                    </a>
+                  </div>
+                  <a href="/ai" class="text-brand-blue-dark font-bold text-[10px] sm:text-xs uppercase tracking-wider pl-4 whitespace-nowrap">
+                    Vào trang &rarr;
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] Section: Hệ số Lọc cá nhân (My Filter Rules) -->
+  <section id="filter" class="pt-12 md:pt-16 pb-20 md:pb-28 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+
+        <h2 class="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold text-brand-navy-deep tracking-tight">Nguyên tắc chọn lọc để cộng tác</h2>
+        <p class="text-sm sm:text-base text-brand-text mt-2">Tôi không chào mời số đông, tôi tìm kiếm những cộng sự cùng tần số tư duy.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Chào đón -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-green/30 shadow-sm">
+          <h3 class="text-lg font-bold text-brand-green-dark mb-6 flex items-center gap-2">
+            Tôi chào đón:
+          </h3>
+          <ul class="space-y-4 text-sm sm:text-base text-brand-text">
+            <li class="flex items-start gap-3">
+              <span class="text-brand-green font-bold">✓</span>
+              <span><strong>Sự chân thành tuyệt đối:</strong> Giao tiếp thẳng thắn, không ẩn ý, không màu mè.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-brand-green font-bold">✓</span>
+              <span><strong>Hành động thực tế:</strong> Nói được làm được, đo lường bằng kết quả dòng tiền thật.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-brand-green font-bold">✓</span>
+              <span><strong>Tư duy hệ thống:</strong> Thiết lập quy trình tối giản, triệt tiêu sự cồng kềnh.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-brand-green font-bold">✓</span>
+              <span><strong>Deep Talk:</strong> Những cuộc thảo luận sâu sắc về nhân sinh, cuộc sống và công nghệ.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Từ chối -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-danger/30 shadow-sm">
+          <h3 class="text-lg font-bold text-brand-danger mb-6 flex items-center gap-2">
+            Tôi từ chối:
+          </h3>
+          <ul class="space-y-4 text-sm sm:text-base text-brand-text">
+            <li class="flex items-start gap-3">
+              <span class="text-brand-danger font-bold">✕</span>
+              <span><strong>Small Talk sáo rỗng:</strong> Những mối quan hệ xã giao, hời hợt tiêu tốn năng lượng.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-brand-danger font-bold">✕</span>
+              <span><strong>Lý thuyết suông:</strong> Những học thuyết giảng đường xa rời thực tiễn kinh doanh.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-brand-danger font-bold">✕</span>
+              <span><strong>Sự cồng kềnh:</strong> Các bộ máy cồng kềnh tiêu tốn thời gian mà hiệu suất sinh lời kém.</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-brand-danger font-bold">✕</span>
+              <span><strong>Tư duy ngắn hạn:</strong> Chạy theo xu hướng nhất thời thay vì xây dựng hệ thống bền vững.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] Section: Tự sự "Phía sau những hệ thống tự động" (Behind the Systems) -->
+  <section class="pt-24 md:pt-32 pb-12 md:pb-16 bg-brand-paper border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <!-- Left: Image -->
+        <div class="lg:col-span-5 flex justify-center">
+          <div class="relative group overflow-hidden rounded-2xl border border-brand-line shadow-sm bg-white p-2 w-full max-w-md lg:max-w-none">
+            <img 
+              src="/images/anh1.jpg" 
+              alt="Phong cách sống tự do & hiệu suất - Đào Xuân Quảng" 
+              class="w-full h-auto object-cover rounded-xl group-hover:scale-[1.02] transition-transform duration-500"
+            />
+          </div>
+        </div>
+        
+        <!-- Right: Content -->
+        <div class="lg:col-span-7 space-y-6">
+
+          <h2 class="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold text-brand-navy-deep tracking-tight md:whitespace-nowrap">Tại sao tôi viết blog?</h2>
+          <div class="relative p-8 rounded-3xl bg-white border border-brand-line shadow-sm">
+            <span class="absolute top-2 left-6 text-6xl text-brand-green/10 font-serif leading-none select-none">“</span>
+            <p class="text-base sm:text-lg text-brand-text leading-relaxed italic relative z-10 pr-6 pb-2">
+              Tôi viết trang blog này không để chia sẻ những lý thuyết bóng bẩy, mà để lưu lại những gì tôi đã làm, đã sai và đã học được trên hành trình đi tìm tự do. Từ việc thử nghiệm các chiến dịch Affiliate Global, huấn luyện AI tự vận hành cho đến những câu chuyện cuộc sống thường nhật. Hy vọng góc nhỏ này sẽ kết nối tôi với những tâm hồn cùng tần số, và biết đâu đấy, có thể giúp bạn rút ngắn một vài bước trên con đường của chính mình.
+            </p>
+            <span class="absolute bottom-2 right-6 text-6xl text-brand-green/10 font-serif leading-none select-none">”</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] Section: Dự án cá nhân & Đồng hành -->
+  <section class="pt-12 md:pt-16 pb-12 md:pb-16 bg-white border-b border-brand-line">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <h2 class="text-3xl sm:text-4xl lg:text-4xl xl:text-5xl font-bold text-brand-navy-deep tracking-tight md:whitespace-nowrap">
+          Dự án cá nhân & Đồng hành
+        </h2>
+        <p class="text-sm sm:text-base text-brand-text mt-4">
+          Bên cạnh viết blog, đây là các sản phẩm công nghệ tôi phát triển độc lập cùng dịch vụ hỗ trợ tối ưu hệ thống dành cho đối tác.
+        </p>
+      </div>
+
+      <!-- Integrated Grid of Products & Solutions -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- SaaS 1 -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full bg-brand-blue-soft border border-brand-blue/20 text-xs font-bold text-brand-blue-dark uppercase mb-6">
+              SaaS Product / Active
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-brand-navy-deep mb-3">VibeAffiliate</h3>
+            <p class="text-base sm:text-lg text-brand-text leading-relaxed">
+              Giải pháp tối ưu hóa chiến dịch Affiliate Global cho thị trường quốc tế, đo lường dữ liệu chuyển đổi tức thời không cần qua bên thứ ba.
+            </p>
+          </div>
+          <a href="/san-pham" class="text-sm sm:text-base font-bold text-brand-navy hover:text-brand-green mt-6 block">
+            Xem sản phẩm số &rarr;
+          </a>
+        </div>
+
+        <!-- SaaS 2 -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full bg-brand-blue-soft border border-brand-blue/20 text-xs font-bold text-brand-blue-dark uppercase mb-6">
+              SaaS Product / Beta
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-brand-navy-deep mb-3">Bot Google Ads Competitor</h3>
+            <p class="text-base sm:text-lg text-brand-text leading-relaxed">
+              Hệ thống tự động theo dõi, phân tích từ khóa và chiến lược thầu của đối thủ cạnh tranh trên kênh Google Search 24/7.
+            </p>
+          </div>
+          <a href="/san-pham" class="text-sm sm:text-base font-bold text-brand-navy hover:text-brand-green mt-6 block">
+            Xem sản phẩm số &rarr;
+          </a>
+        </div>
+
+        <!-- Service: Consulting / Systems Setup -->
+        <div class="p-8 rounded-2xl bg-brand-paper border border-brand-line shadow-sm flex flex-col justify-between">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full bg-brand-green-soft border border-brand-green/20 text-xs font-bold text-brand-green-dark uppercase mb-6">
+              Consulting / Setup B2B
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-bold text-brand-navy-deep mb-3">Tư vấn & Thiết lập Hệ thống</h3>
+            <p class="text-base sm:text-lg text-brand-text leading-relaxed">
+              Thiết kế sơ đồ vận hành, tối ưu hóa quy trình marketing và cấu hình AI Agent theo tri thức doanh nghiệp để giải phóng sức lao động.
+            </p>
+          </div>
+          <a href="/dich-vu" class="text-sm sm:text-base font-bold text-brand-navy hover:text-brand-green mt-6 block">
+            Tìm hiểu dịch vụ &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- [7] Section: Newsletter Signup Form -->
+  <section class="pt-16 pb-24 md:pb-32 bg-brand-paper border-b border-brand-line relative overflow-hidden">
+    <!-- Glowing decorative background element -->
+    <div class="absolute -bottom-20 -right-20 w-80 h-80 bg-brand-green/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -top-20 -left-20 w-80 h-80 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="max-w-4xl mx-auto text-center space-y-6">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-brand-navy-deep tracking-tight">
+          Đăng ký nhận bài đăng mới nhất
+        </h2>
+        <p class="text-base text-brand-muted dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          Nhận chia sẻ thực chiến về ứng dụng AI, tự động hóa, marketing, trải nghiệm cuộc sống và tối ưu vận hành cá nhân qua email của bạn.
+        </p>
+
+        <!-- Glassmorphic Subscription Form Card -->
+        <div class="mt-10 p-8 rounded-3xl bg-white border border-brand-line shadow-xl dark:bg-dark-surface dark:border-dark-border max-w-md mx-auto">
+          <form class="space-y-5 text-left" id="newsletter-form">
+            <div>
+              <label for="newsletter-name" class="block text-xs font-bold text-brand-navy-deep dark:text-white uppercase tracking-wider mb-2">Họ & Tên</label>
+              <input 
+                type="text" 
+                id="newsletter-name" 
+                name="name" 
+                required 
+                placeholder="Nhập họ và tên của bạn..." 
+                class="w-full px-4 py-3.5 rounded-xl border border-brand-line bg-brand-paper focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green text-sm transition-all dark:bg-dark-bg dark:border-dark-border dark:text-white"
+              />
+            </div>
+            <div>
+              <label for="newsletter-email" class="block text-xs font-bold text-brand-navy-deep dark:text-white uppercase tracking-wider mb-2">Địa chỉ Email</label>
+              <input 
+                type="email" 
+                id="newsletter-email" 
+                name="email" 
+                required 
+                placeholder="Nhập địa chỉ email của bạn..." 
+                class="w-full px-4 py-3.5 rounded-xl border border-brand-line bg-brand-paper focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green text-sm transition-all dark:bg-dark-bg dark:border-dark-border dark:text-white"
+              />
+            </div>
+            <div class="pt-2">
+              <button 
+                type="submit" 
+                class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green text-white font-bold text-sm transition-all transform hover:scale-[1.02] shadow-md hover:shadow-brand-green/25 whitespace-nowrap cursor-pointer"
+              >
+                Đăng Ký Nhận Ngay &rarr;
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const initNewsletter = () => {
+      const form = document.getElementById('newsletter-form');
+      if (!form) return;
+      
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const nameInput = document.getElementById('newsletter-name') as HTMLInputElement;
+        const emailInput = document.getElementById('newsletter-email') as HTMLInputElement;
+        if (!nameInput || !emailInput) return;
+        
+        const name = nameInput.value;
+        const email = emailInput.value;
+        if (!name || !email) return;
+
+        try {
+          await fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email })
+          });
+        } catch (err) {
+          console.error('Subscription API error:', err);
+        }
+        
+        // Show success state
+        const parent = form.parentElement;
+        if (parent) {
+          parent.innerHTML = `
+            <div class="text-center py-8 space-y-4">
+              <div class="inline-flex items-center justify-center h-14 w-14 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-2xl font-bold mb-2">✓</div>
+              <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Đăng ký thành công!</h3>
+              <p class="text-sm text-brand-muted dark:text-slate-300 leading-relaxed">Cảm ơn <strong>${name}</strong> đã đăng ký. Bạn sẽ nhận được các bài viết chia sẻ thực chiến mới nhất từ tôi qua email <strong>${email}</strong>.</p>
+            </div>
+          `;
+        }
+      });
+    };
+    initNewsletter();
+    document.addEventListener('astro:page-load', initNewsletter);
+  </script>
+
+  <!-- JSON-LD Structured Data Schema -->
+  <script type="application/ld+json" is:inline>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://daoxuanquang.vn/#person",
+          "name": "Đào Xuân Quảng",
+          "url": "https://daoxuanquang.vn",
+          "image": "https://daoxuanquang.vn/favicon.svg",
+          "jobTitle": "AI & Growth Marketing Specialist",
+          "sameAs": [
+            "https://zalo.me/0702286928"
+          ]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://daoxuanquang.vn/#service",
+          "name": "daoxuanquang.vn",
+          "url": "https://daoxuanquang.vn",
+          "logo": "https://daoxuanquang.vn/favicon.svg",
+          "image": "https://daoxuanquang.vn/og-image.jpg",
+          "description": "Chuyên gia tư vấn và thiết lập hệ thống tự động hóa AI, Growth Marketing, Thiết kế Website tối giản chuẩn SEO.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ho Chi Minh City",
+            "addressCountry": "VN"
+          },
+          "telephone": "0702286928",
+          "priceRange": "$$",
+          "areaServed": "Global",
+          "founder": {
+            "@id": "https://daoxuanquang.vn/#person"
+          }
+        }
+      ]
+    }
+  </script>
+</Layout>
+
+

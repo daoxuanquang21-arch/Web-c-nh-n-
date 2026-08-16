@@ -1,0 +1,45 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('marketing');
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} | Quang Blog`} description={post.data.description}>
+  <article class="py-16 px-4 max-w-3xl mx-auto">
+    <a href="/marketing" class="text-sm font-semibold text-brand-600 dark:text-brand-500 hover:underline mb-6 inline-block">&larr; Quay lại danh sách</a>
+    
+    <header class="mb-10">
+      <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+        <time datetime={post.data.pubDate.toISOString()}>
+          {post.data.pubDate.toLocaleDateString('vi-VN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+        <span>•</span>
+        <span class="font-semibold text-gold-accent">Marketing</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white leading-tight mb-4">
+        {post.data.title}
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed italic">
+        {post.data.description}
+      </p>
+    </header>
+
+    <div class="prose max-w-none">
+      <Content />
+    </div>
+  </article>
+</Layout>

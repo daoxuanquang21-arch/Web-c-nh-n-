@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import products from '../data/products.json';
+---
+
+<Layout title="Sản Phẩm & Công Cụ | daoxuanquang.vn" description="Các công cụ, hệ thống SaaS và sản phẩm số được tối ưu hóa cho Marketing và tăng trưởng doanh nghiệp.">
+  <section class="py-16 px-4 max-w-7xl mx-auto">
+    
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h1 class="text-4xl font-extrabold mb-4">Sản Phẩm & Công Cụ Số</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">
+        Các giải pháp tự động hóa, SaaS tinh gọn và tài nguyên số giúp tối ưu quy trình kinh doanh và gia tăng hiệu suất.
+      </p>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+      {products.map(product => (
+        <div data-id={product.id} class="product-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-3xl">{product.icon}</span>
+              <span class={`text-xs font-semibold px-2.5 py-1 rounded-full ${
+                product.status === 'Nội bộ' 
+                  ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+                  : product.status === 'Sắp ra mắt'
+                  ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400'
+                  : 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-400'
+              }`}>
+                {product.status}
+              </span>
+            </div>
+            
+            <p class="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase tracking-wider mb-1">
+              {product.type}
+            </p>
+            <h2 class="text-xl font-bold mb-3 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">
+              {product.title}
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+              {product.description}
+            </p>
+          </div>
+
+          <div class="flex items-center justify-between mb-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+            <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Giá bán:</span>
+            <span class="text-sm font-bold text-slate-950 dark:text-white">{product.price || 'Liên hệ'}</span>
+          </div>
+          
+          <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
+            {product.status === 'Sắp ra mắt' ? 'Đăng ký nhận thông tin' : product.status === 'Nội bộ' ? 'Chỉ dùng nội bộ' : 'Trải nghiệm ngay'}
+          </button>
+        </div>
+      ))}
+    </div>
+
+    <script>
+      const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
+      if (deletedIds.length > 0) {
+        document.querySelectorAll('.product-card').forEach(card => {
+          const id = card.getAttribute('data-id');
+          if (id && deletedIds.includes(id)) {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      }
+    </script>
+  </section>
+</Layout>

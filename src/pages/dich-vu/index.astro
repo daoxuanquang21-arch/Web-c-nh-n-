@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const services = [
+  {
+    title: 'Thiết kế Website chuẩn SEO',
+    description: 'Xây dựng website tối ưu SEO, giao diện độc bản chuyên nghiệp, nâng cao trải nghiệm người dùng và tỷ lệ chuyển đổi.',
+    link: '/dich-vu/thiet-ke-web',
+    icon: '💻'
+  },
+  {
+    title: 'Đào tạo & Chuyển giao',
+    description: 'Chương trình đào tạo thực chiến về AI, tự động hóa và Growth Marketing trực tiếp cho doanh nghiệp hoặc cá nhân.',
+    link: '/dich-vu/dao-tao',
+    icon: '🎓'
+  }
+];
+---
+
+<Layout title="Dịch Vụ | daoxuanquang.vn" description="Các dịch vụ thiết kế web tối giản và đào tạo thực chiến.">
+  <section class="py-16 px-4 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h1 class="text-4xl font-extrabold mb-4">Dịch Vụ Chuyên Nghiệp</h1>
+      <p class="text-lg text-slate-600 dark:text-slate-400">
+        Giúp bạn xây dựng website chuyên nghiệp và làm chủ quy trình vận hành tự động thông qua chuyển giao thực chiến.
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
+      {services.map(service => (
+        <div class="p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-xl hover:border-brand-500 dark:hover:border-brand-500 transition-all duration-300 group flex flex-col justify-between">
+          <div>
+            <span class="text-4xl mb-4 block">{service.icon}</span>
+            <h2 class="text-2xl font-bold mb-3">{service.title}</h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-sm sm:text-base">{service.description}</p>
+          </div>
+          <a href={service.link} class="inline-flex items-center text-sm font-semibold text-brand-600 dark:text-brand-500 hover:text-brand-700 dark:hover:text-brand-400 group-hover:translate-x-1 transition-transform">
+            Tìm hiểu chi tiết <span class="ml-1">&rarr;</span>
+          </a>
+        </div>
+      ))}
+    </div>
+
+
+  </section>
+</Layout>

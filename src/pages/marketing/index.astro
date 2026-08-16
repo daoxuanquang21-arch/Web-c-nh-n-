@@ -1,0 +1,87 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const posts = await getCollection('marketing');
+const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="Marketing & Affiliate | daoxuanquang.vn" description="Chia sẻ kiến thức marketing thực chiến, case studies chạy quảng cáo và xây dựng hệ thống affiliate.">
+  <section class="py-16 px-4 max-w-7xl mx-auto">
+    <div class="text-center max-w-4xl mx-auto mb-16">
+      <h1 class="text-3xl sm:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white">Marketing & Affiliate</h1>
+      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
+        Case study, kinh nghiệm thực tế về Performance Marketing, SEO và Affiliate.
+      </p>
+    </div>
+
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {sortedPosts.map((post) => (
+        <article data-post-slug={post.id} class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-200 group flex flex-col justify-between overflow-hidden">
+          <div>
+            {post.data.image && (
+              <div class="aspect-video w-full overflow-hidden border-b border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+                <img 
+                  src={post.data.image} 
+                  alt={post.data.title} 
+                  class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+                />
+              </div>
+            )}
+            <div class="p-6">
+              <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('vi-VN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                <span>•</span>
+                <span class="font-semibold text-gold-accent">Marketing</span>
+              </div>
+
+              <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-gold-accent transition-colors">
+                <a href={`/marketing/${post.id}`}>
+                  {post.data.title}
+                </a>
+              </h2>
+              
+              <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                {post.data.description}
+              </p>
+            </div>
+          </div>
+
+          <div class="px-6 pb-6">
+            <a href={`/marketing/${post.id}`} class="inline-flex items-center text-sm font-semibold text-brand-600 dark:text-brand-500 hover:underline">
+              Đọc tiếp &rarr;
+            </a>
+          </div>
+        </article>
+      ))}
+
+      {sortedPosts.length === 0 && (
+        <div class="col-span-full p-8 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-center text-slate-500">
+          Đang cập nhật các bài viết mới...
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    try {
+      const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+      if (deletedSlugs.length > 0) {
+        document.querySelectorAll('[data-post-slug]').forEach(el => {
+          const slug = el.getAttribute('data-post-slug') || '';
+          if (slug && (deletedSlugs.includes(slug) || deletedSlugs.some((s: string) => slug.includes(s) || s.includes(slug)))) {
+            el.remove();
+          }
+        });
+      }
+    } catch (e) {}
+  });
+</script>

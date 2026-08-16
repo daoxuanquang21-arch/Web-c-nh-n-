@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Be Vietnam Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Be Vietnam Pro', var(--font-sans);
+
+  /* Vietnam Dental Holiday Colors */
+  --color-brand-green: #6aae3d;
+  --color-brand-green-dark: #4f8d2d;
+  --color-brand-green-soft: #eef8e7;
+  
+  --color-brand-blue: #5bafd6;
+  --color-brand-blue-dark: #277ea7;
+  --color-brand-blue-soft: #eaf6fb;
+  
+  --color-brand-navy: #164f70;
+  --color-brand-navy-deep: #0d3750;
+  
+  --color-brand-amber: #d4952b;
+  --color-brand-yellow: #e8d44d;
+  
+  --color-brand-ink: #102431;
+  --color-brand-text: #243846;
+  --color-brand-muted: #64727b;
+  --color-brand-line: #d9e5ea;
+  --color-brand-line-strong: #b8ccd6;
+  --color-brand-surface: #ffffff;
+  --color-brand-paper: #f7fbfc;
+  --color-brand-paper-strong: #edf7fb;
+  
+  --color-brand-success: #2f7a1f;
+  --color-brand-danger: #b34234;
+  
+  /* Fallbacks & Mappings for Wepower Landing Page Engine */
+  --color-dark-bg: #102431;
+  --color-dark-surface: #0d3750;
+  --color-dark-border: #164f70;
+  
+  --color-light-bg: #f7fbfc;
+  --color-light-surface: #ffffff;
+  --color-light-border: #d9e5ea;
+  
+  --color-gold-accent: #d4952b;
+  --color-green-accent: #6aae3d;
+  --color-red-accent: #b34234;
+  
+  --color-brand-50: #eef8e7;
+  --color-brand-100: #edf7fb;
+  --color-brand-500: #6aae3d;
+  --color-brand-600: #4f8d2d;
+  --color-brand-700: #164f70;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-white text-brand-text dark:bg-dark-bg dark:text-slate-200 transition-colors duration-300 antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-bold tracking-tight text-brand-navy-deep dark:text-white leading-[1.25];
+  }
+}
+
+/* Simple solid helper utilities matching target site */
+.bg-brand-gradient {
+  background: var(--color-brand-navy-deep);
+}
+
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-brand-paper dark:bg-dark-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-brand-line-strong dark:bg-slate-800 rounded-full hover:bg-slate-400 dark:hover:bg-slate-700;
+}
+
+/* Lightweight markdown typography styling */
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  @apply font-display font-bold text-brand-navy-deep dark:text-white tracking-tight;
+}
+.prose h2 {
+  @apply text-2xl mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2;
+}
+.prose h3 {
+  @apply text-xl mt-6 mb-3;
+}
+.prose p {
+  @apply text-base leading-relaxed mb-5 text-brand-text dark:text-slate-300;
+}
+.prose blockquote {
+  @apply border-l-4 border-brand-green pl-4 italic my-6 text-brand-muted dark:text-slate-400;
+}
+.prose ul {
+  @apply list-disc pl-6 mb-5 space-y-2 text-brand-text dark:text-slate-300;
+}
+.prose ol {
+  @apply list-decimal pl-6 mb-5 space-y-2 text-brand-text dark:text-slate-300;
+}
+.prose li {
+  @apply text-base leading-relaxed;
+}
+.prose strong {
+  @apply font-bold text-brand-navy-deep dark:text-white;
+}
+.prose code {
+  @apply bg-brand-paper-strong dark:bg-slate-900/50 px-1.5 py-0.5 rounded text-sm text-brand-danger font-mono;
+}
+.prose pre {
+  @apply bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto my-6 font-mono text-sm border border-slate-800;
+}

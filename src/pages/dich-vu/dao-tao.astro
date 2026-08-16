@@ -1,0 +1,1281 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const faqs = [
+  {
+    question: "Tôi đang ngập đầu trong công việc, không có thời gian thì học thế nào?",
+    answer: "Tôi rất hiểu bạn đang bận rộn vì tự mình vận hành mọi việc (solo). Nhưng chính vì bạn đang bận nên bạn mới cần hệ thống tự động này để giải phóng sức lao động, vì càng trì hoãn bạn sẽ càng kiệt sức. Học viên của tôi chỉ cần dành ra 2 tiếng mỗi ngày để thực hành học tập, và ngay sau tuần đầu tiên đã tự động hóa được khâu thu thập lead, tiết kiệm ít nhất 10 tiếng mỗi tuần làm việc vặt. Đừng để sự bận rộn cản bước bạn, hãy bắt đầu tự động hóa công việc ngay hôm nay."
+  },
+  {
+    question: "Tôi tự học trên mạng hoặc mua khóa học rẻ hơn được không?",
+    answer: "Hoàn toàn có thể, trên mạng có rất nhiều video hướng dẫn miễn phí. Tuy nhiên, chúng chỉ cung cấp kiến thức rời rạc chứ không cho bạn một HỆ THỐNG chạy thực tế được đồng bộ hóa với dịch vụ cụ thể của bạn. 90% học viên tìm đến tôi sau khi đã tốn hàng tháng trời tự mò mẫm trên YouTube nhưng hệ thống vẫn bị lỗi luồng, chatbot AI trả lời sai quy trình làm mất khách. Thay vì mất thêm 6 tháng mò mẫm sửa lỗi, hãy chọn kèm cặp 1-1 để sở hữu hệ thống hoàn chỉnh chạy ngay trong 14 ngày."
+  },
+  {
+    question: "Chi phí duy trì hệ thống tự động này hàng tháng có đắt không?",
+    answer: "Đây là mối quan tâm rất thực tế của các solopreneur. Chi phí duy trì hệ thống này cực kỳ tối ưu, thậm chí gần như bằng $0 nhờ sử dụng các gói miễn phí rất rộng và cơ chế Pay-as-you-go (chỉ trả khi thực sự có khách hàng tương tác). Các công cụ quản lý như Notion, Google Sheets, Gmail đều dùng gói miễn phí. Bạn chỉ chi trả vài đô la mỗi tháng cho API của OpenAI/Claude khi có khách nhắn tin thực tế. Tổng chi phí vận hành hệ thống này thậm chí còn thấp hơn tiền vài ly cà phê mỗi tháng."
+  },
+  {
+    question: "Tại sao tôi nên học đợt này mà không đợi đợt sau?",
+    answer: "Trì hoãn quyết định là thói quen tâm lý bình thường của mọi người. Tuy nhiên, mỗi tháng bạn trì hoãn là một tháng bạn tiếp tục mất khách hàng vào tay đối thủ đã tự động hóa, và tiếp tục lãng phí hàng chục giờ cho việc vặt thủ công. Hơn nữa, mức đầu tư của chương trình chuyển giao sẽ tăng ở các đợt tiếp theo. Những học viên tham gia sớm hiện đã vận hành hệ thống ổn định và thu hồi vốn đầu tư ngay trong tháng đầu tiên để bứt phá."
+  },
+  {
+    question: "Tôi cần suy nghĩ thêm trước khi đưa ra quyết định?",
+    answer: "Cân nhắc kỹ trước khi đầu tư là hoàn toàn chính xác. Nhưng nếu bạn chỉ suy nghĩ mà không hành động mới, kết quả công việc của bạn vẫn sẽ như cũ. Cách tốt nhất để biết hệ thống có phù hợp hay không là điền form khảo sát để tôi xem xét và tư vấn trực tiếp dựa trên bài toán thực tế của bạn. Hầu hết học viên chần chừ trước đây đều thừa nhận họ đã hối hận vì không bắt đầu sớm hơn để sớm giải phóng bản thân khỏi việc vặt."
+  },
+  {
+    question: "Chi phí 7.999.999đ có cao quá so với giá trị nhận được không?",
+    answer: "Chi phí đầu tư ban đầu là một khoản đáng cân nhắc. Nhưng hãy làm một bài toán so sánh: Mức đầu tư này chỉ tương đương với lương của một nhân viên part-time trong vòng 1 tháng, nhưng hệ thống tự động này sẽ làm việc cho bạn trọn đời, 24/7, không đòi tăng lương, không nghỉ việc. Chỉ cần hệ thống mang về thêm 2-3 khách hàng chất lượng là bạn đã hoàn toàn hòa vốn đầu tư. Tất cả học viên đi trước đều khẳng định đây là khoản đầu tư sinh lời tốt nhất cho sự nghiệp vận hành solo của họ."
+  }
+];
+---
+
+
+<Layout title="Chuyển Giao Hệ Thống Marketing Tự Động 24/7 Cho Expert, Freelancer & Solopreneur | daoxuanquang.vn" description="Chương trình kèm cặp thực chiến 1-1 giúp Người có chuyên môn, Freelancer & Solopreneur tự thiết lập Website chuyên nghiệp chuẩn SEO, Bot AI tư vấn, chuỗi Email Automation và kết nối hệ thống bán hàng tự động 24/7.">
+  
+  <!-- [0] Section: Announcement Bar (Scarcity/Urgency) -->
+  <div class="bg-gradient-to-r from-brand-navy-deep via-brand-navy to-brand-navy-deep text-white py-3 px-4 text-center text-xs sm:text-sm font-semibold border-b border-white/10 relative z-50 flex items-center justify-center gap-2">
+    <span class="flex h-2 w-2 relative">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-green opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-green"></span>
+    </span>
+    <span>CHƯƠNG TRÌNH KÈM CẶP 1-1: Chuyển giao hệ thống Marketing tự động 24/7 cho Người có chuyên môn, Freelancer & Solopreneur (Nhận tối đa 3 học viên tháng này).</span>
+  </div>
+
+  <!-- [1] Section: Hero / Above Fold (Headline + Sub Headline) -->
+  <section class="relative bg-brand-paper dark:bg-dark-bg overflow-hidden py-24 md:py-36 border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="text-center max-w-4xl mx-auto space-y-6">
+        <a href="/dich-vu" class="inline-flex items-center gap-2 text-xs font-bold text-brand-blue-dark dark:text-brand-blue uppercase tracking-widest hover:underline mb-2">
+          &larr; Quay lại danh sách dịch vụ
+        </a>
+        <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-[1.1] pb-2 bg-clip-text text-transparent bg-gradient-to-br from-brand-navy-deep via-brand-navy to-brand-green-dark dark:from-white dark:via-brand-blue dark:to-brand-green">
+          Cách Tự Xây Hệ Thống Marketing Tự Động 24/7 Trong 14 Ngày Mà Không Cần Đội Ngũ
+        </h1>
+        <p class="text-base sm:text-xl text-brand-text dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+          Chương trình kèm cặp thực chiến 1-1 giúp bạn thiết lập Website chuyên nghiệp chuẩn SEO, Bot AI chốt lịch và Email tự động chăm sóc. Hơn 47 chuyên gia & freelancer đã tự làm chủ.
+        </p>
+        <div class="pt-6 flex flex-col sm:flex-row justify-center items-center gap-4">
+          <a href="#contact-form" class="w-full sm:w-auto px-8 py-4.5 rounded-xl bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green text-white font-bold text-base transition-all transform hover:scale-[1.02] text-center shadow-lg hover:shadow-brand-green/20">
+            Đăng ký kèm cặp 1-1 ngay &rarr;
+          </a>
+          <a href="#pain" class="w-full sm:w-auto px-8 py-4.5 rounded-xl border border-brand-line dark:border-dark-border bg-white dark:bg-dark-surface hover:bg-slate-50 dark:hover:bg-slate-800 text-brand-navy-deep dark:text-white font-semibold text-base transition-colors text-center shadow-sm">
+            Tìm hiểu thêm
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Radial gradient background glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] bg-brand-blue/5 dark:bg-brand-blue/5 rounded-full blur-3xl pointer-events-none -z-10"></div>
+    <!-- Background grid decoration -->
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#eaf6fb_1px,transparent_1px),linear-gradient(to_bottom,#eaf6fb_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#164f70_1px,transparent_1px),linear-gradient(to_bottom,#164f70_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-60 dark:opacity-30"></div>
+  </section>
+
+  <!-- [2] Section: Trust Bar + Logo Bar (Authority Early) -->
+  <section class="py-12 bg-white dark:bg-dark-surface/30 border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs font-bold text-brand-muted dark:text-slate-400 uppercase tracking-widest mb-8">
+        TIÊU CHUẨN ĐÀO TẠO VÀ CHUYỂN GIAO CÔNG NGHỆ THỰC CHIẾN
+      </p>
+      <div class="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 transition-all duration-300">
+        <img src="https://api.iconify.design/simple-icons:notion.svg?color=%23000000" alt="Notion" class="h-7 sm:h-8 w-auto dark:invert opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300" />
+        <img src="https://api.iconify.design/simple-icons:googlesheets.svg?color=%2334a853" alt="Google Sheets" class="h-7 sm:h-8 w-auto opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300" />
+        <img src="https://api.iconify.design/simple-icons:openai.svg?color=%2300a67e" alt="OpenAI" class="h-7 sm:h-8 w-auto opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300" />
+        <img src="https://api.iconify.design/simple-icons:gmail.svg?color=%23ea4335" alt="Gmail" class="h-7 sm:h-8 w-auto opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300" />
+        <img src="https://api.iconify.design/simple-icons:claude.svg?color=%23d97756" alt="Claude" class="h-7 sm:h-8 w-auto opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300" />
+        <img src="https://api.iconify.design/simple-icons:cursor.svg?color=%235e6ad2" alt="Cursor" class="h-7 sm:h-8 w-auto opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all duration-300" />
+      </div>
+    </div>
+  </section>
+
+  <!-- [3] Section: Pain Section -->
+  <section id="pain" class="py-24 bg-brand-paper dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep dark:text-white tracking-tight leading-[1.2]">
+          Tại sao bạn có chuyên môn tốt nhưng vẫn ngập đầu <br class="hidden sm:inline" />
+          trong việc vặt và không chủ động được nguồn khách?
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <!-- Vấn đề 1: Triệu chứng -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-dark-surface border border-slate-100 dark:border-dark-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-1 bg-brand-danger"></div>
+          <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white mb-4">Không chủ động nguồn khách</h3>
+          <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+            Lúc bận làm dự án cho khách thì bỏ bê marketing, lúc xong dự án lại ráo riết đi tìm khách mới. Không có hệ thống tự động chạy ngầm để thu hút lead liên tục cho dịch vụ của bạn.
+          </p>
+        </div>
+
+        <!-- Vấn đề 2: Hậu quả -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-dark-surface border border-slate-100 dark:border-dark-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-1 bg-brand-amber"></div>
+          <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white mb-4">Quá tải & Kiệt sức</h3>
+          <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+            Vừa làm chuyên môn, vừa viết content, vừa trực tin nhắn tư vấn khách, vừa gửi mail thủ công. Đầu óc quay cuồng 14h/ngày nhưng thu nhập và sự tăng trưởng vẫn dậm chân tại chỗ.
+          </p>
+        </div>
+
+        <!-- Vấn đề 3: Bản sắc -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-dark-surface border border-slate-100 dark:border-dark-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-full h-1 bg-brand-navy dark:bg-brand-blue"></div>
+          <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white mb-4">Làm thuê cho chính mình</h3>
+          <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+            Bạn giỏi chuyên môn nhưng thực chất đang là "khổ chủ" – nếu bạn dừng làm việc, dòng tiền sẽ dừng lại ngay lập tức. Bạn thiếu đi một tài sản số vận hành thay bạn 24/7.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [4] Section: Solution Bridge & Story (Before-After Story - 7 thành phần A→G) -->
+  <section class="py-24 bg-white dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep dark:text-white tracking-tight">Từ Freelancer quá tải đến Chủ hệ thống Marketing tự vận hành</h2>
+      </div>
+
+      <div class="space-y-8 max-w-4xl mx-auto mb-20 text-brand-text dark:text-slate-300 leading-relaxed text-base">
+        <p>
+          Tôi luôn khao khát thoát khỏi vòng lặp làm việc quần quật 12 tiếng mỗi ngày chỉ để đi tìm kiếm khách hàng. Tôi muốn tự tay xây dựng những cỗ máy tự động hoạt động liên tục 24/7 để thu hút khách hàng tiềm năng, từ đó giải phóng sức lao động của bản thân và dành nhiều thời gian hơn cho chuyên môn cốt lõi.
+        </p>
+        <p>
+          Nhưng thực tế thời gian đầu vô cùng khắc nghiệt. Tôi từng phải túc trực điện thoại đến tận 2 giờ sáng để trả lời từng tin nhắn của khách hàng, luôn sống trong nỗi sợ rằng nếu mình đi ngủ hoặc phản hồi chậm trễ, đối thủ sẽ cướp mất khách hàng ngay lập tức. Đầu óc tôi lúc nào cũng căng thẳng và dòng tiền thì không bao giờ ổn định.
+        </p>
+        <p>
+          Để tự giải cứu mình, tôi bắt tay vào kết nối các công cụ và lập trình bot AI. Thế nhưng, hệ thống liên tục bị lỗi kết nối dữ liệu, chatbot AI trả lời ngớ ngẩn làm mất lòng tin của khách, trong khi chi phí duy trì các phần mềm nước ngoài đắt đỏ ngốn sạch toàn bộ lợi nhuận mà không mang lại kết quả thực tế nào.
+        </p>
+        <p>
+          Bước ngoặt thực sự xuất hiện khi tôi quyết định thay đổi hoàn toàn tư duy: không sử dụng các hệ thống chắp vá phụ thuộc vào các phần mềm quản lý đắt đỏ của bên thứ ba. Tôi tự xây dựng một website chính chủ kết hợp với hệ thống AI Agent nội bộ được huấn luyện sâu bằng chính dữ liệu chuyên môn độc quyền của mình.
+        </p>
+        <p>
+          Tôi đã dành hàng tháng trời thử nghiệm, tối ưu hóa các luồng tự động hóa đồng bộ Notion, thiết lập kịch bản email chăm sóc bám đuổi tự động, và gỡ lỗi từng kết nối API để hệ thống vận hành mượt mà nhất.
+        </p>
+        <p>
+          Thành quả nhận được vượt mức mong đợi. Giờ đây, <strong>chính hệ thống website cá nhân này</strong> đang chạy tự động để tư vấn và giúp tôi vận hành công việc nhàn hơn 24/7. Bên cạnh đó, <strong>tôi còn vận hành hệ thống tự động tiếp cận khách hàng ở thị trường quốc tế</strong>, liên tục mang về khách hàng tiềm năng chất lượng mỗi ngày mà tôi không cần trực tiếp can thiệp thủ công.
+        </p>
+        <p>
+          Từ chỗ quá tải ngập đầu trong những việc vặt không tên, tôi đã từng bước tự động hóa quy trình để lấy lại quyền kiểm soát thời gian, tập trung xây dựng các tài sản số vận hành bền vững. Và tôi ở đây để chuyển giao chính xác hệ thống này cho bạn.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [5] Section: How It Works (Clarity - Lộ trình 14 buổi bám sát 12 việc làm được) -->
+  <section class="py-24 bg-brand-paper dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto mb-20">
+                <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep dark:text-white tracking-tight">Lộ trình 14 buổi thực chiến chi tiết</h2>
+        <p class="text-sm sm:text-base text-brand-muted dark:text-slate-400 mt-4">
+          Cầm tay chỉ việc 1-1 để bạn tự tay xây dựng và làm chủ trọn vẹn 12 kết quả thực tế phục vụ trực tiếp cho công việc kinh doanh của bạn.
+        </p>
+      </div>
+
+      <div class="max-w-4xl mx-auto divide-y divide-brand-line dark:divide-dark-border/40">
+        <!-- Buổi 1 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">01</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Thiết lập Bản đồ Funnel & Tư duy Hệ thống Marketing 24/7</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Phân tích sâu phễu chuyển đổi, định vị thương hiệu cá nhân của bạn, và vẽ sơ đồ tổng thể kết nối các công cụ để chuẩn bị cho 12 kết quả thực tế.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 2 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">02</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Xây dựng Website cá nhân chuẩn SEO — Thiết lập "văn phòng online"</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Cấu hình tên miền, thiết lập giao diện website cá nhân chuyên nghiệp đóng vai trò làm "văn phòng online" chính chủ giúp khách hàng dễ dàng tìm kiếm và tin tưởng năng lực của bạn qua Google.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 3 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">03</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Thiết lập Website dịch vụ tối ưu chuyển đổi</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Thiết kế trang đích giới thiệu dịch vụ cốt lõi của bạn, xây dựng bố cục nội dung chuẩn UX/UI để khách hàng tự nguyện để lại thông tin mà không cần bạn phải hỏi han thủ công.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 4 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">04</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Tối ưu SEO On-page & Tốc độ tải trang dưới 1 giây</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Kỹ thuật tối ưu SEO on-page từ khóa ngành, nén ảnh, tăng tốc trang đích dưới 1 giây để đạt điểm hiệu suất tuyệt đối trên Google, nâng cao tỷ lệ giữ chân khách hàng trên di động.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 5 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">05</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Tư duy AI Agent & Cách viết Skill chuyên biệt chuyên sâu</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Xây dựng tư duy phân rã nhiệm vụ (mỗi Agent chỉ giải quyết chuyên biệt một việc). Học cách viết kỹ năng (Skills) và hệ thống chỉ dẫn (Instructions) chi tiết để định hình tư duy logic cho Agent.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 6 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">06</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Thiết lập Luồng hoạt động (Workflow) & Kết nối dữ liệu cho Agent</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Thiết kế luồng hoạt động từng bước của Agent: từ tiếp nhận trigger (kích hoạt), tự động phân tích dữ liệu chuyên môn đã nạp, ra quyết định logic và bắn hành động đến các hệ thống liên quan.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 7 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">07</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Triển khai AI Agent chuyên biệt tư vấn bán hàng 24/7</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Hiện thực hóa Agent thứ nhất: Chỉ chuyên biệt hóa khâu trực trang web, trả lời câu hỏi thường gặp, báo giá và tự động hướng dẫn khách chốt lịch tư vấn 1-1 trên Website.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 8 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">08</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Triển khai AI Agent chuyên biệt chăm sóc khách hàng cũ</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Hiện thực hóa Agent thứ hai: Chỉ chuyên biệt hóa nhiệm vụ hỏi thăm tiến độ sử dụng dịch vụ, chia sẻ kiến thức mới và tự động gửi gợi ý gia hạn khóa học/dịch vụ cho tệp khách cũ.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 9 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">09</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Xây dựng Notion CRM tự động đồng bộ dữ liệu</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Thiết kế cơ sở dữ liệu quản trị khách hàng thông minh (Notion Second Brain), tự động đồng bộ mọi lead từ form đăng ký về bảng quản lý mà không cần nhập tay thủ công.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 10 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">10</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Tự động gửi tài liệu qua Email/Zalo khi khách đăng ký</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Thiết lập luồng tự động gửi tài liệu học tập, ebook hoặc bài giảng ngay lập tức khi khách điền form thành công, ghi điểm chuyên nghiệp tuyệt đối trong mắt khách hàng.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 11 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">11</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Thiết lập hệ thống tự động nhắc lịch hẹn tư vấn</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Đấu nối công cụ chốt lịch tự động, cấu hình các kịch bản nhắc lịch qua Zalo/Email/SMS trước giờ hẹn để kéo tỷ lệ bùng hẹn xuống dưới 5%.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 12 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">12</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Tích hợp cổng thanh toán quét QR tự động & đối soát dòng tiền</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Kết nối API thanh toán ngân hàng, tự động nhận dạng giao dịch qua QR Code động và đối soát dòng tiền thực tế tức thời về bảng điều khiển.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 13 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">13</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Triển khai AI Agent chuyên biệt phân tích & báo cáo doanh thu về điện thoại</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Hiện thực hóa Agent thứ ba: Chỉ chuyên biệt hóa nhiệm vụ đọc báo cáo CRM, phân tích số liệu chuyển đổi phễu và gửi tin nhắn cảnh báo/báo cáo về điện thoại hàng ngày.
+            </p>
+          </div>
+        </div>
+
+        <!-- Buổi 14 -->
+        <div class="py-8 flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+          <div class="text-4xl sm:text-5xl font-black text-brand-green font-mono tracking-tight shrink-0 md:w-20">14</div>
+          <div class="space-y-2">
+            <h3 class="text-xl font-bold text-brand-navy-deep dark:text-white">Đóng gói tài liệu SOP tự vận hành & Nghiệm thu hệ thống marketing 24/7</h3>
+            <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+              Bàn giao toàn bộ mã nguồn, hướng dẫn quy trình tự bảo trì hệ thống SOP và nghiệm thu cỗ máy marketing 24/7 hoàn chỉnh mang thương hiệu cá nhân của riêng bạn.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6] Section: Features / Inside (12 Điều Bạn Sẽ Làm Được) -->
+  <section class="py-24 bg-white dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-4xl mx-auto mb-20">
+        <h2 class="text-3xl sm:text-5xl font-black text-brand-navy-deep dark:text-white tracking-tight leading-[1.2] pb-2">
+          12 Điều Bạn Sẽ Làm Được 🚀
+        </h2>
+        <p class="text-base sm:text-lg text-brand-muted dark:text-slate-400 mt-4 max-w-2xl mx-auto font-medium">
+          Dành riêng cho người có chuyên môn, đang làm Freelance/Solo — muốn khách hàng tự tìm đến thay vì ngày nào cũng phải đi chạy đơn.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <!-- Card 1 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              1. Sở hữu Website cá nhân chuẩn SEO — "văn phòng online" làm việc thay bạn
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Bạn giỏi chuyên môn, nhưng khách hàng tiềm năng tìm bạn qua đâu? Nếu chỉ dựa vào giới thiệu hay đăng bài Facebook cá nhân, bạn đang bỏ lỡ rất nhiều người đang search Google mỗi ngày để tìm đúng dịch vụ bạn làm 😅
+              <br /><br />
+              Sau chương trình, bạn tự tay dựng được website cá nhân chuẩn SEO — nơi khách hàng tự tìm thấy bạn, đọc hiểu năng lực của bạn, và chủ động liên hệ. Không cần code, không cần thuê ai, bạn kiểm soát 100% "cửa hàng online" của chính mình.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              2. Website giới thiệu dịch vụ, khách để lại thông tin mà không cần bạn hỏi
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Là Solo/Freelancer, thời gian của bạn = tiền. Bạn không thể ngồi nhắn tin xin số điện thoại từng người được. Bạn sẽ học cách dựng website chuyên nghiệp, tối ưu để khách hàng tự nguyện để lại thông tin liên hệ.
+              <br /><br />
+              Kết quả: mỗi ngày bạn thức dậy đã có sẵn danh sách người quan tâm — việc còn lại chỉ là chọn lọc và tư vấn, thay vì phải đi tìm khách từ đầu.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              3. Chatbot AI tư vấn thay bạn, không bỏ lỡ khách nhắn lúc nửa đêm
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Bạn từng ngủ quên, không rep tin nhắn kịp và mất khách chưa? Làm solo nghĩa là không có ai trực page thay bạn khi bạn đang làm việc với khách khác, đang nghỉ ngơi, hay đang offline.
+              <br /><br />
+              Học xong, bạn tự dựng được bot AI trả lời tự động các câu hỏi thường gặp, giới thiệu dịch vụ, báo giá cơ bản — hoạt động 24/7 dù bạn có mặt hay không. Bạn không mất thêm một khách hàng tiềm năng nào chỉ vì "không kịp rep".
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              4. Bot AI chăm sóc khách cũ, giữ mối quan hệ mà không tốn thời gian của bạn
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Làm solo, bạn dễ rơi vào vòng lặp: chỉ lo chạy deadline cho khách mới, quên mất khách cũ — trong khi khách cũ mới là nguồn thu ổn định và ít tốn công sức nhất để có đơn tiếp theo.
+              <br /><br />
+              Bạn sẽ biết cách dựng bot tự động hỏi thăm, nhắc lịch, gợi ý dịch vụ tiếp theo cho khách cũ — âm thầm giữ mối quan hệ trong khi bạn tập trung làm chuyên môn.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              5. Email Marketing tự động — bán hàng ngay cả khi bạn đang ngủ
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Đây là kỹ năng thay đổi hoàn toàn cách bạn làm việc solo. Bạn sẽ dựng được chuỗi email tự động: chào người mới quan tâm, giới thiệu giá trị bản thân/dịch vụ theo từng bước, nhắc lại với người còn đang phân vân, chăm sóc định kỳ với khách cũ.
+              <br /><br />
+              Không cần bạn ngồi soạn tin nhắn tay từng người mỗi ngày — hệ thống email tự vận hành, âm thầm nuôi dưỡng niềm tin và ra quyết định thay bạn ngay cả lúc bạn không online.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              6. Automation Workflow — bạn làm việc một mình nhưng vận hành như cả một đội
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Bạn từng phải tự tay chép thông tin khách từ form qua Excel, rồi vào Zalo nhắn tay, rồi lại nhớ ghi chú vào đâu đó để không quên follow-up? Một mình làm hết những việc này rất dễ kiệt sức.
+              <br /><br />
+              Học xong, bạn biết cách kết nối tự động Website – Form – Email – Zalo – Google Sheet với nhau. Mọi thông tin tự chảy đúng chỗ, đúng lúc — bạn tiết kiệm hàng chục giờ mỗi tuần để dồn hết vào việc bạn giỏi nhất: chuyên môn của mình.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              7. Tự động hóa quy trình nhận job — từ khách để lại thông tin đến khi bắt đầu làm việc
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Từ lúc khách điền form quan tâm, đến khi nhận báo giá, ký hợp đồng, thanh toán, bắt đầu công việc — toàn bộ quy trình này bạn hoàn toàn có thể tự động hóa từng bước, giảm tối đa thao tác thủ công và sai sót.
+              <br /><br />
+              Một quy trình chuyên nghiệp, tự động, khiến khách hàng tin tưởng bạn ngay từ lần chạm đầu tiên — dù bạn chỉ có một mình.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              8. AI Agent hỗ trợ đúng chuyên môn của bạn — như có thêm một "bản sao" của chính mình
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Bạn giỏi trong lĩnh vực của mình, nhưng không thể trả lời hết mọi câu hỏi lặp đi lặp lại từ khách hàng mỗi ngày. Bạn sẽ học cách xây AI Agent được "huấn luyện" đúng theo kiến thức, kinh nghiệm, cách tư vấn của riêng bạn.
+              <br /><br />
+              Đây không phải bot trả lời chung chung — đây là trợ lý hiểu đúng chuyên môn bạn đang làm, giúp bạn nhân bản năng lực tư vấn của mình mà không cần thuê thêm người.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              9. AI Agent xử lý việc hậu trường — báo cáo, tổng hợp, soạn thảo
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Làm solo, bạn vừa là người làm chuyên môn, vừa là người quản lý, vừa là người chăm sóc khách hàng. Sau chương trình, bạn có một trợ lý AI hỗ trợ soạn báo cáo, tổng hợp số liệu công việc, trả lời email hành chính.
+              <br /><br />
+              Bạn nhận được nhiều job hơn trong cùng quỹ thời gian, mà không cần tuyển thêm nhân sự — toàn bộ lợi nhuận vẫn thuộc về bạn.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              10. Viết Skill AI riêng theo đúng chuyên môn của bạn — thứ không ai copy được
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Đây là phần giúp bạn khác biệt hoàn toàn với những Freelancer/Solo khác chỉ dùng AI theo kiểu hỏi-đáp cơ bản. Bạn sẽ học cách "cài" kiến thức chuyên môn, kinh nghiệm, phong cách tư vấn riêng của mình vào AI.
+              <br /><br />
+              Kết quả là một hệ thống AI mang đúng "chất" của bạn — thứ không một ai khác có thể sao chép, vì nó được xây từ chính chuyên môn và kinh nghiệm của bạn.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 11 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              11. Remarketing tự động — khách cũ và khách còn phân vân tự quay lại
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Kết hợp Email Marketing và Bot AI để tự động tiếp cận lại người từng quan tâm nhưng chưa chốt, hoặc khách cũ lâu ngày chưa quay lại. Bạn không cần nhớ để tự nhắn từng người — hệ thống làm thay bạn đúng thời điểm.
+              <br /><br />
+              Đây là cách tăng thu nhập mà không cần tốn thêm thời gian đi tìm khách mới liên tục — điều mà bất kỳ ai làm solo cũng cần.
+            </p>
+          </div>
+        </div>
+
+        <!-- Card 12 -->
+        <div class="p-8 rounded-3xl bg-slate-50 dark:bg-dark-surface/50 border border-slate-100 dark:border-dark-border hover:border-brand-green/20 hover:bg-white dark:hover:bg-dark-surface shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+          <div class="space-y-4">
+            <h3 class="text-lg font-bold text-brand-navy-deep dark:text-white">
+              12. Trọn bộ Hệ Thống Marketing Cá Nhân — làm việc một mình, vận hành như một doanh nghiệp
+            </h3>
+            <p class="text-sm text-brand-text dark:text-slate-300 leading-relaxed">
+              Đây là đích đến cuối cùng: kết hợp tất cả — Website + Chatbot + Email Marketing + Automation + AI Agent — thành MỘT hệ thống marketing khép kín, mang thương hiệu cá nhân của chính bạn, chạy gần như tự động 24/7.
+              <br /><br />
+              Bạn vẫn là người làm việc một mình, nhưng khách hàng tự tìm đến, tự được tư vấn, tự được chăm sóc — trong khi bạn dồn toàn bộ thời gian và năng lượng vào đúng việc bạn giỏi nhất và được trả công xứng đáng nhất: chuyên môn của mình. 🔥
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scarcity bottom note -->
+      <div class="max-w-3xl mx-auto text-center mt-16 p-6 rounded-2xl bg-brand-paper dark:bg-dark-surface border border-brand-line dark:border-dark-border">
+        <p class="text-sm sm:text-base font-semibold text-brand-navy-deep dark:text-white leading-relaxed">
+          💡 <span class="text-brand-green-dark dark:text-brand-green">Bạn không cần biết code, không cần thuê đội ngũ.</span> Bạn chỉ cần biết cách xây đúng hệ thống một lần — và để nó làm việc thay bạn mỗi ngày. Đó chính xác là những gì chương trình chuyển giao 1-1 này sẽ cầm tay chỉ bạn từng bước.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- [6.5] Section: Quà tặng độc quyền & Công nghệ làm chủ -->
+  <section class="py-24 bg-slate-50 dark:bg-dark-surface/30 border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-6xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep dark:text-white tracking-tight">Quà tặng độc quyền & Hỗ trợ trọn đời</h2>
+        <p class="text-xs sm:text-sm md:text-base text-brand-muted dark:text-slate-400 mt-4 max-w-6xl mx-auto whitespace-nowrap">Chương trình tập trung vào đào tạo thực chiến 1-1, đồng thời gửi tặng bạn những cẩm nang tài sản và đặc quyền vô giá đi kèm:</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <!-- Cột 1: Quà tặng độc quyền -->
+        <div class="p-8 rounded-3xl bg-white dark:bg-dark-surface border border-slate-100 dark:border-dark-border shadow-sm space-y-6">
+          <h3 class="text-2xl font-bold text-brand-navy-deep dark:text-white border-b border-brand-line dark:border-dark-border pb-3 flex justify-center items-center gap-2">
+            <span class="text-xl">🎁</span> Tài liệu & Buổi học tặng kèm
+          </h3>
+          <ul class="space-y-6">
+            <li class="flex gap-3">
+              <span class="text-brand-green font-bold text-xl select-none mt-0.5">✓</span>
+              <div>
+                <strong class="text-brand-navy-deep dark:text-white block font-semibold">16 Bước tạo Sales Page chuẩn giúp chuyển đổi cao</strong>
+                <span class="text-sm text-brand-text dark:text-slate-300">Quy trình viết và sắp xếp bố cục nội dung trang bán hàng đỉnh cao theo chuẩn copywriting giúp tối ưu hóa tỷ lệ chốt đơn tự động.</span>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-brand-green font-bold text-xl select-none mt-0.5">✓</span>
+              <div>
+                <strong class="text-brand-navy-deep dark:text-white block font-semibold">Checklist 39 tiêu chí chuẩn cho Technical SEO</strong>
+                <span class="text-sm text-brand-text dark:text-slate-300">Cẩm nang kiểm tra 39 điểm kỹ thuật hạ tầng web, thẻ meta, sơ đồ trang web và chỉ mục để tối ưu hóa hiển thị tối đa trên Google.</span>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-brand-green font-bold text-xl select-none mt-0.5">✓</span>
+              <div>
+                <strong class="text-brand-navy-deep dark:text-white block font-semibold">Tặng bạn 3 buổi hướng dẫn chạy quảng cáo Google Ads</strong>
+                <span class="text-sm text-brand-text dark:text-slate-300">Hướng dẫn thực hành trực tiếp cách thiết lập chiến dịch, tối ưu hóa từ khóa và ngân sách quảng cáo Google để chủ động thu hút đúng tệp khách hàng đang tìm kiếm giải pháp của bạn.</span>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="text-brand-green font-bold text-xl select-none mt-0.5">✓</span>
+              <div>
+                <strong class="text-brand-navy-deep dark:text-white block font-semibold">Cộng đồng support khi bạn cần & Luôn cập nhật xu hướng mới nhất</strong>
+                <span class="text-sm text-brand-text dark:text-slate-300">Đặc quyền tham gia nhóm hỗ trợ trọn đời. Nơi giúp bạn luôn đi trước một bước về công nghệ — lợi thế thông tin sớm chính là chìa khóa mở ra các cơ hội thu nhập trước khi thị trường bão hòa.</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [7] Section: Emotion / Masters (Tạo Cảm Xúc - 4 Hormone & 5 Kỹ Thuật) -->
+  <section class="py-24 bg-brand-navy-deep text-white text-center relative overflow-hidden">
+    <!-- Decorative background glowing elements -->
+    <div class="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-brand-green/15 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-brand-blue/15 blur-3xl pointer-events-none"></div>
+
+    <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
+            
+      <h2 class="text-3xl sm:text-5xl font-bold tracking-tight text-white max-w-3xl mx-auto leading-tight">
+        Một ngày làm việc mới <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-green to-emerald-400">không còn bận rộn việc vặt...</span>
+      </h2>
+
+      <!-- FROSTED GLASS BOX -->
+      <div class="relative bg-white/[0.02] backdrop-blur-lg border border-white/10 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto text-left space-y-8 mt-10">
+
+        <div class="relative z-10 space-y-8">
+          <!-- Step 1 -->
+          <div class="flex gap-4 sm:gap-6 items-start group">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-green/10 border border-brand-green/30 flex items-center justify-center text-brand-green text-sm font-bold">
+              01
+            </div>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed pt-1.5 italic">
+              "Hãy tưởng tượng: 6h sáng thứ Hai, bạn thức dậy và mở điện thoại. Không còn 47 tin nhắn chưa trả lời của khách hàng, không có email spam hành chính hối thúc. Thay vào đó là 3 tin nhắn tự động báo có lead nóng mới đồng bộ về Zalo, kèm 2 lịch hẹn tư vấn chất lượng đã được AI Bot tự động xác nhận từ đêm."
+            </p>
+          </div>
+          
+          <!-- Divider line -->
+          <div class="h-[1px] bg-white/10 w-full"></div>
+
+          <!-- Step 2 -->
+          <div class="flex gap-4 sm:gap-6 items-start group">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-green/10 border border-brand-green/30 flex items-center justify-center text-brand-green text-sm font-bold">
+              02
+            </div>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed pt-1.5 italic">
+              "Bạn thong thả pha một ly cà phê, ngửi thấy hương thơm ấm áp lan tỏa, nghe tiếng gió rì rào buổi sớm – một cảm giác bình yên, tự do thực sự mà đã lâu rồi bạn chưa có. Điện thoại bỗng rung khẽ, tiếng 'ting' đơn hàng vang lên báo hiệu một khách hàng vừa tự động chốt dịch vụ thành công."
+            </p>
+          </div>
+          
+          <!-- Divider line -->
+          <div class="h-[1px] bg-white/10 w-full"></div>
+
+          <!-- Step 3 -->
+          <div class="flex gap-4 sm:gap-6 items-start group">
+            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-brand-green/10 border border-brand-green/30 flex items-center justify-center text-brand-green text-sm font-bold">
+              03
+            </div>
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed pt-1.5 italic">
+              "Thay vì quay cuồng lo sợ mất khách đến 11h đêm như trước đây, giờ đây bạn làm việc với tâm thế của một chủ doanh nghiệp thực sự. Bạn nắm giữ tài sản số, làm chủ cuộc chơi tài chính của mình."
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-8">
+        <a href="#contact-form" class="inline-block px-8 py-4.5 rounded-xl bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green text-white font-bold text-base transition-all transform hover:scale-[1.02]">
+          Tôi Muốn Sở Hữu Tương Lai Này &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+<!-- [9] Section: Pricing & Action (Bảng Giá + Value Stack) -->
+  <section id="pricing" class="py-24 bg-brand-paper dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-5xl mx-auto mb-16">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-navy-deep dark:text-white tracking-tight whitespace-nowrap">Chi phí đầu tư chuyển giao hệ thống</h2>
+        <p class="text-sm sm:text-base text-brand-muted dark:text-slate-400 mt-4">
+          Một lần làm chủ công nghệ marketing tự động, sở hữu tài sản vận hành trọn đời cho riêng mình.
+        </p>
+      </div>
+
+      <div class="max-w-2xl mx-auto rounded-3xl bg-white dark:bg-dark-surface border border-brand-green/30 dark:border-brand-green/40 shadow-xl p-8 sm:p-12 relative group">
+        <div class="absolute top-0 right-0 w-48 h-48 bg-brand-green/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-gradient-to-r from-brand-green to-brand-green-dark text-white text-xs font-bold uppercase tracking-widest shadow-md">
+          KÈM CẶP 1-1 THỰC CHIẾN
+        </div>
+        <div class="text-center space-y-6">
+          <h3 class="text-2xl font-extrabold text-brand-navy-deep dark:text-white uppercase">Bảng giá trị tích lũy (Value Stack)</h3>
+          
+          <ul class="text-sm text-brand-text dark:text-slate-300 text-left space-y-3.5 py-4 border-b border-brand-line dark:border-dark-border">
+            <li class="flex justify-between items-center gap-4">
+              <span>• 14 buổi kèm cặp 1-1 trực tiếp</span>
+              <span class="font-mono text-brand-navy-deep dark:text-white font-bold">10.000.000đ</span>
+            </li>
+            <li class="flex justify-between items-center gap-4">
+              <span>• Mã nguồn Website chuyên nghiệp chuẩn SEO + Bản quyền</span>
+              <span class="font-mono text-brand-navy-deep dark:text-white font-bold">7.000.000đ</span>
+            </li>
+            <li class="flex justify-between items-center gap-4">
+              <span>• AI Assistant nạp tri thức chuyên ngành, cấu hình sẵn</span>
+              <span class="font-mono text-brand-navy-deep dark:text-white font-bold">5.000.000đ</span>
+            </li>
+            <li class="flex justify-between items-center gap-4">
+              <span>• 3 Luồng tự động hóa marketing & đồng bộ dữ liệu</span>
+              <span class="font-mono text-brand-navy-deep dark:text-white font-bold">4.000.000đ</span>
+            </li>
+            <li class="flex justify-between items-center gap-4">
+              <span>• Hệ thống quản lý Notion Second Brain tối ưu sẵn</span>
+              <span class="font-mono text-brand-navy-deep dark:text-white font-bold">2.000.000đ</span>
+            </li>
+            <li class="flex justify-between items-center gap-4">
+              <span>• Hỗ trợ kỹ thuật đồng hành trực tiếp trong 30 ngày</span>
+              <span class="font-mono text-brand-navy-deep dark:text-white font-bold">2.000.000đ</span>
+            </li>
+            <li class="flex justify-between items-center gap-4 border-t border-dashed border-brand-line dark:border-dark-border pt-4 font-bold text-brand-navy-deep dark:text-white">
+              <span>Tổng trị giá trị thực tế của hệ thống:</span>
+              <span class="font-mono text-lg text-brand-danger">30.000.000đ</span>
+            </li>
+          </ul>
+
+          <div class="py-4 space-y-2">
+            <span class="text-xs text-brand-muted dark:text-slate-400 block uppercase tracking-widest font-bold">Đầu tư chỉ một lần</span>
+            <div class="text-4xl sm:text-5xl font-black text-brand-green-dark dark:text-brand-green font-mono">7.999.999đ</div>
+            <span class="text-xs text-brand-muted dark:text-slate-400 block mt-2">Nhận bàn giao hệ thống & làm chủ công cụ trọn đời</span>
+          </div>
+
+          <div class="pt-4">
+            <a href="#contact-form" class="block w-full py-4 rounded-xl bg-gradient-to-r from-brand-green to-brand-green-dark hover:from-brand-green-dark hover:to-brand-green text-white font-bold text-base transition-all transform hover:scale-[1.02] shadow-md hover:shadow-brand-green/20">
+              Tôi Muốn Đăng Ký Sở Hữu Hệ Thống Ngay &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- [10] Section: Guarantee Box (Cam kết Risk Reversal 4 cấp - Level 4) -->
+  <section class="py-16 bg-white dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+      <div class="p-8 sm:p-12 rounded-3xl bg-brand-paper dark:bg-dark-surface border border-brand-green/20 dark:border-brand-green/30 shadow-md relative overflow-hidden group">
+        <div class="absolute top-0 left-0 w-3 h-full bg-brand-green"></div>
+        <div class="absolute -right-8 -bottom-8 w-40 h-40 bg-brand-green/5 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="space-y-6">
+          <h3 class="text-2xl font-bold text-brand-navy-deep dark:text-white flex items-center gap-3">
+            <span class="text-3xl">🤝</span> Cam kết đồng hành và trách nhiệm từ tôi
+          </h3>
+          <p class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed">
+            Tôi hiểu rằng việc đầu tư thời gian và chi phí cho một chương trình kèm cặp là quyết định cần sự tin tưởng lớn. Vì vậy, tôi cam kết bảo vệ quyền lợi của bạn bằng chính sách cam kết cao nhất:
+          </p>
+          <div class="text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed space-y-4 pl-4 border-l-2 border-slate-300 dark:border-slate-700">
+            <p>
+              • <strong>Bảo hành kết quả hành động:</strong> Nếu bạn đi học đầy đủ và hoàn thành các bài tập thực hành sau mỗi buổi học mà hệ thống vẫn không thể vận hành và tự động thu thập lead, tôi sẽ tiếp tục kèm cặp 1-1 miễn phí cho đến khi hệ thống của bạn hoạt động trơn tru 100% không giới hạn thời gian.
+            </p>
+            <p>
+              • <strong>Hoàn trả học phí linh hoạt:</strong> Nếu kết thúc buổi học thứ 2, bạn cảm thấy nội dung truyền tải mang tính lý thuyết sáo rỗng hoặc hệ thống thiết lập không phù hợp với dịch vụ của bạn, hãy báo cho tôi. Tôi sẽ dừng chương trình và hoàn trả lại 100% học phí mà không yêu cầu giải thích thêm.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<!-- [11] Section: Qualification Checklist (Đối tượng phù hợp / Không phù hợp) -->
+  <section class="py-24 bg-white dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep dark:text-white tracking-tight">Khóa học này dành cho ai?</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <!-- Phù hợp -->
+        <div class="p-8 rounded-3xl bg-emerald-50/30 dark:bg-dark-surface/40 border border-emerald-500/20 shadow-sm space-y-6">
+          <h3 class="text-2xl font-bold text-emerald-600 dark:text-emerald-500 flex items-center gap-3">
+            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-emerald-500 text-white text-base select-none">✓</span>
+            Phù hợp với bạn nếu:
+          </h3>
+          <ul class="space-y-5 text-sm sm:text-base text-brand-text dark:text-slate-300">
+            <li class="flex gap-3">
+              <svg class="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <div>
+                Bạn là <strong>Chuyên gia, Coach, Consultant, Trainer</strong> sở hữu kiến thức giá trị, muốn đóng gói và xây dựng phễu thu hút khách hàng tự động để nhân bản doanh thu.
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <svg class="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <div>
+                Bạn là <strong>Freelancer, Solopreneur</strong> khao khát giải phóng bản thân khỏi guồng quay tìm khách và rep inbox thủ công bằng một hệ thống tự vận hành 24/7.
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <svg class="h-5 w-5 text-emerald-500 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <div>
+                Bạn sẵn sàng đầu tư <strong>2-3 giờ mỗi ngày</strong> để thực hành và làm chủ hệ thống tài sản số của riêng mình, thay vì phụ thuộc hoàn toàn vào bên thứ ba.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Không phù hợp -->
+        <div class="p-8 rounded-3xl bg-rose-50/20 dark:bg-dark-surface/40 border border-rose-500/10 shadow-sm space-y-6">
+          <h3 class="text-2xl font-bold text-rose-600 dark:text-rose-500 flex items-center gap-3">
+            <span class="flex items-center justify-center h-8 w-8 rounded-full bg-rose-500 text-white text-base select-none">✕</span>
+            Không phù hợp nếu:
+          </h3>
+          <ul class="space-y-5 text-sm sm:text-base text-brand-text dark:text-slate-300">
+            <li class="flex gap-3">
+              <svg class="h-5 w-5 text-rose-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              <div>
+                Bạn chỉ muốn tích lũy lý thuyết suông, xem video "cho biết" mà không sẵn sàng bắt tay vào thiết lập thực tế cho dự án của mình.
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <svg class="h-5 w-5 text-rose-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              <div>
+                Bạn tìm kiếm "công thức làm giàu nhanh" hoặc coi AI là phép màu tạo ra thu nhập thụ động ngay lập tức mà không cần rèn luyện kỹ năng.
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <svg class="h-5 w-5 text-rose-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              <div>
+                Bạn quá bận rộn đến mức không thể cam kết thực hành tối thiểu 2 giờ/ngày để tự xây dựng và làm chủ hệ thống của mình.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- [13] Section: Testimonial & Social Proof (Zalo Chat Feedback Carousel sát CTA) -->
+  <section class="py-24 bg-slate-50 dark:bg-dark-surface/30 border-b border-brand-line dark:border-dark-border overflow-hidden">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Section Header -->
+      <div class="text-center max-w-4xl mx-auto mb-16 space-y-4">
+        <div class="flex justify-center items-center gap-1 select-none animate-pulse">
+          <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          </svg>
+          <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          </svg>
+          <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          </svg>
+          <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          </svg>
+          <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 24 24">
+            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+          </svg>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-navy-deep dark:text-white tracking-tight">
+          Phản hồi thực tế từ học viên qua Zalo
+        </h2>
+        <p class="text-xs sm:text-sm md:text-base text-brand-muted dark:text-slate-400 mt-4 max-w-5xl mx-auto whitespace-nowrap">
+          Không gì chân thực hơn những đoạn tin nhắn trao đổi kết quả thực tế sau khi hệ thống AI đi vào vận hành.
+        </p>
+      </div>
+
+      <!-- Zalo Chat Carousel Container -->
+      <div class="relative max-w-6xl mx-auto px-4 sm:px-12">
+        <!-- Navigation Buttons -->
+        <button id="prev-btn" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white dark:bg-dark-surface border border-slate-200 dark:border-dark-border shadow-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 h-10 w-10 sm:h-12 sm:w-12 rounded-full flex items-center justify-center font-bold transition-all hover:scale-105 active:scale-95 disabled:opacity-30 disabled:pointer-events-none cursor-pointer" aria-label="Previous slide">
+          &larr;
+        </button>
+
+        <!-- Slider Window -->
+        <div class="overflow-hidden py-4">
+          <div id="slider-track" class="flex gap-8 transition-transform duration-500 ease-out" style="transform: translateX(0px);">
+            
+            <!-- Chat 1: Anh Huy Hoàng -->
+            <div class="w-full md:w-[calc(50%-1rem)] shrink-0 rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-[#e2e9f1] flex flex-col h-[460px] select-none">
+              <div class="bg-[#0068ff] px-4 py-3 flex items-center gap-3 text-white shrink-0">
+                <div class="h-10 w-10 rounded-full bg-[#0050c8] flex items-center justify-center font-bold text-sm shrink-0 border border-white/20">H</div>
+                <div>
+                  <div class="font-bold text-sm">Anh Huy Hoàng</div>
+                  <div class="text-[10px] text-white/80 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span> Vừa mới truy cập</div>
+                </div>
+              </div>
+              <div class="p-4 space-y-4 overflow-y-auto flex-1 text-xs sm:text-sm">
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">H</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Anh Quảng ơi, cái AI Agent tự động phân loại lead chạy ngon lắm rồi! Hôm nay nó tự phân loại xong bắn về sheet với Zalo cho em, đỡ phải ngồi click tay cả buổi sáng.</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">09:12</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%] ml-auto justify-end">
+                  <div class="bg-[#d7e9ff] p-3 rounded-2xl rounded-tr-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Ngon lành em ơi! Tốc độ cập nhật thế nào? Có bị delay không?</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">09:15</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">H</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Dạ em check sơ bộ 50 lead thì đúng đến 47 lead, quá xịn luôn anh. Khách vừa điền form là 2 phút sau có tin nhắn Zalo chăm sóc luôn, họ bất ngờ bảo sao bên mình phản hồi nhanh thế haha.</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">09:18</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat 2: Anh Minh Trí -->
+            <div class="w-full md:w-[calc(50%-1rem)] shrink-0 rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-[#e2e9f1] flex flex-col h-[460px] select-none">
+              <div class="bg-[#0068ff] px-4 py-3 flex items-center gap-3 text-white shrink-0">
+                <div class="h-10 w-10 rounded-full bg-[#0050c8] flex items-center justify-center font-bold text-sm shrink-0 border border-white/20">T</div>
+                <div>
+                  <div class="font-bold text-sm">Anh Minh Trí</div>
+                  <div class="text-[10px] text-white/80 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span> Vừa mới truy cập</div>
+                </div>
+              </div>
+              <div class="p-4 space-y-4 overflow-y-auto flex-1 text-xs sm:text-sm">
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">T</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Quảng ơi, con Bot AI kết nối với chuỗi Email tự động xịn thật sự. Hôm qua có khách điền form lúc 11h đêm, Bot tự động rep Zalo gửi tài liệu, rồi sáng nay email tự động bám đuổi thế nào mà khách tự chốt khóa coaching luôn rồi!</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">08:30</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%] ml-auto justify-end">
+                  <div class="bg-[#d7e9ff] p-3 rounded-2xl rounded-tr-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Tuyệt vời anh Trí ơi, đúng tinh thần cỗ máy marketing 24/7 chạy ngầm rồi. Khách tự hiểu giá trị của anh trước khi gọi điện rồi đúng không?</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">08:35</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">T</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Đúng thế em, bạn ấy bảo đọc email với chat thử với bot xong là tin tưởng 90% rồi, gọi chỉ để chốt thời gian thôi. Tiết kiệm bao nhiêu công sức thuyết phục.</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">08:40</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat 3: Anh Minh Hoàng -->
+            <div class="w-full md:w-[calc(50%-1rem)] shrink-0 rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-[#e2e9f1] flex flex-col h-[460px] select-none">
+              <div class="bg-[#0068ff] px-4 py-3 flex items-center gap-3 text-white shrink-0">
+                <div class="h-10 w-10 rounded-full bg-[#0050c8] flex items-center justify-center font-bold text-sm shrink-0 border border-white/20">M</div>
+                <div>
+                  <div class="font-bold text-sm">Anh Minh Hoàng</div>
+                  <div class="text-[10px] text-white/80 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span> Vừa mới truy cập</div>
+                </div>
+              </div>
+              <div class="p-4 space-y-4 overflow-y-auto flex-1 text-xs sm:text-sm">
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">M</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Quảng ơi, con AI Agent brainstorm ý tưởng nội dung này thông minh thật sự. Nó liên kết đúng hệ tri thức anh gom trên Notion rồi lên kịch bản video chi tiết luôn.</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">10:05</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%] ml-auto justify-end">
+                  <div class="bg-[#d7e9ff] p-3 rounded-2xl rounded-tr-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Anh duyệt kịch bản rồi dùng Cursor tối ưu thêm xem, hiệu suất sản xuất thế nào rồi anh?</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">10:08</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">M</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Trước đây mất cả ngày viết được 2 kịch bản, giờ chỉ cần 1 tiếng là xong 5 kịch bản thô. Tốc độ ra clip tăng gấp mấy lần em ạ!</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">10:12</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat 4: Anh Tấn Phát -->
+            <div class="w-full md:w-[calc(50%-1rem)] shrink-0 rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-[#e2e9f1] flex flex-col h-[460px] select-none">
+              <div class="bg-[#0068ff] px-4 py-3 flex items-center gap-3 text-white shrink-0">
+                <div class="h-10 w-10 rounded-full bg-[#0050c8] flex items-center justify-center font-bold text-sm shrink-0 border border-white/20">P</div>
+                <div>
+                  <div class="font-bold text-sm">Anh Tấn Phát</div>
+                  <div class="text-[10px] text-white/80 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span> Vừa mới truy cập</div>
+                </div>
+              </div>
+              <div class="p-4 space-y-4 overflow-y-auto flex-1 text-xs sm:text-sm">
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">P</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Chào Quảng, hệ thống automation gửi email thông báo tài khoản học viên khi thanh toán thành công chạy mượt lắm em. Anh không cần ngồi check sao kê thủ công để gửi mail kích hoạt nữa.</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">14:20</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%] ml-auto justify-end">
+                  <div class="bg-[#d7e9ff] p-3 rounded-2xl rounded-tr-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Tuyệt vời anh Phát! Giải phóng được hoàn toàn khâu cơ cấu vận hành rồi. Đỡ áp lực hẳn đúng không anh?</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">14:25</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 max-w-[85%]">
+                  <div class="h-8 w-8 rounded-full bg-slate-300 flex items-center justify-center font-bold text-xs shrink-0 text-slate-700">P</div>
+                  <div class="bg-white p-3 rounded-2xl rounded-tl-none text-slate-800 shadow-sm">
+                    <p class="leading-relaxed">Đúng vậy em, trước đây cứ mỗi lần có người mua khóa học là cuống cả lên, giờ hệ thống tự lo hết từ A-Z, anh chỉ việc tập trung làm sản phẩm chất lượng hơn thôi.</p>
+                    <span class="text-[9px] text-slate-400 block text-right mt-1">14:30</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Navigation Dot indicators -->
+        <div class="flex justify-center gap-2 mt-6">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-green/20 dark:bg-brand-green/10"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-green/20 dark:bg-brand-green/10"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Zalo Chat Feedback Carousel Logic
+    document.addEventListener('astro:page-load', () => {
+      const track = document.getElementById('slider-track');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      
+      if (!track || !prevBtn || !nextBtn) return;
+      
+      let currentIndex = 0;
+      
+      function getVisibleCardsCount() {
+        if (window.innerWidth >= 768) return 2; // md and up
+        return 1; // mobile
+      }
+      
+      function updateSlider() {
+        const cards = track.children;
+        if (cards.length === 0) return;
+        
+        const cardWidth = cards[0].offsetWidth;
+        const gap = 32; // gap-8
+        const visibleCards = getVisibleCardsCount();
+        const maxIndex = cards.length - visibleCards;
+        
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+        
+        const offset = currentIndex * (cardWidth + gap);
+        track.style.transform = `translateX(-${offset}px)`;
+        
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= maxIndex;
+      }
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex++;
+        updateSlider();
+      });
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex--;
+        updateSlider();
+      });
+
+      window.addEventListener('resize', updateSlider);
+      updateSlider();
+    });
+  </script>
+
+
+
+  <!-- [13] Section: Screening Form & Contact (Phễu Lọc Khảo Sát Sàng Lọc Học Viên) -->
+  <section id="contact-form" class="py-24 bg-white">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto space-y-12">
+
+        <!-- Screening Questionnaire Box -->
+        <div class="p-8 sm:p-12 rounded-3xl bg-brand-paper border border-brand-line shadow-md">
+          <div class="text-center max-w-4xl mx-auto mb-10">
+            <h3 class="text-2xl sm:text-3xl font-bold text-brand-navy-deep">Đăng ký Chuyển giao Hệ thống Marketing Tự động 1-1</h3>
+
+          </div>
+
+          <form action="https://formspree.io/f/xvggpzoz" method="POST" class="space-y-6 max-w-2xl mx-auto">
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="name" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Họ & Tên *</label>
+                <input 
+                  type="text" 
+                  id="name" 
+                  name="name" 
+                  required 
+                  class="w-full px-4 py-3 rounded-xl border border-brand-line bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green text-sm transition-all"
+                  placeholder="Nguyễn Văn A"
+                />
+              </div>
+              <div>
+                <label for="contact" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Số điện thoại / Zalo *</label>
+                <input 
+                  type="text" 
+                  id="contact" 
+                  name="contact" 
+                  required 
+                  class="w-full px-4 py-3 rounded-xl border border-brand-line bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green text-sm transition-all"
+                  placeholder="0901 234 567"
+                />
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label for="email" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Địa chỉ Email *</label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required 
+                  class="w-full px-4 py-3 rounded-xl border border-brand-line bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green text-sm transition-all"
+                  placeholder="name@company.com"
+                />
+              </div>
+              <div>
+                <label for="position" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Vị thế hiện tại của bạn *</label>
+                <select 
+                  id="position" 
+                  name="position" 
+                  required 
+                  class="w-full px-4 py-3 rounded-xl border border-brand-line bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green text-sm transition-all cursor-pointer"
+                >
+                  <option value="">-- Chọn vị thế hiện tại --</option>
+                  <option value="Solopreneur">Solopreneur (Doanh nghiệp 1 người)</option>
+                  <option value="Freelancer">Freelancer / Người làm tự do</option>
+                  <option value="Business Owner">Chủ doanh nghiệp nhỏ (SMEs)</option>
+                  <option value="Content Creator">Content Creator / Nhà sáng tạo</option>
+                  <option value="Other">Khác</option>
+                </select>
+              </div>
+            </div>
+
+
+
+            <div>
+              <label for="problem" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Mô tả bài toán bạn muốn tự động hóa bằng AI: *</label>
+              <textarea 
+                id="problem" 
+                name="problem" 
+                rows="4" 
+                required
+                class="w-full px-4 py-3 rounded-xl border border-brand-line bg-white focus:outline-none focus:ring-2 focus:ring-brand-green/20 focus:border-brand-green text-sm transition-all leading-relaxed"
+                placeholder="Ví dụ: Tôi muốn tự động hóa việc viết bài blog hoặc gửi email chăm sóc..."
+              ></textarea>
+              <div class="mt-2.5 flex flex-wrap gap-2">
+                <button type="button" class="px-3 py-1.5 rounded-full border border-brand-line bg-slate-50 dark:bg-dark-surface/50 text-xs text-brand-text dark:text-slate-300 hover:border-brand-green hover:text-brand-green transition-all cursor-pointer problem-chip">
+                  🔍 Quét lead tự động
+                </button>
+                <button type="button" class="px-3 py-1.5 rounded-full border border-brand-line bg-slate-50 dark:bg-dark-surface/50 text-xs text-brand-text dark:text-slate-300 hover:border-brand-green hover:text-brand-green transition-all cursor-pointer problem-chip">
+                  ✍️ Viết bài SEO bằng AI
+                </button>
+                <button type="button" class="px-3 py-1.5 rounded-full border border-brand-line bg-slate-50 dark:bg-dark-surface/50 text-xs text-brand-text dark:text-slate-300 hover:border-brand-green hover:text-brand-green transition-all cursor-pointer problem-chip">
+                  🤖 Chatbot chốt lịch hẹn
+                </button>
+                <button type="button" class="px-3 py-1.5 rounded-full border border-brand-line bg-slate-50 dark:bg-dark-surface/50 text-xs text-brand-text dark:text-slate-300 hover:border-brand-green hover:text-brand-green transition-all cursor-pointer problem-chip">
+                  📨 Email Marketing tự động
+                </button>
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <button 
+                type="submit" 
+                class="w-full py-4 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-base transition-all transform hover:scale-[1.02] shadow-md cursor-pointer"
+              >
+                Gửi thông tin khảo sát đăng ký &rarr;
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- [12] Section: FAQ (Câu Hỏi Thường Gặp) -->
+  <section class="py-24 bg-brand-paper dark:bg-dark-bg border-b border-brand-line dark:border-dark-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-20">
+                <h2 class="text-3xl sm:text-5xl font-bold text-brand-navy-deep dark:text-white tracking-tight">Giải đáp thắc mắc của bạn</h2>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-4">
+        {faqs.map((faq) => (
+          <details class="group bg-white dark:bg-dark-surface rounded-2xl border border-brand-line dark:border-dark-border p-6 shadow-sm [&_summary::-webkit-details-marker]:hidden transition-all duration-300">
+            <summary class="flex items-center justify-between gap-4 font-bold text-base sm:text-lg text-brand-navy-deep dark:text-white cursor-pointer select-none">
+              <div class="flex-1 text-left" set:html={faq.question}></div>
+              <span class="shrink-0 transition-transform duration-300 group-open:rotate-180">
+                <svg class="h-5 w-5 text-brand-muted dark:text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </summary>
+            <div class="mt-4 text-sm sm:text-base text-brand-text dark:text-slate-300 leading-relaxed border-t border-brand-line dark:border-dark-border pt-4 prose dark:prose-invert text-left" set:html={faq.answer}></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const initLeadsForm = () => {
+      const form = document.querySelector('#contact-form form') as HTMLFormElement;
+      if (!form) return;
+
+      // Helper chips logic for problem textarea
+      const chips = document.querySelectorAll('.problem-chip');
+      const problemTextarea = document.getElementById('problem') as HTMLTextAreaElement;
+      if (problemTextarea) {
+        chips.forEach(chip => {
+          chip.addEventListener('click', () => {
+            const chipText = chip.textContent?.trim() || '';
+            const cleanText = chipText.replace(/^[^\s]+\s+/, ''); // Remove emoji prefix
+            
+            if (problemTextarea.value.trim() === '') {
+              problemTextarea.value = 'Tôi muốn tìm hiểu và xây dựng hệ thống tự động hóa cho phần: ' + cleanText;
+            } else {
+              problemTextarea.value += ', ' + cleanText;
+            }
+            problemTextarea.focus();
+          });
+        });
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Get fields
+        const nameInput = document.getElementById('name') as HTMLInputElement;
+        const contactInput = document.getElementById('contact') as HTMLInputElement;
+        const emailInput = document.getElementById('email') as HTMLInputElement;
+        const positionInput = document.getElementById('position') as HTMLSelectElement;
+        const commitmentInput = document.getElementById('commitment') as HTMLSelectElement;
+        const problemInput = document.getElementById('problem') as HTMLTextAreaElement;
+
+        if (!nameInput || !contactInput || !emailInput || !positionInput || !commitmentInput || !problemInput) return;
+
+        const payload = {
+          name: nameInput.value,
+          contact: contactInput.value,
+          email: emailInput.value,
+          position: positionInput.value,
+          commitment: commitmentInput.value,
+          problem: problemInput.value
+        };
+
+        const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+        const originalText = submitBtn ? submitBtn.textContent : 'Gửi thông tin khảo sát đăng ký &rarr;';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = 'Đang gửi thông tin...';
+        }
+
+        try {
+          // 1. Submit to local leads API
+          await fetch('/api/leads', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          
+          // 2. Submit to Formspree in background
+          const formData = new FormData(form);
+          await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+        } catch (err) {
+          console.error('Leads submit error:', err);
+        }
+
+        // Show success state
+        const parent = form.parentElement;
+        if (parent) {
+          parent.innerHTML = `
+            <div class="text-center py-12 space-y-6">
+              <div class="inline-flex items-center justify-center h-20 w-20 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-4xl font-bold mb-2">✓</div>
+              <div class="space-y-2">
+                <h3 class="text-3xl font-extrabold text-brand-navy-deep">Gửi thông tin thành công!</h3>
+                <p class="text-base text-brand-text max-w-xl mx-auto leading-relaxed">
+                  Cảm ơn <strong>${payload.name}</strong> đã hoàn thành bản khảo sát. Tôi sẽ xem xét kỹ bài toán của bạn và phản hồi trực tiếp lịch hẹn qua Zalo/Email trong vòng 24 giờ tới.
+                </p>
+              </div>
+            </div>
+          `;
+        }
+      });
+    };
+    initLeadsForm();
+    document.addEventListener('astro:page-load', initLeadsForm);
+  </script>
+  <!-- Dynamic JSON-LD FAQ Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  })} />
+</Layout>
