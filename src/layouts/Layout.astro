@@ -137,7 +137,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                   document.title = `${post.title} | daoxuanquang.com.vn`;
                   const pubDateObj = post.pubDate ? new Date(post.pubDate) : new Date();
                   const formattedDate = pubDateObj.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
-                  const catLabel = category === 'cuoc-song' ? 'Cuộc sống' : (category === 'ai' ? 'AI & Agent' : 'Marketing');
+                  const catLabel = category === 'cuoc-song' ? 'Cuộc sống' : (category === 'ai' ? 'AI' : 'Marketing');
 
                   let formattedContent = post.content || '';
                   if (!formattedContent.trim().startsWith('<')) {

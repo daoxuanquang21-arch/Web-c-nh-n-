@@ -6,12 +6,12 @@ const posts = await getCollection('ai');
 const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<Layout title="AI & Vibe Coding | daoxuanquang.com.vn" description="Tư duy hệ thống, thiết lập AI Agent cho doanh nghiệp và kỷ nguyên Vibe Coding.">
+<Layout title="AI | Đào Xuân Quảng" description="Tư duy hệ thống, ứng dụng AI cho doanh nghiệp và tự động hóa vận hành.">
   <section class="py-16 px-4 max-w-7xl mx-auto">
     <div class="text-center max-w-4xl mx-auto mb-16">
-      <h1 class="text-3xl sm:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white">AI & Vibe Coding</h1>
+      <h1 class="text-3xl sm:text-5xl font-extrabold mb-4 text-slate-900 dark:text-white">AI</h1>
       <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed">
-        Phát triển phần mềm bằng AI Agent, tự động hóa quy trình nghiệp vụ và xây dựng hệ thống thông minh.
+        Phát triển ứng dụng AI, tự động hóa quy trình nghiệp vụ và xây dựng hệ thống thông minh.
       </p>
     </div>
 
@@ -38,7 +38,7 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
                   })}
                 </time>
                 <span>•</span>
-                <span class="font-semibold text-gold-accent">AI & Agent</span>
+                <span class="font-semibold text-gold-accent">AI</span>
               </div>
 
               <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-gold-accent transition-colors">
@@ -130,7 +130,7 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
                 <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
                   <time datetime="${pubDateObj.toISOString()}">${formattedDate}</time>
                   <span>•</span>
-                  <span class="font-semibold text-gold-accent">AI & Agent</span>
+                  <span class="font-semibold text-gold-accent">AI</span>
                 </div>
                 <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-gold-accent transition-colors">
                   <a href="/ai/${postSlug}">${post.title}</a>
