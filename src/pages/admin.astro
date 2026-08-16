@@ -208,7 +208,7 @@ import Layout from '../layouts/Layout.astro';
                 </div>
 
                 <!-- 2. SEO Primary Keyword Banner Row -->
-                <div class="p-4 rounded-2xl bg-slate-950/80 border border-teal-500/30 flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                <div id="seo-keyword-banner-row" class="p-4 rounded-2xl bg-slate-950/80 border border-teal-500/30 flex flex-col md:flex-row items-stretch md:items-center gap-3">
                   <div class="flex-grow space-y-1.5">
                     <label for="post-primary-keyword" class="block text-xs font-extrabold text-teal-400 uppercase tracking-wider flex items-center gap-1.5">
                       <span>✨</span> TỪ KHÓA CHÍNH (SEO PRIMARY KEYWORD) *
@@ -223,7 +223,7 @@ import Layout from '../layouts/Layout.astro';
                 <!-- 3. Main Grid: Left Editor & Right SEO Analyzer -->
                 <div class="grid lg:grid-cols-12 gap-6 items-start">
                   <!-- Left side: Main Editor fields -->
-                  <div class="lg:col-span-7 space-y-4">
+                  <div id="main-editor-container" class="lg:col-span-7 space-y-4 transition-all duration-300">
                     <div>
                       <label for="post-title" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">TIÊU ĐỀ BÀI VIẾT * (TITLE)</label>
                       <input type="text" id="post-title" required placeholder="Nhập tiêu đề bài viết..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm font-bold text-white" />
@@ -235,8 +235,8 @@ import Layout from '../layouts/Layout.astro';
                     </div>
 
                     <div>
-                      <label for="post-content" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">NỘI DUNG CHI TIẾT HTML / MARKDOWN *</label>
-                      <textarea id="post-content" required rows="16" placeholder="Soạn thảo nội dung bài viết HTML / Markdown chuẩn SEO v3.0 ở đây..." class="w-full px-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green font-mono text-xs leading-relaxed text-slate-200"></textarea>
+                      <label id="post-content-label" for="post-content" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">NỘI DUNG CHI TIẾT HTML / MARKDOWN *</label>
+                      <textarea id="post-content" required rows="16" placeholder="Soạn thảo nội dung bài viết HTML / Markdown chuẩn SEO v3.0 ở đây..." class="w-full px-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green font-sans text-sm leading-relaxed text-slate-200"></textarea>
                     </div>
 
                     <!-- Submit Action Button -->
@@ -248,7 +248,7 @@ import Layout from '../layouts/Layout.astro';
                   </div>
 
               <!-- Right side: REAL-TIME SEO V3.0 ANALYZER & PROMPT ENGINE WIDGET -->
-              <div class="lg:col-span-5 space-y-4 bg-slate-950/70 border border-slate-800/80 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between max-h-[750px] overflow-y-auto">
+              <div id="seo-analyzer-widget" class="lg:col-span-5 space-y-4 bg-slate-950/70 border border-slate-800/80 p-5 rounded-2xl backdrop-blur-md flex flex-col justify-between max-h-[750px] overflow-y-auto transition-all duration-300">
                 <div class="space-y-4">
                   <!-- Tab Header Switcher inside Post Modal -->
                   <div class="grid grid-cols-2 gap-2 border-b border-slate-800 pb-3">
@@ -1465,6 +1465,44 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
       if (pDesc) pDesc.addEventListener('input', runRealtimeSEOAnalyzer);
       if (pContent) pContent.addEventListener('input', runRealtimeSEOAnalyzer);
 
+      function toggleCategoryEditorMode() {
+        const cat = pCat?.value;
+        const keywordRow = document.getElementById('seo-keyword-banner-row');
+        const mainEditor = document.getElementById('main-editor-container');
+        const seoWidget = document.getElementById('seo-analyzer-widget');
+        const contentLabel = document.getElementById('post-content-label');
+
+        if (cat === 'cuoc-song') {
+          // Mode Tối giản cho Cuộc sống & Tư duy
+          if (keywordRow) keywordRow.classList.add('hidden');
+          if (seoWidget) seoWidget.classList.add('hidden');
+          if (mainEditor) {
+            mainEditor.classList.remove('lg:col-span-7');
+            mainEditor.classList.add('lg:col-span-12');
+          }
+          if (editorTitleText && !isEditMode) editorTitleText.textContent = '☕ Soạn Thảo Bài Viết Cuộc Sống & Tư Duy (Tối Giản)';
+          if (contentLabel) contentLabel.textContent = 'NỘI DUNG BÀI VIẾT * (VIẾT TỰ DO - KHÔNG CẦN THẺ HTML)';
+          if (pContent) {
+            pContent.placeholder = 'Dán hoặc gõ toàn bộ bài viết tâm sự / tư duy của bạn ở đây... (trình bày tự do không cần thẻ HTML, hệ thống sẽ tự động căn chỉnh hiển thị đẹp mắt)!';
+          }
+        } else {
+          // Mode SEO Chuyên sâu cho AI & Digital Marketing
+          if (keywordRow) keywordRow.classList.remove('hidden');
+          if (seoWidget) seoWidget.classList.remove('hidden');
+          if (mainEditor) {
+            mainEditor.classList.remove('lg:col-span-12');
+            mainEditor.classList.add('lg:col-span-7');
+          }
+          if (editorTitleText && !isEditMode) editorTitleText.textContent = '✍️ Soạn Thảo Bài Viết Mới Chuẩn SEO v3.0';
+          if (contentLabel) contentLabel.textContent = 'NỘI DUNG CHI TIẾT HTML / MARKDOWN *';
+          if (pContent) {
+            pContent.placeholder = 'Soạn thảo nội dung bài viết HTML / Markdown chuẩn SEO v3.0 ở đây...';
+          }
+        }
+      }
+
+      if (pCat) pCat.addEventListener('change', toggleCategoryEditorMode);
+
       function resetForm() {
         if (postForm) postForm.reset();
         isEditMode = false;
@@ -1476,6 +1514,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         if (pStatus) pStatus.value = 'public';
         if (pSlug) pSlug.readOnly = false;
         if (pCat) pCat.disabled = false;
+        toggleCategoryEditorMode();
         runRealtimeSEOAnalyzer();
       }
 
@@ -1620,6 +1659,8 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             // Block editing of slug and category in edit mode to prevent file moving/clashing errors
             pSlug.readOnly = true;
             pCat.disabled = true;
+
+            toggleCategoryEditorMode();
 
             if (postModal) {
               postModal.classList.remove('hidden');
