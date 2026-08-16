@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Bảng Điều Khiển Quản Trị | daoxuanquang.vn" description="Hệ thống quản lý nội dung bài viết, danh sách khách hàng đăng ký và thiết lập website." noindex={true} hideNavFooter={true}>
+<Layout title="Bảng Điều Khiển Quản Trị | daoxuanquang.com.vn" description="Hệ thống quản lý nội dung bài viết, danh sách khách hàng đăng ký và thiết lập website." noindex={true} hideNavFooter={true}>
   <div class="min-h-screen bg-slate-950 text-slate-100 relative overflow-hidden font-['Be_Vietnam_Pro'] antialiased">
     <!-- Ambient glowing backgrounds -->
     <div class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full bg-brand-green/5 blur-[150px] pointer-events-none"></div>
@@ -56,7 +56,7 @@ import Layout from '../layouts/Layout.astro';
               Q
             </div>
             <div>
-              <span class="font-extrabold text-lg tracking-tight block text-white">daoxuanquang.vn</span>
+              <span class="font-extrabold text-lg tracking-tight block text-white">daoxuanquang.com.vn</span>
               <span class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Admin Panel</span>
             </div>
           </div>
@@ -411,7 +411,7 @@ import Layout from '../layouts/Layout.astro';
                       </h5>
                       <ul class="space-y-2 text-[11px]">
                         <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 1 (Title):</strong> Từ khóa chính đứng đầu hoặc trong 30 ký tự đầu. Độ dài 6-12 từ. Không dùng ký tự cấm (!, ", **).</li>
-                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 2 (Sapo):</strong> Độ dài 145-160 ký tự. Từ khóa xuất hiện trong 60 ký tự đầu. Chứa tác giả "Đào Xuân Quảng" / "daoxuanquang.vn".</li>
+                        <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 2 (Sapo):</strong> Độ dài 145-160 ký tự. Từ khóa xuất hiện trong 60 ký tự đầu. Chứa tác giả "Đào Xuân Quảng" / "daoxuanquang.com.vn".</li>
                         <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 3 (Nội dung):</strong> Tối thiểu 1500 từ. Có ít nhất 3 H2 và 5 H3. Tất cả H2 dạng câu hỏi phải có dấu chấm hỏi (?).</li>
                         <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 4 (Featured Snippets):</strong> Ngay sau mỗi H2 câu hỏi phải có 1 Quote-box 40-60 từ cô đọng câu trả lời cho Google Search.</li>
                         <li class="p-2 rounded bg-slate-900 border border-slate-800"><strong class="text-brand-green">Module 5 (Internal Links):</strong> Đúng 8 links. BẮT BUỘC in đậm anchor text <code>&lt;strong&gt;&lt;a href="..."&gt;...&lt;/a&gt;&lt;/strong&gt;</code>.</li>
@@ -711,9 +711,9 @@ import Layout from '../layouts/Layout.astro';
       if (copyFullSystemPromptBtn) {
         copyFullSystemPromptBtn.addEventListener('click', () => {
           const fullPrompt = `PROMPT SEO BLOG CONTENT - PHIÊN BẢN 3.0 HOÀN CHỈNH
-© 2026 Wepower Group | Tác giả: Nguyễn Hữu Thi | Đơn vị áp dụng: daoxuanquang.vn
+© 2026 Wepower Group | Tác giả: Nguyễn Hữu Thi | Đơn vị áp dụng: daoxuanquang.com.vn
 
-Bạn là chuyên gia SEO Content Writer hàng đầu với 10+ năm kinh nghiệm. Hãy đóng vai chuyên gia sáng tạo nội dung chuẩn SEO cho website daoxuanquang.vn và viết bài viết chuẩn HTML theo bộ tiêu chuẩn 10 Module v3.0 dưới đây:
+Bạn là chuyên gia SEO Content Writer hàng đầu với 10+ năm kinh nghiệm. Hãy đóng vai chuyên gia sáng tạo nội dung chuẩn SEO cho website daoxuanquang.com.vn và viết bài viết chuẩn HTML theo bộ tiêu chuẩn 10 Module v3.0 dưới đây:
 
 THÔNG TIN BÀI VIẾT (INPUT VARIABLES):
 - Title (Tiêu đề): \${title}
@@ -807,13 +807,13 @@ Vui lòng xuất mã HTML thuần chuẩn theo template v3.0 ngay bây giờ.`;
           const slugVal = (document.getElementById('post-slug') as HTMLInputElement)?.value.trim() || '[url-slug]';
 
           const generatedPrompt = `PROMPT AI VIẾT BÀI BLOG CHUẨN SEO V3.0 (WEPOWER GROUP)
-Đơn vị áp dụng: daoxuanquang.vn | Tác giả: Nguyễn Hữu Thi
+Đơn vị áp dụng: daoxuanquang.com.vn | Tác giả: Nguyễn Hữu Thi
 
 THÔNG TIN BÀI VIẾT:
 - Tiêu đề (Title): ${titleVal}
 - Từ khóa chính (Primary Keyword): ${kwVal}
 - URL Slug: ${slugVal}
-- Tác giả: Đào Xuân Quảng (daoxuanquang.vn)
+- Tác giả: Đào Xuân Quảng (daoxuanquang.com.vn)
 
 YÊU CẦU NỘI DUNG V3.0 (TUÂN THỦ 100%):
 1. AIO & GEO: Viết bài chuẩn HTML tối thiểu 1500 từ. Data Anchoring có số liệu minh chứng.

@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://daoxuanquang.vn/sitemap-index.xml
+Sitemap: https://daoxuanquang.com.vn/sitemap-index.xml

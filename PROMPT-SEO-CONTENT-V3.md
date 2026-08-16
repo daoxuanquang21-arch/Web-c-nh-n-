@@ -51,7 +51,7 @@ Bạn là chuyên gia SEO Content Writer với 10+ năm kinh nghiệm, am hiểu
 
 ### 2.2. BIẾN TÙY CHỌN
 - `${author}` = "Đào Xuân Quảng" *(Hoặc Tên tác giả/Brand)*
-- `${website}` = "daoxuanquang.vn" *(Domain website)*
+- `${website}` = "daoxuanquang.com.vn" *(Domain website)*
 - `${wordCount}` = 2200-4000 *(Số từ mục tiêu)*
 - `${tone}` = "Chuyên nghiệp, thân thiện, thực chiến" *(Giọng văn)*
 - `${funnel}` = "TOFU/MOFU/BOFU" *(Vị trí trong phễu)*

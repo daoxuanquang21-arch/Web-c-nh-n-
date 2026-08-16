@@ -1,4 +1,4 @@
-# daoxuanquang.vn
+# daoxuanquang.com.vn
 > Website cá nhân của Đào Xuân Quảng - Chuyên gia AI & Growth Marketing.
 
 ## Thông tin cốt lõi
@@ -7,10 +7,10 @@
 - **Sứ mệnh**: Giúp các Expert, Freelancer và Solopreneur xây dựng tài sản số và tự động hóa quy trình kinh doanh.
 
 ## Dịch vụ
-- [Đào tạo & Chuyển giao hệ thống Marketing tự động 24/7](https://daoxuanquang.vn/dich-vu/dao-tao): Chương trình kèm cặp thực chiến 1-1 giúp xây dựng Website chuyên nghiệp, AI Bot tư vấn chăm sóc khách hàng, Email Automation và phễu bán hàng khép kín trong 14 ngày.
-- [Thiết kế Website chuẩn SEO](https://daoxuanquang.vn/dich-vu/thiet-ke-web): Thiết kế website độc bản tối ưu điểm Lighthouse, chuẩn cấu trúc SEO, tích hợp phễu thu thập lead tự động.
+- [Đào tạo & Chuyển giao hệ thống Marketing tự động 24/7](https://daoxuanquang.com.vn/dich-vu/dao-tao): Chương trình kèm cặp thực chiến 1-1 giúp xây dựng Website chuyên nghiệp, AI Bot tư vấn chăm sóc khách hàng, Email Automation và phễu bán hàng khép kín trong 14 ngày.
+- [Thiết kế Website chuẩn SEO](https://daoxuanquang.com.vn/dich-vu/thiet-ke-web): Thiết kế website độc bản tối ưu điểm Lighthouse, chuẩn cấu trúc SEO, tích hợp phễu thu thập lead tự động.
 
 ## Sản phẩm & Công cụ
-- [Automated SEO Writer Agent](https://daoxuanquang.vn/san-pham): AI Agent tự động nghiên cứu từ khóa, tạo dàn ý và viết bài chuẩn SEO tự động 100%. (Sắp ra mắt)
-- [B2B Cold Email Automator](https://daoxuanquang.vn/san-pham): Hệ thống tự động quét lead, cá nhân hóa nội dung email bằng AI và gửi tự động. (Sắp ra mắt)
-- [Astro Minimal Blog Template](https://daoxuanquang.vn/san-pham): Template blog tối giản tối ưu tốc độ, tích hợp Tailwind CSS v4 và cấu trúc SEO. (Nội bộ)
+- [Automated SEO Writer Agent](https://daoxuanquang.com.vn/san-pham): AI Agent tự động nghiên cứu từ khóa, tạo dàn ý và viết bài chuẩn SEO tự động 100%. (Sắp ra mắt)
+- [B2B Cold Email Automator](https://daoxuanquang.com.vn/san-pham): Hệ thống tự động quét lead, cá nhân hóa nội dung email bằng AI và gửi tự động. (Sắp ra mắt)
+- [Astro Minimal Blog Template](https://daoxuanquang.com.vn/san-pham): Template blog tối giản tối ưu tốc độ, tích hợp Tailwind CSS v4 và cấu trúc SEO. (Nội bộ)
