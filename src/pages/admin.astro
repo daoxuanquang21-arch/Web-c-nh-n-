@@ -918,37 +918,43 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           renderPosts();
 
           // 2. Fetch Subscribers
-          const subRes = await fetch('/api/subscribe');
-          if (subRes.ok) {
-            const data = await subRes.json();
-            if (data.success) {
-              const deletedSubs = JSON.parse(localStorage.getItem('deleted_sub_emails') || '[]');
-              currentSubscribers = data.subscribers.filter((s: any) => !deletedSubs.includes(s.email));
-              renderSubscribers();
+          try {
+            const subRes = await fetch('/api/subscribe');
+            if (subRes.ok && (subRes.headers.get('content-type') || '').includes('application/json')) {
+              const data = await subRes.json();
+              if (data && data.success) {
+                const deletedSubs = JSON.parse(localStorage.getItem('deleted_sub_emails') || '[]');
+                currentSubscribers = (data.subscribers || []).filter((s: any) => !deletedSubs.includes(s.email));
+                renderSubscribers();
+              }
             }
-          }
+          } catch (e) {}
 
           // 3. Fetch Leads
-          const leadsRes = await fetch('/api/leads');
-          if (leadsRes.ok) {
-            const data = await leadsRes.json();
-            if (data.success) {
-              const deletedLeads = JSON.parse(localStorage.getItem('deleted_lead_emails') || '[]');
-              currentLeads = data.leads.filter((l: any) => !deletedLeads.includes(l.email));
-              renderLeads();
+          try {
+            const leadsRes = await fetch('/api/leads');
+            if (leadsRes.ok && (leadsRes.headers.get('content-type') || '').includes('application/json')) {
+              const data = await leadsRes.json();
+              if (data && data.success) {
+                const deletedLeads = JSON.parse(localStorage.getItem('deleted_lead_emails') || '[]');
+                currentLeads = (data.leads || []).filter((l: any) => !deletedLeads.includes(l.email));
+                renderLeads();
+              }
             }
-          }
+          } catch (e) {}
 
           // 4. Fetch Products
-          const prodRes = await fetch('/api/products');
-          if (prodRes.ok) {
-            const data = await prodRes.json();
-            if (data.success) {
-              const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
-              currentProducts = data.products.filter((p: any) => !deletedIds.includes(p.id));
-              renderProducts();
+          try {
+            const prodRes = await fetch('/api/products');
+            if (prodRes.ok && (prodRes.headers.get('content-type') || '').includes('application/json')) {
+              const data = await prodRes.json();
+              if (data && data.success) {
+                const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
+                currentProducts = (data.products || []).filter((p: any) => !deletedIds.includes(p.id));
+                renderProducts();
+              }
             }
-          }
+          } catch (e) {}
 
           // 5. Update Stats Overview counts
           updateOverviewStats();
