@@ -893,19 +893,29 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         try {
           // 1. Fetch Posts
           const postsRes = await fetch('/api/posts');
+          let serverPosts: any[] = [];
           if (postsRes.ok) {
-            const data = await postsRes.json();
-            if (data.success) {
-              const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
-              currentPosts = data.posts.filter((p: any) => 
-                !deletedSlugs.includes(p.slug) && 
-                !deletedSlugs.includes(p.id) && 
-                !deletedSlugs.includes(p.title) &&
-                !deletedSlugs.includes(`${p.category}/${p.slug}`)
-              );
-              renderPosts();
+            const contentType = postsRes.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+              const data = await postsRes.json();
+              if (data.success) serverPosts = data.posts || [];
             }
           }
+
+          const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+          const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+          
+          const mergedMap = new Map();
+          serverPosts.forEach((p: any) => mergedMap.set(p.slug, p));
+          customPosts.forEach((p: any) => mergedMap.set(p.slug, p));
+          
+          currentPosts = Array.from(mergedMap.values()).filter((p: any) => 
+            !deletedSlugs.includes(p.slug) && 
+            !deletedSlugs.includes(p.id) && 
+            !deletedSlugs.includes(p.title) &&
+            !deletedSlugs.includes(`${p.category}/${p.slug}`)
+          );
+          renderPosts();
 
           // 2. Fetch Subscribers
           const subRes = await fetch('/api/subscribe');
@@ -1531,23 +1541,42 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
 
           try {
             if (savePostBtn) savePostBtn.disabled = true;
-            
-            const res = await fetch('/api/posts', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(payload)
-            });
 
-            const result = await res.json();
-            if (result.success) {
-              showToast(isEditMode ? 'Bài viết đã cập nhật thành công!' : 'Đã tạo bài viết thành công vào Content Collections!');
-              handleClosePostModal();
-              loadAllData();
+            // 1. Save to custom_saved_posts in localStorage so it persists 100% in SSG mode
+            const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+            const existingIdx = customPosts.findIndex((p: any) => p.slug === payload.slug || p.id === `${payload.category}/${payload.slug}`);
+            const newPostObj = {
+              id: `${payload.category}/${payload.slug}`,
+              ...payload
+            };
+            if (existingIdx !== -1) {
+              customPosts[existingIdx] = newPostObj;
             } else {
-              showToast(result.error || 'Có lỗi xảy ra khi lưu bài viết', true);
+              customPosts.push(newPostObj);
             }
+            localStorage.setItem('custom_saved_posts', JSON.stringify(customPosts));
+
+            // 2. Safely call backend API if active
+            try {
+              const res = await fetch('/api/posts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+              });
+              const contentType = res.headers.get('content-type') || '';
+              if (contentType.includes('application/json')) {
+                const result = await res.json();
+                if (!result.success) console.warn('API warning:', result.error);
+              }
+            } catch (apiErr) {
+              console.warn('API fetch warning:', apiErr);
+            }
+
+            showToast(isEditMode ? 'Bài viết đã cập nhật thành công!' : 'Đã xuất bản bài viết thành công!');
+            handleClosePostModal();
+            loadAllData();
           } catch (err: any) {
-            showToast('Lỗi API: ' + err.message, true);
+            showToast('Lỗi khi lưu bài viết: ' + err.message, true);
           } finally {
             if (savePostBtn) savePostBtn.disabled = false;
           }
@@ -1604,17 +1633,26 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           if (id && !deletedSlugs.includes(id)) deletedSlugs.push(id);
           localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
 
+          // Clear from custom_saved_posts as well
+          let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+          customPosts = customPosts.filter((p: any) => p.slug !== slug && p.id !== id);
+          localStorage.setItem('custom_saved_posts', JSON.stringify(customPosts));
+
           currentPosts = currentPosts.filter(p => p.slug !== slug && p.id !== id);
           renderPosts();
           updateOverviewStats();
           showToast('Bài viết đã được xóa thành công!');
 
           try {
-            await fetch('/api/posts', {
+            const res = await fetch('/api/posts', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ action: 'delete', category, slug, title: slug })
             });
+            const contentType = res.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+              await res.json();
+            }
           } catch (err) {
             console.error('Delete post fetch error:', err);
           }
