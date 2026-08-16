@@ -1603,7 +1603,26 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             return;
           }
 
+          function formatPlainTextToHtml(text: string): string {
+            if (!text) return '';
+            if (text.trim().startsWith('<')) return text;
+
+            const rawLines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+            return rawLines.map(line => {
+              const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
+              const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
+              const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 150 && cleanLine === cleanLine.toUpperCase();
+              const isHeading = isAllCaps || line.startsWith('#');
+
+              if (isHeading) {
+                return `<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-3 leading-snug">${cleanLine}</h2>`;
+              }
+              return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
+            }).join('\n');
+          }
+
           const tagsArr = pTags?.value ? pTags.value.split(',').map(t => t.trim()).filter(Boolean) : [];
+          const formattedBody = formatPlainTextToHtml(pContent.value);
 
           const payload = {
             title: pTitle.value,
@@ -1613,7 +1632,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             pubDate: pPubDate.value,
             status: pStatus?.value || 'public',
             tags: tagsArr,
-            content: pContent.value,
+            content: formattedBody,
             author: 'Quang',
             image: pImg?.value || ''
           };

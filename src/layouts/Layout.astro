@@ -141,19 +141,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
 
                   let formattedContent = post.content || '';
                   if (!formattedContent.trim().startsWith('<')) {
-                    const rawBlocks = formattedContent.split(/\n\s*\n/).filter((b: string) => b.trim());
-                    formattedContent = rawBlocks.map((block: string) => {
-                      const trimmed = block.trim();
-                      const lines = trimmed.split('\n').map((l: string) => l.trim()).filter(Boolean);
-                      return lines.map((line: string) => {
-                        const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
-                        const isHeading = (cleanLine.length > 5 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase() && /[A-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine)) || line.startsWith('#');
-                        if (isHeading) {
-                          return `<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-3 leading-snug">${cleanLine}</h2>`;
-                        }
-                        return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
-                      }).join('');
-                    }).join('');
+                    const rawLines = formattedContent.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
+                    formattedContent = rawLines.map((line: string) => {
+                      const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
+                      const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
+                      const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 150 && cleanLine === cleanLine.toUpperCase();
+                      const isHeading = isAllCaps || line.startsWith('#');
+
+                      if (isHeading) {
+                        return `<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-3 leading-snug">${cleanLine}</h2>`;
+                      }
+                      return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
+                    }).join('\n');
                   }
 
                   const imageHtml = post.image ? `<img src="${post.image}" alt="${post.title}" class="w-full max-h-96 object-cover rounded-2xl mb-8 shadow-md" />` : '';
