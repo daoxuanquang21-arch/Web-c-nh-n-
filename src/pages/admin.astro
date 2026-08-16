@@ -1630,7 +1630,12 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             }
             localStorage.setItem('custom_saved_posts', JSON.stringify(customPosts));
 
-            // 2. Safely call backend API if active
+            // 2. Remove from deleted_post_slugs if previously deleted
+            let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+            deletedSlugs = deletedSlugs.filter((s: string) => s !== payload.slug && s !== `${payload.category}/${payload.slug}` && s !== payload.title && s !== 'cuoc-song' && s !== 'marketing' && s !== 'ai');
+            localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
+
+            // 3. Safely call backend API if active
             try {
               const res = await fetch('/api/posts', {
                 method: 'POST',
