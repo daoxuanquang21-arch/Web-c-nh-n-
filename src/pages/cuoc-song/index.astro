@@ -4,6 +4,17 @@ import Layout from '../../layouts/Layout.astro';
 
 const posts = await getCollection('cuoc-song');
 const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const formatCleanTitle = (t: string) => {
+  if (!t) return '';
+  const lettersOnly = t.replace(/[^a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/g, '');
+  if (lettersOnly.length > 5 && lettersOnly === lettersOnly.toUpperCase()) {
+    let lower = t.toLowerCase();
+    lower = lower.charAt(0).toUpperCase() + lower.slice(1);
+    return lower.replace(/\b(ai|seo|sop|hot|vps|ui|ux|ads|cpm|cpc)\b/gi, (m) => m.toUpperCase());
+  }
+  return t;
+};
 ---
 
 <Layout title="Góc Nhìn Cuộc Sống | daoxuanquang.com.vn" description="Chia sẻ suy ngẫm cá nhân, triết lý sống tối giản và hành trình phát triển bản thân.">
@@ -17,13 +28,13 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
 
     <div class="posts-grid-container grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
       {sortedPosts.map((post) => (
-        <article data-post-slug={post.id} class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-200 group flex flex-col justify-between overflow-hidden">
+        <article data-post-slug={post.id} data-post-title={post.data.title} class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-200 group flex flex-col justify-between overflow-hidden">
           <div>
             {post.data.image && (
               <div class="aspect-video w-full overflow-hidden border-b border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
                 <img 
                   src={post.data.image} 
-                  alt={post.data.title} 
+                  alt={formatCleanTitle(post.data.title)} 
                   class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
                 />
               </div>
@@ -43,7 +54,7 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
 
               <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-gold-accent transition-colors">
                 <a href={`/cuoc-song/${post.id}`}>
-                  {post.data.title}
+                  {formatCleanTitle(post.data.title)}
                 </a>
               </h2>
               
@@ -73,6 +84,19 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     try {
+      const formatCleanTitle = (t: string) => {
+        if (!t) return '';
+        const lettersOnly = t.replace(/[^a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/g, '');
+        if (lettersOnly.length > 5 && lettersOnly === lettersOnly.toUpperCase()) {
+          let lower = t.toLowerCase();
+          lower = lower.charAt(0).toUpperCase() + lower.slice(1);
+          return lower.replace(/\b(ai|seo|sop|hot|vps|ui|ux|ads|cpm|cpc)\b/gi, (m) => m.toUpperCase());
+        }
+        return t;
+      };
+
+      const normalizeText = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
+
       // 1. Sanitize deleted_post_slugs in localStorage
       let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
       const broadCategories = ['cuoc-song', 'marketing', 'ai'];
@@ -82,21 +106,46 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
         deletedSlugs = cleanedDeletedSlugs;
       }
 
-      // 2. Hide deleted posts cleanly with exact match
-      if (deletedSlugs.length > 0) {
-        document.querySelectorAll('[data-post-slug]').forEach(el => {
-          const fullId = el.getAttribute('data-post-slug') || '';
-          const slugOnly = fullId.split('/').pop() || '';
-          if (deletedSlugs.includes(fullId) || deletedSlugs.includes(slugOnly)) {
-            el.remove();
-          }
-        });
-      }
+      // Collect existing card identifiers to avoid duplicates
+      const existingNormalizedTitles = new Set();
+      const existingNormalizedSlugs = new Set();
+      document.querySelectorAll('[data-post-slug]').forEach(el => {
+        const fullId = el.getAttribute('data-post-slug') || '';
+        const titleAttr = el.getAttribute('data-post-title') || '';
+        const slugOnly = fullId.split('/').pop() || '';
+        
+        if (deletedSlugs.includes(fullId) || deletedSlugs.includes(slugOnly)) {
+          el.remove();
+        } else {
+          existingNormalizedSlugs.add(normalizeText(fullId));
+          existingNormalizedSlugs.add(normalizeText(slugOnly));
+          if (titleAttr) existingNormalizedTitles.add(normalizeText(titleAttr));
+        }
+      });
 
       // 3. Render custom posts saved from Admin
-      const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
-      const categoryPosts = customPosts.filter((p: any) => p.category === 'cuoc-song' && !deletedSlugs.includes(p.slug) && !deletedSlugs.includes(p.id));
-      
+      let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+      let updatedCustomPosts = false;
+      const filteredCustomPosts: any[] = [];
+
+      customPosts.forEach((p: any) => {
+        const pSlug = p.slug || p.id?.split('/').pop() || '';
+        const normSlug = normalizeText(pSlug);
+        const normTitle = normalizeText(p.title);
+
+        // If duplicate of static article, remove from localStorage to clean up cache
+        if (existingNormalizedSlugs.has(normSlug) || existingNormalizedTitles.has(normTitle)) {
+          updatedCustomPosts = true;
+          return;
+        }
+        filteredCustomPosts.push(p);
+      });
+
+      if (updatedCustomPosts) {
+        localStorage.setItem('custom_saved_posts', JSON.stringify(filteredCustomPosts));
+      }
+
+      const categoryPosts = filteredCustomPosts.filter((p: any) => p.category === 'cuoc-song' && !deletedSlugs.includes(p.slug) && !deletedSlugs.includes(p.id));
       const gridContainer = document.querySelector('.posts-grid-container');
       const emptyStateContainer = document.querySelector('.posts-empty-state');
 
@@ -107,19 +156,17 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
           const postSlug = post.slug || post.id?.split('/').pop() || '';
           if (!postSlug) return;
 
-          const existingCard = document.querySelector(`[data-post-slug="${post.id}"]`) || document.querySelector(`[data-post-slug="${postSlug}"]`);
-          if (existingCard) return;
-
           const articleEl = document.createElement('article');
           articleEl.setAttribute('data-post-slug', postSlug);
           articleEl.className = 'rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-200 group flex flex-col justify-between overflow-hidden';
           
           const pubDateObj = post.pubDate ? new Date(post.pubDate) : new Date();
           const formattedDate = pubDateObj.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+          const cleanTitle = formatCleanTitle(post.title);
 
           const imageHtml = post.image ? `
             <div class="aspect-video w-full overflow-hidden border-b border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
-              <img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300" />
+              <img src="${post.image}" alt="${cleanTitle}" class="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300" />
             </div>
           ` : '';
 
@@ -133,7 +180,7 @@ const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDa
                   <span class="font-semibold text-gold-accent">Cuộc sống</span>
                 </div>
                 <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-gold-accent transition-colors">
-                  <a href="/cuoc-song/${postSlug}">${post.title}</a>
+                  <a href="/cuoc-song/${postSlug}">${cleanTitle}</a>
                 </h2>
                 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">${post.description}</p>
               </div>
