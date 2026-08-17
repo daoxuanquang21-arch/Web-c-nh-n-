@@ -161,18 +161,23 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
             }
           });
 
-          // 4. Auto-upgrade standalone paragraph lines into H2 headings if they look like section titles
+          // 4. Auto-upgrade standalone paragraph lines into H2/H3 headings if they look like section titles
           document.querySelectorAll('.prose p').forEach((pEl) => {
             const t = (pEl.textContent || '').trim();
-            const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(t);
-            const lastChar = t.slice(-1);
-            const isPunctuationEnd = ['.', ',', ';', ':'].includes(lastChar);
+            if (!t || pEl.querySelector('img, a, iframe')) return;
+
+            const cleanText = t.replace(/["'”]/g, '').trim();
+            const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanText);
+            const isEndsWithPeriod = cleanText.endsWith('.') || cleanText.endsWith(',');
             
-            if (hasLetters && t.length >= 6 && t.length <= 110 && !isPunctuationEnd && !t.includes('http') && !pEl.querySelector('img, a, iframe')) {
-              const h2El = document.createElement('h2');
-              h2El.className = 'text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug';
-              h2El.textContent = formatCleanTitle(t);
-              pEl.replaceWith(h2El);
+            const isExplicitPattern = /^(bài này|\d+\.|phương pháp \d+|tóm lại|cái bẫy|đừng|hãy|kết luận)/i.test(cleanText);
+            const isShortTitleLine = hasLetters && cleanText.length >= 4 && cleanText.length <= 110 && !isEndsWithPeriod && !t.includes('http');
+
+            if (isExplicitPattern || isShortTitleLine) {
+              const isH3 = cleanText.toLowerCase().startsWith('phương pháp');
+              const newEl = document.createElement(isH3 ? 'h3' : 'h2');
+              newEl.textContent = formatCleanTitle(t.replace(/^#+\s*/, ''));
+              pEl.replaceWith(newEl);
             }
           });
 
@@ -225,16 +230,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                 const rawLines = formattedContent.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
                 formattedContent = rawLines.map((line: string) => {
                   const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
-                  const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
-                  const lastChar = cleanLine.slice(-1);
-                  const isPunctuationEnd = ['.', ',', ';', ':'].includes(lastChar);
+                  const cleanText = cleanLine.replace(/["'”]/g, '').trim();
+                  const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanText);
+                  const isEndsWithPeriod = cleanText.endsWith('.') || cleanText.endsWith(',');
                   
-                  const isH3 = line.startsWith('###');
+                  const isH3 = line.startsWith('###') || cleanText.toLowerCase().startsWith('phương pháp');
                   const isExplicitH2 = line.startsWith('##') || line.startsWith('#');
-                  const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase();
-                  const isShortHeadingLine = hasLetters && cleanLine.length >= 6 && cleanLine.length <= 110 && !isPunctuationEnd && !line.includes('http');
+                  const isExplicitPattern = /^(bài này|\d+\.|phương pháp \d+|tóm lại|cái bẫy|đừng|hãy|kết luận)/i.test(cleanText);
+                  const isAllCaps = hasLetters && cleanText.length >= 4 && cleanText.length < 120 && cleanText === cleanText.toUpperCase();
+                  const isShortHeadingLine = hasLetters && cleanText.length >= 4 && cleanText.length <= 110 && !isEndsWithPeriod && !line.includes('http');
 
-                  const isH2 = isExplicitH2 || isAllCaps || isShortHeadingLine;
+                  const isH2 = isExplicitH2 || isExplicitPattern || isAllCaps || isShortHeadingLine;
                   
                   if (isH3) {
                     return `<h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug">${formatCleanTitle(cleanLine)}</h3>`;
