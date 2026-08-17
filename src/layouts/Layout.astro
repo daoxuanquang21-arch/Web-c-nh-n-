@@ -154,6 +154,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
             }
           });
 
+          // 4. Auto-upgrade standalone paragraph lines into H2 headings if they look like section titles
+          document.querySelectorAll('.prose p').forEach((pEl) => {
+            const t = (pEl.textContent || '').trim();
+            const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(t);
+            const lastChar = t.slice(-1);
+            const isPunctuationEnd = ['.', ',', ';', ':'].includes(lastChar);
+            
+            if (hasLetters && t.length >= 6 && t.length <= 110 && !isPunctuationEnd && !t.includes('http') && !pEl.querySelector('img, a, iframe')) {
+              const h2El = document.createElement('h2');
+              h2El.className = 'text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug';
+              h2El.textContent = formatCleanTitle(t);
+              pEl.replaceWith(h2El);
+            }
+          });
+
           const pathname = window.location.pathname.replace(/\/$/, '');
           const parts = pathname.split('/').filter(Boolean);
           const validCategories = ['cuoc-song', 'marketing', 'ai'];
@@ -204,9 +219,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                 formattedContent = rawLines.map((line: string) => {
                   const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
                   const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
+                  const lastChar = cleanLine.slice(-1);
+                  const isPunctuationEnd = ['.', ',', ';', ':'].includes(lastChar);
                   
                   const isH3 = line.startsWith('###');
-                  const isH2 = line.startsWith('##') || line.startsWith('#') || (hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase());
+                  const isExplicitH2 = line.startsWith('##') || line.startsWith('#');
+                  const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase();
+                  const isShortHeadingLine = hasLetters && cleanLine.length >= 6 && cleanLine.length <= 110 && !isPunctuationEnd && !line.includes('http');
+
+                  const isH2 = isExplicitH2 || isAllCaps || isShortHeadingLine;
                   
                   if (isH3) {
                     return `<h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug">${formatCleanTitle(cleanLine)}</h3>`;
