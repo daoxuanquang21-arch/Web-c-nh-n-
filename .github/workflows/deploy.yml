@@ -17,7 +17,8 @@ jobs:
           password: '#wF?*tyPs^j4'
           script: |
             cd /var/www/blog
-            git pull origin main
+            git fetch --all
+            git reset --hard origin/main
             npm install
             npm run build
             systemctl reload nginx
