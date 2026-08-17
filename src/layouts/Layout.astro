@@ -44,10 +44,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
     <meta name="title" content={title} />
     <meta name="description" content={description} />
 
-    <!-- Immediate localStorage cleanup for legacy cuchaytheo duplicates -->
+    <!-- Immediate localStorage cleanup for legacy cuchaytheo and static server slugs -->
     <script is:inline>
       (function() {
         try {
+          var serverSlugs = [
+            'cu-chay-theo-nhung-ky-nang-dang-hot',
+            'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep',
+            'affiliate-global',
+            'vibe-coding-ai-agent'
+          ];
           var custom = localStorage.getItem('custom_saved_posts');
           if (custom) {
             var posts = JSON.parse(custom);
@@ -57,7 +63,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               var p = posts[i];
               var t = (p.title || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
               var s = (p.slug || p.id || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
-              if (t.indexOf('cuchaytheo') !== -1 || s.indexOf('cuchaytheo') !== -1) {
+              var sOnly = s.split('/').pop();
+              if (t.indexOf('cuchaytheo') !== -1 || s.indexOf('cuchaytheo') !== -1 || serverSlugs.indexOf(s) !== -1 || serverSlugs.indexOf(sOnly) !== -1) {
                 continue;
               }
               if (seen[t]) {
