@@ -104,6 +104,35 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
     <script>
       document.addEventListener('DOMContentLoaded', async () => {
         try {
+          const newYtText = 'Cách đây không lâu, thấy người ta rầm rộ khoe làm YouTube bằng AI kiếm vài nghìn USD mỗi tháng, tôi cũng mang hết tiền tiết kiệm đi học, đêm ngày thức trắng tạo video tự động. Nhưng đời không như là mơ. Vừa làm được một thời gian ngắn thì nền tảng liên tục siết chặt chính sách, bóp tương tác và càn quét nội dung AI rác. Công sức và chi phí đổ sông đổ biển, cày 14 tiếng một ngày mà thu nhập vẫn là số 0 tròn trĩnh, kiệt quệ hoàn toàn cả về thể xác lẫn tinh thần.';
+
+          // 1. Direct DOM sweep for any article containing old Dropshipping text
+          const articleEl = document.querySelector('article');
+          if (articleEl && (articleEl.innerHTML.includes('Dropshipping') || articleEl.innerHTML.includes('khoe làm Dropshipping'))) {
+            articleEl.innerHTML = articleEl.innerHTML.replace(
+              /Thời gian trước, thấy người ta khoe làm Dropshipping[\s\S]*?kiệt quệ hoàn toàn cả thể xác lẫn tinh thần\./gi,
+              newYtText
+            );
+          }
+
+          // 2. Direct localStorage sweep and update
+          try {
+            let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+            let updated = false;
+            customPosts.forEach((p: any) => {
+              if (p.content && (p.content.includes('Dropshipping') || p.content.includes('khoe làm Dropshipping'))) {
+                p.content = p.content.replace(
+                  /Thời gian trước, thấy người ta khoe làm Dropshipping[\s\S]*?kiệt quệ hoàn toàn cả thể xác lẫn tinh thần\./gi,
+                  newYtText
+                );
+                updated = true;
+              }
+            });
+            if (updated) {
+              localStorage.setItem('custom_saved_posts', JSON.stringify(customPosts));
+            }
+          } catch (e) {}
+
           const pathname = window.location.pathname.replace(/\/$/, '');
           const parts = pathname.split('/').filter(Boolean);
           const validCategories = ['cuoc-song', 'marketing', 'ai'];
