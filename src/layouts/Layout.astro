@@ -330,26 +330,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                       }
                     }
 
+                    const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
                     const fallbackPosts = [
                       {
-                        title: 'Affiliate Global: Kinh nghiệm thực chiến từ 0 đến $10,000/tháng',
-                        description: 'Tổng hợp bài học, sai lầm và công thức đo lường hiệu quả quảng cáo khi làm thị trường quốc tế.',
-                        category: 'marketing',
-                        slug: 'affiliate-global'
-                      },
-                      {
-                        title: 'Vibe Coding & Xây dựng AI Agent tự động hóa vận hành',
-                        description: 'Cách ứng dụng các mô hình AI Agent vào quy trình bán hàng và chăm sóc khách hàng tự động 24/7.',
-                        category: 'ai',
-                        slug: 'vibe-coding-ai-agent'
-                      },
-                      {
-                        title: 'Tư duy tối giản trong vận hành Solopreneur',
-                        description: 'Rút gọn quy trình, tự động hoá các công việc lặp đi lặp lại để tập trung vào giá trị cốt lõi.',
+                        title: 'Cứ chạy theo những kỹ năng đang "HOT" thì cả đời anh em chỉ đi dọn mâm cho kẻ khác',
+                        description: 'Bài học đắt giá về trào lưu làm YouTube bằng AI, kỹ năng đất nền và tư duy xây dựng hệ thống tài sản số bền vững.',
                         category: 'cuoc-song',
-                        slug: 'tu-duy-toi-gian'
+                        slug: 'cu-chay-theo-nhung-ky-nang-dang-hot'
+                      },
+                      {
+                        title: 'Đừng tự nhốt mình dưới đáy giếng của một chuyên môn hẹp!',
+                        description: 'Chỉ thạo một nghề là rủi ro lớn nhất thời nay. Học ngay cách mở rộng kho kiến thức ngầm để không bế tắc trước những bài toán chưa từng có tiền lệ.',
+                        category: 'cuoc-song',
+                        slug: 'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep'
                       }
-                    ];
+                    ].filter(fp => !deletedSlugs.includes(fp.slug));
 
                     const normCurrentSlug = normalizeText(slug);
                     const normCurrentTitle = normalizeText(cleanTitle);
