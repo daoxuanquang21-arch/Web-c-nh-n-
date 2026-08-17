@@ -108,15 +108,12 @@
 
 /* Lightweight markdown typography styling */
 .prose h1, .prose h2, .prose h3, .prose h4 {
-  @apply font-display font-bold text-brand-navy-deep dark:text-white tracking-tight;
+  @apply font-display font-bold text-slate-900 dark:text-white tracking-tight leading-snug;
   text-wrap: pretty;
 }
-.prose h2 {
-  @apply text-xl sm:text-2xl mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug;
+.prose h2, .prose h3 {
+  @apply text-xl sm:text-2xl mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2;
   text-wrap: pretty;
-}
-.prose h3 {
-  @apply text-xl mt-6 mb-3;
 }
 .prose p {
   @apply text-base leading-relaxed mb-5 text-brand-text dark:text-slate-300;

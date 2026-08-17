@@ -199,6 +199,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               }
 
               if (post) {
+                let formattedContent = post.content || '';
+                const rawLines = formattedContent.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
+                formattedContent = rawLines.map((line: string) => {
+                  const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
+                  const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
+                  
+                  const isH3 = line.startsWith('###');
+                  const isH2 = line.startsWith('##') || line.startsWith('#') || (hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase());
+                  
+                  if (isH3) {
+                    return `<h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug">${formatCleanTitle(cleanLine)}</h3>`;
+                  }
+                  if (isH2) {
+                    return `<h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug">${formatCleanTitle(cleanLine)}</h2>`;
+                  }
+                  return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
+                }).join('\n');
+
                 const mainContainer = document.querySelector('main');
                 if (mainContainer) {
                   // Hide footer main nav links & remove empty dark padding on article page
