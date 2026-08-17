@@ -187,34 +187,25 @@ const formatCleanTitle = (t: string) => {
         }
       });
 
-      // 3. Render custom posts saved from Admin
+      // 3. Render custom posts saved from Admin for this category that are not already in the DOM
       let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
-      let updatedCustomPosts = false;
-      const filteredCustomPosts: any[] = [];
-
-      customPosts.forEach((p: any) => {
+      const categoryPosts = customPosts.filter((p: any) => {
+        if (!p || p.category !== 'ai') return false;
         const pSlug = p.slug || p.id?.split('/').pop() || '';
         const normSlug = normalizeText(pSlug);
         const normTitle = normalizeText(p.title);
 
-        const isMatch = Array.from(existingNormalizedTitles).some((t: any) => 
+        if (deletedSlugs.includes(pSlug) || deletedSlugs.includes(p.id)) return false;
+
+        const isAlreadyInDom = Array.from(existingNormalizedTitles).some((t: any) => 
           t === normTitle || (normTitle && t && (normTitle.indexOf(t) !== -1 || t.indexOf(normTitle) !== -1))
         ) || Array.from(existingNormalizedSlugs).some((s: any) => 
           s === normSlug || (normSlug && s && (normSlug.indexOf(s) !== -1 || s.indexOf(normSlug) !== -1))
         );
 
-        if (isMatch) {
-          updatedCustomPosts = true;
-          return;
-        }
-        filteredCustomPosts.push(p);
+        return !isAlreadyInDom;
       });
 
-      if (updatedCustomPosts) {
-        localStorage.setItem('custom_saved_posts', JSON.stringify(filteredCustomPosts));
-      }
-
-      const categoryPosts = filteredCustomPosts.filter((p: any) => p.category === 'ai' && !deletedSlugs.includes(p.slug) && !deletedSlugs.includes(p.id));
       const gridContainer = document.querySelector('.posts-grid-container');
       const emptyStateContainer = document.querySelector('.posts-empty-state');
 
