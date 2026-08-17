@@ -176,6 +176,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
             if (isExplicitPattern || isShortTitleLine) {
               const isH3 = cleanText.toLowerCase().startsWith('phương pháp');
               const newEl = document.createElement(isH3 ? 'h3' : 'h2');
+              newEl.className = isH3 
+                ? 'text-lg sm:text-xl font-bold text-brand-green dark:text-emerald-400 mt-8 mb-3 pl-3 border-l-4 border-brand-green leading-snug'
+                : 'text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-10 mb-4 border-b-2 border-slate-200 dark:border-slate-800 pb-2.5 leading-snug';
               newEl.textContent = formatCleanTitle(t.replace(/^#+\s*/, ''));
               pEl.replaceWith(newEl);
             }
@@ -243,10 +246,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                   const isH2 = isExplicitH2 || isExplicitPattern || isAllCaps || isShortHeadingLine;
                   
                   if (isH3) {
-                    return `<h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug">${formatCleanTitle(cleanLine)}</h3>`;
+                    return `<h3 class="text-lg sm:text-xl font-bold text-brand-green dark:text-emerald-400 mt-8 mb-3 pl-3 border-l-4 border-brand-green leading-snug">${formatCleanTitle(cleanLine)}</h3>`;
                   }
                   if (isH2) {
-                    return `<h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug">${formatCleanTitle(cleanLine)}</h2>`;
+                    return `<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-10 mb-4 border-b-2 border-slate-200 dark:border-slate-800 pb-2.5 leading-snug">${formatCleanTitle(cleanLine)}</h2>`;
                   }
                   return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
                 }).join('\n');
