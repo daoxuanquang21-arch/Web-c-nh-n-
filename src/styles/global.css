@@ -67,10 +67,22 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    @apply font-bold tracking-tight text-brand-navy-deep dark:text-white leading-[1.25];
+    @apply font-bold tracking-tight text-brand-navy-deep dark:text-white;
     overflow-wrap: break-word;
     word-break: break-word;
     text-wrap: balance;
+  }
+
+  h1 {
+    @apply text-2xl sm:text-4xl lg:text-5xl font-extrabold leading-tight;
+  }
+
+  h2 {
+    @apply text-xl sm:text-3xl lg:text-4xl font-bold leading-snug;
+  }
+
+  h3 {
+    @apply text-lg sm:text-xl font-bold leading-snug;
   }
 }
 
