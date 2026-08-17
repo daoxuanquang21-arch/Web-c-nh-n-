@@ -134,9 +134,19 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               if (post) {
                 const mainContainer = document.querySelector('main');
                 if (mainContainer) {
-                  // Hide footer main nav links on article page
+                  // Hide footer main nav links & remove empty dark padding on article page
                   const footerNav = document.getElementById('footer-main-nav');
                   if (footerNav) footerNav.classList.add('hidden');
+
+                  const footerContainer = document.getElementById('footer-container');
+                  if (footerContainer) {
+                    footerContainer.className = 'mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6';
+                  }
+
+                  const footerBottom = document.getElementById('footer-bottom-bar');
+                  if (footerBottom) {
+                    footerBottom.className = 'flex flex-col items-center justify-center text-center gap-3 mt-0 pt-0 border-t-0';
+                  }
 
                   // Fetch related/featured posts for bottom section
                   let otherPostsHtml = '';
@@ -151,7 +161,32 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                       }
                     }
 
-                    const related = allPosts.filter((p: any) => p.slug !== slug && p.id !== `${category}/${slug}`).slice(0, 2);
+                    const fallbackPosts = [
+                      {
+                        title: 'Tư duy tối giản trong vận hành Solopreneur',
+                        description: 'Rút gọn quy trình, tự động hoá các công việc lặp đi lặp lại để tập trung vào giá trị cốt lõi.',
+                        category: 'cuoc-song',
+                        slug: 'tu-duy-toi-gian'
+                      },
+                      {
+                        title: 'Affiliate Global: Kinh nghiệm thực chiến từ 0 đến $10,000/tháng',
+                        description: 'Tổng hợp bài học, sai lầm và công thức đo lường hiệu quả quảng cáo khi làm thị trường quốc tế.',
+                        category: 'marketing',
+                        slug: 'affiliate-global'
+                      },
+                      {
+                        title: 'Vibe Coding & Xây dựng AI Agent tự động hóa vận hành',
+                        description: 'Cách ứng dụng các mô hình AI Agent vào quy trình bán hàng và chăm sóc khách hàng tự động 24/7.',
+                        category: 'ai',
+                        slug: 'vibe-coding-ai-agent'
+                      }
+                    ];
+
+                    let related = allPosts.filter((p: any) => p.slug !== slug && p.id !== `${category}/${slug}`).slice(0, 2);
+                    if (!related.length) {
+                      related = fallbackPosts.filter(p => p.slug !== slug).slice(0, 2);
+                    }
+
                     if (related.length) {
                       otherPostsHtml = `
                         <section class="mt-12 pt-10 border-t border-slate-200 dark:border-slate-800">
