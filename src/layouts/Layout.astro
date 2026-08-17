@@ -131,6 +131,23 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                 } catch (e) {}
               }
 
+              if (post && post.content) {
+                if (post.content.includes('Dropshipping') || post.content.includes('khoe làm Dropshipping')) {
+                  post.content = post.content.replace(
+                    /Thời gian trước, thấy người ta khoe làm Dropshipping[\s\S]*?kiệt quệ hoàn toàn cả thể xác lẫn tinh thần\./gi,
+                    'Cách đây không lâu, thấy người ta rầm rộ khoe làm YouTube bằng AI kiếm vài nghìn USD mỗi tháng, tôi cũng mang hết tiền tiết kiệm đi học, đêm ngày thức trắng tạo video tự động. Nhưng đời không như là mơ. Vừa làm được một thời gian ngắn thì nền tảng liên tục siết chặt chính sách, bóp tương tác và càn quét nội dung AI rác. Công sức và chi phí đổ sông đổ biển, cày 14 tiếng một ngày mà thu nhập vẫn là số 0 tròn trĩnh, kiệt quệ hoàn toàn cả về thể xác lẫn tinh thần.'
+                  );
+                  try {
+                    let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+                    const idx = customPosts.findIndex((p: any) => p.slug === slug || p.id === `${category}/${slug}` || p.id === slug);
+                    if (idx !== -1) {
+                      customPosts[idx].content = post.content;
+                      localStorage.setItem('custom_saved_posts', JSON.stringify(customPosts));
+                    }
+                  } catch(e) {}
+                }
+              }
+
               if (post) {
                 const mainContainer = document.querySelector('main');
                 if (mainContainer) {
