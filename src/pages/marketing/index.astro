@@ -106,20 +106,20 @@ const formatCleanTitle = (t: string) => {
         deletedSlugs = cleanedDeletedSlugs;
       }
 
-      // Collect existing card identifiers to avoid duplicates
+      // Collect existing card identifiers from actual DOM h2 text to avoid attribute escaping issues
       const existingNormalizedTitles = new Set();
       const existingNormalizedSlugs = new Set();
-      document.querySelectorAll('[data-post-slug]').forEach(el => {
+      document.querySelectorAll('.posts-grid-container article').forEach(el => {
         const fullId = el.getAttribute('data-post-slug') || '';
-        const titleAttr = el.getAttribute('data-post-title') || '';
         const slugOnly = fullId.split('/').pop() || '';
+        const h2Text = el.querySelector('h2')?.textContent || '';
         
         if (deletedSlugs.includes(fullId) || deletedSlugs.includes(slugOnly)) {
           el.remove();
         } else {
           existingNormalizedSlugs.add(normalizeText(fullId));
           existingNormalizedSlugs.add(normalizeText(slugOnly));
-          if (titleAttr) existingNormalizedTitles.add(normalizeText(titleAttr));
+          if (h2Text) existingNormalizedTitles.add(normalizeText(h2Text));
         }
       });
 
@@ -133,7 +133,13 @@ const formatCleanTitle = (t: string) => {
         const normSlug = normalizeText(pSlug);
         const normTitle = normalizeText(p.title);
 
-        if (existingNormalizedSlugs.has(normSlug) || existingNormalizedTitles.has(normTitle)) {
+        const isMatch = Array.from(existingNormalizedTitles).some((t: any) => 
+          t === normTitle || (normTitle && t && (normTitle.includes(t) || t.includes(normTitle)))
+        ) || Array.from(existingNormalizedSlugs).some((s: any) => 
+          s === normSlug
+        );
+
+        if (isMatch) {
           updatedCustomPosts = true;
           return;
         }
