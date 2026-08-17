@@ -54,11 +54,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
           ];
           var deleted = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
           if (!Array.isArray(deleted)) deleted = [];
-          
-          // Add known deleted slugs if not present
-          ['affiliate-global', 'vibe-coding-ai-agent'].forEach(function(ds) {
-            if (deleted.indexOf(ds) === -1) deleted.push(ds);
+
+          // Ensure serverSlugs are NEVER present in deleted_post_slugs
+          var cleanDeleted = deleted.filter(function(ds) {
+            var dsNorm = (ds || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
+            var dsOnly = dsNorm.split('/').pop() || '';
+            for (var k = 0; k < serverSlugs.length; k++) {
+              var ssNorm = serverSlugs[k].toLowerCase().replace(/[^a-z0-9]/gi, '');
+              if (dsNorm === ssNorm || dsOnly === ssNorm) return false;
+            }
+            return true;
           });
+          if (cleanDeleted.length !== deleted.length) {
+            localStorage.setItem('deleted_post_slugs', JSON.stringify(cleanDeleted));
+            deleted = cleanDeleted;
+          }
 
           var custom = localStorage.getItem('custom_saved_posts');
           if (custom) {
@@ -83,15 +93,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
             localStorage.setItem('custom_saved_posts', JSON.stringify(clean));
           }
 
-          // DOM Purge helper for deleted post cards
+          // DOM Purge helper for deleted post cards (EXACT slug matching only)
           var purgeDeletedDOM = function() {
             document.querySelectorAll('a[href]').forEach(function(a) {
-              var href = (a.getAttribute('href') || '').toLowerCase();
-              var hNorm = href.replace(/[^a-z0-9]/gi, '');
+              var rawHref = a.getAttribute('href') || '';
+              var cleanHref = rawHref.split('?')[0].split('#')[0].replace(/\/$/, '').toLowerCase();
+              var hrefSlug = cleanHref.split('/').pop() || '';
+              if (!hrefSlug) return;
+
+              // NEVER purge active serverSlugs
+              if (serverSlugs.indexOf(hrefSlug) !== -1) return;
+
               for (var d = 0; d < deleted.length; d++) {
-                var delItem = (deleted[d] || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
-                if (delItem && delItem.length > 3 && hNorm.indexOf(delItem) !== -1) {
-                  var card = a.closest('.grid > a, div.group, article') || a;
+                var delItem = (deleted[d] || '').toLowerCase().replace(/\.mdx?$/, '');
+                var delSlug = delItem.split('/').pop() || '';
+                if (delSlug && hrefSlug === delSlug) {
+                  var card = a.closest('.posts-grid-container > article, .grid > a, div.group, article') || a;
                   card.remove();
                   break;
                 }

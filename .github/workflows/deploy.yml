@@ -20,6 +20,6 @@ jobs:
             git fetch --all
             git reset --hard origin/main
             npm install
-            rm -rf dist
+            rm -rf .astro dist
             npm run build
             systemctl reload nginx

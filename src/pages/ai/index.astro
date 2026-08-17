@@ -53,7 +53,7 @@ const formatCleanTitle = (t: string) => {
               </div>
 
               <h2 class="text-2xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-gold-accent transition-colors">
-                <a href={`/ai/${post.id}`}>
+                <a href={`/ai/${post.id.replace(/\.mdx?$/, '')}`}>
                   {formatCleanTitle(post.data.title)}
                 </a>
               </h2>
@@ -65,7 +65,7 @@ const formatCleanTitle = (t: string) => {
           </div>
 
           <div class="px-6 pb-6">
-            <a href={`/ai/${post.id}`} class="inline-flex items-center text-sm font-semibold text-brand-600 dark:text-brand-500 hover:underline">
+            <a href={`/ai/${post.id.replace(/\.mdx?$/, '')}`} class="inline-flex items-center text-sm font-semibold text-brand-600 dark:text-brand-500 hover:underline">
               Đọc tiếp &rarr;
             </a>
           </div>
