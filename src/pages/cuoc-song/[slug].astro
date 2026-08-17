@@ -14,7 +14,14 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 const allPosts = await getCollection('cuoc-song');
-const relatedPosts = allPosts.filter(p => p.id !== post.id).slice(0, 2);
+const normalizeText = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
+const relatedPosts = allPosts.filter(p => {
+  const pNormSlug = normalizeText(p.id);
+  const pNormTitle = normalizeText(p.data.title);
+  const currentNormSlug = normalizeText(post.id);
+  const currentNormTitle = normalizeText(post.data.title);
+  return pNormSlug !== currentNormSlug && pNormTitle !== currentNormTitle;
+}).slice(0, 2);
 
 const formatCleanTitle = (t: string) => {
   if (!t) return '';

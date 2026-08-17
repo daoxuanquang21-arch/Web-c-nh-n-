@@ -221,9 +221,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                       }
                     ];
 
-                    let related = allPosts.filter((p: any) => p.slug !== slug && p.id !== `${category}/${slug}`).slice(0, 2);
+                    const normCurrentSlug = normalizeText(slug);
+                    const normCurrentTitle = normalizeText(cleanTitle);
+
+                    let related = allPosts.filter((p: any) => {
+                      const pNormSlug = normalizeText(p.slug || p.id);
+                      const pNormTitle = normalizeText(p.title);
+                      return !pNormSlug.includes('cuchaytheo') && pNormSlug !== normCurrentSlug && pNormTitle !== normCurrentTitle;
+                    }).slice(0, 2);
+
                     if (!related.length) {
-                      related = fallbackPosts.filter(p => p.slug !== slug).slice(0, 2);
+                      related = fallbackPosts.filter(p => {
+                        const pNormSlug = normalizeText(p.slug);
+                        const pNormTitle = normalizeText(p.title);
+                        return pNormSlug !== normCurrentSlug && pNormTitle !== normCurrentTitle;
+                      }).slice(0, 2);
                     }
 
                     if (related.length) {
