@@ -136,6 +136,10 @@
   border-bottom-color: #1e293b !important;
 }
 
+.prose hr {
+  display: none !important;
+}
+
 .prose h3 {
   font-size: 1.25rem !important;
   line-height: 1.4 !important;

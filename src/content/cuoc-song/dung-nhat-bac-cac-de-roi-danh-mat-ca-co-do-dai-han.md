@@ -14,8 +14,6 @@ Tôi cá là anh em ngồi đây, không ít thì nhiều, đã từng rơi vào
 
 Rõ ràng, nhìn người ta phất lên “như diều gặp gió” thì lòng mình gợn sóng lắm chứ. Nhưng đằng sau cái bẫy của sự phồn vinh giả tạo đó là một triết lý cực kỳ khắc nghiệt mà những người muốn làm việc lớn phải thấu hiểu.
 
----
-
 ## Khi cả thế giới hối hả nhặt bạc cắc, tại sao những “người khổng lồ” lại chọn cách ngồi im?
 
 Hầu hết anh em mình lớn lên với tư duy: *“Cờ tới tay ai người nấy phất”*, *“Có tiền ngu gì không kiếm”*. Thấy cơ hội ra tiền là lao vào cắn xé.
@@ -28,23 +26,17 @@ Thực chất, bí mật cốt lõi của những người chơi hệ “bền v
 
 Chắc anh em từng nghe về bài test “Kẹo dẻo” (Marshmallow Experiment) nổi tiếng của Đại học Stanford. Đứa trẻ nào chịu nhịn ăn 1 viên kẹo hôm nay để được nhận 2 viên vào ngày mai, sau này lớn lên đều có thu nhập cao hơn, sức khoẻ tốt hơn và tỷ lệ thành công vượt trội.
 
----
-
 ## Nghe thì lý thuyết, nhưng áp dụng vào đời thực thì đắng ngắt!
 
 Nhịn viên kẹo lúc 5 tuổi thì dễ, chứ nhịn “tiền chục, tiền trăm triệu” lúc 25, 30 tuổi thì khó vô cùng. Nhất là khi xung quanh anh em, bạn bè đua nhau flex nhà, flex xe nhờ dăm ba cái trò “hit and run” (đánh nhanh thắng nhanh). Cái nỗi đau thực sự ở đây là chúng ta rất khó cưỡng lại cám dỗ trước mắt, đặc biệt khi xung quanh nhiều người chọn con đường ngắn hạn.
 
 Nó tạo ra một thứ áp lực đồng trang lứa (FOMO) kinh khủng khiếp. Mình làm tử tế thì chậm rì, bọn nó làm lôm côm thì tiền vô như nước.
 
----
-
 ## Nhưng vấn đề lớn nhất mà tôi thấy ở anh em là gì, biết không?
 
 Đó là cái giá phải trả cho việc “nhặt bạc cắc”. Nếu anh em cứ nhắm mắt chọn cái lợi ngay lập tức, hậu quả sẽ là: **Đánh đổi liên tục lợi ích ngắn hạn, đến cuối cùng không đạt được cả ngắn hạn lẫn dài hạn.**
 
 Nay anh em chạy ads bùng, mai anh em bán kem trộn, mốt anh em làm trò lùa gà. 5 năm sau nhìn lại, trong tay anh em không có một thương hiệu, không có uy tín, không có một tệp khách hàng trung thành nào. Anh em đang xây một lâu đài trên cát, sóng đánh một phát là trôi sạch.
-
----
 
 ## Áp dụng khung tư duy “Từ chối khéo”: Kỷ luật để kiên định với con đường dài
 
@@ -72,8 +64,6 @@ Người khôn ngoan chọn cày cuốc những kỹ năng “tích lãi kép”
 
 Mỗi lần anh em dũng cảm gạt bỏ một món “tiền bẩn”, một “dự án rác”, là anh em đang tự giải phóng không gian, thời gian và năng lượng để chuẩn bị đón nhận những cơ hội lớn gấp 10 lần ở phía sau.
 
----
-
 ## Lời kết: Anh em đang dựng lều hay xây cao ốc?
 
 Anh em thử tưởng tượng xem: Dựng một cái lều vỉa hè chỉ mất 1 buổi chiều. Nhưng để xây một tòa nhà chọc trời, người ta mất cả năm trời ròng rã chỉ để đào móng – một công việc mệt mỏi, tốn kém và chẳng ai nhìn thấy thành quả nhô lên khỏi mặt đất.
@@ -83,7 +73,5 @@ Nếu chỉ nhìn bằng con mắt ngắn hạn, thằng dựng lều sẽ đứ
 > Cuộc sống và kinh doanh là những trò chơi dài hạn (long-term games). Hãy chơi nó với những con người dài hạn (long-term people).
 
 Tối nay, trước khi đưa ra một quyết định kiểu như “có nên nhảy việc chỉ vì thêm 2 triệu tiền lương” hay “có nên nhập lô hàng dởm này để tối ưu biên độ lợi nhuận”, hãy dừng lại 3 giây và tự hỏi: **Lựa chọn này có đang giết chết phiên bản vĩ đại của tôi trong 5 năm tới không?**
-
----
 
 Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nào mà anh em đã dũng cảm nói KHÔNG để bảo vệ mục tiêu dài hạn chưa? Kể tôi nghe ở dưới phần bình luận nhé, để xem anh em mình đã “tỉnh đòn” đến mức nào rồi!
