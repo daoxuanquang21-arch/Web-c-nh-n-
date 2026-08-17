@@ -64,7 +64,7 @@ const cleanTitle = formatCleanTitle(post.data.title);
         <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-green/10 text-brand-green dark:bg-brand-green/20 border border-brand-green/20">
           🏷️ Marketing
         </span>
-        <time datetime={post.data.pubDate.toISOString()} class="font-medium">
+        <time id="article-pub-date" datetime={post.data.pubDate.toISOString()} class="font-medium">
           📅 {post.data.pubDate.toLocaleDateString('vi-VN', {
             year: 'numeric',
             month: 'long',

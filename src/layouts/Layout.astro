@@ -272,7 +272,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
 
             // Always update <time> tag on article page if pubDate was updated in Admin
             if (post && post.pubDate) {
-              const timeEl = document.querySelector('article header time, main time, time');
+              const timeEl = document.getElementById('article-pub-date') || document.querySelector('article header time, main time, time');
               if (timeEl) {
                 const pubDateObj = new Date(post.pubDate);
                 if (!isNaN(pubDateObj.getTime())) {
