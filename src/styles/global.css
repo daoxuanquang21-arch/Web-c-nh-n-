@@ -70,7 +70,7 @@
     @apply font-bold tracking-tight text-brand-navy-deep dark:text-white;
     overflow-wrap: break-word;
     word-break: break-word;
-    text-wrap: balance;
+    text-wrap: pretty;
   }
 
   h1 {
@@ -109,9 +109,11 @@
 /* Lightweight markdown typography styling */
 .prose h1, .prose h2, .prose h3, .prose h4 {
   @apply font-display font-bold text-brand-navy-deep dark:text-white tracking-tight;
+  text-wrap: pretty;
 }
 .prose h2 {
-  @apply text-2xl mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2;
+  @apply text-xl sm:text-2xl mt-8 mb-4 border-b border-brand-line dark:border-slate-800 pb-2 leading-snug;
+  text-wrap: pretty;
 }
 .prose h3 {
   @apply text-xl mt-6 mb-3;
