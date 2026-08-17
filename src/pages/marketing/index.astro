@@ -133,7 +133,7 @@ const formatCleanTitle = (t: string) => {
         deletedSlugs = cleanedDeletedSlugs;
       }
 
-      // Collect existing card identifiers from actual DOM h2 text to avoid attribute escaping issues
+      // Collect existing card identifiers from actual DOM h2 text and normalize slug matching
       const existingNormalizedTitles = new Set();
       const existingNormalizedSlugs = new Set();
       document.querySelectorAll('.posts-grid-container article').forEach(el => {
@@ -141,12 +141,27 @@ const formatCleanTitle = (t: string) => {
         const slugOnly = fullId.split('/').pop() || '';
         const h2Text = el.querySelector('h2')?.textContent || '';
         
-        if (deletedSlugs.includes(fullId) || deletedSlugs.includes(slugOnly)) {
+        const normFullId = normalizeText(fullId);
+        const normSlugOnly = normalizeText(slugOnly);
+        const normTitle = normalizeText(h2Text);
+
+        const isDeleted = deletedSlugs.some((del: string) => {
+          const normDel = normalizeText(del);
+          return normDel && (
+            normDel === normFullId ||
+            normDel === normSlugOnly ||
+            normDel === normTitle ||
+            (normDel.length > 8 && normTitle.includes(normDel)) ||
+            (normDel.length > 8 && normFullId.includes(normDel))
+          );
+        });
+
+        if (isDeleted) {
           el.remove();
         } else {
-          if (fullId) existingNormalizedSlugs.add(normalizeText(fullId));
-          if (slugOnly) existingNormalizedSlugs.add(normalizeText(slugOnly));
-          if (h2Text) existingNormalizedTitles.add(normalizeText(h2Text));
+          if (fullId) existingNormalizedSlugs.add(normFullId);
+          if (slugOnly) existingNormalizedSlugs.add(normSlugOnly);
+          if (h2Text) existingNormalizedTitles.add(normTitle);
         }
       });
 
