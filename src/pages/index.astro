@@ -138,10 +138,10 @@ const faqs = [
                 Năm 2023, ngay khi vừa tốt nghiệp, tôi quyết định xin làm việc không lương cho một người anh thành đạt. Tại môi trường đó, tôi may mắn được gặp gỡ và làm việc cùng những con người vô cùng giỏi giang và chân thành. Dù xuất phát điểm của tôi lúc ấy rất thấp – thứ duy nhất tôi mang theo chỉ là tinh thần cầu tiến, sự chăm chỉ và lòng chân thành – nhưng họ vẫn luôn bao bọc, nâng đỡ và đối xử với tôi như một người em trong nhà. Họ tận tình chỉ dạy cho tôi từ tư duy, marketing đến tài chính – những bài học vô giá mà lẽ ra tôi phải đánh đổi bằng rất nhiều năm tháng và tiền bạc mới có thể tiếp cận được. Tôi biết ơn sâu sắc những con người tử tế ấy, những người đã đặt nền móng vững chắc để tôi tiếp tục tiến lên trong hiện tại. Và giờ đây, tôi muốn chia sẻ lại toàn bộ những trải nghiệm đó với bạn, hy vọng chúng sẽ là điểm tựa hữu ích giúp bạn rút ngắn con đường tìm kiếm của riêng mình.
               </p>
               {latestCuocSong && (
-                <div class="p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors">
+                <div class="chapter-card p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors" data-post-slug={latestCuocSong.id.split('/').pop()?.replace(/\.mdx?$/, '')}>
                   <div>
                     <span class="font-bold text-brand-blue-dark block mb-1 text-xs">Chiêm nghiệm mới nhất:</span>
-                    <a href={`/cuoc-song/${latestCuocSong.id}`} class="text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
+                    <a href={`/cuoc-song/${latestCuocSong.id.split('/').pop()?.replace(/\.mdx?$/, '')}`} class="chapter-title text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
                       {latestCuocSong.data.title}
                     </a>
                   </div>
@@ -167,10 +167,10 @@ const faqs = [
                 Sau khi tích lũy đủ tri thức từ những người đi trước, tôi quyết định tự đứng trên đôi chân của mình bằng việc bước chân vào thị trường Global Ads và Affiliate Marketing. Tại đây, tôi áp dụng triết lý "tư duy bất cân đối" (Asymmetric Payoff) – tập trung thiết kế các chiến dịch thông minh với chi phí và rủi ro tối thiểu, nhằm khai thác biên độ lợi nhuận tối đa từ nguồn traffic quốc tế. Đây là bước đi quan trọng giúp tôi thấu hiểu sức mạnh của dòng tiền tự động.
               </p>
               {latestMarketing && (
-                <div class="p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors">
+                <div class="chapter-card p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors" data-post-slug={latestMarketing.id.split('/').pop()?.replace(/\.mdx?$/, '')}>
                   <div>
                     <span class="font-bold text-brand-blue-dark block mb-1 text-xs">Case study mới nhất:</span>
-                    <a href={`/marketing/${latestMarketing.id}`} class="text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
+                    <a href={`/marketing/${latestMarketing.id.split('/').pop()?.replace(/\.mdx?$/, '')}`} class="chapter-title text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
                       {latestMarketing.data.title}
                     </a>
                   </div>
@@ -196,10 +196,10 @@ const faqs = [
                 Khi quy mô hệ thống Marketing tăng trưởng nhanh chóng, tôi nhận ra những giới hạn của việc vận hành thủ công. Đó là lúc tôi chủ động đón đầu làn sóng Vibe Coding và bước vào kỷ nguyên AI Agent. Tôi ngừng viết mã thủ công, dịch chuyển hoàn toàn sang vai trò Kiến trúc sư Hệ thống để huấn luyện và điều phối các AI tự vận hành, tối ưu hóa hiệu suất và giải phóng tối đa sức lao động.
               </p>
               {latestAi && (
-                <div class="p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors">
+                <div class="chapter-card p-4 rounded-xl bg-brand-paper border border-brand-line text-xs sm:text-sm flex justify-between items-center group hover:border-brand-blue/30 transition-colors" data-post-slug={latestAi.id.split('/').pop()?.replace(/\.mdx?$/, '')}>
                   <div>
                     <span class="font-bold text-brand-blue-dark block mb-1 text-xs">Bài viết mới nhất:</span>
-                    <a href={`/ai/${latestAi.id}`} class="text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
+                    <a href={`/ai/${latestAi.id.split('/').pop()?.replace(/\.mdx?$/, '')}`} class="chapter-title text-brand-navy-deep font-semibold hover:text-brand-green hover:underline">
                       {latestAi.data.title}
                     </a>
                   </div>
