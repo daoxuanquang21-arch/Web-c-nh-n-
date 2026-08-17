@@ -1046,15 +1046,34 @@ Ví dụ: Tư duy tư vấn giải pháp, kỹ năng thấu hiểu tâm lý khá
 
           const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
           
+          // Clean stale deletedSlugs and customPosts from browser localStorage
+          const activeSlugs = [
+            'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep',
+            'cu-chay-theo-nhung-ky-nang-dang-hot',
+            'cu-chay-theo-nhung-ky-nang-dang-hot-thi-ca-doi-anh-em-chi-di-don-mam-cho-ke-khac',
+            'affiliate-global',
+            'vibe-coding-ai-agent',
+            'cuoc-song',
+            'marketing',
+            'ai'
+          ];
+
           let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
-          const invalidDeleted = ['cuoc-song', 'marketing', 'ai', 'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep', 'cu-chay-theo-nhung-ky-nang-dang-hot'];
-          deletedSlugs = deletedSlugs.filter((s: string) => !invalidDeleted.includes(s));
+          deletedSlugs = deletedSlugs.filter((s: string) => 
+            !activeSlugs.some(act => s.includes(act) || act.includes(s))
+          );
           localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
+
+          let customPostsArr = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+          customPostsArr = customPostsArr.filter((p: any) => 
+            p && p.slug && !p.slug.includes('cu-chay-theo-nhung-ky-nang-dang-hot-thi-ca-doi-anh-em')
+          );
+          localStorage.setItem('custom_saved_posts', JSON.stringify(customPostsArr));
 
           const mergedMap = new Map();
           defaultPosts.forEach((p: any) => mergedMap.set(p.slug, p));
           serverPosts.forEach((p: any) => mergedMap.set(p.slug, p));
-          customPosts.forEach((p: any) => mergedMap.set(p.slug, p));
+          customPostsArr.forEach((p: any) => mergedMap.set(p.slug, p));
 
           currentPosts = Array.from(mergedMap.values()).filter((p: any) => 
             !deletedSlugs.includes(p.slug) && 
