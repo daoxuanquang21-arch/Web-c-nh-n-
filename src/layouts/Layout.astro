@@ -115,23 +115,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
             );
           }
 
-          // 2. Direct localStorage sweep and update
-          try {
-            let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
-            let updated = false;
-            customPosts.forEach((p: any) => {
-              if (p.content && (p.content.includes('Dropshipping') || p.content.includes('khoe làm Dropshipping'))) {
-                p.content = p.content.replace(
-                  /Thời gian trước, thấy người ta khoe làm Dropshipping[\s\S]*?kiệt quệ hoàn toàn cả thể xác lẫn tinh thần\./gi,
-                  newYtText
-                );
-                updated = true;
-              }
-            });
-            if (updated) {
-              localStorage.setItem('custom_saved_posts', JSON.stringify(customPosts));
+          // 3. Auto-convert ALL CAPS headings in article body to Sentence Case
+          document.querySelectorAll('article h1, article h2, article h3, article h4, .prose h1, .prose h2, .prose h3, .prose h4').forEach((el) => {
+            const t = el.textContent || '';
+            const lettersOnly = t.replace(/[^a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/g, '');
+            if (lettersOnly.length > 4 && lettersOnly === lettersOnly.toUpperCase()) {
+              let lower = t.toLowerCase();
+              lower = lower.charAt(0).toUpperCase() + lower.slice(1);
+              el.textContent = lower.replace(/\b(ai|seo|sop|hot|vps|ui|ux|ads|cpm|cpc)\b/gi, (m) => m.toUpperCase());
             }
-          } catch (e) {}
+          });
 
           const pathname = window.location.pathname.replace(/\/$/, '');
           const parts = pathname.split('/').filter(Boolean);

@@ -8,6 +8,10 @@ author: 'Đào Xuân Quảng'
 tags: ["Cuộc sống", "Tư duy", "Kỹ năng đất nền", "AI"]
 ---
 
+## Cái bẫy của "lợi ích tức thì" bóp chết lợi thế cạnh tranh
+
 Cách đây không lâu, thấy người ta rầm rộ khoe làm YouTube bằng AI kiếm vài nghìn USD mỗi tháng, tôi cũng mang hết tiền tiết kiệm đi học, đêm ngày thức trắng tạo video tự động. Nhưng đời không như là mơ. Vừa làm được một thời gian ngắn thì nền tảng liên tục siết chặt chính sách, bóp tương tác và càn quét nội dung AI rác. Công sức và chi phí đổ sông đổ biển, cày 14 tiếng một ngày mà thu nhập vẫn là số 0 tròn trĩnh, kiệt quệ hoàn toàn cả về thể xác lẫn tinh thần.
+
+## Đừng mua đất mặt tiền đã đu đỉnh, hãy mua "đất nền kỹ năng"
 
 Anh em ngẫm thử xem, mình đang có lợi thế gì để gieo một "Kỹ năng Đất nền" chưa? Đừng để 3 năm nữa lại tiếc nuối "giá như ngày đó mình học...".
