@@ -190,7 +190,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
     {!hideNavFooter && <Navbar />}
 
     <!-- Main Content -->
-    <main class="flex-grow flex flex-col">
+    <main class={`flex-grow flex flex-col ${!hideNavFooter ? 'pt-16' : ''}`}>
       <slot />
     </main>
 
