@@ -32,9 +32,7 @@ Nhịn viên kẹo lúc 5 tuổi thì dễ, chứ nhịn “tiền chục, tiề
 
 Nó tạo ra một thứ áp lực đồng trang lứa (FOMO) kinh khủng khiếp. Mình làm tử tế thì chậm rì, bọn nó làm lôm côm thì tiền vô như nước.
 
-## Nhưng vấn đề lớn nhất mà tôi thấy ở anh em là gì, biết không?
-
-Đó là cái giá phải trả cho việc “nhặt bạc cắc”. Nếu anh em cứ nhắm mắt chọn cái lợi ngay lập tức, hậu quả sẽ là: **Đánh đổi liên tục lợi ích ngắn hạn, đến cuối cùng không đạt được cả ngắn hạn lẫn dài hạn.**
+Nhưng vấn đề lớn nhất mà tôi thấy ở anh em là gì, biết không? Đó là cái giá phải trả cho việc “nhặt bạc cắc”. Nếu anh em cứ nhắm mắt chọn cái lợi ngay lập tức, hậu quả sẽ là: **Đánh đổi liên tục lợi ích ngắn hạn, đến cuối cùng không đạt được cả ngắn hạn lẫn dài hạn.**
 
 Nay anh em chạy ads bùng, mai anh em bán kem trộn, mốt anh em làm trò lùa gà. 5 năm sau nhìn lại, trong tay anh em không có một thương hiệu, không có uy tín, không có một tệp khách hàng trung thành nào. Anh em đang xây một lâu đài trên cát, sóng đánh một phát là trôi sạch.
 
@@ -54,7 +52,7 @@ Một cơ hội kiếm 100 củ ngay hôm nay nhưng khiến khách hàng chửi
 
 ### 2. Chạy theo trend thay vì xây dựng Kỹ năng lõi
 
-Hôm nay thấy AI hot đi lùa gà bán khóa học rác. Ngày mai thấy sàn thương mại điện tử hot lại đi làm tools spam. Anh em đang chơi trò “đập chuột” cực kỳ tốn sức. 
+Hôm nay thấy AI hot đi lùa gà bán khóa học rác. Ngày mai thấy sàn thương mại điện tử hot lại đi làm tools spam. Anh em đang chơi trò “đập chuột” cực kỳ tốn sức.
 
 Người khôn ngoan chọn cày cuốc những kỹ năng “tích lãi kép” như viết lách, thuyết trình, thấu hiểu tâm lý con người – những thứ mất nhiều tháng để thành thục nhưng kiếm tiền cả đời.
 
@@ -73,5 +71,3 @@ Nếu chỉ nhìn bằng con mắt ngắn hạn, thằng dựng lều sẽ đứ
 > Cuộc sống và kinh doanh là những trò chơi dài hạn (long-term games). Hãy chơi nó với những con người dài hạn (long-term people).
 
 Tối nay, trước khi đưa ra một quyết định kiểu như “có nên nhảy việc chỉ vì thêm 2 triệu tiền lương” hay “có nên nhập lô hàng dởm này để tối ưu biên độ lợi nhuận”, hãy dừng lại 3 giây và tự hỏi: **Lựa chọn này có đang giết chết phiên bản vĩ đại của tôi trong 5 năm tới không?**
-
-Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nào mà anh em đã dũng cảm nói KHÔNG để bảo vệ mục tiêu dài hạn chưa? Kể tôi nghe ở dưới phần bình luận nhé, để xem anh em mình đã “tỉnh đòn” đến mức nào rồi!
