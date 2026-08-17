@@ -2,8 +2,28 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 
+const normalizeTextServer = (s: string) => {
+  return (s || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[đĐ]/g, 'd')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+};
+
 const posts = await getCollection('cuoc-song');
-const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const seenSSGTitles = new Set();
+const sortedPosts = posts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .filter(p => {
+    const nt = normalizeTextServer(p.data.title);
+    if (!nt) return false;
+    for (let t of Array.from(seenSSGTitles) as string[]) {
+      if (t === nt || (t.length > 10 && (t.indexOf(nt) !== -1 || nt.indexOf(t) !== -1))) return false;
+    }
+    seenSSGTitles.add(nt);
+    return true;
+  });
 
 const formatCleanTitle = (t: string) => {
   if (!t) return '';

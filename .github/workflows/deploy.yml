@@ -19,6 +19,7 @@ jobs:
             cd /var/www/blog
             git fetch --all
             git reset --hard origin/main
+            git clean -fd
             npm install
             rm -rf .astro dist
             npm run build
