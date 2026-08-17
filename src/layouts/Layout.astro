@@ -44,16 +44,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
     <meta name="title" content={title} />
     <meta name="description" content={description} />
 
-    <!-- Immediate localStorage cleanup for legacy cuchaytheo and static server slugs -->
+    <!-- Immediate localStorage & DOM cleanup for deleted and legacy posts -->
     <script is:inline>
       (function() {
         try {
           var serverSlugs = [
             'cu-chay-theo-nhung-ky-nang-dang-hot',
-            'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep',
-            'affiliate-global',
-            'vibe-coding-ai-agent'
+            'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep'
           ];
+          var deleted = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+          if (!Array.isArray(deleted)) deleted = [];
+          
+          // Add known deleted slugs if not present
+          ['affiliate-global', 'vibe-coding-ai-agent'].forEach(function(ds) {
+            if (deleted.indexOf(ds) === -1) deleted.push(ds);
+          });
+
           var custom = localStorage.getItem('custom_saved_posts');
           if (custom) {
             var posts = JSON.parse(custom);
@@ -64,7 +70,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               var t = (p.title || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
               var s = (p.slug || p.id || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
               var sOnly = s.split('/').pop();
-              if (t.indexOf('cuchaytheo') !== -1 || s.indexOf('cuchaytheo') !== -1 || serverSlugs.indexOf(s) !== -1 || serverSlugs.indexOf(sOnly) !== -1) {
+
+              if (t.indexOf('cuchaytheo') !== -1 || s.indexOf('cuchaytheo') !== -1 || serverSlugs.indexOf(s) !== -1 || serverSlugs.indexOf(sOnly) !== -1 || deleted.indexOf(s) !== -1 || deleted.indexOf(sOnly) !== -1) {
                 continue;
               }
               if (seen[t]) {
@@ -74,6 +81,28 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               clean.push(p);
             }
             localStorage.setItem('custom_saved_posts', JSON.stringify(clean));
+          }
+
+          // DOM Purge helper for deleted post cards
+          var purgeDeletedDOM = function() {
+            document.querySelectorAll('a[href]').forEach(function(a) {
+              var href = (a.getAttribute('href') || '').toLowerCase();
+              var hNorm = href.replace(/[^a-z0-9]/gi, '');
+              for (var d = 0; d < deleted.length; d++) {
+                var delItem = (deleted[d] || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
+                if (delItem && delItem.length > 3 && hNorm.indexOf(delItem) !== -1) {
+                  var card = a.closest('.grid > a, div.group, article') || a;
+                  card.remove();
+                  break;
+                }
+              }
+            });
+          };
+
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', purgeDeletedDOM);
+          } else {
+            purgeDeletedDOM();
           }
         } catch(e) {}
       })();
