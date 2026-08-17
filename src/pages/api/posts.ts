@@ -1,7 +1,33 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+function formatContentHeadings(content: string): string {
+  if (!content) return '';
+  const lines = content.split(/\r?\n/);
+  const formatted = lines.map(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return '';
+    if (trimmed.startsWith('#')) return line;
+    
+    const cleanLine = trimmed.replace(/^[#\-\*]+\s*/, '');
+    const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
+    const lastChar = cleanLine.slice(-1);
+    const isPunctuationEnd = ['.', ',', ';'].includes(lastChar);
+    
+    const isExplicitSection = /^(bài này dành cho|\d+\.|phương pháp \d+|tóm lại|cái bẫy|đừng|hãy)/i.test(cleanLine);
+    const isShortHeadingLine = hasLetters && cleanLine.length >= 4 && cleanLine.length <= 110 && !isPunctuationEnd && !line.includes('http');
+    const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase();
 
+    if (isExplicitSection || isAllCaps || (isShortHeadingLine && !line.startsWith('*') && !line.startsWith('-'))) {
+      if (cleanLine.toLowerCase().startsWith('phương pháp')) {
+        return `### ${cleanLine}`;
+      }
+      return `## ${cleanLine}`;
+    }
+    return line;
+  });
+  return formatted.join('\n');
+}
 
 // Helper to parse frontmatter from markdown
 function parseMarkdown(filePath: string) {
@@ -137,6 +163,8 @@ export async function POST({ request }: { request: Request }) {
     const postStatus = status === 'private' ? 'private' : 'public';
     const isDraft = postStatus === 'private';
 
+    const formattedPostContent = formatContentHeadings(content || '');
+
     // Format Frontmatter
     const fileContent = `---
 title: "${title.replace(/"/g, '\\"')}"
@@ -149,7 +177,7 @@ image: "${image || ''}"
 ${tagsStr}
 ---
 
-${content || ''}
+${formattedPostContent}
 `;
 
     fs.writeFileSync(filePath, fileContent, 'utf-8');
