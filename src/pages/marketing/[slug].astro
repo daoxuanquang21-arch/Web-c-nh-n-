@@ -12,6 +12,10 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+
+const allPosts = await getCollection('marketing');
+const relatedPosts = allPosts.filter(p => p.id !== post.id).slice(0, 2);
+
 const formatCleanTitle = (t: string) => {
   if (!t) return '';
   const lettersOnly = t.replace(/[^a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/g, '');
@@ -66,5 +70,38 @@ const cleanTitle = formatCleanTitle(post.data.title);
     <div class="prose max-w-none text-slate-800 dark:text-slate-200 leading-relaxed sm:text-lg">
       <Content />
     </div>
+
+    {relatedPosts.length > 0 && (
+      <section class="mt-12 pt-10 border-t border-slate-200 dark:border-slate-800">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+            🔥 Bài Viết Nổi Bật Khác
+          </h2>
+          <a href="/marketing" class="text-xs sm:text-sm font-bold text-brand-green hover:underline">
+            Xem tất cả &rarr;
+          </a>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+          {relatedPosts.map(rp => (
+            <a href={`/marketing/${rp.id}`} class="group p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-brand-green transition-all shadow-sm flex flex-col justify-between">
+              <div>
+                <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green/10 text-brand-green mb-2">
+                  🏷️ Marketing
+                </span>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-green transition-colors line-clamp-2 leading-snug">
+                  {formatCleanTitle(rp.data.title)}
+                </h3>
+                {rp.data.description && <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">{rp.data.description}</p>}
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-xs font-bold text-brand-green">
+                <span>Đọc tiếp</span>
+                <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
   </article>
 </Layout>

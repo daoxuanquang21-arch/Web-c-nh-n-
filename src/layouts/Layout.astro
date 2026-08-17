@@ -134,41 +134,65 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               if (post) {
                 const mainContainer = document.querySelector('main');
                 if (mainContainer) {
-                  // Helper to convert ALL CAPS titles to elegant Sentence Case
-                  const formatCleanTitle = (t: string) => {
-                    if (!t) return '';
-                    const lettersOnly = t.replace(/[^a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/g, '');
-                    if (lettersOnly.length > 5 && lettersOnly === lettersOnly.toUpperCase()) {
-                      let lower = t.toLowerCase();
-                      lower = lower.charAt(0).toUpperCase() + lower.slice(1);
-                      return lower.replace(/\b(ai|seo|sop|hot|vps|ui|ux|ads|cpm|cpc)\b/gi, (m) => m.toUpperCase());
-                    }
-                    return t;
-                  };
+                  // Hide footer main nav links on article page
+                  const footerNav = document.getElementById('footer-main-nav');
+                  if (footerNav) footerNav.classList.add('hidden');
 
-                  const cleanTitle = formatCleanTitle(post.title);
-                  document.title = `${cleanTitle} | daoxuanquang.com.vn`;
-                  const pubDateObj = post.pubDate ? new Date(post.pubDate) : new Date();
-                  const formattedDate = pubDateObj.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
-                  const catLabel = category === 'cuoc-song' ? 'Cuộc sống' : (category === 'ai' ? 'AI' : 'Marketing');
-
-                  let formattedContent = post.content || '';
-                  if (!formattedContent.trim().startsWith('<')) {
-                    const rawLines = formattedContent.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
-                    formattedContent = rawLines.map((line: string) => {
-                      const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
-                      const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
-                      const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 150 && cleanLine === cleanLine.toUpperCase();
-                      const isHeading = isAllCaps || line.startsWith('#');
-
-                      if (isHeading) {
-                        return `<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-3 leading-snug">${formatCleanTitle(cleanLine)}</h2>`;
+                  // Fetch related/featured posts for bottom section
+                  let otherPostsHtml = '';
+                  try {
+                    let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+                    let allPosts = customPosts;
+                    if (!allPosts.length) {
+                      const res = await fetch('/api/posts');
+                      if (res.ok) {
+                        const data = await res.json();
+                        allPosts = data.posts || [];
                       }
-                      return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
-                    }).join('\n');
-                  }
+                    }
 
-                  const imageHtml = post.image ? `<img src="${post.image}" alt="${cleanTitle}" class="w-full max-h-96 object-cover rounded-2xl mb-8 shadow-md" />` : '';
+                    const related = allPosts.filter((p: any) => p.slug !== slug && p.id !== `${category}/${slug}`).slice(0, 2);
+                    if (related.length) {
+                      otherPostsHtml = `
+                        <section class="mt-12 pt-10 border-t border-slate-200 dark:border-slate-800">
+                          <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                              🔥 Bài Viết Nổi Bật Khác
+                            </h2>
+                            <a href="/${category}" class="text-xs sm:text-sm font-bold text-brand-green hover:underline">
+                              Xem tất cả &rarr;
+                            </a>
+                          </div>
+
+                          <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                            ${related.map((rp: any) => {
+                              const rpCat = rp.category || category;
+                              const rpUrl = `/${rpCat}/${rp.slug || rp.id}`;
+                              const rpTitle = formatCleanTitle(rp.title);
+                              const rpCatLabel = rpCat === 'cuoc-song' ? 'Cuộc sống' : (rpCat === 'ai' ? 'AI' : 'Marketing');
+                              return `
+                                <a href="${rpUrl}" class="group p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-brand-green transition-all shadow-sm flex flex-col justify-between">
+                                  <div>
+                                    <span class="inline-block text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-brand-green/10 text-brand-green mb-2">
+                                      🏷️ ${rpCatLabel}
+                                    </span>
+                                    <h3 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-green transition-colors line-clamp-2 leading-snug">
+                                      ${rpTitle}
+                                    </h3>
+                                    ${rp.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-2 leading-relaxed">${rp.description}</p>` : ''}
+                                  </div>
+                                  <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between text-xs font-bold text-brand-green">
+                                    <span>Đọc tiếp</span>
+                                    <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                                  </div>
+                                </a>
+                              `;
+                            }).join('')}
+                          </div>
+                        </section>
+                      `;
+                    }
+                  } catch (e) {}
 
                   mainContainer.innerHTML = `
                     <article class="py-8 sm:py-12 px-4 max-w-3xl mx-auto min-h-[70vh] w-full">
@@ -206,6 +230,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                       <div class="prose max-w-none text-slate-800 dark:text-slate-200 leading-relaxed sm:text-lg">
                         ${formattedContent}
                       </div>
+
+                      ${otherPostsHtml}
                     </article>
                   `;
                 }
