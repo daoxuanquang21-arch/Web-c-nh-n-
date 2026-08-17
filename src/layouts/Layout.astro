@@ -71,7 +71,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               var s = (p.slug || p.id || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
               var sOnly = s.split('/').pop();
 
-              if (t.indexOf('cuchaytheo') !== -1 || s.indexOf('cuchaytheo') !== -1 || serverSlugs.indexOf(s) !== -1 || serverSlugs.indexOf(sOnly) !== -1 || deleted.indexOf(s) !== -1 || deleted.indexOf(sOnly) !== -1) {
+              if (serverSlugs.indexOf(s) !== -1 || serverSlugs.indexOf(sOnly) !== -1 || deleted.indexOf(s) !== -1 || deleted.indexOf(sOnly) !== -1) {
                 continue;
               }
               if (seen[t]) {
@@ -357,7 +357,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                       const pNormTitle = normalizeText(p.title);
                       
                       if (!pNormTitle || seenTitles.has(pNormTitle)) return;
-                      if (pNormTitle.includes('cuchaytheo') || pNormSlug.includes('cuchaytheo')) return;
                       if (pNormSlug === normCurrentSlug || pNormTitle === normCurrentTitle) return;
                       
                       seenTitles.add(pNormTitle);

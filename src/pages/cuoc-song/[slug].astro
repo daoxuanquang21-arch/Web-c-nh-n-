@@ -34,9 +34,7 @@ seenTitles.add(currentNormTitle);
 
 const relatedPosts = candidatePosts.filter(p => {
   const pNormTitle = normalizeText(p.data.title);
-  const pNormSlug = normalizeText(p.id);
   if (!pNormTitle || seenTitles.has(pNormTitle)) return false;
-  if (pNormTitle.includes('cuchaytheo') || pNormSlug.includes('cuchaytheo')) return false;
   seenTitles.add(pNormTitle);
   return true;
 }).slice(0, 2);
