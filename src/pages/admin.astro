@@ -1788,17 +1788,28 @@ Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó 
             return `## ${trimmed.replace(/^#+\s*/, '')}`;
           }
 
-          const cleanLine = trimmed.replace(/^[#\-\*]+\s*/, '');
+          // Check blockquote
+          if (/^>/.test(trimmed)) return trimmed;
+          if (/^[“"'][\s\S]+[”"']$/.test(trimmed) && trimmed.length < 220 && !trimmed.includes('\n')) {
+            return `> ${trimmed.replace(/^[“"']|[”"']$/g, '')}`;
+          }
+
+          // Check list items
+          if (/^[\-\*\+•]\s+/.test(trimmed)) {
+            return `- ${trimmed.replace(/^[\-\*\+•]\s+/, '')}`;
+          }
+
+          const cleanLine = trimmed.replace(/^[#\-\*•\+]\s*/, '');
           const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
           const lastChar = cleanLine.slice(-1);
           const isPunctuationEnd = ['.', ',', ';'].includes(lastChar);
           
-          // Pattern detection for H3 (Sub-methods, steps, tips)
-          const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|\d+\.\d+)\s*\d*[:\.]/i.test(cleanLine);
+          // Pattern detection for H3 (Sub-methods, steps, tips, branches, etc.)
+          const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|bí quyết|mẹo|ví dụ|\d+\.\d+)\s*\d*[:\.]/i.test(cleanLine);
           
-          // Pattern detection for H2 (Major numbered sections, summary, conclusions)
-          const isH2Explicit = /^(bài này dành cho|\d+\.|tóm lại|kết luận|cái bẫy|nguyên nhân|giải pháp|tổng kết)/i.test(cleanLine);
-          const isShortHeadingLine = hasLetters && cleanLine.length >= 4 && cleanLine.length <= 110 && !isPunctuationEnd && !line.includes('http');
+          // Pattern detection for H2 (Major numbered sections, summary, conclusions, Roman numerals)
+          const isH2Explicit = /^(bài này dành cho|bài này|\d+\.|\d+\/|phần \d+|chương \d+|mục \d+|[IVXLCDM]+\.|\d+\s*[-–—]|tóm lại|kết luận|cái bẫy|nguyên nhân|giải pháp|tổng kết|đúc kết|lời khuyên)/i.test(cleanLine);
+          const isShortHeadingLine = hasLetters && cleanLine.length >= 4 && cleanLine.length <= 110 && !isPunctuationEnd && !line.includes('http') && !line.includes('://');
           const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase();
 
           if (isH3Pattern) {
@@ -1899,7 +1910,31 @@ Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó 
           }
           pContent.value = standardizeArticleHeadings(pContent.value);
           runRealtimeSEOAnalyzer();
-          showToast('✨ Đã tự động phân loại Heading (H2 Navy / H3 Xanh Lá) chuẩn đồng bộ!');
+          showToast('⚡ Đã tự động phân loại Heading (H2 Navy / H3 Xanh Lá) chuẩn đồng bộ!');
+        });
+      }
+
+      // AUTOMATIC PASTE & BLUR HEADING SEPARATION LISTENER
+      if (pContent) {
+        pContent.addEventListener('paste', () => {
+          setTimeout(() => {
+            if (!pContent.value.trim()) return;
+            const formatted = standardizeArticleHeadings(pContent.value);
+            if (formatted !== pContent.value) {
+              pContent.value = formatted;
+              runRealtimeSEOAnalyzer();
+              showToast('⚡ Đã tự động phân chia Heading H2 (Xanh Navy) & H3 (Xanh Lá) đồng bộ 100%!');
+            }
+          }, 80);
+        });
+
+        pContent.addEventListener('blur', () => {
+          if (!pContent.value.trim()) return;
+          const formatted = standardizeArticleHeadings(pContent.value);
+          if (formatted !== pContent.value) {
+            pContent.value = formatted;
+            runRealtimeSEOAnalyzer();
+          }
         });
       }
 
