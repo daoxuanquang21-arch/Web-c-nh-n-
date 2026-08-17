@@ -66,13 +66,13 @@ Mỗi khi vô tình biết được một kiến thức mới lạ ngoài ngành
 
 Anh em không cần dùng nó hôm nay. Cứ cất vào kho.
 
-Não bộ có một siêu năng lực gọi là **"Sáng tạo tổ hợp"**. Nó sẽ âm thầm giữ các mảnh ghép đó lại. Đến khi anh em gặp một bài toán hóc búa trong công việc, não sẽ tự động móc nối kiến thức sinh học, lịch sử hay nghệ thuật kia để tạo ra một giải pháp đột phá mà những người chỉ học chuyên môn thuần túy không bao giờ nghĩ ra được.
+Não bộ có một siêu năng lực gọi là **"Sáng tạo tổ hợp"**. Nó sẽ âm thầm giữ các mảnh ghép đó lại. Đến khi anh em gặp một bài toán hóc búa trong công việc,脑 sẽ tự động móc nối kiến thức sinh học, lịch sử hay nghệ thuật kia để tạo ra một giải pháp đột phá mà những người chỉ học chuyên môn thuần túy không bao giờ nghĩ ra được.
 
 ## Tóm lại
 
 1. Cảm giác tiếc thời gian khi học thứ chưa dùng ngay chỉ là ảo giác phòng vệ của não bộ nguyên thủy.
 2. Những cơ hội lớn nhất luôn nằm ở vùng giao thoa giữa các lĩnh vực, chứ không nằm ở đáy giếng chuyên môn hẹp.
-3. Cứ gom nhặt kiến thức nền tảng rộng rãi mỗi ngày 15 phút mà không cần áp lực, để não bộ tự lo phần kết nối.
+3. Cứ gom nhặt kiến thức nền tảng rộng rãi mỗi ngày 15 phút mà không cần áp lực, để脑 bộ tự lo phần kết nối.
 
 Vào một buổi họp hay một đợt khủng hoảng nào đó trong tương lai, khi tất cả đồng nghiệp xung quanh đang loay hoay với những lối mòn cũ kỹ... Anh em bất ngờ đưa ra một góc nhìn khác biệt, giải quyết êm đẹp bài toán lớn bằng một nguyên lý mượn từ lĩnh vực chẳng ai ngờ tới.
 
