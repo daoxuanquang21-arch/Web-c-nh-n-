@@ -12,30 +12,55 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const formatCleanTitle = (t: string) => {
+  if (!t) return '';
+  const lettersOnly = t.replace(/[^a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/g, '');
+  if (lettersOnly.length > 5 && lettersOnly === lettersOnly.toUpperCase()) {
+    let lower = t.toLowerCase();
+    lower = lower.charAt(0).toUpperCase() + lower.slice(1);
+    return lower.replace(/\b(ai|seo|sop|hot|vps|ui|ux|ads|cpm|cpc)\b/gi, (m) => m.toUpperCase());
+  }
+  return t;
+};
+
+const cleanTitle = formatCleanTitle(post.data.title);
 ---
 
-<Layout title={`${post.data.title} | Quang Blog`} description={post.data.description}>
-  <article class="py-16 px-4 max-w-3xl mx-auto">
-    <a href="/marketing" class="text-sm font-semibold text-brand-600 dark:text-brand-500 hover:underline mb-6 inline-block">&larr; Quay lại danh sách</a>
+<Layout title={`${cleanTitle} | Quang Blog`} description={post.data.description}>
+  <article class="py-8 sm:py-12 px-4 max-w-3xl mx-auto min-h-[70vh] w-full">
+    <a href="/marketing" class="text-xs sm:text-sm font-semibold text-brand-green dark:text-brand-green hover:underline mb-6 inline-flex items-center gap-1.5">&larr; Quay lại danh sách Marketing</a>
     
-    <header class="mb-10">
-      <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
-        <time datetime={post.data.pubDate.toISOString()}>
-          {post.data.pubDate.toLocaleDateString('vi-VN', {
+    <header class="mb-8">
+      <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+        <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-green/10 text-brand-green dark:bg-brand-green/20 border border-brand-green/20">
+          🏷️ Marketing
+        </span>
+        <time datetime={post.data.pubDate.toISOString()} class="font-medium">
+          📅 {post.data.pubDate.toLocaleDateString('vi-VN', {
             year: 'numeric',
             month: 'long',
             day: 'numeric',
           })}
         </time>
-        <span>•</span>
-        <span class="font-semibold text-gold-accent">Marketing</span>
       </div>
+
       <h1 class="text-xl sm:text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white leading-snug tracking-tight mb-4">
-        {post.data.title}
+        {cleanTitle}
       </h1>
-      <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed italic">
-        {post.data.description}
-      </p>
+
+      {post.data.description && (
+        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border-l-4 border-brand-green mb-6 text-base sm:text-lg text-slate-700 dark:text-slate-300 leading-relaxed italic shadow-sm">
+          {post.data.description}
+        </div>
+      )}
+
+      <div class="flex items-center gap-3 pt-2 pb-6 border-b border-slate-200 dark:border-slate-800">
+        <div class="w-10 h-10 rounded-xl bg-brand-green text-white font-extrabold text-lg flex items-center justify-center shadow-md shrink-0">Q</div>
+        <div>
+          <div class="text-sm font-bold text-slate-900 dark:text-white">Đào Xuân Quảng</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Tác giả • Solopreneur & AI Operator</div>
+        </div>
+      </div>
     </header>
 
     <div class="prose max-w-none text-slate-800 dark:text-slate-200 leading-relaxed sm:text-lg">
