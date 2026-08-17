@@ -134,10 +134,10 @@ const formatCleanTitle = (t: string) => {
         const normTitle = normalizeText(p.title);
 
         const isMatch = Array.from(existingNormalizedTitles).some((t: any) => 
-          t.includes('cuchaytheo') || t === normTitle || (normTitle && t && (normTitle.includes(t) || t.includes(normTitle)))
+          t === normTitle || (normTitle && t && (normTitle.includes(t) || t.includes(normTitle)))
         ) || Array.from(existingNormalizedSlugs).some((s: any) => 
-          s.includes('cuchaytheo') || s === normSlug
-        ) || normTitle.includes('cuchaytheo') || normSlug.includes('cuchaytheo');
+          s === normSlug
+        );
 
         if (isMatch) {
           updatedCustomPosts = true;
