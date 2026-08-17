@@ -70,6 +70,7 @@
     @apply font-bold tracking-tight text-brand-navy-deep dark:text-white leading-[1.25];
     overflow-wrap: break-word;
     word-break: break-word;
+    text-wrap: balance;
   }
 }
 
