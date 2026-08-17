@@ -255,25 +255,38 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
             const category = parts[0];
             const slug = parts[1];
 
+            let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+            let post = customPosts.find((p: any) => p.slug === slug || p.id === `${category}/${slug}` || p.id === slug);
+
+            if (!post) {
+              try {
+                const res = await fetch('/api/posts');
+                if (res.ok) {
+                  const data = await res.json();
+                  if (data.posts) {
+                    post = data.posts.find((p: any) => p.slug === slug || p.id === `${category}/${slug}`);
+                  }
+                }
+              } catch (e) {}
+            }
+
+            // Always update <time> tag on article page if pubDate was updated in Admin
+            if (post && post.pubDate) {
+              const timeEl = document.querySelector('article header time, main time, time');
+              if (timeEl) {
+                const pubDateObj = new Date(post.pubDate);
+                if (!isNaN(pubDateObj.getTime())) {
+                  const formattedDate = pubDateObj.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+                  timeEl.setAttribute('datetime', pubDateObj.toISOString());
+                  timeEl.textContent = `📅 ${formattedDate}`;
+                }
+              }
+            }
+
             // Check if actual article detail h1 is missing on page
             const existingArticleTitle = document.querySelector('article h1');
-            if (!existingArticleTitle) {
-              let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
-              let post = customPosts.find((p: any) => p.slug === slug || p.id === `${category}/${slug}` || p.id === slug);
-
-              if (!post) {
-                try {
-                  const res = await fetch('/api/posts');
-                  if (res.ok) {
-                    const data = await res.json();
-                    if (data.posts) {
-                      post = data.posts.find((p: any) => p.slug === slug || p.id === `${category}/${slug}`);
-                    }
-                  }
-                } catch (e) {}
-              }
-
-              if (post && post.content) {
+            if (!existingArticleTitle && post) {
+              if (post.content) {
                 if (post.content.includes('Dropshipping') || post.content.includes('khoe làm Dropshipping')) {
                   post.content = post.content.replace(
                     /Thời gian trước, thấy người ta khoe làm Dropshipping[\s\S]*?kiệt quệ hoàn toàn cả thể xác lẫn tinh thần\./gi,
@@ -290,19 +303,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                 }
               }
 
-              if (post) {
-                if (post.pubDate) {
-                  const timeEl = document.querySelector('time');
-                  if (timeEl) {
-                    const pubDateObj = new Date(post.pubDate);
-                    if (!isNaN(pubDateObj.getTime())) {
-                      timeEl.setAttribute('datetime', pubDateObj.toISOString());
-                      timeEl.textContent = pubDateObj.toLocaleDateString('vi-VN', { day: '2-digit', month: 'long', year: 'numeric' });
-                    }
-                  }
-                }
+              const pubDateObj = post.pubDate ? new Date(post.pubDate) : new Date();
+              const formattedDate = pubDateObj.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
 
-                let formattedContent = post.content || '';
+              let formattedContent = post.content || '';
                 const rawLines = formattedContent.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
                 formattedContent = rawLines.map((line: string) => {
                   const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
@@ -496,7 +500,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                 }
               }
             }
-          }
         } catch (e) {
           console.error('Fallback article renderer error:', e);
         }
