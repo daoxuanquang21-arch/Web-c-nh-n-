@@ -90,6 +90,11 @@ export async function GET() {
 
       const files = fs.readdirSync(catDir).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
       for (const file of files) {
+        const slug = file.replace(/\.mdx?$/, '');
+        if (slug.includes('cu-chay-theo-nhung-ky-nang-dang-hot-thi-ca-doi-anh-em') || slug.length > 50) {
+          try { fs.unlinkSync(path.join(catDir, file)); } catch(e) {}
+          continue;
+        }
         const filePath = path.join(catDir, file);
         const parsed = parseMarkdown(filePath);
         if (parsed) {
