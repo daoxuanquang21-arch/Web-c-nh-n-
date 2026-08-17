@@ -95,7 +95,14 @@ const formatCleanTitle = (t: string) => {
         return t;
       };
 
-      const normalizeText = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
+      const normalizeText = (s: string) => {
+        return (s || '')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[đĐ]/g, 'd')
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, '');
+      };
 
       // 1. Sanitize deleted_post_slugs in localStorage
       let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
@@ -117,8 +124,8 @@ const formatCleanTitle = (t: string) => {
         if (deletedSlugs.includes(fullId) || deletedSlugs.includes(slugOnly)) {
           el.remove();
         } else {
-          existingNormalizedSlugs.add(normalizeText(fullId));
-          existingNormalizedSlugs.add(normalizeText(slugOnly));
+          if (fullId) existingNormalizedSlugs.add(normalizeText(fullId));
+          if (slugOnly) existingNormalizedSlugs.add(normalizeText(slugOnly));
           if (h2Text) existingNormalizedTitles.add(normalizeText(h2Text));
         }
       });
@@ -134,9 +141,9 @@ const formatCleanTitle = (t: string) => {
         const normTitle = normalizeText(p.title);
 
         const isMatch = Array.from(existingNormalizedTitles).some((t: any) => 
-          t === normTitle || (normTitle && t && (normTitle.includes(t) || t.includes(normTitle)))
+          t === normTitle || (normTitle && t && (normTitle.indexOf(t) !== -1 || t.indexOf(normTitle) !== -1))
         ) || Array.from(existingNormalizedSlugs).some((s: any) => 
-          s === normSlug
+          s === normSlug || (normSlug && s && (normSlug.indexOf(s) !== -1 || s.indexOf(normSlug) !== -1))
         );
 
         if (isMatch) {
