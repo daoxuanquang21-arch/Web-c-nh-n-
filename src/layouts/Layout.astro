@@ -291,6 +291,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
               }
 
               if (post) {
+                if (post.pubDate) {
+                  const timeEl = document.querySelector('time');
+                  if (timeEl) {
+                    const pubDateObj = new Date(post.pubDate);
+                    if (!isNaN(pubDateObj.getTime())) {
+                      timeEl.setAttribute('datetime', pubDateObj.toISOString());
+                      timeEl.textContent = pubDateObj.toLocaleDateString('vi-VN', { day: '2-digit', month: 'long', year: 'numeric' });
+                    }
+                  }
+                }
+
                 let formattedContent = post.content || '';
                 const rawLines = formattedContent.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
                 formattedContent = rawLines.map((line: string) => {

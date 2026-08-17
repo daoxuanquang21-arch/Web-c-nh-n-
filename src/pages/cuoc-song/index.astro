@@ -162,6 +162,25 @@ const formatCleanTitle = (t: string) => {
         if (isDeleted) {
           el.remove();
         } else {
+          // Check if custom_saved_posts has updated pubDate or title for existing DOM card
+          const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+          const matchingCustom = customPosts.find((p: any) => {
+            const ps = normalizeText(p.slug || p.id);
+            const pt = normalizeText(p.title);
+            return (ps && (ps === normSlugOnly || ps === normFullId)) || (pt && pt === normTitle);
+          });
+
+          if (matchingCustom && matchingCustom.pubDate) {
+            const timeEl = el.querySelector('time');
+            if (timeEl) {
+              const pubDateObj = new Date(matchingCustom.pubDate);
+              if (!isNaN(pubDateObj.getTime())) {
+                timeEl.setAttribute('datetime', pubDateObj.toISOString());
+                timeEl.textContent = pubDateObj.toLocaleDateString('vi-VN', { day: '2-digit', month: 'long', year: 'numeric' });
+              }
+            }
+          }
+
           if (fullId) existingNormalizedSlugs.add(normFullId);
           if (slugOnly) existingNormalizedSlugs.add(normSlugOnly);
           if (h2Text) existingNormalizedTitles.add(normTitle);
