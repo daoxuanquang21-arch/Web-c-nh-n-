@@ -896,28 +896,66 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
       // API loading function
       async function loadAllData() {
         try {
-          // 1. Fetch Posts
-          const postsRes = await fetch('/api/posts');
-          let serverPosts: any[] = [];
-          if (postsRes.ok) {
-            const contentType = postsRes.headers.get('content-type') || '';
-            if (contentType.includes('application/json')) {
-              const data = await postsRes.json();
-              if (data.success) serverPosts = data.posts || [];
+          const defaultPosts = [
+            {
+              id: 'cuoc-song/dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep',
+              slug: 'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep',
+              category: 'cuoc-song',
+              title: 'Đừng tự nhốt mình dưới đáy giếng của một chuyên môn hẹp!',
+              description: 'Chỉ thạo một nghề là rủi ro lớn nhất thời nay. Học ngay cách mở rộng kho kiến thức ngầm để không bế tắc trước những bài toán chưa từng có tiền lệ.',
+              pubDate: '2026-08-17',
+              status: 'public',
+              draft: false,
+              author: 'Đào Xuân Quảng',
+              tags: ['Cuộc sống', 'Kỹ năng', 'Tư duy']
+            },
+            {
+              id: 'cuoc-song/cu-chay-theo-nhung-ky-nang-dang-hot',
+              slug: 'cu-chay-theo-nhung-ky-nang-dang-hot',
+              category: 'cuoc-song',
+              title: 'Cứ chạy theo những kỹ năng đang "HOT" thì cả đời anh em chỉ đi dọn mâm cho kẻ khác',
+              description: 'Thấy trend gì cũng vội đi học? Anh em đang tự ném mình vào biển đỏ! Khám phá ngay tư duy săn "đất nền kỹ năng" để làm trùm ngách, x10 thu nhập từ bây giờ.',
+              pubDate: '2026-08-16',
+              status: 'public',
+              draft: false,
+              author: 'Đào Xuân Quảng',
+              tags: ['Cuộc sống', 'Tư duy', 'Kỹ năng đất nền', 'AI']
             }
+          ];
+
+          let serverPosts: any[] = [];
+          try {
+            const postsRes = await fetch('/api/posts');
+            if (postsRes.ok) {
+              const contentType = postsRes.headers.get('content-type') || '';
+              if (contentType.includes('application/json')) {
+                const data = await postsRes.json();
+                if (data && data.success && Array.isArray(data.posts) && data.posts.length > 0) {
+                  serverPosts = data.posts;
+                }
+              }
+            }
+          } catch(e) {}
+
+          if (serverPosts.length === 0) {
+            serverPosts = defaultPosts;
           }
 
           const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
-          const deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
           
+          let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+          const invalidDeleted = ['cuoc-song', 'marketing', 'ai', 'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep', 'cu-chay-theo-nhung-ky-nang-dang-hot'];
+          deletedSlugs = deletedSlugs.filter((s: string) => !invalidDeleted.includes(s));
+          localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
+
           const mergedMap = new Map();
+          defaultPosts.forEach((p: any) => mergedMap.set(p.slug, p));
           serverPosts.forEach((p: any) => mergedMap.set(p.slug, p));
           customPosts.forEach((p: any) => mergedMap.set(p.slug, p));
-          
+
           currentPosts = Array.from(mergedMap.values()).filter((p: any) => 
             !deletedSlugs.includes(p.slug) && 
             !deletedSlugs.includes(p.id) && 
-            !deletedSlugs.includes(p.title) &&
             !deletedSlugs.includes(`${p.category}/${p.slug}`)
           );
           renderPosts();
@@ -927,45 +965,79 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             const subRes = await fetch('/api/subscribe');
             if (subRes.ok && (subRes.headers.get('content-type') || '').includes('application/json')) {
               const data = await subRes.json();
-              if (data && data.success) {
+              if (data && data.success && Array.isArray(data.subscribers)) {
                 const deletedSubs = JSON.parse(localStorage.getItem('deleted_sub_emails') || '[]');
-                currentSubscribers = (data.subscribers || []).filter((s: any) => !deletedSubs.includes(s.email));
-                renderSubscribers();
+                currentSubscribers = data.subscribers.filter((s: any) => !deletedSubs.includes(s.email));
               }
             }
           } catch (e) {}
+          renderSubscribers();
 
           // 3. Fetch Leads
           try {
             const leadsRes = await fetch('/api/leads');
             if (leadsRes.ok && (leadsRes.headers.get('content-type') || '').includes('application/json')) {
               const data = await leadsRes.json();
-              if (data && data.success) {
+              if (data && data.success && Array.isArray(data.leads)) {
                 const deletedLeads = JSON.parse(localStorage.getItem('deleted_lead_emails') || '[]');
-                currentLeads = (data.leads || []).filter((l: any) => !deletedLeads.includes(l.email));
-                renderLeads();
+                currentLeads = data.leads.filter((l: any) => !deletedLeads.includes(l.email));
               }
             }
           } catch (e) {}
+          renderLeads();
 
           // 4. Fetch Products
+          const defaultProducts = [
+            {
+              id: "ai-sales-automation",
+              title: "AI Sales Automation System",
+              description: "Hệ thống tự động hóa phản hồi Zalo/Messenger & Chốt đơn 24/7 ứng dụng AI Agents.",
+              type: "SaaS & Micro Tools",
+              status: "Đang hoạt động",
+              price: "Liên hệ",
+              icon: "🤖"
+            },
+            {
+              id: "sop-prompt-ai-kit",
+              title: "Bộ Quy Trình SOP & Prompt AI",
+              description: "Kho tài nguyên quy trình đóng gói doanh nghiệp và 100+ Prompt AI thực chiến.",
+              type: "Digital Products",
+              status: "Sẵn sàng",
+              price: "1.990.000đ",
+              icon: "⚡"
+            },
+            {
+              id: "coaching-solopreneur-1on1",
+              title: "Chương Trình Kèm Cặp 1-1 Solopreneur",
+              description: "Huấn luyện thực chiến xây dựng hệ thống bán hàng tự động và tự do tài chính.",
+              type: "Dịch Vụ & Đào Tạo",
+              status: "Đang nhận học viên",
+              price: "Thỏa thuận",
+              icon: "🚀"
+            }
+          ];
+
           try {
             const prodRes = await fetch('/api/products');
             if (prodRes.ok && (prodRes.headers.get('content-type') || '').includes('application/json')) {
               const data = await prodRes.json();
-              if (data && data.success) {
+              if (data && data.success && Array.isArray(data.products) && data.products.length > 0) {
                 const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
-                currentProducts = (data.products || []).filter((p: any) => !deletedIds.includes(p.id));
-                renderProducts();
+                currentProducts = data.products.filter((p: any) => !deletedIds.includes(p.id));
               }
             }
           } catch (e) {}
+
+          if (currentProducts.length === 0) {
+            const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
+            currentProducts = defaultProducts.filter((p: any) => !deletedIds.includes(p.id));
+          }
+          renderProducts();
 
           // 5. Update Stats Overview counts
           updateOverviewStats();
         } catch (error) {
           console.error('Error loading API data:', error);
-          showToast('Không kết nối được local API, đang dùng dữ liệu cache.', true);
         }
       };
 
