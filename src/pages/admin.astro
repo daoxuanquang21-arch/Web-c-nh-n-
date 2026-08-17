@@ -1025,10 +1025,11 @@ Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó 
 
           const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
           
-          // Only protect category names from deletedSlugs
+          // Protect active system posts from stale local storage deletions
+          const activeSystemSlugs = ['dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep', 'affiliate-global', 'vibe-coding-ai-agent'];
           const protectedCategories = ['cuoc-song', 'marketing', 'ai'];
           let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
-          deletedSlugs = deletedSlugs.filter((s: string) => !protectedCategories.includes(s));
+          deletedSlugs = deletedSlugs.filter((s: string) => !protectedCategories.includes(s) && !activeSystemSlugs.includes(s));
           localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
 
           let customPostsArr = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
