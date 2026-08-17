@@ -13,14 +13,29 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const allPosts = await getCollection('ai');
+const allCuocSong = await getCollection('cuoc-song');
+const allMarketing = await getCollection('marketing');
+const allAi = await getCollection('ai');
+
+const candidatePosts = [
+  ...allCuocSong.map(p => ({ ...p, category: 'cuoc-song', catLabel: 'Cuộc sống' })),
+  ...allMarketing.map(p => ({ ...p, category: 'marketing', catLabel: 'Marketing' })),
+  ...allAi.map(p => ({ ...p, category: 'ai', catLabel: 'AI' }))
+];
+
 const normalizeText = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
-const relatedPosts = allPosts.filter(p => {
-  const pNormSlug = normalizeText(p.id);
+const currentNormTitle = normalizeText(post.data.title);
+
+const seenTitles = new Set();
+seenTitles.add(currentNormTitle);
+
+const relatedPosts = candidatePosts.filter(p => {
   const pNormTitle = normalizeText(p.data.title);
-  const currentNormSlug = normalizeText(post.id);
-  const currentNormTitle = normalizeText(post.data.title);
-  return pNormSlug !== currentNormSlug && pNormTitle !== currentNormTitle;
+  const pNormSlug = normalizeText(p.id);
+  if (!pNormTitle || seenTitles.has(pNormTitle)) return false;
+  if (pNormTitle.includes('cuchaytheo') || pNormSlug.includes('cuchaytheo')) return false;
+  seenTitles.add(pNormTitle);
+  return true;
 }).slice(0, 2);
 
 const formatCleanTitle = (t: string) => {

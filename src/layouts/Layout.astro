@@ -44,6 +44,34 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
     <meta name="title" content={title} />
     <meta name="description" content={description} />
 
+    <!-- Immediate localStorage cleanup for legacy cuchaytheo duplicates -->
+    <script is:inline>
+      (function() {
+        try {
+          var custom = localStorage.getItem('custom_saved_posts');
+          if (custom) {
+            var posts = JSON.parse(custom);
+            var seen = {};
+            var clean = [];
+            for (var i = 0; i < posts.length; i++) {
+              var p = posts[i];
+              var t = (p.title || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
+              var s = (p.slug || p.id || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
+              if (t.indexOf('cuchaytheo') !== -1 || s.indexOf('cuchaytheo') !== -1) {
+                continue;
+              }
+              if (seen[t]) {
+                continue;
+              }
+              seen[t] = true;
+              clean.push(p);
+            }
+            localStorage.setItem('custom_saved_posts', JSON.stringify(clean));
+          }
+        } catch(e) {}
+      })();
+    </script>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={articleDate ? 'article' : 'website'} />
     <meta property="og:url" content={Astro.url} />
