@@ -980,32 +980,6 @@ Não bộ có một siêu năng lực gọi là **“Sáng tạo tổ hợp”**
 Vào một buổi họp hay một đợt khủng hoảng nào đó trong tương lai, khi tất cả đồng nghiệp xung quanh đang loay hoay với những lối mòn cũ kỹ… Anh em bất ngờ đưa ra một góc nhìn khác biệt, giải quyết êm đẹp bài toán lớn bằng một nguyên lý mượn từ lĩnh vực chẳng ai ngờ tới.
 
 Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó là “sự nhạy bén thiên bẩm”. Nhưng chỉ anh em hiểu rằng, đó là quả ngọt của những “viên đạn” đã âm thầm tích lũy trong kho vũ khí ngầm từ nhiều năm trước.`
-            },
-            {
-              id: 'marketing/affiliate-global',
-              slug: 'affiliate-global',
-              category: 'marketing',
-              title: 'Affiliate Global: Kinh nghiệm thực chiến từ 0 đến $10,000/tháng',
-              description: 'Tổng hợp bài học, sai lầm và công thức đo lường hiệu quả quảng cáo khi làm thị trường quốc tế.',
-              pubDate: '2026-08-10',
-              status: 'public',
-              draft: false,
-              author: 'Đào Xuân Quảng',
-              tags: ['Marketing', 'Affiliate', 'Global', 'Ads'],
-              content: `Làm Affiliate thị trường quốc tế (Global Affiliate) chưa bao giờ là câu chuyện trải đầy hoa hồng.`
-            },
-            {
-              id: 'ai/vibe-coding-ai-agent',
-              slug: 'vibe-coding-ai-agent',
-              category: 'ai',
-              title: 'Vibe Coding & Xây dựng AI Agent tự động hóa vận hành',
-              description: 'Cách ứng dụng các mô hình AI Agent vào quy trình bán hàng và chăm sóc khách hàng tự động 24/7.',
-              pubDate: '2026-08-12',
-              status: 'public',
-              draft: false,
-              author: 'Đào Xuân Quảng',
-              tags: ['AI', 'Vibe Coding', 'AI Agent', 'Automation'],
-              content: `Trong năm 2026, khái niệm "Vibe Coding" và "AI Agent" không còn là những thuật ngữ lý thuyết xa lạ.`
             }
           ];
 
@@ -1026,7 +1000,7 @@ Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó 
           const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
           
           // Protect active system posts from stale local storage deletions
-          const activeSystemSlugs = ['dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep', 'affiliate-global', 'vibe-coding-ai-agent'];
+          const activeSystemSlugs = ['dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep'];
           const protectedCategories = ['cuoc-song', 'marketing', 'ai'];
           let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
           deletedSlugs = deletedSlugs.filter((s: string) => !protectedCategories.includes(s) && !activeSystemSlugs.includes(s));

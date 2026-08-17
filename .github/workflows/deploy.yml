@@ -21,6 +21,6 @@ jobs:
             git reset --hard origin/main
             git clean -fd
             npm install
-            rm -rf .astro dist
+            rm -rf .astro dist node_modules/.astro node_modules/.vite
             npm run build
             systemctl reload nginx
