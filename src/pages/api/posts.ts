@@ -14,14 +14,15 @@ function formatContentHeadings(content: string): string {
     const lastChar = cleanLine.slice(-1);
     const isPunctuationEnd = ['.', ',', ';'].includes(lastChar);
     
-    const isExplicitSection = /^(bài này dành cho|\d+\.|phương pháp \d+|tóm lại|cái bẫy|đừng|hãy)/i.test(cleanLine);
+    const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|\d+\.\d+)\s*\d*[:\.]/i.test(cleanLine);
+    const isH2Explicit = /^(bài này dành cho|\d+\.|tóm lại|kết luận|cái bẫy|nguyên nhân|giải pháp|tổng kết)/i.test(cleanLine);
     const isShortHeadingLine = hasLetters && cleanLine.length >= 4 && cleanLine.length <= 110 && !isPunctuationEnd && !line.includes('http');
     const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase();
 
-    if (isExplicitSection || isAllCaps || (isShortHeadingLine && !line.startsWith('*') && !line.startsWith('-'))) {
-      if (cleanLine.toLowerCase().startsWith('phương pháp')) {
-        return `### ${cleanLine}`;
-      }
+    if (isH3Pattern) {
+      return `### ${cleanLine}`;
+    }
+    if (isH2Explicit || isAllCaps || (isShortHeadingLine && !line.startsWith('*') && !line.startsWith('-') && !line.startsWith('>'))) {
       return `## ${cleanLine}`;
     }
     return line;

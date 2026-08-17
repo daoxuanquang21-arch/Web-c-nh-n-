@@ -239,8 +239,54 @@ import Layout from '../layouts/Layout.astro';
                     </div>
 
                     <div>
-                      <label id="post-content-label" for="post-content" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">NỘI DUNG CHI TIẾT HTML / MARKDOWN *</label>
-                      <textarea id="post-content" required rows="16" placeholder="Soạn thảo nội dung bài viết HTML / Markdown chuẩn SEO v3.0 ở đây..." class="w-full px-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green font-sans text-sm leading-relaxed text-slate-200"></textarea>
+                      <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                        <div class="flex items-center gap-2">
+                          <label id="post-content-label" for="post-content" class="text-xs font-bold text-slate-400 uppercase tracking-wider">NỘI DUNG CHI TIẾT HTML / MARKDOWN *</label>
+                          <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">✨ Tự Động Định Dạng Heading & Màu Sắc</span>
+                        </div>
+                        <button type="button" id="btn-preview-content" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 transition-all flex items-center gap-1 cursor-pointer">
+                          👁️ <span id="preview-btn-text">Xem trước hiển thị</span>
+                        </button>
+                      </div>
+
+                      <!-- Heading & Style Format Bar -->
+                      <div class="p-2 rounded-xl bg-slate-900/90 border border-slate-800 flex flex-wrap items-center gap-2 mb-2">
+                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Định dạng nhanh:</span>
+                        
+                        <button type="button" id="btn-fmt-h2" title="Chèn tiêu đề lớn H2 (Xanh Navy / Đậm)" class="px-2.5 py-1 rounded-lg bg-blue-950/70 hover:bg-blue-900 border border-blue-600/40 text-blue-300 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                          <span class="font-extrabold text-blue-400">H2</span> Mục Lớn
+                        </button>
+
+                        <button type="button" id="btn-fmt-h3" title="Chèn tiêu đề nhánh H3 (Xanh Lá / Viền Trái)" class="px-2.5 py-1 rounded-lg bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-600/40 text-emerald-300 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                          <span class="font-extrabold text-emerald-400">H3</span> Phương Pháp / Mục Con
+                        </button>
+
+                        <button type="button" id="btn-fmt-quote" title="Chèn trích dẫn Blockquote (Viền xanh lá, nghiêng)" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                          <span class="font-serif italic font-bold">"</span> Trích Dẫn
+                        </button>
+
+                        <button type="button" id="btn-fmt-list" title="Chèn gạch đầu dòng" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer">
+                          • Danh Sách
+                        </button>
+
+                        <button type="button" id="btn-auto-heading" title="Tự động nhận diện và gán cỡ chữ, màu sắc đồng bộ cho toàn bộ heading" class="ml-auto px-3 py-1 rounded-lg bg-brand-green/20 hover:bg-brand-green text-brand-green hover:text-white border border-brand-green/40 text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm">
+                          ⚡ Chuẩn Hóa Heading Đồng Bộ
+                        </button>
+                      </div>
+
+                      <div class="relative">
+                        <textarea id="post-content" required rows="16" placeholder="Soạn thảo nội dung bài viết HTML / Markdown chuẩn SEO v3.0 ở đây..." class="w-full px-4 py-4 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green font-sans text-sm leading-relaxed text-slate-200"></textarea>
+                        
+                        <div id="content-preview-pane" class="hidden w-full h-[400px] overflow-y-auto px-5 py-5 rounded-xl border border-slate-800 bg-slate-950 text-slate-200 prose max-w-none text-sm leading-relaxed"></div>
+                      </div>
+
+                      <!-- Style Guide Info -->
+                      <div class="flex flex-wrap items-center gap-3 text-[11px] text-slate-400 bg-slate-950/40 p-2.5 rounded-xl border border-slate-800/60 mt-1.5">
+                        <span class="font-bold text-slate-300">Quy chuẩn hiển thị:</span>
+                        <span class="inline-flex items-center gap-1.5 text-blue-400 font-semibold"><span class="w-2 h-2 rounded-full bg-blue-500"></span> H2: Size 24px-28px • Xanh Navy • Gạch chân</span>
+                        <span class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> H3: Size 20px-22px • Xanh Lá • Viền trái</span>
+                        <span class="inline-flex items-center gap-1.5 text-amber-300 font-semibold"><span class="w-2 h-2 rounded-full bg-amber-400"></span> Trích dẫn: Nghiêng • Viền trái</span>
+                      </div>
                     </div>
 
                     <!-- Submit Action Button -->
@@ -1726,8 +1772,158 @@ Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó 
         });
       }
 
-      // Generate markdown string helper
+      // Heading Standardization & Live Preview Engine
+      function standardizeArticleHeadings(text: string): string {
+        if (!text) return '';
+        const lines = text.split(/\r?\n/);
+        const formatted = lines.map(line => {
+          const trimmed = line.trim();
+          if (!trimmed) return '';
+          
+          // Already properly marked H2 or H3
+          if (/^##\s+/.test(trimmed) || /^###\s+/.test(trimmed)) {
+            return trimmed;
+          }
+          if (/^#\s+/.test(trimmed)) {
+            return `## ${trimmed.replace(/^#+\s*/, '')}`;
+          }
 
+          const cleanLine = trimmed.replace(/^[#\-\*]+\s*/, '');
+          const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
+          const lastChar = cleanLine.slice(-1);
+          const isPunctuationEnd = ['.', ',', ';'].includes(lastChar);
+          
+          // Pattern detection for H3 (Sub-methods, steps, tips)
+          const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|\d+\.\d+)\s*\d*[:\.]/i.test(cleanLine);
+          
+          // Pattern detection for H2 (Major numbered sections, summary, conclusions)
+          const isH2Explicit = /^(bài này dành cho|\d+\.|tóm lại|kết luận|cái bẫy|nguyên nhân|giải pháp|tổng kết)/i.test(cleanLine);
+          const isShortHeadingLine = hasLetters && cleanLine.length >= 4 && cleanLine.length <= 110 && !isPunctuationEnd && !line.includes('http');
+          const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 120 && cleanLine === cleanLine.toUpperCase();
+
+          if (isH3Pattern) {
+            return `### ${cleanLine}`;
+          }
+          if (isH2Explicit || isAllCaps || (isShortHeadingLine && !line.startsWith('*') && !line.startsWith('-') && !line.startsWith('>'))) {
+            return `## ${cleanLine}`;
+          }
+          return line;
+        });
+        return formatted.join('\n');
+      }
+
+      function renderMarkdownToHtml(md: string): string {
+        if (!md) return '<p class="text-slate-500 italic">Chưa có nội dung để xem trước...</p>';
+        const lines = md.split(/\r?\n/);
+        let inList = false;
+        let htmlParts: string[] = [];
+
+        lines.forEach(line => {
+          const trimmed = line.trim();
+          if (!trimmed) {
+            if (inList) {
+              htmlParts.push('</ul>');
+              inList = false;
+            }
+            return;
+          }
+
+          if (trimmed.startsWith('### ')) {
+            if (inList) { htmlParts.push('</ul>'); inList = false; }
+            const hText = trimmed.substring(4);
+            htmlParts.push(`<h3 class="text-lg sm:text-xl font-bold text-emerald-400 mt-6 mb-2 pl-3 border-l-4 border-emerald-500">${hText}</h3>`);
+          } else if (trimmed.startsWith('## ')) {
+            if (inList) { htmlParts.push('</ul>'); inList = false; }
+            const hText = trimmed.substring(3);
+            htmlParts.push(`<h2 class="text-xl sm:text-2xl font-extrabold text-blue-400 mt-8 mb-3 pb-2 border-b-2 border-slate-800">${hText}</h2>`);
+          } else if (trimmed.startsWith('> ')) {
+            if (inList) { htmlParts.push('</ul>'); inList = false; }
+            const qText = trimmed.substring(2);
+            htmlParts.push(`<blockquote class="border-l-4 border-emerald-500/80 bg-emerald-950/20 p-4 rounded-r-xl my-4 italic text-slate-300">${qText}</blockquote>`);
+          } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+            if (!inList) {
+              htmlParts.push('<ul class="list-disc pl-6 space-y-1.5 my-3 text-slate-300">');
+              inList = true;
+            }
+            const lText = trimmed.substring(2);
+            htmlParts.push(`<li>${lText}</li>`);
+          } else {
+            if (inList) { htmlParts.push('</ul>'); inList = false; }
+            // Bold text conversion **text**
+            const pFormatted = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-white">$1</strong>');
+            htmlParts.push(`<p class="text-slate-300 leading-relaxed mb-4 text-sm sm:text-base">${pFormatted}</p>`);
+          }
+        });
+
+        if (inList) htmlParts.push('</ul>');
+        return htmlParts.join('\n');
+      }
+
+      // Toolbar Actions Setup
+      const btnFmtH2 = document.getElementById('btn-fmt-h2');
+      const btnFmtH3 = document.getElementById('btn-fmt-h3');
+      const btnFmtQuote = document.getElementById('btn-fmt-quote');
+      const btnFmtList = document.getElementById('btn-fmt-list');
+      const btnAutoHeading = document.getElementById('btn-auto-heading');
+      const btnPreviewContent = document.getElementById('btn-preview-content');
+      const previewPane = document.getElementById('content-preview-pane');
+      const previewBtnText = document.getElementById('preview-btn-text');
+
+      function insertPrefixAtCursor(prefix: string) {
+        if (!pContent) return;
+        const start = pContent.selectionStart;
+        const end = pContent.selectionEnd;
+        const val = pContent.value;
+        
+        if (start !== end) {
+          const selected = val.substring(start, end);
+          const replaced = prefix + selected;
+          pContent.value = val.substring(0, start) + replaced + val.substring(end);
+        } else {
+          pContent.value = val.substring(0, start) + prefix + val.substring(end);
+        }
+        pContent.focus();
+        runRealtimeSEOAnalyzer();
+      }
+
+      if (btnFmtH2) btnFmtH2.addEventListener('click', () => insertPrefixAtCursor('\n## '));
+      if (btnFmtH3) btnFmtH3.addEventListener('click', () => insertPrefixAtCursor('\n### '));
+      if (btnFmtQuote) btnFmtQuote.addEventListener('click', () => insertPrefixAtCursor('\n> '));
+      if (btnFmtList) btnFmtList.addEventListener('click', () => insertPrefixAtCursor('\n- '));
+
+      if (btnAutoHeading) {
+        btnAutoHeading.addEventListener('click', () => {
+          if (!pContent || !pContent.value.trim()) {
+            showToast('Chưa có nội dung để chuẩn hóa!', true);
+            return;
+          }
+          pContent.value = standardizeArticleHeadings(pContent.value);
+          runRealtimeSEOAnalyzer();
+          showToast('✨ Đã tự động phân loại Heading (H2 Navy / H3 Xanh Lá) chuẩn đồng bộ!');
+        });
+      }
+
+      let isPreviewing = false;
+      if (btnPreviewContent && previewPane && pContent) {
+        btnPreviewContent.addEventListener('click', () => {
+          isPreviewing = !isPreviewing;
+          if (isPreviewing) {
+            previewPane.innerHTML = renderMarkdownToHtml(pContent.value);
+            pContent.classList.add('hidden');
+            previewPane.classList.remove('hidden');
+            if (previewBtnText) previewBtnText.textContent = '✏️ Quay lại sửa';
+            btnPreviewContent.classList.add('bg-brand-green/20', 'text-brand-green', 'border-brand-green/40');
+            btnPreviewContent.classList.remove('bg-slate-900', 'text-slate-300');
+          } else {
+            previewPane.classList.add('hidden');
+            pContent.classList.remove('hidden');
+            if (previewBtnText) previewBtnText.textContent = '👁️ Xem trước hiển thị';
+            btnPreviewContent.classList.remove('bg-brand-green/20', 'text-brand-green', 'border-brand-green/40');
+            btnPreviewContent.classList.add('bg-slate-900', 'text-slate-300');
+            pContent.focus();
+          }
+        });
+      }
 
       // Form Submit Handler
       if (postForm) {
@@ -1739,26 +1935,11 @@ Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó 
             return;
           }
 
-          function formatPlainTextToHtml(text: string): string {
-            if (!text) return '';
-            if (text.trim().startsWith('<')) return text;
-
-            const rawLines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-            return rawLines.map(line => {
-              const cleanLine = line.replace(/^[#\-\*]+\s*/, '');
-              const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
-              const isAllCaps = hasLetters && cleanLine.length >= 4 && cleanLine.length < 150 && cleanLine === cleanLine.toUpperCase();
-              const isHeading = isAllCaps || line.startsWith('#');
-
-              if (isHeading) {
-                return `<h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-8 mb-3 leading-snug">${cleanLine}</h2>`;
-              }
-              return `<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${line}</p>`;
-            }).join('\n');
-          }
+          // Auto-standardize headings before saving
+          const formattedBody = standardizeArticleHeadings(pContent.value);
+          pContent.value = formattedBody;
 
           const tagsArr = pTags?.value ? pTags.value.split(',').map(t => t.trim()).filter(Boolean) : [];
-          const formattedBody = formatPlainTextToHtml(pContent.value);
 
           const payload = {
             title: pTitle.value,

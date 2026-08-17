@@ -232,11 +232,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
             const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanText);
             const isEndsWithPeriod = cleanText.endsWith('.') || cleanText.endsWith(',');
             
-            const isExplicitPattern = /^(bài này|\d+\.|phương pháp \d+|tóm lại|cái bẫy|đừng|hãy|kết luận)/i.test(cleanText);
+            const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|\d+\.\d+)\s*\d*[:\.]/i.test(cleanText);
+            const isH2Explicit = /^(bài này|\d+\.|tóm lại|cái bẫy|đừng|hãy|kết luận|nguyên nhân|giải pháp|tổng kết)/i.test(cleanText);
             const isShortTitleLine = hasLetters && cleanText.length >= 4 && cleanText.length <= 110 && !isEndsWithPeriod && !t.includes('http');
 
-            if (isExplicitPattern || isShortTitleLine) {
-              const isH3 = cleanText.toLowerCase().startsWith('phương pháp');
+            if (isH3Pattern || isH2Explicit || isShortTitleLine) {
+              const isH3 = isH3Pattern;
               const newEl = document.createElement(isH3 ? 'h3' : 'h2');
               newEl.className = isH3 
                 ? 'text-lg sm:text-xl font-bold text-brand-green dark:text-emerald-400 mt-8 mb-3 pl-3 border-l-4 border-brand-green leading-snug'
