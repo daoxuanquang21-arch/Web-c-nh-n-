@@ -18,30 +18,46 @@ const services = [
 ---
 
 <Layout title="Dịch Vụ | daoxuanquang.com.vn" description="Các dịch vụ thiết kế web tối giản và đào tạo thực chiến.">
-  <section class="py-16 px-4 max-w-7xl mx-auto">
-    <div class="text-center max-w-3xl mx-auto mb-16">
-      <h1 class="text-4xl font-extrabold mb-4">Dịch Vụ Chuyên Nghiệp</h1>
-      <p class="text-lg text-slate-600 dark:text-slate-400">
+  <section class="py-8 sm:py-16 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+      <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-brand-green/10 text-brand-green dark:bg-brand-green/20 dark:text-brand-green mb-3 uppercase tracking-wider">
+        ⚡ DỊCH VỤ & GIẢI PHÁP
+      </span>
+      <h1 class="text-[22px] xs:text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-snug text-brand-navy-deep dark:text-white mb-3">
+        <span class="whitespace-nowrap">Dịch Vụ Chuyên Nghiệp</span>
+      </h1>
+      <p class="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
         Giúp bạn xây dựng website chuyên nghiệp và làm chủ quy trình vận hành tự động thông qua chuyển giao thực chiến.
       </p>
     </div>
 
     <!-- Services Grid -->
-    <div class="grid md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16 max-w-4xl mx-auto">
       {services.map(service => (
-        <div class="p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-xl hover:border-brand-500 dark:hover:border-brand-500 transition-all duration-300 group flex flex-col justify-between">
+        <div class="p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-xl hover:border-brand-green dark:hover:border-brand-green transition-all duration-300 group flex flex-col justify-between">
           <div>
-            <span class="text-4xl mb-4 block">{service.icon}</span>
-            <h2 class="text-2xl font-bold mb-3">{service.title}</h2>
-            <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-sm sm:text-base">{service.description}</p>
+            <div class="w-12 h-12 rounded-2xl bg-brand-green/10 dark:bg-brand-green/20 flex items-center justify-center text-2xl mb-4 shadow-sm group-hover:scale-105 transition-transform">
+              {service.icon}
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold mb-3 text-brand-navy-deep dark:text-white group-hover:text-brand-green transition-colors">
+              {service.title}
+            </h2>
+            <p class="text-slate-600 dark:text-slate-400 mb-6 leading-relaxed text-sm sm:text-base">
+              {service.description}
+            </p>
           </div>
-          <a href={service.link} class="inline-flex items-center text-sm font-semibold text-brand-600 dark:text-brand-500 hover:text-brand-700 dark:hover:text-brand-400 group-hover:translate-x-1 transition-transform">
-            Tìm hiểu chi tiết <span class="ml-1">&rarr;</span>
-          </a>
+          
+          <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80">
+            <a 
+              href={service.link} 
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-green text-white font-bold text-sm hover:bg-brand-green-dark transition-all shadow-md group-hover:shadow-lg"
+            >
+              <span>Tìm hiểu chi tiết</span>
+              <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+            </a>
+          </div>
         </div>
       ))}
     </div>
-
-
   </section>
 </Layout>

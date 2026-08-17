@@ -57,16 +57,19 @@
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
   }
 
   body {
-    @apply bg-white text-brand-text dark:bg-dark-bg dark:text-slate-200 transition-colors duration-300 antialiased;
+    @apply bg-white text-brand-text dark:bg-dark-bg dark:text-slate-200 transition-colors duration-300 antialiased overflow-x-hidden;
     font-family: var(--font-sans);
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     @apply font-bold tracking-tight text-brand-navy-deep dark:text-white leading-[1.25];
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 }
 
