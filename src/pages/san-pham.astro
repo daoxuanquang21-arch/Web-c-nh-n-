@@ -61,15 +61,72 @@ import products from '../data/products.json';
     )}
 
     <script>
-      const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
-      if (deletedIds.length > 0) {
-        document.querySelectorAll('.product-card').forEach(card => {
-          const id = card.getAttribute('data-id');
-          if (id && deletedIds.includes(id)) {
-            (card as HTMLElement).style.display = 'none';
-          }
-        });
-      }
+      (function() {
+        const grid = document.querySelector('.grid');
+        if (!grid) return;
+
+        // 1. Purge deleted products
+        const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
+        if (deletedIds.length > 0) {
+          document.querySelectorAll('.product-card').forEach(card => {
+            const id = card.getAttribute('data-id');
+            if (id && deletedIds.includes(id)) {
+              (card as HTMLElement).style.display = 'none';
+            }
+          });
+        }
+
+        // 2. Render custom added products from Admin
+        const customProducts = JSON.parse(localStorage.getItem('custom_products') || '[]');
+        if (Array.isArray(customProducts) && customProducts.length > 0) {
+          const existingIds = Array.from(document.querySelectorAll('.product-card')).map(c => c.getAttribute('data-id'));
+          customProducts.forEach(product => {
+            if (!product.id || existingIds.includes(product.id) || deletedIds.includes(product.id)) return;
+
+            const card = document.createElement('div');
+            card.setAttribute('data-id', product.id);
+            card.className = 'product-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-300 flex flex-col justify-between group';
+            
+            const badgeClass = product.status === 'Nội bộ' 
+              ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+              : product.status === 'Sắp ra mắt'
+              ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400'
+              : 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-400';
+
+            const btnText = product.status === 'Sắp ra mắt' ? 'Đăng ký nhận thông tin' : product.status === 'Nội bộ' ? 'Chỉ dùng nội bộ' : 'Trải nghiệm ngay';
+
+            card.innerHTML = `
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-3xl">${product.icon || '📦'}</span>
+                  <span class="text-xs font-semibold px-2.5 py-1 rounded-full ${badgeClass}">
+                    ${product.status || 'Đang hoạt động'}
+                  </span>
+                </div>
+                <p class="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase tracking-wider mb-1">
+                  ${product.type || 'Sản phẩm'}
+                </p>
+                <h2 class="text-xl font-bold mb-3 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors">
+                  ${product.title || ''}
+                </h2>
+                <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                  ${product.description || ''}
+                </p>
+              </div>
+
+              <div class="flex items-center justify-between mb-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Giá bán:</span>
+                <span class="text-sm font-bold text-slate-950 dark:text-white">${product.price || 'Liên hệ'}</span>
+              </div>
+              
+              <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
+                ${btnText}
+              </button>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      })();
     </script>
   </section>
 </Layout>
