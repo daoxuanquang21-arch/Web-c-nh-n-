@@ -1046,27 +1046,15 @@ Ví dụ: Tư duy tư vấn giải pháp, kỹ năng thấu hiểu tâm lý khá
 
           const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
           
-          // Clean stale deletedSlugs and customPosts from browser localStorage
-          const activeSlugs = [
-            'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep',
-            'cu-chay-theo-nhung-ky-nang-dang-hot',
-            'cu-chay-theo-nhung-ky-nang-dang-hot-thi-ca-doi-anh-em-chi-di-don-mam-cho-ke-khac',
-            'affiliate-global',
-            'vibe-coding-ai-agent',
-            'cuoc-song',
-            'marketing',
-            'ai'
-          ];
-
+          // Only protect category names from deletedSlugs
+          const protectedCategories = ['cuoc-song', 'marketing', 'ai'];
           let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
-          deletedSlugs = deletedSlugs.filter((s: string) => 
-            !activeSlugs.some(act => s.includes(act) || act.includes(s))
-          );
+          deletedSlugs = deletedSlugs.filter((s: string) => !protectedCategories.includes(s));
           localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
 
           let customPostsArr = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
           customPostsArr = customPostsArr.filter((p: any) => 
-            p && p.slug && !p.slug.includes('cu-chay-theo-nhung-ky-nang-dang-hot-thi-ca-doi-anh-em')
+            p && p.slug && !deletedSlugs.includes(p.slug)
           );
           localStorage.setItem('custom_saved_posts', JSON.stringify(customPostsArr));
 
