@@ -187,6 +187,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                     footerBottom.className = 'flex flex-col items-center justify-center text-center gap-3 mt-0 pt-0 border-t-0';
                   }
 
+                  // Direct localStorage sweep to purge legacy cuchaytheo duplicates
+                  try {
+                    let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+                    let updated = false;
+                    const cleaned = customPosts.filter((p: any) => {
+                      const t = normalizeText(p.title);
+                      const s = normalizeText(p.slug || p.id);
+                      if (t.includes('cuchaytheo') || s.includes('cuchaytheo')) {
+                        updated = true;
+                        return false;
+                      }
+                      return true;
+                    });
+                    if (updated) {
+                      localStorage.setItem('custom_saved_posts', JSON.stringify(cleaned));
+                    }
+                  } catch (e) {}
+
                   // Fetch related/featured posts for bottom section
                   let otherPostsHtml = '';
                   try {
@@ -202,12 +220,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
 
                     const fallbackPosts = [
                       {
-                        title: 'Tư duy tối giản trong vận hành Solopreneur',
-                        description: 'Rút gọn quy trình, tự động hoá các công việc lặp đi lặp lại để tập trung vào giá trị cốt lõi.',
-                        category: 'cuoc-song',
-                        slug: 'tu-duy-toi-gian'
-                      },
-                      {
                         title: 'Affiliate Global: Kinh nghiệm thực chiến từ 0 đến $10,000/tháng',
                         description: 'Tổng hợp bài học, sai lầm và công thức đo lường hiệu quả quảng cáo khi làm thị trường quốc tế.',
                         category: 'marketing',
@@ -218,25 +230,42 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
                         description: 'Cách ứng dụng các mô hình AI Agent vào quy trình bán hàng và chăm sóc khách hàng tự động 24/7.',
                         category: 'ai',
                         slug: 'vibe-coding-ai-agent'
+                      },
+                      {
+                        title: 'Tư duy tối giản trong vận hành Solopreneur',
+                        description: 'Rút gọn quy trình, tự động hoá các công việc lặp đi lặp lại để tập trung vào giá trị cốt lõi.',
+                        category: 'cuoc-song',
+                        slug: 'tu-duy-toi-gian'
                       }
                     ];
 
                     const normCurrentSlug = normalizeText(slug);
                     const normCurrentTitle = normalizeText(cleanTitle);
 
-                    let related = allPosts.filter((p: any) => {
+                    const seenTitles = new Set();
+                    const related: any[] = [];
+
+                    allPosts.forEach((p: any) => {
                       const pNormSlug = normalizeText(p.slug || p.id);
                       const pNormTitle = normalizeText(p.title);
-                      return !pNormSlug.includes('cuchaytheo') && pNormSlug !== normCurrentSlug && pNormTitle !== normCurrentTitle;
-                    }).slice(0, 2);
+                      
+                      if (!pNormTitle || seenTitles.has(pNormTitle)) return;
+                      if (pNormTitle.includes('cuchaytheo') || pNormSlug.includes('cuchaytheo')) return;
+                      if (pNormSlug === normCurrentSlug || pNormTitle === normCurrentTitle) return;
+                      
+                      seenTitles.add(pNormTitle);
+                      related.push(p);
+                    });
 
-                    if (!related.length) {
-                      related = fallbackPosts.filter(p => {
-                        const pNormSlug = normalizeText(p.slug);
-                        const pNormTitle = normalizeText(p.title);
-                        return pNormSlug !== normCurrentSlug && pNormTitle !== normCurrentTitle;
-                      }).slice(0, 2);
-                    }
+                    fallbackPosts.forEach(fp => {
+                      if (related.length >= 2) return;
+                      const fpNormTitle = normalizeText(fp.title);
+                      const fpNormSlug = normalizeText(fp.slug);
+                      if (!seenTitles.has(fpNormTitle) && fpNormTitle !== normCurrentTitle && fpNormSlug !== normCurrentSlug) {
+                        seenTitles.add(fpNormTitle);
+                        related.push(fp);
+                      }
+                    });
 
                     if (related.length) {
                       otherPostsHtml = `
