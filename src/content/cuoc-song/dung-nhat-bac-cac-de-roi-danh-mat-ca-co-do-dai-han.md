@@ -1,6 +1,6 @@
 ---
 title: "Đừng nhặt bạc cắc để rồi đánh mất cả cơ đồ dài hạn"
-description: "Muốn xây dựng một sự nghiệp bền vững và trở thành tay chơi lớn? Đôi khi cách nhanh nhất không phải là làm việc điên cuồng hơn, mà là học cách... “chê tiền” trước mắt, giống hệt cách tỷ phú Charlie Munger và Warren Buffett đã làm suốt 70 năm qua."
+description: "Muốn trở thành tay chơi lớn và xây dựng cơ đồ bền vững? Đôi khi cách nhanh nhất là học cách “chê tiền” trước mắt như Charlie Munger và Warren Buffett."
 pubDate: 2026-08-02T09:00:00.000Z
 status: "public"
 draft: false

@@ -234,8 +234,11 @@ import Layout from '../layouts/Layout.astro';
                     </div>
 
                     <div>
-                      <label for="post-description" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">TÓM TẮT NGẮN / SAPO * (SEO DESCRIPTION)</label>
-                      <textarea id="post-description" required rows="3" placeholder="Nhập tóm tắt Sapo chuẩn 145-160 ký tự..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm leading-relaxed text-slate-200"></textarea>
+                      <div class="flex items-center justify-between mb-2">
+                        <label for="post-description" class="block text-xs font-bold text-slate-400 uppercase tracking-wider">TÓM TẮT NGẮN / SAPO * (TỐI ĐA 165 KÝ TỰ)</label>
+                        <span id="sapo-char-counter" class="text-[11px] font-mono text-slate-400">0/165</span>
+                      </div>
+                      <textarea id="post-description" maxlength="165" required rows="3" placeholder="Nhập tóm tắt Sapo chuẩn tối đa 165 ký tự..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm leading-relaxed text-slate-200"></textarea>
                     </div>
 
                     <div>
@@ -352,8 +355,10 @@ import Layout from '../layouts/Layout.astro';
                       <div id="seo-item-4" class="pt-2 flex items-start gap-3">
                         <span class="seo-icon text-amber-400 font-bold text-base leading-none shrink-0 mt-0.5">⚠️</span>
                         <div class="space-y-0.5">
-                          <span class="seo-title font-bold block text-slate-200">Từ khóa nằm trong 60 ký tự đầu Sapo</span>
-                          <span class="seo-desc text-[11px] text-slate-400 block">Đẩy từ khóa lên đầu Sapo giúp AI dễ nhận biết hơn</span>
+                          <div class="flex-1">
+                            <span class="seo-title font-bold block text-slate-200">Độ dài Sapo tối ưu (Tối đa 165 ký tự, hiện tại: 0)</span>
+                            <span class="seo-desc text-[11px] text-slate-400 block">Sapo không nên vượt quá 165 ký tự để tránh bị cắt bớt trên Google</span>
+                          </div>
                         </div>
                       </div>
 
@@ -1032,7 +1037,7 @@ Mọi người sẽ nhìn anh em với ánh mắt ngưỡng mộ và gọi đó 
               slug: 'dung-nhat-bac-cac-de-roi-danh-mat-ca-co-do-dai-han',
               category: 'cuoc-song',
               title: 'Đừng nhặt bạc cắc để rồi đánh mất cả cơ đồ dài hạn',
-              description: 'Muốn xây dựng một sự nghiệp bền vững và trở thành tay chơi lớn? Đôi khi cách nhanh nhất không phải là làm việc điên cuồng hơn, mà là học cách... “chê tiền” trước mắt, giống hệt cách tỷ phú Charlie Munger và Warren Buffett đã làm suốt 70 năm qua.',
+              description: 'Muốn trở thành tay chơi lớn và xây dựng cơ đồ bền vững? Đôi khi cách nhanh nhất là học cách “chê tiền” trước mắt như Charlie Munger và Warren Buffett.',
               pubDate: '2026-08-02 09:00',
               status: 'public',
               draft: false,
@@ -1650,12 +1655,20 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
             setItem('seo-item-4', 'warn', 'Từ khóa nằm trong 60 ký tự đầu Sapo', 'Đẩy từ khóa lên đầu Sapo giúp AI dễ nhận biết hơn');
           }
 
-          // 5. Sapo length (145-160 chars)
+          // 5. Sapo length (Max 165 chars)
           const descLen = desc.length;
-          if (descLen >= 145 && descLen <= 160) {
-            setItem('seo-item-5', 'pass', `Độ dài Sapo tối ưu (145-160 ký tự, hiện tại: ${descLen})`, 'Độ dài Sapo đã đạt chuẩn SEO');
+          const sapoCounter = document.getElementById('sapo-char-counter');
+          if (sapoCounter) {
+            sapoCounter.textContent = `${descLen}/165`;
+            sapoCounter.className = descLen > 165 ? 'text-[11px] font-mono text-rose-400 font-bold' : 'text-[11px] font-mono text-brand-green font-bold';
+          }
+
+          if (descLen >= 50 && descLen <= 165) {
+            setItem('seo-item-5', 'pass', `Độ dài Sapo chuẩn SEO (Tối đa 165 ký tự, hiện tại: ${descLen})`, 'Độ dài Sapo tối ưu cho hiển thị Google & mạng xã hội');
+          } else if (descLen > 165) {
+            setItem('seo-item-5', 'warn', `Độ dài Sapo vượt quá 165 ký tự (Hiện tại: ${descLen})`, 'Hãy rút ngắn Sapo về dưới 165 ký tự');
           } else {
-            setItem('seo-item-5', 'warn', `Độ dài Sapo tối ưu (145-160 ký tự, hiện tại: ${descLen})`, 'Nên điều chỉnh Sapo về khoảng 145-160 ký tự');
+            setItem('seo-item-5', 'warn', `Độ dài Sapo tối ưu (Tối đa 165 ký tự, hiện tại: ${descLen})`, 'Nên viết Sapo đầy đủ từ 50-165 ký tự');
           }
 
           // 6. Sapo contains brand / author
