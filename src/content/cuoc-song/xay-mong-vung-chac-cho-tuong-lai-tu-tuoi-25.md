@@ -88,7 +88,7 @@ Và quả ngọt đến rất rõ ràng: Sự kiên định theo đuổi lộ tr
 
 Thế nên là, cơ hội không tự nhiên rơi xuống đầu ai cả. Nó là tổng hòa của những quyết định nhỏ nhặt hôm nay được chiếu theo một đích đến dài hạn từ tương lai.
 
-## \"Vậy nếu cứ ép mình sống theo kế hoạch 5 năm, liệu có biến mình thành một cỗ máy khô khan thiếu cảm xúc không?\"
+## "Vậy nếu cứ ép mình sống theo kế hoạch 5 năm, liệu có biến mình thành một cỗ máy khô khan thiếu cảm xúc không?"
 
 Đây là sự hiểu lầm TAI HẠI nhất mà tuổi trẻ hay mắc phải. Anh em cần phân biệt rạch ròi:
 
