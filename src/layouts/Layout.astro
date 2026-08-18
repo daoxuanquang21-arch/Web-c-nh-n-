@@ -239,29 +239,6 @@ for (const cat of categories) {
             }
           });
 
-          // 4. Auto-upgrade standalone paragraph lines into H2/H3 headings if they look like section titles
-          document.querySelectorAll('.prose p').forEach((pEl) => {
-            const t = (pEl.textContent || '').trim();
-            if (!t || pEl.querySelector('img, a, iframe')) return;
-
-            const cleanText = t.replace(/["'”]/g, '').trim();
-            const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanText);
-            const isEndsWithPeriod = cleanText.endsWith('.') || cleanText.endsWith(',');
-            
-            const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|\d+\.\d+)\s*\d*[:\.]/i.test(cleanText);
-            const isH2Explicit = /^(bài này dành cho|\d+\.|tóm lại|cái bẫy|đừng|hãy|kết luận|nguyên nhân|giải pháp|tổng kết)/i.test(cleanText);
-            const isShortTitleLine = hasLetters && cleanText.length >= 4 && cleanText.length <= 110 && !isEndsWithPeriod && !t.includes('http');
-
-            if (isH3Pattern || isH2Explicit || isShortTitleLine) {
-              const isH3 = isH3Pattern;
-              const newEl = document.createElement(isH3 ? 'h3' : 'h2');
-              newEl.className = isH3 
-                ? 'text-lg sm:text-xl font-bold text-brand-green dark:text-emerald-400 mt-8 mb-3 pl-3 border-l-4 border-brand-green leading-snug'
-                : 'text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-10 mb-4 border-b-2 border-slate-200 dark:border-slate-800 pb-2.5 leading-snug';
-              newEl.textContent = formatCleanTitle(t.replace(/^#+\s*/, ''));
-              pEl.replaceWith(newEl);
-            }
-          });
 
           const pathname = window.location.pathname.replace(/\/$/, '');
           const parts = pathname.split('/').filter(Boolean);
