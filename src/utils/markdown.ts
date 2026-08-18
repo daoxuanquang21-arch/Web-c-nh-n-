@@ -114,7 +114,7 @@ export function renderMarkdownToHtml(md: string): string {
     } else if (trimmed.startsWith('> ')) {
       if (inList) { htmlParts.push('</ul>'); inList = false; }
       const qText = trimmed.substring(2);
-      htmlParts.push(`<blockquote class="border-l-4 border-brand-green/80 bg-emerald-950/20 p-4 rounded-r-xl my-4 italic text-slate-700 dark:text-slate-300">${qText}</blockquote>`);
+      htmlParts.push(`<blockquote class="border-l-4 border-slate-300 dark:border-slate-700 pl-4 my-4 italic text-slate-600 dark:text-slate-400">${qText}</blockquote>`);
     } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       if (!inList) {
         htmlParts.push('<ul class="list-disc pl-6 space-y-1.5 my-3 text-slate-700 dark:text-slate-300">');
