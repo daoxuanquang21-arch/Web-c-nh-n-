@@ -32,9 +32,10 @@ jobs:
             rm -rf /tmp/blog_backup
 
             # Clean up duplicate and old files from server content
-            rm -f src/content/cuoc-song/xay-mong-vung-chac-cho-tuong-lai-tu-tuoi-25.md
+            rm -f src/content/cuoc-song/xay-tai-san-tin-nhiem-loi-thoat-cho-khung-hoang-tuoi-25.md
             rm -f src/content/cuoc-song/dung-nhat-bac-cac-de-roi-danh-mat-ca-co-do-dai-han.md
-            git checkout src/content/cuoc-song/xay-tai-san-tin-nhiem-lo-thoat-cho-khung-hoang-tuoi-25.md
+            git checkout src/content/cuoc-song/xay-mong-vung-chac-cho-tuong-lai-tu-tuoi-25.md
+
 
             npm install
             rm -rf .astro dist node_modules/.astro node_modules/.vite
