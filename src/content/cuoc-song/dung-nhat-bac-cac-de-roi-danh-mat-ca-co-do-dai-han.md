@@ -1,5 +1,5 @@
 ---
-title: "Đừng nhặt bạc cắc để rồi đánh mất cả cơ đồ dài hạn"
+title: "Thôi ngay nhặt bạc cắc để rồi đánh mất cả cơ đồ dài hạn"
 description: "Muốn trở thành tay chơi lớn và xây dựng cơ đồ bền vững? Đôi khi cách nhanh nhất là học cách “chê tiền” trước mắt như Charlie Munger và Warren Buffett."
 pubDate: 2026-08-02T09:00:00.000Z
 status: "public"
