@@ -1,6 +1,6 @@
 ---
-title: "Ngừng dùng ý chí, hãy dùng hệ thống để xây thói quen"
-description: "Ý chí rồi sẽ cạn kiệt. Khám phá 3 quy tắc thiết lập hệ thống giúp bạn tự động hoàn thành mục tiêu lớn mà không cần gắng gượng."
+title: "Bí mật hiệu ứng lãi kép mà các khóa học giấu nhẹm"
+description: "Đừng vội bỏ cuộc khi chưa thấy kết quả. Bài viết này bóc trần sự thật về thói quen nhỏ và cách vượt qua giai đoạn chán nản nhất để bứt phá."
 pubDate: 2026-08-18T16:00:00.000Z
 status: "public"
 draft: false

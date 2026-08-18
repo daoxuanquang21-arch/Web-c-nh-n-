@@ -34,7 +34,10 @@ jobs:
             # Clean up duplicate and old files from server content
             rm -f src/content/cuoc-song/xay-tai-san-tin-nhiem-loi-thoat-cho-khung-hoang-tuoi-25.md
             rm -f src/content/cuoc-song/dung-nhat-bac-cac-de-roi-danh-mat-ca-co-do-dai-han.md
+            rm -f src/content/cuoc-song/ngung-dung-y-chi-hay-dung-he-thong-de-xay-thoi-quen.md
             git checkout src/content/cuoc-song/xay-mong-vung-chac-cho-tuong-lai-tu-tuoi-25.md
+            git checkout src/content/cuoc-song/bi-mat-hieu-ung-lai-kep-ma-cac-khoa-hoc-giau-nhem.md
+
 
 
             npm install
