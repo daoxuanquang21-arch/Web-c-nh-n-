@@ -17,9 +17,19 @@ jobs:
           password: '#wF?*tyPs^j4'
           script: |
             cd /var/www/blog
+            # Backup user content and data to prevent losing them during git update
+            mkdir -p /tmp/blog_backup
+            rsync -a src/content/ /tmp/blog_backup/content/
+            rsync -a src/data/ /tmp/blog_backup/data/
+
             git fetch --all
             git reset --hard origin/main
             git clean -fd
+
+            # Restore and merge user content and data back
+            rsync -a /tmp/blog_backup/content/ src/content/
+            rsync -a /tmp/blog_backup/data/ src/data/
+            rm -rf /tmp/blog_backup
             npm install
             rm -rf .astro dist node_modules/.astro node_modules/.vite
             npm run build
