@@ -8,7 +8,7 @@ author: "Đào Xuân Quảng"
 tags: ["Cuộc sống", "Tư duy", "Bản thân"]
 ---
 
-## CĂN BỆNH "NGHIỆN THỂ DIỆN" VÀ CÁI BẪY CỦA SỰ AN TOÀN
+## Căn bệnh "nghiện thể diện" và cái bẫy của sự an toàn
 
 Anh em thấy cảnh này quen không?
 
@@ -24,7 +24,7 @@ Kết quả là gì?
 
 Anh em tặc lưỡi quay về với phương án an toàn. Anh em tiếp tục vắt kiệt sức chạy những cái deadline lẻ tẻ, nhặt nhạnh những đồng tiền lẻ để duy trì một cái vỏ bọc hào nhoáng. Cái giá phải trả là anh em vĩnh viễn không bao giờ tích lũy đủ đòn bẩy để tạo ra một cú nhảy vọt. Anh em tự nhốt mình vào một cái lồng chuột, chạy mãi mà không thoát ra được.
 
-## ĐỔI "THỂ DIỆN" LẤY "ĐẾ CHẾ" (Sự thật đằng sau những quyết định lớn)
+## Đổi "thể diện" lấy "đế chế" (Sự thật đằng sau những quyết định lớn)
 
 Tôi nói thẳng, xã hội ngoài kia đang tôn thờ những thứ "nhanh" và "dễ". Nhưng đó chính là bẫy chuột.
 
@@ -37,7 +37,7 @@ Hãy áp dụng nguyên tắc **"Quyền năng của sự phớt lờ"**:
 
 Trong mắt đám đông lúc đó, anh em là kẻ đi lùi. Kệ họ. Anh em đang đào rễ sâu xuống đất, trong khi họ chỉ đang mải mê hái những chiếc lá sắp rụng.
 
-## KẺ DÁM CHỊU THIỆT HÔM NAY SẼ LÀ KẺ ĐỊNH GIÁ NGÀY MAI
+## Kẻ dám chịu thiệt hôm nay sẽ là kẻ định giá ngày mai
 
 Tôi muốn anh em hình dung bức tranh này:
 
