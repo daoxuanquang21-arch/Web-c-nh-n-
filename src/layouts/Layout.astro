@@ -275,7 +275,7 @@ for (const cat of categories) {
 
             if (!post) {
               try {
-                const res = await fetch('/api/posts');
+                const res = await fetch('/api/posts?t=' + new Date().getTime());
                 if (res.ok) {
                   const data = await res.json();
                   if (data.posts) {
@@ -386,7 +386,7 @@ for (const cat of categories) {
                     let customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
                     let allPosts = customPosts;
                     if (!allPosts.length) {
-                      const res = await fetch('/api/posts');
+                      const res = await fetch('/api/posts?t=' + new Date().getTime());
                       if (res.ok) {
                         const data = await res.json();
                         allPosts = data.posts || [];

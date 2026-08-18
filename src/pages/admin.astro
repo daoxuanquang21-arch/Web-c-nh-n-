@@ -1115,7 +1115,7 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
 
           let serverPosts: any[] = [];
           try {
-            const postsRes = await fetch('/api/posts');
+            const postsRes = await fetch('/api/posts?t=' + Date.now());
             if (postsRes.ok) {
               const contentType = postsRes.headers.get('content-type') || '';
               if (contentType.includes('application/json')) {
