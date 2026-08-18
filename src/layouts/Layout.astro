@@ -42,7 +42,7 @@ for (const cat of categories) {
 ---
 
 <!doctype html>
-<html lang="vi" class="scroll-smooth">
+<html lang="vi" class="scroll-smooth" data-server-slugs={JSON.stringify(serverSlugsList)}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -65,7 +65,7 @@ for (const cat of categories) {
     <script is:inline>
       (function() {
         try {
-          var serverSlugs = {JSON.stringify(serverSlugsList)};
+          var serverSlugs = JSON.parse(document.documentElement.getAttribute('data-server-slugs') || '[]');
           var deleted = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
           if (!Array.isArray(deleted)) deleted = [];
 
