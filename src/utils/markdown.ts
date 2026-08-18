@@ -1,5 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from 'fs';
+import path from 'path';
 
 // Helper to format clean titles (same logic as in [slug].astro)
 export function formatCleanTitle(t: string): string {
