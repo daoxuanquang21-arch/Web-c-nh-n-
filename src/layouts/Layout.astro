@@ -247,7 +247,7 @@ for (const cat of categories) {
             const isEndsWithPeriod = cleanText.endsWith('.') || cleanText.endsWith(',');
             
             const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|\d+\.\d+)\s*\d*[:\.]/i.test(cleanText);
-            const isH2Explicit = /^(bài này|\d+\.|tóm lại|cái bẫy|đừng|hãy|kết luận|nguyên nhân|giải pháp|tổng kết)/i.test(cleanText);
+            const isH2Explicit = /^(bài này dành cho|\d+\.|tóm lại|cái bẫy|đừng|hãy|kết luận|nguyên nhân|giải pháp|tổng kết)/i.test(cleanText);
             const isShortTitleLine = hasLetters && cleanText.length >= 4 && cleanText.length <= 110 && !isEndsWithPeriod && !t.includes('http');
 
             if (isH3Pattern || isH2Explicit || isShortTitleLine) {
@@ -331,7 +331,7 @@ for (const cat of categories) {
                   
                   const isH3 = line.startsWith('###') || cleanText.toLowerCase().startsWith('phương pháp');
                   const isExplicitH2 = line.startsWith('##') || line.startsWith('#');
-                  const isExplicitPattern = /^(bài này|\d+\.|phương pháp \d+|tóm lại|cái bẫy|đừng|hãy|kết luận)/i.test(cleanText);
+                  const isExplicitPattern = /^(bài này dành cho|\d+\.|phương pháp \d+|tóm lại|cái bẫy|đừng|hãy|kết luận)/i.test(cleanText);
                   const isAllCaps = hasLetters && cleanText.length >= 4 && cleanText.length < 120 && cleanText === cleanText.toUpperCase();
                   const isShortHeadingLine = hasLetters && cleanText.length >= 4 && cleanText.length <= 110 && !isEndsWithPeriod && !line.includes('http');
 
