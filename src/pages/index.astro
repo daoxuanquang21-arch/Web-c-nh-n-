@@ -1,11 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
+import { getPostsByCategory } from '../utils/markdown';
 
 // Fetch articles from the content collections dynamically
-const cuocSongPosts = await getCollection('cuoc-song');
-const marketingPosts = await getCollection('marketing');
-const aiPosts = await getCollection('ai');
+const cuocSongPosts = getPostsByCategory('cuoc-song');
+const marketingPosts = getPostsByCategory('marketing');
+const aiPosts = getPostsByCategory('ai');
 
 // Get the latest post in each category to showcase in cards
 const latestCuocSong = cuocSongPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())[0];

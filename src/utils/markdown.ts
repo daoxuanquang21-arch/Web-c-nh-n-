@@ -133,3 +133,48 @@ export function renderMarkdownToHtml(md: string): string {
   if (inList) htmlParts.push('</ul>');
   return htmlParts.join('\n');
 }
+
+export interface PostListItem {
+  id: string;
+  slug: string;
+  category: string;
+  data: {
+    title: string;
+    description: string;
+    pubDate: Date;
+    tags: string[];
+    author: string;
+    image: string;
+  };
+}
+
+export function getPostsByCategory(category: string): PostListItem[] {
+  const contentDir = path.resolve(`./src/content/${category}`);
+  const postsList: PostListItem[] = [];
+
+  if (fs.existsSync(contentDir)) {
+    const files = fs.readdirSync(contentDir).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+    for (const file of files) {
+      const filePath = path.join(contentDir, file);
+      const parsed = parseMarkdownFile(filePath);
+      if (parsed) {
+        if (parsed.status === 'private' || parsed.draft) continue;
+        postsList.push({
+          id: file.replace(/\.mdx?$/, ''),
+          slug: file.replace(/\.mdx?$/, ''),
+          category,
+          data: {
+            title: parsed.title,
+            description: parsed.description,
+            pubDate: parsed.pubDate,
+            tags: parsed.tags,
+            author: parsed.author,
+            image: parsed.image
+          }
+        });
+      }
+    }
+  }
+
+  return postsList;
+}

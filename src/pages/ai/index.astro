@@ -1,6 +1,6 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import { getPostsByCategory } from '../../utils/markdown';
 
 const normalizeTextServer = (s: string) => {
   return (s || '')
@@ -11,7 +11,7 @@ const normalizeTextServer = (s: string) => {
     .replace(/[^a-z0-9]/g, '');
 };
 
-const posts = await getCollection('ai');
+const posts = getPostsByCategory('ai');
 const seenSSGTitles = new Set();
 const sortedPosts = posts
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
