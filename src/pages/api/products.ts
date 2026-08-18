@@ -15,7 +15,12 @@ export async function GET() {
 
     return new Response(JSON.stringify({ success: true, products }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
     });
   } catch (error: any) {
     return new Response(JSON.stringify({ success: false, error: error.message }), {
