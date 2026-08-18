@@ -7,9 +7,6 @@ draft: false
 author: "Đào Xuân Quảng"
 tags: ["Cuộc sống", "Tư duy", "Kinh doanh"]
 ---
-
-## Bí mật tàn nhẫn về "lãi kép" mà các khóa học phát triển bản thân đang giấu bạn
-
 Đây là sự thật sẽ cứu vãn những mục tiêu đang dang dở của bạn trong năm nay. (Tôi đã mất rất nhiều thời gian chìm trong sự tự trách bản thân trước khi ngộ ra nguyên lý vận hành này của não bộ).
 
 Dành riêng cho anh em nào đang:
