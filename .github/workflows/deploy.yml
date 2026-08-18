@@ -37,6 +37,8 @@ jobs:
             rm -f src/content/cuoc-song/ngung-dung-y-chi-hay-dung-he-thong-de-xay-thoi-quen.md
             git checkout src/content/cuoc-song/xay-mong-vung-chac-cho-tuong-lai-tu-tuoi-25.md
             git checkout src/content/cuoc-song/bi-mat-hieu-ung-lai-kep-ma-cac-khoa-hoc-giau-nhem.md
+            git checkout src/content/cuoc-song/cach-tro-thanh-thoi-nam-cham-thu-hut-moi-co-hoi.md
+
 
 
 
