@@ -23,4 +23,6 @@ jobs:
             npm install
             rm -rf .astro dist node_modules/.astro node_modules/.vite
             npm run build
+            npm install -g pm2
+            PORT=4321 pm2 restart blog --update-env || PORT=4321 pm2 start dist/server/entry.mjs --name blog
             systemctl reload nginx
