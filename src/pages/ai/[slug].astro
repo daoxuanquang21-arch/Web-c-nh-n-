@@ -33,15 +33,44 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-const allCuocSong = await getCollection('cuoc-song');
-const allMarketing = await getCollection('marketing');
-const allAi = await getCollection('ai');
+// Dynamically read files on the server's disk to generate related posts (real-time!)
+const contentDir = path.resolve('./src/content');
+const categories = ['ai', 'marketing', 'cuoc-song'];
+const candidatePosts: any[] = [];
 
-const candidatePosts = [
-  ...allCuocSong.map(p => ({ ...p, category: 'cuoc-song', catLabel: 'Cuộc sống' })),
-  ...allMarketing.map(p => ({ ...p, category: 'marketing', catLabel: 'Marketing' })),
-  ...allAi.map(p => ({ ...p, category: 'ai', catLabel: 'AI' }))
-];
+const catLabelMap: Record<string, string> = {
+  'ai': 'AI',
+  'marketing': 'Marketing',
+  'cuoc-song': 'Cuộc sống'
+};
+
+for (const cat of categories) {
+  const catDir = path.join(contentDir, cat);
+  if (fs.existsSync(catDir)) {
+    const files = fs.readdirSync(catDir).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+    for (const file of files) {
+      const pPath = path.join(catDir, file);
+      const parsed = parseMarkdownFile(pPath);
+      if (parsed) {
+        if (parsed.status === 'private' || parsed.draft) continue;
+        candidatePosts.push({
+          id: file.replace(/\.mdx?$/, ''),
+          slug: file.replace(/\.mdx?$/, ''),
+          category: cat,
+          catLabel: catLabelMap[cat],
+          data: {
+            title: parsed.title,
+            description: parsed.description,
+            pubDate: parsed.pubDate,
+            tags: parsed.tags,
+            author: parsed.author,
+            image: parsed.image
+          }
+        });
+      }
+    }
+  }
+}
 
 const normalizeText = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9]/gi, '');
 const currentNormTitle = normalizeText(post.data.title);

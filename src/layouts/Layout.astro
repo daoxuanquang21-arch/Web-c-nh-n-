@@ -2,6 +2,8 @@
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import fs from 'node:fs';
+import path from 'node:path';
 
 interface Props {
   title?: string;
@@ -22,6 +24,21 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanquang.com.vn');
+
+// Dynamically list all markdown files on the server's disk to populate serverSlugs
+const contentDir = path.resolve('./src/content');
+const categories = ['ai', 'marketing', 'cuoc-song'];
+const serverSlugsList: string[] = [];
+
+for (const cat of categories) {
+  const catDir = path.join(contentDir, cat);
+  if (fs.existsSync(catDir)) {
+    const files = fs.readdirSync(catDir).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+    for (const file of files) {
+      serverSlugsList.push(file.replace(/\.mdx?$/, ''));
+    }
+  }
+}
 ---
 
 <!doctype html>
@@ -48,10 +65,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanq
     <script is:inline>
       (function() {
         try {
-          var serverSlugs = [
-            'cu-chay-theo-nhung-ky-nang-dang-hot',
-            'dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep'
-          ];
+          var serverSlugs = {JSON.stringify(serverSlugsList)};
           var deleted = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
           if (!Array.isArray(deleted)) deleted = [];
 
