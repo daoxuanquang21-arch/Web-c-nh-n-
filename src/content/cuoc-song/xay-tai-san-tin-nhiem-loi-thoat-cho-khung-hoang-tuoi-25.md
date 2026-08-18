@@ -33,7 +33,7 @@ Thay vì đợi sếp giao việc, hãy chủ động đề xuất giải pháp 
 ### 3. Đầu tư vào những kỹ năng tích lãi kép
 Kỹ năng chuyên môn sâu kết hợp với khả năng thấu hiểu tâm lý, viết lách và thuyết trình sẽ tạo ra một bộ nhận diện thương hiệu cá nhân cực kỳ mạnh mẽ. Đó chính là nền móng giúp anh em gia tăng tài sản tín nhiệm nhanh nhất.
 
-## Hay tất cả những gì anh em đang gạch bỏ trong danh sách, chỉ đơn thuần là để tồn tại qua tháng này?
+Hay tất cả những gì anh em đang gạch bỏ trong danh sách, chỉ đơn thuần là để tồn tại qua tháng này?
 
 Nếu câu trả lời là vế sau, thì chặng đường tuổi 30 của anh em hứa hẹn sẽ còn chông gai và tốn sức lắm đấy hehe.
 
