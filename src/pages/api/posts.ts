@@ -122,7 +122,7 @@ export async function GET() {
 export async function POST({ request }: { request: Request }) {
   try {
     const body = await request.json();
-    const { title, description, category, slug, pubDate, status, tags, content, author, image, action } = body;
+    const { title, description, category, slug, originalSlug, originalCategory, pubDate, status, tags, content, author, image, action } = body;
 
     if (!title || !category || !slug) {
       return new Response(JSON.stringify({ success: false, error: 'Missing required fields' }), {
@@ -132,6 +132,15 @@ export async function POST({ request }: { request: Request }) {
     }
 
     const contentDir = path.resolve('./src/content');
+    
+    // If slug or category changed, delete the old markdown file to prevent duplicates
+    if (originalSlug && originalCategory && (originalSlug !== slug || originalCategory !== category)) {
+      const oldFilePath = path.join(contentDir, originalCategory, `${originalSlug}.md`);
+      if (fs.existsSync(oldFilePath)) {
+        try { fs.unlinkSync(oldFilePath); } catch (e) {}
+      }
+    }
+
     const catDir = path.join(contentDir, category);
     if (!fs.existsSync(catDir)) {
       fs.mkdirSync(catDir, { recursive: true });

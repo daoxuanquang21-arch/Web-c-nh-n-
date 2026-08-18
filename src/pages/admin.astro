@@ -1823,8 +1823,14 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
         const nowIso = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
         if (pPubDate) pPubDate.value = nowIso;
         if (pStatus) pStatus.value = 'public';
-        if (pSlug) pSlug.readOnly = false;
-        if (pCat) pCat.disabled = false;
+        if (pSlug) {
+          pSlug.readOnly = false;
+          delete pSlug.dataset.originalSlug;
+        }
+        if (pCat) {
+          pCat.disabled = false;
+          delete pCat.dataset.originalCategory;
+        }
         toggleCategoryEditorMode();
         runRealtimeSEOAnalyzer();
       }
@@ -2076,6 +2082,8 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
             description: pDesc.value,
             category: pCat.value,
             slug: pSlug.value,
+            originalSlug: pSlug.dataset.originalSlug || '',
+            originalCategory: pCat.dataset.originalCategory || '',
             pubDate: pPubDate.value,
             status: pStatus?.value || 'public',
             tags: tagsArr,
@@ -2089,6 +2097,20 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
 
             // 1. Save to custom_saved_posts in localStorage so it persists 100% in SSG mode
             const customPosts = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
+            
+            // Clean up old slug record if slug or category was edited
+            const origSlug = pSlug.dataset.originalSlug;
+            const origCat = pCat.dataset.originalCategory;
+            if (origSlug && origCat && (origSlug !== payload.slug || origCat !== payload.category)) {
+              const oldIdx = customPosts.findIndex((p: any) => p.slug === origSlug && p.category === origCat);
+              if (oldIdx !== -1) customPosts.splice(oldIdx, 1);
+              
+              let deletedSlugs = JSON.parse(localStorage.getItem('deleted_post_slugs') || '[]');
+              if (!deletedSlugs.includes(origSlug)) deletedSlugs.push(origSlug);
+              if (!deletedSlugs.includes(`${origCat}/${origSlug}`)) deletedSlugs.push(`${origCat}/${origSlug}`);
+              localStorage.setItem('deleted_post_slugs', JSON.stringify(deletedSlugs));
+            }
+
             const existingIdx = customPosts.findIndex((p: any) => p.slug === payload.slug || p.id === `${payload.category}/${payload.slug}`);
             const newPostObj = {
               id: `${payload.category}/${payload.slug}`,
@@ -2161,9 +2183,12 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
             if (pImg) pImg.value = post.image || '';
             if (pTags) pTags.value = post.tags ? post.tags.join(', ') : '';
 
-            // Block editing of slug and category in edit mode to prevent file moving/clashing errors
-            pSlug.readOnly = true;
-            pCat.disabled = true;
+            // Set datasets to track original slug/category for file renaming on the server
+            pSlug.dataset.originalSlug = post.slug;
+            pCat.dataset.originalCategory = post.category;
+
+            pSlug.readOnly = false;
+            pCat.disabled = false;
 
             toggleCategoryEditorMode();
 
