@@ -21,6 +21,7 @@ Dành riêng cho anh em nào đang ở trong tình trạng:
 - Đang làm sếp, làm mentor, có đàn em đi theo và thực tâm muốn truyền bí kíp này cho chúng nó.
 - Nhưng hễ khuyên "phải kiên nhẫn", "đừng chỉ nhìn vào lương trước mắt" thì y như rằng bị dội gáo nước lạnh: "Thế tháng này KPI của em có đạt không sếp?".
 - Đang chán nản vì xung quanh toàn người tư duy ngắn hạn, sợ cái triết lý làm nghề xương máu của mình không ai kế thừa.
+
 Anh em ạ, tôi cũng từng bực mình y chang.
 
 Mình muốn tốt cho nó, nó lại nghĩ mình đang "vẽ hươu vẽ vượn" để bóc lột sức lao động. Nhưng lỗi không phải do chúng nó. Lỗi là do anh em đang bán sai cách.
@@ -39,14 +40,14 @@ Vậy giải pháp là gì?
 
 Người ta không bị thuyết phục bởi lời khuyên. Người ta bị thuyết phục bởi kết quả (thậm chí là sự ghen tị). Hãy dùng 3 bước thực chiến này:
 
-1. Show, Don't Tell (Làm cho thấy, đừng giải thích)
+1. Làm cho thấy, đừng giải thích
 
 Hãy để đàn em thấy sức mạnh của sự vô hình.
 
 - Bọn nó trầy trật xin cuộc hẹn khách VIP không được? Anh em nhấc máy gọi một cuốc, đầu dây bên kia vồn vã mời ra cafe chốt việc luôn.
 - Bọn nó chạy quảng cáo toát mồ hôi không ra đơn? Anh em đăng một status tâm tình nhẹ nhàng, khách tự tìm đến inbox nhờ tư vấn.
 
-2. Gieo Hạt Đúng Lúc (Inception)
+2. Gieo hạt đúng lúc
 
 Khi chúng nó tròn mắt hỏi:
 
@@ -54,9 +55,9 @@ Khi chúng nó tròn mắt hỏi:
 
 ĐÂY CHÍNH LÀ THỜI ĐIỂM VÀNG. Lúc này cửa sổ tâm trí chúng nó mới mở ra. Đừng trả lời kiểu bề trên, hãy kể chuyện nhẹ nhàng:
 
-> "Thực ra cũng chẳng có trick gì đâu. Ông khách này hồi xưa dự án ổng tịt ngòi, anh nhảy vào phụ làm slide không lấy một cắc. Giờ ổng thành sếp lớn ổng nhớ cái tình ngày xưa thôi. Làm nghề nhiều khi ăn nhau ở mấy cái không tính đếm được bằng tiền lúc đó em ạ."
+> "Thực ra cũng chẳng có mẹo gì đâu. Ông khách này hồi xưa dự án ổng tịt ngòi, anh nhảy vào phụ làm slide không lấy một cắc. Giờ ổng thành sếp lớn ổng nhớ cái tình ngày xưa thôi. Làm nghề nhiều khi ăn nhau ở mấy cái không tính đếm được bằng tiền lúc đó em ạ."
 
-3. Giao Bài Tập "Micro-Action" (Hành động vi mô)
+3. Giao bài tập siêu nhỏ (Hành động vi mô)
 
 Ngay lúc nó đang thấm, đừng bắt nó "đi xây dựng mạng lưới đi". Hãy giao một việc siêu nhỏ thôi:
 
