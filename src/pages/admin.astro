@@ -1903,7 +1903,7 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
           const cleanLine = trimmed.replace(/^[#\-\*•\+]\s*/, '');
           const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
           const lastChar = cleanLine.slice(-1);
-          const isPunctuationEnd = ['.', ',', ';'].includes(lastChar);
+          const isPunctuationEnd = ['.', ',', ';', '?', '!'].includes(lastChar);
           
           // Pattern detection for H3 (Sub-methods, steps, tips, branches, etc.)
           const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|bí quyết|mẹo|ví dụ|\d+\.\d+)\s*\d*[:\.]/i.test(cleanLine);

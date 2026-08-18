@@ -12,7 +12,7 @@ function formatContentHeadings(content: string): string {
     const cleanLine = trimmed.replace(/^[#\-\*]+\s*/, '');
     const hasLetters = /[a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/.test(cleanLine);
     const lastChar = cleanLine.slice(-1);
-    const isPunctuationEnd = ['.', ',', ';'].includes(lastChar);
+    const isPunctuationEnd = ['.', ',', ';', '?', '!'].includes(lastChar);
     
     const isH3Pattern = /^(phương pháp|bước|cách|gợi ý|lưu ý|\d+\.\d+)\s*\d*[:\.]/i.test(cleanLine);
     const isH2Explicit = /^(bài này dành cho|\d+\.|tóm lại|kết luận|cái bẫy|nguyên nhân|giải pháp|tổng kết)/i.test(cleanLine);
