@@ -1142,13 +1142,7 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
           let customPostsArr = JSON.parse(localStorage.getItem('custom_saved_posts') || '[]');
           customPostsArr = customPostsArr.filter((p: any) => 
             p && p.slug && !deletedSlugs.includes(p.slug)
-          ).map((p: any) => {
-            const matchDef = defaultPosts.find(dp => dp.slug === p.slug || dp.id === p.id);
-            if (matchDef) {
-              return { ...p, description: matchDef.description, content: matchDef.content, title: matchDef.title };
-            }
-            return p;
-          });
+          );
           localStorage.setItem('custom_saved_posts', JSON.stringify(customPostsArr));
 
           const mergedMap = new Map();
