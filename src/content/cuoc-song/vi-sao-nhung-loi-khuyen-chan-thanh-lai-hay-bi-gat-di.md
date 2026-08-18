@@ -21,8 +21,7 @@ Dành riêng cho anh em nào đang ở trong tình trạng:
 - Đang làm sếp, làm mentor, có đàn em đi theo và thực tâm muốn truyền bí kíp này cho chúng nó.
 - Nhưng hễ khuyên "phải kiên nhẫn", "đừng chỉ nhìn vào lương trước mắt" thì y như rằng bị dội gáo nước lạnh: "Thế tháng này KPI của em có đạt không sếp?".
 - Đang chán nản vì xung quanh toàn người tư duy ngắn hạn, sợ cái triết lý làm nghề xương máu của mình không ai kế thừa.
-
-## Anh em ạ, tôi cũng từng bực mình y chang
+Anh em ạ, tôi cũng từng bực mình y chang.
 
 Mình muốn tốt cho nó, nó lại nghĩ mình đang "vẽ hươu vẽ vượn" để bóc lột sức lao động. Nhưng lỗi không phải do chúng nó. Lỗi là do anh em đang bán sai cách.
 
