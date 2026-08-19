@@ -18,7 +18,7 @@ Nếu anh em Gen Z/đầu 9x (tầm 25 tuổi) đang phải đối mặt với:
 - Cảm giác bất an, không hình dung nổi 5 năm nữa mình sẽ là ai, làm ở đâu, hay lúc đó lại bơ vơ nhìn người ta vượt mặt.
 - Thói quen đưa ra lựa chọn cảm tính theo kiểu "thấy vui thì làm, thấy mệt thì bỏ" để rồi cứ luẩn quẩn mãi trong một vòng tròn không lối thoát.
 
-Hãy xem thử kỹ thuật định hướng tương lai tui minh họa trong hình: Đưa ra quyết định hôm nay dựa trên hình dung con người 5 năm sau. Anh em sẽ hiểu vì sao việc chỉ nhìn vào hoàn cảnh hiện tại để ra quyết định lại là cái bẫy đẩy chúng ta vào cảnh giậm chân tại chỗ (và cách để làm chủ nó).
+Hãy xem thử kỹ thuật định hướng tương lai tôi minh họa trong hình: Đưa ra quyết định hôm nay dựa trên hình dung con người 5 năm sau. Anh em sẽ hiểu vì sao việc chỉ nhìn vào hoàn cảnh hiện tại để ra quyết định lại là cái bẫy đẩy chúng ta vào cảnh giậm chân tại chỗ (và cách để làm chủ nó).
 
 Toàn bộ hướng đi, sự nhạy bén trong chiến lược cá nhân và vị thế của anh em sẽ thay đổi mãi mãi nếu hiểu được điều này. Tiền bạc hay cơ hội thăng tiến sẽ đến như một hệ quả tất yếu của những lựa chọn có tầm nhìn.
 
@@ -42,7 +42,7 @@ Nói tiếng người nghĩa là: Cái giá của việc không có tầm nhìn 
 
 Đây là lý do tại sao ở độ tuổi 25, có những người nhìn qua tưởng linh hoạt, cơ hội, chỗ nào có vẻ thơm là nhảy vào. Nhưng đến năm 30 tuổi, khi nhìn lại, họ vẫn chỉ là một nhân viên lẹt đẹt, kỹ năng chắp vá, không có chiều sâu vì mỗi năm họ làm một phách, không có sợi chỉ đỏ xuyên suốt sự nghiệp.
 
-Tui biết anh em đang nghĩ kiểu: "Ờ thì ai chẳng muốn nghĩ xa, nhưng sống nay biết mai còn chưa xong, lo gì chuyện 5 năm nữa cho mệt óc!". Tui hiểu, vì tui cũng từng có giai đoạn thấy việc lập kế hoạch 5 năm là thứ gì đó xa vời, sáo rỗng.
+Tôi biết anh em đang nghĩ kiểu: "Ờ thì ai chẳng muốn nghĩ xa, nhưng sống nay biết mai còn chưa xong, lo gì chuyện 5 năm nữa cho mệt óc!". Tôi hiểu, vì tôi cũng từng có giai đoạn thấy việc lập kế hoạch 5 năm là thứ gì đó xa vời, sáo rỗng.
 
 Nhưng sự thật là anh em đang nhầm lẫn giữa "sống thực tế" và "sống không có định hướng".
 
@@ -82,9 +82,9 @@ Người ta sẽ nhìn anh em và bảo: "Sao thằng này kỷ luật thế, vi
 
 Khi anh em rèn được thói quen ra quyết định bằng tư duy ngược thay vì nhìn vào cái lợi trước mắt, anh em không chỉ làm chủ cuộc đời mình. Anh em còn xây dựng được một thứ vũ khí tối thượng: Sự nhất quán và Tầm nhìn không ai dễ có được.
 
-Tui còn nhớ giai đoạn tuổi 25, có những ngày đồng nghiệp xung quanh rủ rê tối nào cũng đi nhậu nhẹt, cuối tuần đi chơi xả láng, nhìn họ vui vẻ tận hưởng hiện tại tui cũng chạnh lòng chứ. Nhưng trong đầu tui lúc đó đã khắc ghi một hình ảnh rõ mồn một về việc mình muốn trở thành ai vào năm 30 tuổi. Tui tự nhủ: "Nếu cứ thả trôi theo tụi nó, 5 năm nữa mình sẽ nhận lại một cái kết thảm hại, lúc đó khóc cũng không kịp".
+Tôi còn nhớ giai đoạn tuổi 25, có những ngày đồng nghiệp xung quanh rủ rê tối nào cũng đi nhậu nhẹt, cuối tuần đi chơi xả láng, nhìn họ vui vẻ tận hưởng hiện tại tôi cũng chạnh lòng chứ. Nhưng trong đầu tôi lúc đó đã khắc ghi một hình ảnh rõ mồn một về việc mình muốn trở thành ai vào năm 30 tuổi. Tôi tự nhủ: "Nếu cứ thả trôi theo tụi nó, 5 năm nữa mình sẽ nhận lại một cái kết thảm hại, lúc đó khóc cũng không kịp".
 
-Và quả ngọt đến rất rõ ràng: Sự kiên định theo đuổi lộ trình vạch sẵn từ năm 25 tuổi giúp tui có một bệ phóng cực kỳ vững chắc khi bước sang tuổi 30. Trong khi nhiều người bắt đầu hoảng loạn vì sự nghiệp dậm chân tại chỗ, tui đã tự tin ngồi vào ghế quản lý với mức thu nhập mơ ước.
+Và quả ngọt đến rất rõ ràng: Sự kiên định theo đuổi lộ trình vạch sẵn từ năm 25 tuổi giúp tôi có một bệ phóng cực kỳ vững chắc khi bước sang tuổi 30. Trong khi nhiều người bắt đầu hoảng loạn vì sự nghiệp dậm chân tại chỗ, tôi đã tự tin ngồi vào ghế quản lý với mức thu nhập mơ ước.
 
 Thế nên là, cơ hội không tự nhiên rơi xuống đầu ai cả. Nó là tổng hòa của những quyết định nhỏ nhặt hôm nay được chiếu theo một đích đến dài hạn từ tương lai.
 
@@ -99,7 +99,7 @@ Thế nên là, cơ hội không tự nhiên rơi xuống đầu ai cả. Nó l�
 
 > Seneca từng nói một câu chí lý: "Không có ngọn gió nào là thuận lợi cho kẻ không biết mình muốn cập bến nào."
 
-Tui không xúi anh em phải lên kế hoạch chi tiết từng phút giây hay bỏ hết mọi niềm vui hiện tại nhé. Anh em hoàn toàn có quyền tận hưởng tuổi trẻ. Nhưng hãy nhớ quy luật: Ra quyết định hôm nay mà không nhìn 5 năm sau, thì tương lai sẽ trừng phạt anh em bằng sự bấp bênh. Hãy tập thói quen lùi lại 1 bước, hình dung bản thân ở tuổi 30 trước khi gật đầu đồng ý với bất kỳ ngã rẽ quan trọng nào.
+Tôi không xúi anh em phải lên kế hoạch chi tiết từng phút giây hay bỏ hết mọi niềm vui hiện tại nhé. Anh em hoàn toàn có quyền tận hưởng tuổi trẻ. Nhưng hãy nhớ quy luật: Ra quyết định hôm nay mà không nhìn 5 năm sau, thì tương lai sẽ trừng phạt anh em bằng sự bấp bênh. Hãy tập thói quen lùi lại 1 bước, hình dung bản thân ở tuổi 30 trước khi gật đầu đồng ý với bất kỳ ngã rẽ quan trọng nào.
 
 Nếu anh em là một trong số ít những người trẻ dám dùng tư duy Backcasting để định hướng cuộc đời, anh em sẽ cực kỳ đáng gờm. Sếp sẽ nhìn thấy ở anh em tầm nhìn chiến lược. Đối tác sẽ nhìn thấy sự tin cậy và chắc chắn trong từng đường đi nước bước.
 
