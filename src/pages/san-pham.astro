@@ -60,7 +60,7 @@ import products from '../data/products.json';
               <span class="text-sm font-bold text-slate-950 dark:text-white">{product.price || 'Liên hệ'}</span>
             </div>
             {product.status === 'Sắp ra mắt' ? (
-              <button class="w-full py-2.5 rounded-lg border border-red-500/90 text-red-600 dark:border-red-500/70 dark:text-red-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white text-sm font-bold transition-all duration-200 cursor-pointer">
+              <button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">
                 Đăng ký nhận thông tin
               </button>
             ) : product.status === 'Nội bộ' ? (
@@ -72,7 +72,7 @@ import products from '../data/products.json';
                 href={`https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block w-full text-center py-2.5 rounded-lg border border-red-500/90 text-red-600 dark:border-red-500/70 dark:text-red-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white text-sm font-bold transition-all duration-200"
+                class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
               >
                 {product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay'}
               </a>
@@ -117,13 +117,13 @@ import products from '../data/products.json';
 
             let actionHtml = '';
             if (product.status === 'Sắp ra mắt') {
-              actionHtml = `<button class="w-full py-2.5 rounded-lg border border-red-500/90 text-red-600 dark:border-red-500/70 dark:text-red-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white text-sm font-bold transition-all duration-200 cursor-pointer">Đăng ký nhận thông tin</button>`;
+              actionHtml = `<button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">Đăng ký nhận thông tin</button>`;
             } else if (product.status === 'Nội bộ') {
               actionHtml = `<button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">Chỉ dùng nội bộ</button>`;
             } else {
               const zaloUrl = `https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title || ''}`)}`;
               const btnLabel = product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay';
-              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg border border-red-500/90 text-red-600 dark:border-red-500/70 dark:text-red-400 hover:bg-red-600 hover:text-white dark:hover:bg-red-600 dark:hover:text-white text-sm font-bold transition-all duration-200">${btnLabel}</a>`;
+              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow">${btnLabel}</a>`;
             }
 
             const imageHtml = product.image
