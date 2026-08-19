@@ -43,6 +43,8 @@ jobs:
             git checkout src/content/cuoc-song/dung-de-luong-cung-la-phao-cuu-sinh-duy-nhat.md
             git checkout src/content/ai/ngung-hoc-vet-cong-cu-hay-hoc-tu-duy-ra-lenh-cho-ai.md
             git checkout src/content/cuoc-song/nghich-ly-nguoi-gioi-cang-cay-sau-cang-thay-minh-kem.md
+            git checkout src/content/cuoc-song/ngung-lam-idol-mang-hay-lam-nguoi-ghi-chep-tan-tuy.md
+
 
 
 
