@@ -47,6 +47,8 @@ jobs:
             git checkout src/content/cuoc-song/cang-co-to-ra-hoan-hao-anh-em-cang-de-mat-gia.md
             git checkout src/content/cuoc-song/choi-he-ben-vung-duong-ai-nay-di-dich-ai-nay-toi.md
             git checkout src/content/cuoc-song/cho-voi-di-ban-hang-khi-chua-biet-ro-minh-gioi-gi.md
+            git checkout src/content/cuoc-song/bi-quyet-ban-minh-khong-nguong-noi-ve-khach-dung-khoe-than.md
+
 
 
 
