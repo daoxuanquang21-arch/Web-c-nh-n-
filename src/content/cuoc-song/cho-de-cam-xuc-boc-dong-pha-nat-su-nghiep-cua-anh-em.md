@@ -77,8 +77,6 @@ Anh em không mất 5 năm để sửa một sai lầm ngớ ngẩn. Anh em dùn
 
 Ra quyết định có hệ thống. Đó là vũ khí tối thượng của sự trưởng thành.
 
----
-
 Và đây, lại là màn giới thiệu (nhưng hứa là có lợi cho anh em).
 
 Anh em nào thực sự đang loay hoay trước các ngã rẽ lớn, muốn cài đặt một "hệ điều hành" tư duy sắc bén để bẻ gãy mọi sự bốc đồng, giảm thiểu sai lầm đắt giá trong đời và xây dựng hệ thống tự vận hành cho riêng mình, thì thân mời tham gia chương trình [Đào tạo 14 ngày làm hệ thống](/dich-vu/dao-tao) của tôi.
