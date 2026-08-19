@@ -10,6 +10,16 @@ export function formatCleanTitle(t: string): string {
   return t;
 }
 
+// Helper to parse markdown formatting like links and bold text
+function parseInlineMarkdown(text: string): string {
+  if (!text) return '';
+  // Convert links [text](url)
+  let formatted = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="text-brand-green dark:text-emerald-400 font-bold hover:underline">$1</a>');
+  // Convert bold **text**
+  formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
+  return formatted;
+}
+
 // Custom markdown renderer with exact design specs matching Layout.astro
 export function renderMarkdownToHtml(md: string): string {
   if (!md) return '<p class="text-slate-500 italic">Chưa có nội dung...</p>';
@@ -38,19 +48,17 @@ export function renderMarkdownToHtml(md: string): string {
     } else if (trimmed.startsWith('> ')) {
       if (inList) { htmlParts.push('</ul>'); inList = false; }
       const qText = trimmed.substring(2);
-      htmlParts.push(`<blockquote class="border-l-4 border-slate-300 dark:border-slate-700 pl-4 my-4 italic text-slate-600 dark:text-slate-400">${qText}</blockquote>`);
+      htmlParts.push(`<blockquote class="border-l-4 border-slate-300 dark:border-slate-700 pl-4 my-4 italic text-slate-600 dark:text-slate-400">${parseInlineMarkdown(qText)}</blockquote>`);
     } else if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       if (!inList) {
         htmlParts.push('<ul class="list-disc pl-6 space-y-1.5 my-3 text-slate-700 dark:text-slate-300">');
         inList = true;
       }
       const lText = trimmed.substring(2);
-      htmlParts.push(`<li>${lText}</li>`);
+      htmlParts.push(`<li>${parseInlineMarkdown(lText)}</li>`);
     } else {
       if (inList) { htmlParts.push('</ul>'); inList = false; }
-      // Bold text conversion **text**
-      const pFormatted = trimmed.replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold text-slate-900 dark:text-white">$1</strong>');
-      htmlParts.push(`<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${pFormatted}</p>`);
+      htmlParts.push(`<p class="text-slate-700 dark:text-slate-300 leading-relaxed mb-6 text-base sm:text-lg">${parseInlineMarkdown(trimmed)}</p>`);
     }
   });
 
