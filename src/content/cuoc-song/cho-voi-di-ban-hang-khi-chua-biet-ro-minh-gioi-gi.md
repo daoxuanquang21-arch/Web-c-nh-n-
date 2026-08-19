@@ -61,7 +61,7 @@ Hãy tự hỏi: Anh em có chấp nhận được việc 1 năm nữa vẫn loa
 
 **Bài học 2: Thiết kế cho "hành trình" chứ không phải "điểm đến"**
 
-Đây là sai lầm tôi mắc phải rất nhiều lần. Tôi hay tập trung vào "mục tiêu kiếm 20 triệu/tháng", mà quên mất "trải nghiệm" trong suốt quá trình xây dựng nó.
+Đây là sai lầm tôi mắc phải rất nhiều lần. Tôi hay tập trung vào "mục tiêu kiếm 50 triệu/tháng", mà quên mất "trải nghiệm" trong suốt quá trình xây dựng nó.
 
 Ví dụ, nếu anh em cố đấm ăn xôi đi làm một việc anh em ghét (như ông bạn tôi đi livestream bán hàng), thì hành trình mỗi ngày là một cực hình. Sáng dậy uể oải, làm thì gượng ép, tối ngủ thì áp lực.
 
