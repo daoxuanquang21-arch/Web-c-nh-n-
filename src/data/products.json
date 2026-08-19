@@ -8,5 +8,15 @@
     "icon": "📘",
     "price": "199.000đ",
     "image": "/images/ebook-tao-blog-landscape.jpg"
+  },
+  {
+    "id": "ebook-9-cach-tao-thu-nhap-tu-blog",
+    "title": "9 Cách Tạo Thu Nhập Từ Blog",
+    "description": "Khám phá 9 phương pháp tạo dòng tiền thực tế và hiệu quả từ trang blog của bạn. Cuốn cẩm nang thực chiến giúp bạn biến nội dung số thành nguồn thu nhập bền vững.",
+    "type": "Ebook",
+    "status": "Đang hoạt động",
+    "icon": "📘",
+    "price": "Miễn phí",
+    "image": "/images/ebook-thu-nhap-blog.jpg"
   }
 ]
