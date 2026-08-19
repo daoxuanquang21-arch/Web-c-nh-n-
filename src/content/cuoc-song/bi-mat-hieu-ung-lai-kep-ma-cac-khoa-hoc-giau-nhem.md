@@ -1,5 +1,5 @@
 ---
-title: "Bí mật hiệu ứng lãi kép mà các khóa học giấu nhẹm"
+title: "Bí mật hiệu ứng lãi kép mà những gã già dơ giấu nhẹm"
 description: "Đừng vội bỏ cuộc khi chưa thấy kết quả. Bài viết này bóc trần sự thật về thói quen nhỏ và cách vượt qua giai đoạn chán nản nhất để bứt phá."
 pubDate: 2026-08-18T16:00:00.000Z
 status: "public"
