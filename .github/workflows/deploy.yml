@@ -39,6 +39,8 @@ jobs:
             git checkout src/content/cuoc-song/bi-mat-hieu-ung-lai-kep-ma-cac-khoa-hoc-giau-nhem.md
             git checkout src/content/cuoc-song/cach-tro-thanh-thoi-nam-cham-thu-hut-moi-co-hoi.md
             git checkout src/content/cuoc-song/vi-sao-nhung-loi-khuyen-chan-thanh-lai-hay-bi-gat-di.md
+            git checkout src/content/cuoc-song/cho-de-cam-xuc-boc-dong-pha-nat-su-nghiep-cua-anh-em.md
+
 
 
 
