@@ -25,6 +25,15 @@ const sortedPosts = posts
     return true;
   });
 
+const postsPerPage = 6;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1') || 1;
+const totalPages = Math.ceil(sortedPosts.length / postsPerPage);
+const activePage = Math.max(1, Math.min(currentPage, totalPages || 1));
+
+const startIndex = (activePage - 1) * postsPerPage;
+const endIndex = startIndex + postsPerPage;
+const paginatedPosts = sortedPosts.slice(startIndex, endIndex);
+
 const formatCleanTitle = (t: string) => {
   if (!t) return '';
   const lettersOnly = t.replace(/[^a-zA-ZÁÀẢẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬĐÉÈẺẼẸÊẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÚÙỦŨỤƯỨỪỬỮỰÝỲỶỸỊ]/g, '');
@@ -50,7 +59,7 @@ const formatCleanTitle = (t: string) => {
     </div>
 
     <div class="posts-grid-container grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {sortedPosts.map((post) => (
+      {paginatedPosts.map((post) => (
         <article data-post-slug={post.id} data-post-title={post.data.title} class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-200 group flex flex-col justify-between overflow-hidden">
           <div>
             {post.data.image && (
@@ -95,12 +104,61 @@ const formatCleanTitle = (t: string) => {
         </article>
       ))}
 
-      {sortedPosts.length === 0 && (
+      {paginatedPosts.length === 0 && (
         <div class="posts-empty-state col-span-full p-8 border border-dashed border-slate-200 dark:border-slate-800 rounded-2xl text-center text-slate-500">
           Đang cập nhật các bài viết mới...
         </div>
       )}
     </div>
+
+    {totalPages > 1 && (
+      <div class="flex justify-center items-center gap-2 mt-12 pt-6 border-t border-slate-100 dark:border-slate-800">
+        {activePage > 1 ? (
+          <a
+            href={`?page=${activePage - 1}`}
+            class="px-4 py-2 text-sm font-semibold rounded-xl bg-slate-100 dark:bg-dark-surface hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors"
+          >
+            &larr; Trang trước
+          </a>
+        ) : (
+          <span class="px-4 py-2 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-300 dark:text-slate-700 cursor-not-allowed">
+            &larr; Trang trước
+          </span>
+        )}
+
+        <div class="flex items-center gap-1.5">
+          {Array.from({ length: totalPages }).map((_, i) => {
+            const pageNum = i + 1;
+            const isCurrent = pageNum === activePage;
+            return (
+              <a
+                href={`?page=${pageNum}`}
+                class={`px-3.5 py-2 text-sm font-bold rounded-xl transition-all duration-150 ${
+                  isCurrent
+                    ? 'bg-brand-green text-white shadow-sm'
+                    : 'bg-slate-100 dark:bg-dark-surface hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
+                }`}
+              >
+                {pageNum}
+              </a>
+            );
+          })}
+        </div>
+
+        {activePage < totalPages ? (
+          <a
+            href={`?page=${activePage + 1}`}
+            class="px-4 py-2 text-sm font-semibold rounded-xl bg-slate-100 dark:bg-dark-surface hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors"
+          >
+            Trang sau &rarr;
+          </a>
+        ) : (
+          <span class="px-4 py-2 text-sm font-semibold rounded-xl bg-slate-50 dark:bg-slate-900 text-slate-300 dark:text-slate-700 cursor-not-allowed">
+            Trang sau &rarr;
+          </span>
+        )}
+      </div>
+    )}
   </section>
 </Layout>
 
@@ -209,7 +267,10 @@ const formatCleanTitle = (t: string) => {
       const gridContainer = document.querySelector('.posts-grid-container');
       const emptyStateContainer = document.querySelector('.posts-empty-state');
 
-      if (categoryPosts.length > 0 && gridContainer) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentPageNum = parseInt(urlParams.get('page') || '1') || 1;
+
+      if (currentPageNum === 1 && categoryPosts.length > 0 && gridContainer) {
         if (emptyStateContainer) emptyStateContainer.remove();
         
         categoryPosts.forEach((post: any) => {
