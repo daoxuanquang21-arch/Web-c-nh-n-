@@ -33,7 +33,7 @@ export async function GET() {
 export async function POST({ request }: { request: Request }) {
   try {
     const body = await request.json();
-    const { id, title, description, type, status, icon, price, action } = body;
+    const { id, title, description, type, status, icon, price, action, image } = body;
 
     let products = [];
     if (fs.existsSync(productsFilePath)) {
@@ -64,7 +64,7 @@ export async function POST({ request }: { request: Request }) {
       });
     }
 
-    const newProduct = { id, title, description, type, status, icon, price: price || 'Liên hệ' };
+    const newProduct = { id, title, description, type, status, icon, price: price || 'Liên hệ', image: image || '' };
 
     // Check if product ID already exists to decide between update and create
     const existingIndex = products.findIndex((p: any) => p.id === id);

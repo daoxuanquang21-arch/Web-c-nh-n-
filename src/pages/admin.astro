@@ -583,6 +583,10 @@ import Layout from '../layouts/Layout.astro';
                   <label for="product-description" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mô tả sản phẩm *</label>
                   <textarea id="product-description" required rows="4" placeholder="Nhập mô tả ngắn về tính năng và giá trị sản phẩm..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm leading-relaxed"></textarea>
                 </div>
+                <div>
+                  <label for="product-image" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Đường dẫn ảnh đại diện (Tùy chọn - Ví dụ: /images/san-pham.jpg)</label>
+                  <input type="text" id="product-image" placeholder="Ví dụ: /images/ebook-tao-blog.jpg" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
+                </div>
               </div>
 
               <!-- Right side parameters -->
@@ -2227,6 +2231,7 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
       const prStatus = document.getElementById('product-status') as HTMLSelectElement;
       const prPrice = document.getElementById('product-price') as HTMLInputElement;
       const prIcon = document.getElementById('product-icon') as HTMLInputElement;
+      const prImage = document.getElementById('product-image') as HTMLInputElement;
       const productEditorTitle = document.getElementById('product-editor-title');
       const saveProductBtn = document.getElementById('save-product-btn');
 
@@ -2237,6 +2242,7 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
         isProductEditMode = false;
         if (productEditorTitle) productEditorTitle.textContent = '📦 Soạn Thảo Sản Phẩm Mới';
         if (prId) prId.readOnly = false;
+        if (prImage) prImage.value = '';
       }
 
       if (addProductBtn) {
@@ -2277,8 +2283,16 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
           return `
             <tr class="hover:bg-slate-900/20 transition-all align-top">
               <td class="p-4 font-bold text-slate-200">
-                <span class="text-xl mr-2">${prod.icon || '📦'}</span> ${prod.title}
-                <span class="block text-xs font-mono text-slate-500 font-normal">id: ${prod.id}</span>
+                <div class="flex items-center gap-2">
+                  ${prod.image 
+                    ? `<img src="${prod.image}" alt="${prod.title}" class="w-8 h-8 rounded-lg object-cover bg-slate-800" />` 
+                    : `<span class="text-xl">${prod.icon || '📦'}</span>`
+                  }
+                  <div>
+                    <span>${prod.title}</span>
+                    <span class="block text-xs font-mono text-slate-500 font-normal">id: ${prod.id}</span>
+                  </div>
+                </div>
               </td>
               <td class="p-4 text-xs font-bold text-slate-300 font-mono">${prod.type}</td>
               <td class="p-4 text-xs font-semibold text-slate-200 font-mono">${prod.price || 'Liên hệ'}</td>
@@ -2320,6 +2334,7 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
             prStatus.value = prod.status;
             prPrice.value = prod.price || 'Liên hệ';
             prIcon.value = prod.icon || '';
+            if (prImage) prImage.value = prod.image || '';
 
             // Block id edit in edit mode
             prId.readOnly = true;
@@ -2391,7 +2406,8 @@ Gần đây nhất, có một “viên kẹo dẻo” cám dỗ ngắn hạn nà
             type: prType.value,
             status: prStatus.value,
             price: prPrice.value,
-            icon: prIcon.value
+            icon: prIcon.value,
+            image: prImage.value
           };
 
           try {

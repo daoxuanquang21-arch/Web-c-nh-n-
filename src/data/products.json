@@ -4,8 +4,9 @@
     "title": "Ebook Hướng Dẫn Tạo Blog Cá Nhân",
     "description": "Cẩm nang từng bước xây dựng blog cá nhân chuyên nghiệp từ con số 0, tối ưu hóa SEO và thiết lập hệ thống tự động thu hút độc giả bền vững.",
     "type": "Ebook",
-    "status": "Đang hoạt động",
+    "status": "Sắp ra mắt",
     "icon": "📘",
-    "price": "199.000đ"
+    "price": "199.000đ",
+    "image": "/images/ebook-tao-blog.jpg"
   }
 ]
