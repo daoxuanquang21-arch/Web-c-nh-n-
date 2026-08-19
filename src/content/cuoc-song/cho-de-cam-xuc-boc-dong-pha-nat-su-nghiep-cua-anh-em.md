@@ -79,10 +79,8 @@ Ra quyết định có hệ thống. Đó là vũ khí tối thượng của s�
 
 ---
 
-Và đây, lại là màn quảng cáo (nhưng hứa là có lợi cho anh em).
+Và đây, lại là màn giới thiệu (nhưng hứa là có lợi cho anh em).
 
-Anh em nào thực sự đang loay hoay trước các ngã rẽ lớn, muốn cài đặt một "hệ điều hành" tư duy sắc bén để bẻ gãy mọi sự bốc đồng, giảm thiểu sai lầm đắt giá trong đời thì thân mời tham gia (miễn phí) lớp RESET.
+Anh em nào thực sự đang loay hoay trước các ngã rẽ lớn, muốn cài đặt một "hệ điều hành" tư duy sắc bén để bẻ gãy mọi sự bốc đồng, giảm thiểu sai lầm đắt giá trong đời và xây dựng hệ thống tự vận hành cho riêng mình, thì thân mời tham gia chương trình [Đào tạo 14 ngày làm hệ thống](/dich-vu) của tôi.
 
-Lớp này nói về Landmark (vũ khí quản trị tâm lý và hệ thống tư duy của các top đầu như Vua Nệm, F88, PNJ) và cách áp dụng nó trực tiếp vào việc ra quyết định của cá nhân.
-
-Lớp này không tạo phễu, không bán hàng khóa học phía sau. Nó là lớp Mini CUỐI CÙNG tôi mở để test độ thực chiến của giáo án. Thế nên, anh em nào muốn join sẽ cần trao đổi 5-10 phút trước xem vấn đề anh em đang gặp có thực sự phù hợp để áp dụng framework này không (để đỡ tốn thời gian của cả đôi bên). Thấy hợp lý thì mình đi tiếp!
+Chương trình này giúp anh em thiết kế sơ đồ vận hành, tối ưu hóa quy trình marketing và cấu hình AI Agent theo tri thức của chính anh em để giải phóng sức lao động. Do tính chất kèm cặp thực chiến, anh em nào muốn tham gia sẽ cần trao đổi ngắn 5-10 phút trước với tôi xem vấn đề anh em đang gặp có thực sự phù hợp hay không (để đỡ tốn thời gian của cả đôi bên). Thấy hợp lý thì mình đi tiếp!
