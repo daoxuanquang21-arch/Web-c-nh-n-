@@ -54,10 +54,24 @@ import products from '../data/products.json';
               <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Giá bán:</span>
               <span class="text-sm font-bold text-slate-950 dark:text-white">{product.price || 'Liên hệ'}</span>
             </div>
-            
-            <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
-              {product.status === 'Sắp ra mắt' ? 'Đăng ký nhận thông tin' : product.status === 'Nội bộ' ? 'Chỉ dùng nội bộ' : 'Trải nghiệm ngay'}
-            </button>
+            {product.status === 'Sắp ra mắt' ? (
+              <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
+                Đăng ký nhận thông tin
+              </button>
+            ) : product.status === 'Nội bộ' ? (
+              <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
+                Chỉ dùng nội bộ
+              </button>
+            ) : (
+              <a 
+                href={`https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block w-full text-center py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors hover:text-brand-green"
+              >
+                Trải nghiệm ngay
+              </a>
+            )}
           </div>
         ))}
       </div>
@@ -96,7 +110,15 @@ import products from '../data/products.json';
               ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400'
               : 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-400';
 
-            const btnText = product.status === 'Sắp ra mắt' ? 'Đăng ký nhận thông tin' : product.status === 'Nội bộ' ? 'Chỉ dùng nội bộ' : 'Trải nghiệm ngay';
+            let actionHtml = '';
+            if (product.status === 'Sắp ra mắt') {
+              actionHtml = `<button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">Đăng ký nhận thông tin</button>`;
+            } else if (product.status === 'Nội bộ') {
+              actionHtml = `<button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">Chỉ dùng nội bộ</button>`;
+            } else {
+              const zaloUrl = `https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title || ''}`)}`;
+              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors hover:text-brand-green">Trải nghiệm ngay</a>`;
+            }
 
             card.innerHTML = `
               <div>
@@ -122,9 +144,7 @@ import products from '../data/products.json';
                 <span class="text-sm font-bold text-slate-950 dark:text-white">${product.price || 'Liên hệ'}</span>
               </div>
               
-              <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
-                ${btnText}
-              </button>
+              ${actionHtml}
             `;
             grid.appendChild(card);
           });
