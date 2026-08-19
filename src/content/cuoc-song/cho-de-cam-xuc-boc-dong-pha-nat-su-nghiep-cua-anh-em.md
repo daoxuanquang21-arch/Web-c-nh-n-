@@ -81,6 +81,6 @@ Ra quyết định có hệ thống. Đó là vũ khí tối thượng của s�
 
 Và đây, lại là màn giới thiệu (nhưng hứa là có lợi cho anh em).
 
-Anh em nào thực sự đang loay hoay trước các ngã rẽ lớn, muốn cài đặt một "hệ điều hành" tư duy sắc bén để bẻ gãy mọi sự bốc đồng, giảm thiểu sai lầm đắt giá trong đời và xây dựng hệ thống tự vận hành cho riêng mình, thì thân mời tham gia chương trình [Đào tạo 14 ngày làm hệ thống](/dich-vu) của tôi.
+Anh em nào thực sự đang loay hoay trước các ngã rẽ lớn, muốn cài đặt một "hệ điều hành" tư duy sắc bén để bẻ gãy mọi sự bốc đồng, giảm thiểu sai lầm đắt giá trong đời và xây dựng hệ thống tự vận hành cho riêng mình, thì thân mời tham gia chương trình [Đào tạo 14 ngày làm hệ thống](/dich-vu/dao-tao) của tôi.
 
 Chương trình này giúp anh em thiết kế sơ đồ vận hành, tối ưu hóa quy trình marketing và cấu hình AI Agent theo tri thức của chính anh em để giải phóng sức lao động. Do tính chất kèm cặp thực chiến, anh em nào muốn tham gia sẽ cần trao đổi ngắn 5-10 phút trước với tôi xem vấn đề anh em đang gặp có thực sự phù hợp hay không (để đỡ tốn thời gian của cả đôi bên). Thấy hợp lý thì mình đi tiếp!
