@@ -50,6 +50,8 @@ jobs:
             git checkout src/content/cuoc-song/bi-quyet-ban-minh-khong-nguong-noi-ve-khach-dung-khoe-than.md
             git checkout src/content/cuoc-song/10-prompt-ai-giup-anh-em-thoat-khoi-mot-nguon-thu-duy-nhat.md
             git checkout src/content/cuoc-song/tien-mat-co-thuc-su-cuu-anh-em-khi-khung-hoang-ap-den.md
+            git checkout src/content/cuoc-song/thoat-khoi-vong-xoay-phan-ung-de-lam-chu-cuoc-doi.md
+
 
 
 
