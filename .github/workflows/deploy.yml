@@ -48,6 +48,8 @@ jobs:
             git checkout src/content/cuoc-song/choi-he-ben-vung-duong-ai-nay-di-dich-ai-nay-toi.md
             git checkout src/content/cuoc-song/cho-voi-di-ban-hang-khi-chua-biet-ro-minh-gioi-gi.md
             git checkout src/content/cuoc-song/bi-quyet-ban-minh-khong-nguong-noi-ve-khach-dung-khoe-than.md
+            git checkout src/content/cuoc-song/10-prompt-ai-giup-anh-em-thoat-khoi-mot-nguon-thu-duy-nhat.md
+
 
 
 
