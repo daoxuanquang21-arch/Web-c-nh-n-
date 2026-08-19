@@ -74,7 +74,7 @@ import products from '../data/products.json';
                 rel="noopener noreferrer"
                 class="block w-full text-center py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors hover:text-brand-green"
               >
-                Trải nghiệm ngay
+                {product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay'}
               </a>
             )}
           </div>
@@ -122,7 +122,8 @@ import products from '../data/products.json';
               actionHtml = `<button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">Chỉ dùng nội bộ</button>`;
             } else {
               const zaloUrl = `https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title || ''}`)}`;
-              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors hover:text-brand-green">Trải nghiệm ngay</a>`;
+              const btnLabel = product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay';
+              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors hover:text-brand-green">${btnLabel}</a>`;
             }
 
             const imageHtml = product.image
