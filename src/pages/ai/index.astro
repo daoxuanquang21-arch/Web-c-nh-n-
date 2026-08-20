@@ -315,6 +315,16 @@ const formatCleanTitle = (t: string) => {
           gridContainer.prepend(articleEl);
         });
       }
+
+      // 4. Limit to strictly at most 6 posts per page
+      if (gridContainer) {
+        const articles = gridContainer.querySelectorAll('article');
+        if (articles.length > 6) {
+          for (let i = 6; i < articles.length; i++) {
+            articles[i].remove();
+          }
+        }
+      }
     } catch (e) {
       console.error('Render ai posts error:', e);
     }
