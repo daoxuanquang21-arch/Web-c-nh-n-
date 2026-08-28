@@ -1,7 +1,7 @@
 ---
 title: "Nghịch lý người giỏi: Càng cày sâu càng thấy mình kém"
 description: "Kẻ lừa đảo thật thì không bao giờ sợ bị lộ. Đây là cách anh em dọn rác tâm lý, biến nỗi sợ thành sự tự tin sắc lạnh bằng số liệu không thể chối cãi."
-pubDate: 2026-08-19T05:30:00.000Z
+pubDate: 2026-08-22T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

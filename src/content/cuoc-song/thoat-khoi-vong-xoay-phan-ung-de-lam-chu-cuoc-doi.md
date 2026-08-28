@@ -1,7 +1,7 @@
 ---
 title: "Thoát khỏi vòng xoáy phản ứng để làm chủ cuộc đời"
 description: "Cuộc sống bị cuốn đi vì những tin nhắn réo gọi và sự cố bất ngờ? Bí mật của người thành công là tập trung tuyệt đối vào việc quan trọng không khẩn cấp."
-pubDate: 2026-08-19T10:00:00.000Z
+pubDate: 2026-08-25T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

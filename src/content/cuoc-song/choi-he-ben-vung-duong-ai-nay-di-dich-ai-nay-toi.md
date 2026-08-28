@@ -1,7 +1,7 @@
 ---
 title: "Chơi hệ bền vững: Đường ai nấy đi, đích ai nấy tới"
 description: "Chậm lại một nhịp để xây móng chắc, còn hơn cuống cuồng chạy theo tốc độ của người khác rồi tự đập bỏ chiến lược của chính mình."
-pubDate: 2026-08-19T07:00:00.000Z
+pubDate: 2026-08-13T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

@@ -1,7 +1,7 @@
 ---
 title: "Đừng để lương cứng là phao cứu sinh duy nhất"
 description: "Công ty sa thải, lạm phát tăng. Đã đến lúc anh em tự xây hệ sinh thái thu nhập đa luồng từ kỹ năng có sẵn để không bao giờ sợ đứt dòng tiền."
-pubDate: 2026-08-19T04:30:00.000Z
+pubDate: 2026-08-16T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

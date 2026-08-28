@@ -1,7 +1,7 @@
 ---
 title: "10 prompt AI giúp anh em thoát khỏi một nguồn thu duy nhất"
 description: "Từ Cashflow Quadrant của Kiyosaki đến đòn bẩy của Naval Ravikant - áp dụng ngay để xây danh mục lựa chọn cho riêng mình."
-pubDate: 2026-08-19T09:00:00.000Z
+pubDate: 2026-08-01T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

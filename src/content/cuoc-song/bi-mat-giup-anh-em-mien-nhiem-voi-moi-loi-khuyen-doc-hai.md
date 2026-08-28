@@ -1,7 +1,7 @@
 ---
 title: "Bí mật giúp anh em miễn nhiễm với mọi lời khuyên độc hại"
 description: "Quá nhiều triết lý sống làm tâm trí anh em tê liệt và mất phương hướng? Hãy trang bị ngay bộ lọc tư duy sắc bén để bứt phá thu nhập mà không bị dắt mũi nữa."
-pubDate: 2026-08-19T10:30:00.000Z
+pubDate: 2026-08-02T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

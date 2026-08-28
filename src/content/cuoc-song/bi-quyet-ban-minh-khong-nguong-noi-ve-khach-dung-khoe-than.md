@@ -1,7 +1,7 @@
 ---
 title: "Bí quyết bán mình không ngượng: Nói về khách, đừng khoe thân!"
 description: "Khách hàng y như xem ảnh kỷ yếu, họ chỉ tìm chính mình. Ngừng khoe profile, hãy nói về nỗi đau của họ để chốt sale mà không cần gồng."
-pubDate: 2026-08-19T08:30:00.000Z
+pubDate: 2026-08-05T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

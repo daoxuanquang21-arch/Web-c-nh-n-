@@ -1,7 +1,7 @@
 ---
 title: "Chớ vội đi bán hàng khi chưa biết rõ mình giỏi gì"
 description: "Khách hàng không mua sản phẩm, họ mua giải pháp. Đã đến lúc dùng kỹ năng ruột của anh em để đẻ ra tiền thay vì gồng mình học một nghề mới toanh."
-pubDate: 2026-08-19T08:00:00.000Z
+pubDate: 2026-08-12T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

@@ -1,7 +1,7 @@
 ---
 title: "Đừng tự nhốt mình dưới đáy giếng của một chuyên môn hẹp!"
 description: "Chỉ thạo một nghề là rủi ro lớn nhất thời nay. Học ngay cách mở rộng kho kiến thức ngầm để không bế tắc trước những bài toán chưa từng có tiền lệ."
-pubDate: 2026-08-01T09:00:00.000Z
+pubDate: 2026-08-21T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

@@ -1,7 +1,7 @@
 ---
 title: "Tiền mặt có thực sự cứu anh em khi khủng hoảng ập đến?"
 description: "Đừng ảo tưởng tiền là tấm khiên duy nhất. Khi giông bão quét qua, thứ giữ anh em đứng vững chính là con người."
-pubDate: 2026-08-19T09:30:00.000Z
+pubDate: 2026-08-26T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

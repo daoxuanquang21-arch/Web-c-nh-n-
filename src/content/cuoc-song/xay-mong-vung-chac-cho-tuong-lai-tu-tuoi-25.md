@@ -1,7 +1,7 @@
 ---
 title: "Xây móng vững chắc cho tương lai từ tuổi 25"
 description: "Muốn sự nghiệp thăng hoa buộc phải nằm lòng cách 'ra quyết định ngược' dựa trên hình dung về chính mình trong tương lai."
-pubDate: 2026-08-18T09:00:00.000Z
+pubDate: 2026-08-28T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

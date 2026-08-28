@@ -1,7 +1,7 @@
 ---
 title: "Càng cố tỏ ra hoàn hảo, anh em càng dễ mất giá"
 description: "Thời nay, sự chân thật mới là thứ xa xỉ nhất. Dừng ngay việc chạy 'máy ảo' phông bạt và bắt đầu bứt phá với bài test trà đá vỉa hè."
-pubDate: 2026-08-19T06:30:00.000Z
+pubDate: 2026-08-10T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

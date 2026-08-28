@@ -1,7 +1,7 @@
 ---
 title: "Ngừng làm idol mạng, hãy làm người ghi chép tận tụy"
 description: "Bí quyết xây thương hiệu không giả trân: Đừng cố tạo content, hãy phơi bày 'mồ hôi' xưởng thợ để đối tác khao khát làm việc cùng."
-pubDate: 2026-08-19T06:00:00.000Z
+pubDate: 2026-08-23T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

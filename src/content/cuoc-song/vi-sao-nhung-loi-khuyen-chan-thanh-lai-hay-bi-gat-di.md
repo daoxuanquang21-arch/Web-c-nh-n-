@@ -1,7 +1,7 @@
 ---
 title: "Vì sao những lời khuyên chân thành lại hay bị gạt đi?"
 description: "Muốn đồng sự sống có tâm và nhìn xa trông rộng? Áp dụng ngay phương pháp bẻ lái tâm lý cực mượt này để không bao giờ bị gán mác giáo điều."
-pubDate: 2026-08-18T16:00:00.000Z
+pubDate: 2026-08-27T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

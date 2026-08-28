@@ -1,7 +1,7 @@
 ---
 title: "Chớ để cảm xúc bốc đồng phá nát sự nghiệp của anh em."
 description: "Quyết định ngã rẽ bằng trực giác là cách nhanh nhất để anh em vứt bỏ nhiều năm tuổi trẻ đi dọn rác do chính mình tạo ra."
-pubDate: 2026-08-19T04:00:00.000Z
+pubDate: 2026-08-11T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"

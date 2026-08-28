@@ -1,7 +1,7 @@
 ---
 title: "Cách trở thành thỏi nam châm thu hút mọi cơ hội"
 description: "Sự vô ơn không đến từ nhân cách mà từ tư duy sai lệch. Khám phá 3 quy tắc giúp bạn duy trì mạng lưới quan hệ đỉnh cao."
-pubDate: 2026-08-18T16:00:00.000Z
+pubDate: 2026-08-07T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"
