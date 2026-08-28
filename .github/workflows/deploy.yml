@@ -52,6 +52,8 @@ jobs:
             git checkout src/content/cuoc-song/tien-mat-co-thuc-su-cuu-anh-em-khi-khung-hoang-ap-den.md
             git checkout src/content/cuoc-song/thoat-khoi-vong-xoay-phan-ung-de-lam-chu-cuoc-doi.md
             git checkout src/content/cuoc-song/bi-mat-giup-anh-em-mien-nhiem-voi-moi-loi-khuyen-doc-hai.md
+            git checkout src/data/products.json
+
 
 
 
