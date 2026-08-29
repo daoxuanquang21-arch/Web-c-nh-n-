@@ -51,7 +51,7 @@ export function renderMarkdownToHtml(md: string): string {
         inList = false;
       }
       inCodeBlock = true;
-      htmlParts.push('<pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto my-6 font-mono text-sm leading-relaxed border border-slate-800"><code class="block whitespace-pre">');
+      htmlParts.push('<pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto my-6 font-mono text-sm leading-relaxed border border-slate-800"><code class="block whitespace-pre" style="background: transparent !important; background-color: transparent !important; padding: 0 !important; color: inherit !important;">');
       return;
     }
 
