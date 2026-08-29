@@ -25,10 +25,36 @@ export function renderMarkdownToHtml(md: string): string {
   if (!md) return '<p class="text-slate-500 italic">Chưa có nội dung...</p>';
   const lines = md.split(/\r?\n/);
   let inList = false;
+  let inCodeBlock = false;
   let htmlParts: string[] = [];
 
   lines.forEach(line => {
     const trimmed = line.trim();
+
+    if (inCodeBlock) {
+      if (trimmed.startsWith('```')) {
+        inCodeBlock = false;
+        htmlParts.push('</code></pre>');
+      } else {
+        const escaped = line
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+        htmlParts.push(escaped);
+      }
+      return;
+    }
+
+    if (trimmed.startsWith('```')) {
+      if (inList) {
+        htmlParts.push('</ul>');
+        inList = false;
+      }
+      inCodeBlock = true;
+      htmlParts.push('<pre class="bg-slate-900 text-slate-100 p-4 rounded-xl overflow-x-auto my-6 font-mono text-sm leading-relaxed border border-slate-800"><code class="block whitespace-pre">');
+      return;
+    }
+
     if (!trimmed) {
       if (inList) {
         htmlParts.push('</ul>');
@@ -63,5 +89,6 @@ export function renderMarkdownToHtml(md: string): string {
   });
 
   if (inList) htmlParts.push('</ul>');
+  if (inCodeBlock) htmlParts.push('</code></pre>');
   return htmlParts.join('\n');
 }
