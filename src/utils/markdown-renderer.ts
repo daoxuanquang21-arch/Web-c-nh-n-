@@ -55,6 +55,15 @@ export function renderMarkdownToHtml(md: string): string {
       return;
     }
 
+    if (trimmed === '---') {
+      if (inList) {
+        htmlParts.push('</ul>');
+        inList = false;
+      }
+      htmlParts.push('<hr class="my-8 border-t border-slate-200 dark:border-slate-800" />');
+      return;
+    }
+
     if (!trimmed) {
       if (inList) {
         htmlParts.push('</ul>');
