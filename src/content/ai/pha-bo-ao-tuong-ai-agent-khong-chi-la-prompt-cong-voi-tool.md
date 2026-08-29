@@ -82,13 +82,13 @@ Khi bắt đầu triển khai dự án thực tế, anh em sẽ phải đối m�
 
 Để bảo đảm Agent của anh em không "đốt tiền" hoặc làm crash hệ thống khách hàng, hãy bảo đảm anh em đã tích hợp đầy đủ 8 điểm trong checklist sau:
 
-1. `[ ]` **Infinite Loop Guard (Chống vòng lặp vô hạn):** Đã thiết lập giới hạn cứng `max_iterations` (tối đa 5-7 lần chạy) để tránh trường hợp Agent tự gọi đi gọi lại API vô tận. Khi vượt ngưỡng, hệ thống bắt buộc phải dừng và chuyển trạng thái về dự phòng (fallback) để đảm bảo không hao tổn tài nguyên API.
-2. `[ ]` **JSON Schema Validator (Xác thực cấu trúc JSON):** Có lớp code truyền thống sử dụng thư viện mạnh mẽ như Zod hoặc Pydantic để xác thực định dạng JSON đầu ra trước khi xử lý tiếp. Bước này giúp loại bỏ hoàn toàn các lỗi cú pháp hoặc thiếu trường trước khi dữ liệu đi vào database.
-3. `[ ]` **RAG Context Compression (Tối ưu hóa bối cảnh RAG):** Có giải pháp lọc, rút gọn token và rerank tài liệu để bối cảnh nạp vào luôn nhỏ hơn 8000 token, giúp tối ưu hóa chi phí và tăng tốc độ xử lý của mô hình lên nhiều lần.
-4. `[ ]` **API Rate Limiter (Kiểm soát tần suất gọi API):** Có cơ chế hàng đợi (queue) và tự động thử lại (retry với exponential backoff) khi API chạm giới hạn RPM/TPM của nhà cung cấp, đảm bảo tính liên tục của dịch vụ.
-5. `[ ]` **Observability & Tracing (Lưu vết và giám sát):** Có hệ thống lưu vết (Telemetry như OpenTelemetry, Phoenix, LangSmith) ghi nhận chi tiết thời gian chạy, prompt sử dụng và số lượng token tiêu thụ của từng lượt chạy phục vụ việc tối ưu hóa.
-6. `[ ]` **System Prompt Injection Protection (Chống tấn công Prompt):** Có lớp lọc bảo mật kiểm tra đầu vào của người dùng, ngăn chặn các hành vi cố tình chèn mã lệnh để phá hoại chỉ thị hệ thống hoặc đánh cắp prompt gốc.
-7. `[ ]` **Cost Guardrails (Giới hạn ngân sách chạy):** Có cơ chế tự động ngắt kết nối hoặc cảnh báo khẩn cấp khi chi phí token của một session hoặc của một tài khoản người dùng vượt quá hạn mức cho phép trong ngày.
-8. `[ ]` **Fallback Graceful (Cơ chế xử lý khi thất bại):** Khi Agent thất bại hoàn toàn sau khi đã thử hết số lượt chạy, hệ thống có giải pháp trả về thông báo lịch sự cho người dùng và tự động tạo ticket log lỗi gửi tới kỹ sư con người xử lý ngay lập tức.
+1. [ ] **Infinite Loop Guard (Chống vòng lặp vô hạn):** Đã thiết lập giới hạn cứng `max_iterations` (tối đa 5-7 lần chạy) để tránh trường hợp Agent tự gọi đi gọi lại API vô tận. Khi vượt ngưỡng, hệ thống bắt buộc phải dừng và chuyển trạng thái về dự phòng (fallback) để đảm bảo không hao tổn tài nguyên API.
+2. [ ] **JSON Schema Validator (Xác thực cấu trúc JSON):** Có lớp code truyền thống sử dụng thư viện mạnh mẽ như Zod hoặc Pydantic để xác thực định dạng JSON đầu ra trước khi xử lý tiếp. Bước này giúp loại bỏ hoàn toàn các lỗi cú pháp hoặc thiếu trường trước khi dữ liệu đi vào database.
+3. [ ] **RAG Context Compression (Tối ưu hóa bối cảnh RAG):** Có giải pháp lọc, rút gọn token và rerank tài liệu để bối cảnh nạp vào luôn nhỏ hơn 8000 token, giúp tối ưu hóa chi phí và tăng tốc độ xử lý của mô hình lên nhiều lần.
+4. [ ] **API Rate Limiter (Kiểm soát tần suất gọi API):** Có cơ chế hàng đợi (queue) và tự động thử lại (retry với exponential backoff) khi API chạm giới hạn RPM/TPM của nhà cung cấp, đảm bảo tính liên tục của dịch vụ.
+5. [ ] **Observability & Tracing (Lưu vết và giám sát):** Có hệ thống lưu vết (Telemetry như OpenTelemetry, Phoenix, LangSmith) ghi nhận chi tiết thời gian chạy, prompt sử dụng và số lượng token tiêu thụ của từng lượt chạy phục vụ việc tối ưu hóa.
+6. [ ] **System Prompt Injection Protection (Chống tấn công Prompt):** Có lớp lọc bảo mật kiểm tra đầu vào của người dùng, ngăn chặn các hành vi cố tình chèn mã lệnh để phá hoại chỉ thị hệ thống hoặc đánh cắp prompt gốc.
+7. [ ] **Cost Guardrails (Giới hạn ngân sách chạy):** Có cơ chế tự động ngắt kết nối hoặc cảnh báo khẩn cấp khi chi phí token của một session hoặc của một tài khoản người dùng vượt quá hạn mức cho phép trong ngày.
+8. [ ] **Fallback Graceful (Cơ chế xử lý khi thất bại):** Khi Agent thất bại hoàn toàn sau khi đã thử hết số lượt chạy, hệ thống có giải pháp trả về thông báo lịch sự cho người dùng và tự động tạo ticket log lỗi gửi tới kỹ sư con người xử lý ngay lập tức.
 
 Làm chủ tư duy hệ thống và nắm vững checklist này là chìa khóa vàng giúp anh em thành công đưa AI Agent vào thực tế vận hành thương mại thành công trong năm 2026!
