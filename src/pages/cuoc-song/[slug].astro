@@ -6,6 +6,10 @@ import path from 'path';
 import { parseMarkdownFile, renderMarkdownToHtml } from '../../utils/markdown';
 
 const { slug } = Astro.params;
+
+if (slug === 'dung-nhat-bac-cac-de-roi-danh-mat-ca-co-do-dai-han') {
+  return Astro.redirect('/cuoc-song/thoi-ngay-nhat-bac-cac-de-roi-danh-mat-ca-co-do-dai-han', 301);
+}
 const filePath = path.resolve('./src/content/cuoc-song', `${slug}.md`);
 
 let post: any = null;

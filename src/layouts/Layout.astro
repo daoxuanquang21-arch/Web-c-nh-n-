@@ -105,6 +105,9 @@ for (const cat of categories) {
               var sOnly = s.split('/').pop() || '';
 
               var isDuplicate = false;
+              if (s.indexOf('dungnhatbaccac') !== -1 || s.indexOf('dung-nhat-bac-cac') !== -1) {
+                isDuplicate = true;
+              }
               for (var k = 0; k < normServerSlugs.length; k++) {
                 var nss = normServerSlugs[k];
                 if (s === nss || sOnly === nss || (t && t === nss) || (t && nss && (t.indexOf(nss) !== -1 || nss.indexOf(t) !== -1))) {
