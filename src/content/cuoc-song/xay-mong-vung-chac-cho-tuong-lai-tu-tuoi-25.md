@@ -84,7 +84,7 @@ Khi anh em rèn được thói quen ra quyết định bằng tư duy ngược t
 
 Tôi còn nhớ giai đoạn tuổi 25, có những ngày đồng nghiệp xung quanh rủ rê tối nào cũng đi nhậu nhẹt, cuối tuần đi chơi xả láng, nhìn họ vui vẻ tận hưởng hiện tại tôi cũng chạnh lòng chứ. Nhưng trong đầu tôi lúc đó đã khắc ghi một hình ảnh rõ mồn một về việc mình muốn trở thành ai vào năm 30 tuổi. Tôi tự nhủ: "Nếu cứ thả trôi theo tụi nó, 5 năm nữa mình sẽ nhận lại một cái kết thảm hại, lúc đó khóc cũng không kịp".
 
-Và quả ngọt đến rất rõ ràng: Sự kiên định theo đuổi lộ trình vạch sẵn từ năm 25 tuổi giúp tôi có một bệ phóng cực kỳ vững chắc khi bước sang tuổi 30. Trong khi nhiều người bắt đầu hoảng loạn vì sự nghiệp dậm chân tại chỗ, tôi đã tự tin ngồi vào ghế quản lý với mức thu nhập mơ ước.
+Và quả ngọt đến rất rõ ràng: Sự kiên định theo đuổi lộ trình vạch sẵn từ năm đôi mươi giúp tôi có một bệ phóng cực kỳ vững chắc khi bước sang tuổi 25. Trong khi nhiều người bắt đầu hoảng loạn vì sự nghiệp dậm chân tại chỗ, tôi đã tự tin ngồi vào ghế quản lý với mức thu nhập mơ ước.
 
 Thế nên là, cơ hội không tự nhiên rơi xuống đầu ai cả. Nó là tổng hòa của những quyết định nhỏ nhặt hôm nay được chiếu theo một đích đến dài hạn từ tương lai.
 
