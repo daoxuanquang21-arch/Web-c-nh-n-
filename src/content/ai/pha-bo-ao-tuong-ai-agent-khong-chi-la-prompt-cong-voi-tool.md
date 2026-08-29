@@ -11,7 +11,7 @@ tags: ["AI", "Tư duy", "Hệ thống"]
 Chào anh em, để kết thúc lộ trình tự học xây dựng AI Agent cho năm 2026, chúng ta cần cùng nhau thẳng thắn bóc tách và phá bỏ những ảo tưởng, những chiếc "bánh vẽ" đang tràn ngập trên thị trường đào tạo và phát triển AI hiện nay.
 
 Hầu hết các khóa học mì ăn liền hoặc các bài viết giật tít trên mạng đều đang quảng cáo một công thức xây dựng Agent vô cùng đơn giản:
-$$\text{Agent} = \text{Prompt} + \text{Tool} + \text{Memory}$$
+**`Agent = Prompt + Tool + Memory`**
 
 Họ dạy anh em cài một framework kéo thả trực quan như Flowise, Dify, viết một prompt ngắn, gắn thêm công cụ tìm kiếm Google và một vector database làm bộ nhớ. Sau đó, họ chạy thử một demo chatbot viết bài bán hàng tự động và tuyên bố: *"Bạn đã xây dựng thành công một AI Agent thực thụ cho doanh nghiệp!"*. 
 
@@ -23,7 +23,7 @@ Nhưng thực tế đắng ngắt hơn thế nhiều. Công thức đơn giản 
 
 Đối với một dự án phần mềm AI Agent thực sự chạy ổn định ở môi trường doanh nghiệp, cách tư duy đúng phải là một hệ thống phức hợp:
 
-$$\text{Agent} = \text{Model} + \text{Context} + \text{Tools} + \text{Memory} + \text{Workflow} + \text{Verification} + \text{Recovery} + \text{Observability}$$
+**`Agent = Model + Context + Tools + Memory + Workflow + Verification + Recovery + Observability`**
 
 ```
                    +---------------------------------------+
