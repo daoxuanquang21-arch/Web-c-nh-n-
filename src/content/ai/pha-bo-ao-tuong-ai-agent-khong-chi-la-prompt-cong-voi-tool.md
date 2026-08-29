@@ -53,12 +53,23 @@ Trong đó, mô hình ngôn ngữ lớn (Model) chỉ đóng vai trò là một 
 
 Khi bắt đầu triển khai dự án thực tế, anh em sẽ phải đối mặt với câu hỏi: Nên tự viết code (Custom Harness) hay sử dụng các thư viện có sẵn? Hãy xem bảng phân tích dưới đây để đưa ra lựa chọn sáng suốt nhất:
 
-| Tiêu chí | Custom Harness (Khuyên dùng) | LangChain / CrewAI | LangGraph |
-| :--- | :--- | :--- | :--- |
-| **Độ phức tạp ban đầu** | Thấp (chỉ cần viết code thuần) | Trung bình (cần học cú pháp thư viện) | Cao (cần hiểu mô hình đồ thị/state) |
-| **Khả năng Debug** | Rất dễ (kiểm soát từng dòng code) | Rất khó (nhiều lớp bọc ngầm bên dưới) | Trung bình (đồ thị rõ ràng nhưng phức tạp) |
-| **Độ linh hoạt / Tùy biến** | Vô hạn (tùy chỉnh theo logic app) | Bị giới hạn bởi kiến trúc thư viện | Cao (phù hợp với agent dạng đồ thị vòng) |
-| **Hiệu năng & Tốc độ** | Tối ưu tuyệt đối, không dư thừa | Chậm do phải tải nhiều dependencies | Tốt nhưng tốn tài nguyên quản lý state |
+### 1. Custom Harness (Khuyên dùng)
+- **Độ phức tạp ban đầu:** Thấp (chỉ cần viết code thuần).
+- **Khả năng Debug:** Rất dễ (kiểm soát từng dòng code và luồng chạy).
+- **Độ linh hoạt / Tùy biến:** Vô hạn (tùy chỉnh 100% theo nhu cầu thực tế của ứng dụng).
+- **Hiệu năng & Tốc độ:** Tối ưu tuyệt đối, tải cực kỳ nhẹ và không bị dư thừa thư viện.
+
+### 2. LangChain / CrewAI
+- **Độ phức tạp ban đầu:** Trung bình (phải tốn thời gian học cú pháp và các lớp bọc của thư viện).
+- **Khả năng Debug:** Rất khó (xử lý ngầm nhiều lớp, khó lần vết lỗi).
+- **Độ linh hoạt / Tùy biến:** Bị giới hạn nhiều bởi cấu trúc và kiến trúc mặc định của thư viện.
+- **Hiệu năng & Tốc độ:** Chậm hơn đáng kể do phải tải nhiều thư viện phụ thuộc (dependencies) cồng kềnh.
+
+### 3. LangGraph
+- **Độ phức tạp ban đầu:** Cao (đòi hỏi thời gian nghiên cứu sâu về mô hình đồ thị và quản lý state).
+- **Khả năng Debug:** Trung bình (đồ thị luồng chạy trực quan nhưng thiết lập phức tạp).
+- **Độ linh hoạt / Tùy biến:** Rất cao (đặc biệt thích hợp cho các Agent chạy dạng đồ thị vòng lặp phức tạp).
+- **Hiệu năng & Tốc độ:** Tốt nhưng tiêu tốn tài nguyên quản lý trạng thái (state management).
 
 **Lời khuyên thực chiến của tôi:** 
 - Nếu anh em đang xây dựng các Agent phục vụ **quy trình nghiệp vụ chính xác, bảo mật cao của doanh nghiệp**, hãy chọn **Custom Harness**. 
