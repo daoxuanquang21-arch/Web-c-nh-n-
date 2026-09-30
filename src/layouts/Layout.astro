@@ -24,6 +24,12 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanquang.com.vn');
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isServicePage = currentPath === '/dich-vu' || currentPath.startsWith('/dich-vu/');
+const isArticlePage = ['/marketing', '/cuoc-song', '/ai'].some(cat => {
+  const parts = currentPath.split('/').filter(Boolean);
+  return parts.length >= 2 && ['marketing', 'cuoc-song', 'ai'].includes(parts[0]);
+});
 
 // Dynamically list all markdown files on the server's disk to populate serverSlugs
 const contentDir = path.resolve('./src/content');
@@ -206,7 +212,7 @@ for (const cat of categories) {
     {!hideNavFooter && <Navbar />}
 
     <!-- Main Content -->
-    <main class={`flex-grow flex flex-col ${!hideNavFooter ? 'pt-16' : ''}`}>
+    <main class={`flex-grow flex flex-col ${!hideNavFooter ? 'pt-16' : ''} ${isServicePage ? 'service-page' : ''} ${isArticlePage ? 'article-page' : ''}`}>
       <slot />
     </main>
 
