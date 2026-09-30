@@ -5,7 +5,7 @@ pubDate: 2026-08-12T09:00:00.000Z
 status: "public"
 draft: false
 author: "Đào Xuân Quảng"
-tags: ["Cuộc sống", "Tư duy", "Kinh doanh"]
+tags: ["Marketing", "Bán hàng", "Kinh doanh"]
 ---
 Nếu muốn có thêm thu nhập nhưng làm hoài không ra (anh em thử đủ kiểu từ bán hàng online, freelance, đầu tư, chạy ads đủ kiểu xong vẫn bế tắc, hoặc là bỏ cuộc giữa chừng luôn), hãy tự tìm hiểu "Job-To-Be-Done" (JTBD) của chính mình. (Nghe thì khá học thuật nhưng những người kiếm tiền giỏi nhất họ làm từ lâu rồi, và tới giờ vẫn làm, tối ưu liên tục).
 
