@@ -1067,12 +1067,12 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
 
           // 2. Fetch Subscribers
           try {
-            const subRes = await fetch('/api/subscribe');
+            localStorage.removeItem('deleted_sub_emails');
+            const subRes = await fetch('/api/subscribe?t=' + Date.now());
             if (subRes.ok && (subRes.headers.get('content-type') || '').includes('application/json')) {
               const data = await subRes.json();
               if (data && data.success && Array.isArray(data.subscribers)) {
-                const deletedSubs = JSON.parse(localStorage.getItem('deleted_sub_emails') || '[]');
-                currentSubscribers = data.subscribers.filter((s: any) => !deletedSubs.includes(s.email));
+                currentSubscribers = data.subscribers;
               }
             }
           } catch (e) {}
@@ -1080,12 +1080,12 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
 
           // 3. Fetch Leads
           try {
-            const leadsRes = await fetch('/api/leads');
+            localStorage.removeItem('deleted_lead_emails');
+            const leadsRes = await fetch('/api/leads?t=' + Date.now());
             if (leadsRes.ok && (leadsRes.headers.get('content-type') || '').includes('application/json')) {
               const data = await leadsRes.json();
               if (data && data.success && Array.isArray(data.leads)) {
-                const deletedLeads = JSON.parse(localStorage.getItem('deleted_lead_emails') || '[]');
-                currentLeads = data.leads.filter((l: any) => !deletedLeads.includes(l.email));
+                currentLeads = data.leads;
               }
             }
           } catch (e) {}
@@ -1310,12 +1310,6 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         // Global Delete Subscriber Handler
         (window as any).deleteSubItem = async (email: string) => {
           if (!email) return;
-          const deletedSubs = JSON.parse(localStorage.getItem('deleted_sub_emails') || '[]');
-          if (!deletedSubs.includes(email)) {
-            deletedSubs.push(email);
-            localStorage.setItem('deleted_sub_emails', JSON.stringify(deletedSubs));
-          }
-
           currentSubscribers = currentSubscribers.filter(s => s.email !== email);
           renderSubscribers();
           updateOverviewStats();
@@ -1390,13 +1384,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         // Global Delete Lead Handler
         (window as any).deleteLeadItem = async (email: string, date: string) => {
           if (!email) return;
-          const deletedLeads = JSON.parse(localStorage.getItem('deleted_lead_emails') || '[]');
-          if (!deletedLeads.includes(email)) {
-            deletedLeads.push(email);
-            localStorage.setItem('deleted_lead_emails', JSON.stringify(deletedLeads));
-          }
-
-          currentLeads = currentLeads.filter(l => l.email !== email);
+          currentLeads = currentLeads.filter(l => !(l.email === email && l.date === date));
           renderLeads();
           updateOverviewStats();
           showToast('Đã xóa yêu cầu chuyển giao học viên!');
