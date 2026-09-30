@@ -934,22 +934,21 @@ const faqs = [
         e.preventDefault();
 
         // Get fields
-        const nameInput = document.getElementById('name') as HTMLInputElement;
-        const contactInput = document.getElementById('contact') as HTMLInputElement;
-        const emailInput = document.getElementById('email') as HTMLInputElement;
-        const positionInput = document.getElementById('position') as HTMLSelectElement;
-        const commitmentInput = document.getElementById('commitment') as HTMLSelectElement;
-        const problemInput = document.getElementById('problem') as HTMLTextAreaElement;
+        const nameInput = document.getElementById('name') as HTMLInputElement | null;
+        const contactInput = document.getElementById('contact') as HTMLInputElement | null;
+        const emailInput = document.getElementById('email') as HTMLInputElement | null;
+        const positionInput = document.getElementById('position') as HTMLSelectElement | null;
+        const problemInput = document.getElementById('problem') as HTMLTextAreaElement | null;
 
-        if (!nameInput || !contactInput || !emailInput || !positionInput || !commitmentInput || !problemInput) return;
+        if (!nameInput || !contactInput || !emailInput || !positionInput || !problemInput) return;
 
         const payload = {
-          name: nameInput.value,
-          contact: contactInput.value,
-          email: emailInput.value,
+          name: nameInput.value.trim(),
+          contact: contactInput.value.trim(),
+          email: emailInput.value.trim(),
           position: positionInput.value,
-          commitment: commitmentInput.value,
-          problem: problemInput.value
+          commitment: 'Yes',
+          problem: problemInput.value.trim()
         };
 
         const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;

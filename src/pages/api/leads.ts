@@ -52,7 +52,7 @@ export async function POST({ request }: { request: Request }) {
       });
     }
 
-    if (!name || !contact || !email || !position || !commitment || !problem) {
+    if (!name || !contact || !email || !position || !problem) {
       return new Response(JSON.stringify({ success: false, error: 'Missing required fields' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
@@ -64,7 +64,7 @@ export async function POST({ request }: { request: Request }) {
       contact,
       email,
       position,
-      commitment,
+      commitment: commitment || 'Yes',
       problem,
       date: new Date().toISOString()
     });
