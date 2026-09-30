@@ -12,9 +12,9 @@ jobs:
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: '180.93.136.93'
-          username: 'root'
-          password: '#wF?*tyPs^j4'
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          password: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd /var/www/blog
             # Backup user content and data to prevent losing them during git update
