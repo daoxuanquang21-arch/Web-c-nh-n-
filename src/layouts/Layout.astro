@@ -17,12 +17,13 @@ interface Props {
 const {
   title = "Đào Xuân Quảng | AI, Digital Marketing & Solopreneur",
   description = "Website cá nhân chia sẻ về cuộc sống, kiến thức marketing global, setup hệ thống AI Agent cho doanh nghiệp và các sản phẩm số.",
-  image = "/og-image.jpg",
+  image = "/images/avatar.jpg",
   articleDate,
   noindex = false,
   hideNavFooter = false
 } = Astro.props;
 
+const finalImage = (image && image.trim() !== '') ? image : '/images/avatar.jpg';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://daoxuanquang.com.vn');
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isServicePage = currentPath === '/dich-vu' || currentPath.startsWith('/dich-vu/');
@@ -168,7 +169,7 @@ for (const cat of categories) {
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.url)} />
+    <meta property="og:image" content={new URL(finalImage, Astro.url)} />
     <meta property="og:site_name" content="Blog của Quảng" />
 
     <!-- Twitter -->
@@ -176,7 +177,7 @@ for (const cat of categories) {
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    <meta property="twitter:image" content={new URL(finalImage, Astro.url)} />
 
     {articleDate && <meta property="article:published_time" content={articleDate} />}
 
