@@ -103,7 +103,7 @@ const formatCleanTitle = (t: string) => {
 const cleanTitle = formatCleanTitle(post.data.title);
 ---
 
-<Layout title={`${cleanTitle} | Blog của Quảng`} description={post.data.description}>
+<Layout title={`${cleanTitle} | Blog của Quảng`} description={post.data.description} image={post.data.image}>
   <article class="py-8 sm:py-12 px-4 max-w-3xl mx-auto min-h-[70vh] w-full">
     <a href="/cuoc-song" class="text-xs sm:text-sm font-semibold text-brand-green dark:text-brand-green hover:underline mb-6 inline-flex items-center gap-1.5">&larr; Quay lại danh sách Cuộc sống</a>
     
