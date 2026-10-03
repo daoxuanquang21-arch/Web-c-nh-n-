@@ -56,6 +56,16 @@ for (const cat of categories) {
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNV2YN50E0"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-LNV2YN50E0');
+    </script>
+
     <!-- Robots index control -->
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
