@@ -25,7 +25,13 @@ import products from '../data/products.json';
             <div>
               {product.image && (
                 <div class="w-full aspect-video rounded-xl overflow-hidden mb-4 bg-slate-100 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80">
-                  <img src={product.image} alt={product.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  {product.link ? (
+                    <a href={product.link} target="_blank" rel="noopener noreferrer" class="block w-full h-full">
+                      <img src={product.image} alt={product.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </a>
+                  ) : (
+                    <img src={product.image} alt={product.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  )}
                 </div>
               )}
               <div class="flex items-center justify-between mb-4">
@@ -45,7 +51,13 @@ import products from '../data/products.json';
                 {product.type}
               </p>
               <h2 class="text-xl font-bold mb-3 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors" style="text-wrap: wrap;">
-                {product.title}
+                {product.link ? (
+                  <a href={product.link} target="_blank" rel="noopener noreferrer" class="hover:underline">
+                    {product.title}
+                  </a>
+                ) : (
+                  product.title
+                )}
               </h2>
               <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
                 {product.description}
@@ -56,7 +68,16 @@ import products from '../data/products.json';
               <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Giá bán:</span>
               <span class="text-sm font-bold text-slate-950 dark:text-white">{product.price || 'Liên hệ'}</span>
             </div>
-            {product.status === 'Sắp ra mắt' ? (
+            {product.link ? (
+              <a 
+                href={product.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
+              >
+                {product.status === 'Sắp ra mắt' ? 'Đăng ký nhận thông tin' : (product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay')}
+              </a>
+            ) : product.status === 'Sắp ra mắt' ? (
               <button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">
                 Đăng ký nhận thông tin
               </button>
@@ -113,7 +134,10 @@ import products from '../data/products.json';
               : 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-400';
 
             let actionHtml = '';
-            if (product.status === 'Sắp ra mắt') {
+            if (product.link) {
+              const label = product.status === 'Sắp ra mắt' ? 'Đăng ký nhận thông tin' : (product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay');
+              actionHtml = `<a href="${product.link}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow">${label}</a>`;
+            } else if (product.status === 'Sắp ra mắt') {
               actionHtml = `<button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">Đăng ký nhận thông tin</button>`;
             } else if (product.status === 'Nội bộ') {
               actionHtml = `<button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">Chỉ dùng nội bộ</button>`;
