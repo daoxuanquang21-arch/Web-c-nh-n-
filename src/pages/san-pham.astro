@@ -1,6 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import products from '../data/products.json';
+import fs from 'fs';
+import path from 'path';
+
+export const prerender = false;
+
+// Đảm bảo không bị cache trình duyệt hay proxy khi Admin vừa sửa xong
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+let products: any[] = [];
+try {
+  const filePath = path.resolve('./src/data/products.json');
+  if (fs.existsSync(filePath)) {
+    const raw = fs.readFileSync(filePath, 'utf-8');
+    products = JSON.parse(raw || '[]');
+  }
+} catch (e) {
+  console.error('Lỗi đọc products.json:', e);
+}
 ---
 
 <Layout title="Sản Phẩm & Công Cụ | daoxuanquang.com.vn" description="Các công cụ, hệ thống SaaS và sản phẩm số được tối ưu hóa cho Marketing và tăng trưởng doanh nghiệp.">
@@ -20,184 +37,107 @@ import products from '../data/products.json';
       </div>
     ) : (
       <div class="grid md:grid-cols-3 gap-8 mb-16">
-        {products.map(product => (
-          <div data-id={product.id} class="product-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
-            <div>
-              {product.image && (
-                <div class="w-full aspect-video rounded-xl overflow-hidden mb-4 bg-slate-100 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80">
-                  {product.link ? (
-                    <a href={product.link} target="_blank" rel="noopener noreferrer" class="block w-full h-full">
+        {products.map(product => {
+          const badgeClass = product.status === 'Nội bộ'
+            ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+            : product.status === 'Sắp ra mắt'
+            ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400 border border-amber-200 dark:border-amber-800/40'
+            : product.status === 'Miễn phí'
+            ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800/40'
+            : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40';
+
+          return (
+            <div data-id={product.id} class="product-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-300 flex flex-col justify-between group">
+              <div>
+                {product.image && (
+                  <div class="w-full aspect-video rounded-xl overflow-hidden mb-4 bg-slate-100 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80">
+                    {product.link ? (
+                      <a href={product.link} target={product.link.startsWith('http') ? '_blank' : '_self'} class="block w-full h-full">
+                        <img src={product.image} alt={product.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                      </a>
+                    ) : (
                       <img src={product.image} alt={product.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </a>
-                  ) : (
-                    <img src={product.image} alt={product.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                  )}
-                </div>
-              )}
-              {(!product.image || product.status) && (
+                    )}
+                  </div>
+                )}
+                
                 <div class="flex items-center justify-between mb-4">
-                  {product.image ? null : <span class="text-3xl">{product.icon}</span>}
+                  {product.image ? (
+                    <span class="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase tracking-wider">
+                      {product.type || 'Sản phẩm'}
+                    </span>
+                  ) : (
+                    <span class="text-3xl">{product.icon || '📦'}</span>
+                  )}
+
                   {product.status && (
-                    <span class={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                      product.status === 'Nội bộ' 
-                        ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
-                        : product.status === 'Sắp ra mắt'
-                        ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400'
-                        : 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-400'
-                    }`}>
+                    <span class={`text-xs font-semibold px-2.5 py-1 rounded-full ${badgeClass}`}>
                       {product.status}
                     </span>
                   )}
                 </div>
-              )}
-              
-              <p class="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase tracking-wider mb-1">
-                {product.type}
-              </p>
-              <h2 class="text-xl font-bold mb-3 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors" style="text-wrap: wrap;">
-                {product.link ? (
-                  <a href={product.link} target="_blank" rel="noopener noreferrer" class="hover:underline">
-                    {product.title}
-                  </a>
-                ) : (
-                  product.title
+
+                {!product.image && (
+                  <p class="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase tracking-wider mb-1">
+                    {product.type || 'Sản phẩm'}
+                  </p>
                 )}
-              </h2>
-              <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
-                {product.description}
-              </p>
-            </div>
 
-            {product.price ? (
-              <div class="flex items-center justify-between mb-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
-                <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Giá bán:</span>
-                <span class="text-sm font-bold text-slate-950 dark:text-white">{product.price}</span>
-              </div>
-            ) : (
-              <div class="pt-4 border-t border-slate-100 dark:border-slate-800/60"></div>
-            )}
-            {product.link ? (
-              <a 
-                href={product.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
-              >
-                Xem thêm
-              </a>
-            ) : product.status === 'Sắp ra mắt' ? (
-              <button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">
-                Xem thêm
-              </button>
-            ) : product.status === 'Nội bộ' ? (
-              <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
-                Chỉ dùng nội bộ
-              </button>
-            ) : (
-              <a 
-                href={`https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title}`)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
-              >
-                {product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay'}
-              </a>
-            )}
-          </div>
-        ))}
-      </div>
-    )}
-
-    <script>
-      (function() {
-        const grid = document.querySelector('.grid');
-        if (!grid) return;
-
-        // 1. Purge deleted products
-        const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
-        if (deletedIds.length > 0) {
-          document.querySelectorAll('.product-card').forEach(card => {
-            const id = card.getAttribute('data-id');
-            if (id && deletedIds.includes(id)) {
-              (card as HTMLElement).style.display = 'none';
-            }
-          });
-        }
-
-        // 2. Render custom added products from Admin
-        const customProducts = JSON.parse(localStorage.getItem('custom_products') || '[]');
-        if (Array.isArray(customProducts) && customProducts.length > 0) {
-          const existingIds = Array.from(document.querySelectorAll('.product-card')).map(c => c.getAttribute('data-id'));
-          customProducts.forEach(product => {
-            if (!product.id || existingIds.includes(product.id) || deletedIds.includes(product.id)) return;
-
-            const card = document.createElement('div');
-            card.setAttribute('data-id', product.id);
-            card.className = 'product-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-surface hover:shadow-lg transition-all duration-300 flex flex-col justify-between group';
-            
-            const badgeClass = product.status === 'Nội bộ' 
-              ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
-              : product.status === 'Sắp ra mắt'
-              ? 'bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400'
-              : 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/30 dark:text-indigo-400';
-
-            let actionHtml = '';
-            if (product.link) {
-              actionHtml = `<a href="${product.link}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow">Xem thêm</a>`;
-            } else if (product.status === 'Sắp ra mắt') {
-              actionHtml = `<button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">Xem thêm</button>`;
-            } else if (product.status === 'Nội bộ') {
-              actionHtml = `<button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">Chỉ dùng nội bộ</button>`;
-            } else {
-              const zaloUrl = `https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title || ''}`)}`;
-              const btnLabel = product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay';
-              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow">${btnLabel}</a>`;
-            }
-
-            const imageHtml = product.image
-              ? `<div class="w-full aspect-video rounded-xl overflow-hidden mb-4 bg-slate-100 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80">
-                  <img src="${product.image}" alt="${product.title || ''}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </div>`
-              : '';
-            const iconHtml = product.image ? '' : `<span class="text-3xl">${product.icon || '📦'}</span>`;
-
-            const priceHtml = product.price
-              ? `<div class="flex items-center justify-between mb-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
-                  <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Giá bán:</span>
-                  <span class="text-sm font-bold text-slate-950 dark:text-white">${product.price}</span>
-                </div>`
-              : `<div class="pt-4 border-t border-slate-100 dark:border-slate-800/60"></div>`;
-
-            const statusHtml = product.status
-              ? `<span class="text-xs font-semibold px-2.5 py-1 rounded-full ${badgeClass}">${product.status}</span>`
-              : '';
-            const statusDivHtml = (!product.image || product.status)
-              ? `<div class="flex items-center justify-between mb-4">${iconHtml}${statusHtml}</div>`
-              : '';
-
-            card.innerHTML = `
-              <div>
-                ${imageHtml}
-                ${statusDivHtml}
-                <p class="text-xs text-brand-600 dark:text-brand-400 font-bold uppercase tracking-wider mb-1">
-                  ${product.type || 'Sản phẩm'}
-                </p>
                 <h2 class="text-xl font-bold mb-3 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors" style="text-wrap: wrap;">
-                  ${product.title || ''}
+                  {product.link ? (
+                    <a href={product.link} target={product.link.startsWith('http') ? '_blank' : '_self'} class="hover:underline">
+                      {product.title}
+                    </a>
+                  ) : (
+                    product.title
+                  )}
                 </h2>
                 <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
-                  ${product.description || ''}
+                  {product.description}
                 </p>
               </div>
 
-              ${priceHtml}
-              
-              ${actionHtml}
-            `;
-            grid.appendChild(card);
-          });
-        }
-      })();
-    </script>
+              <div>
+                {product.price ? (
+                  <div class="flex items-center justify-between mb-4 pt-4 border-t border-slate-100 dark:border-slate-800/60">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Giá bán:</span>
+                    <span class="text-sm font-bold text-slate-950 dark:text-white">{product.price}</span>
+                  </div>
+                ) : (
+                  <div class="pt-4 border-t border-slate-100 dark:border-slate-800/60"></div>
+                )}
+
+                {product.link ? (
+                  <a 
+                    href={product.link}
+                    target={product.link.startsWith('http') ? '_blank' : '_self'}
+                    class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
+                  >
+                    Xem thêm
+                  </a>
+                ) : product.status === 'Sắp ra mắt' ? (
+                  <button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">
+                    Xem thêm
+                  </button>
+                ) : product.status === 'Nội bộ' ? (
+                  <button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">
+                    Chỉ dùng nội bộ
+                  </button>
+                ) : (
+                  <a 
+                    href={`https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
+                  >
+                    {product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Nhắn tin tư vấn'}
+                  </a>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
   </section>
 </Layout>
