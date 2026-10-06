@@ -103,6 +103,8 @@ export async function POST({ request }: { request: Request }) {
     }
     if (link && link.trim()) {
       newProduct.link = link.trim();
+    } else if (cleanId === 'ebook-tao-blog') {
+      newProduct.link = '/ebook-tao-blog';
     }
     if (typeof featured === 'boolean') {
       newProduct.featured = featured;

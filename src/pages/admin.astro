@@ -2472,7 +2472,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           prPrice.value = prod.price || '';
           prIcon.value = prod.icon || '📘';
           prImage.value = prod.image || '';
-          prLink.value = prod.link || '';
+          prLink.value = prod.link || (prod.id === 'ebook-tao-blog' ? '/ebook-tao-blog' : '');
         } else {
           resetProductForm();
         }
@@ -2695,7 +2695,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             price: prPrice.value.trim() || 'Liên hệ',
             icon: prIcon.value.trim() || '📦',
             image: prImage.value.trim(),
-            link: prLink.value.trim()
+            link: prLink.value.trim() || (idVal === 'ebook-tao-blog' ? '/ebook-tao-blog' : '')
           };
 
           try {

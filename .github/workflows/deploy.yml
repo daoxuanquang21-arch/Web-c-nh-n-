@@ -36,6 +36,7 @@ jobs:
             if [ -s /tmp/blog_backup/data/products.json ]; then
               cp /tmp/blog_backup/data/products.json src/data/products.json
             fi
+            node -e "try { const fs = require('fs'); const p = JSON.parse(fs.readFileSync('src/data/products.json', 'utf8')); p.forEach(x => { if (x.id === 'ebook-tao-blog' && !x.link) x.link = '/ebook-tao-blog'; }); fs.writeFileSync('src/data/products.json', JSON.stringify(p, null, 2)); } catch(e) {}"
             rm -rf /tmp/blog_backup
 
             # Clean up duplicate and old files from server content

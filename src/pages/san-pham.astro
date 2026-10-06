@@ -33,6 +33,12 @@ try {
     <!-- Products Grid Container (Server-rendered + Client-side Realtime Hydration) -->
     <div id="products-grid-container" class="grid md:grid-cols-3 gap-8 mb-16">
       {products.map(product => {
+        const targetLink = product.link || (product.id === 'ebook-tao-blog' ? '/ebook-tao-blog' : '');
+        const isPaid = product.price && product.price !== 'Liên hệ' && product.price !== '0đ' && product.price !== 'Miễn phí';
+        const ctaLabel = targetLink 
+          ? (product.status === 'Sắp ra mắt' ? 'Xem thêm' : (isPaid ? 'Mua ngay' : 'Xem chi tiết')) 
+          : (product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay');
+
         const badgeClass = product.status === 'Nội bộ'
           ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
           : product.status === 'Sắp ra mắt'
@@ -46,8 +52,8 @@ try {
             <div>
               {product.image && (
                 <div class="w-full aspect-video rounded-xl overflow-hidden mb-4 bg-slate-100 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80">
-                  {product.link ? (
-                    <a href={product.link} target={product.link.startsWith('http') ? '_blank' : '_self'} class="block w-full h-full">
+                  {targetLink ? (
+                    <a href={targetLink} target={targetLink.startsWith('http') ? '_blank' : '_self'} class="block w-full h-full">
                       <img src={product.image} alt={product.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </a>
                   ) : (
@@ -79,8 +85,8 @@ try {
               )}
 
               <h2 class="text-xl font-bold mb-3 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors" style="text-wrap: wrap;">
-                {product.link ? (
-                  <a href={product.link} target={product.link.startsWith('http') ? '_blank' : '_self'} class="hover:underline">
+                {targetLink ? (
+                  <a href={targetLink} target={targetLink.startsWith('http') ? '_blank' : '_self'} class="hover:underline">
                     {product.title}
                   </a>
                 ) : (
@@ -102,13 +108,13 @@ try {
                 <div class="pt-4 border-t border-slate-100 dark:border-slate-800/60"></div>
               )}
 
-              {product.link ? (
+              {targetLink ? (
                 <a 
-                  href={product.link}
-                  target={product.link.startsWith('http') ? '_blank' : '_self'}
-                  class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
+                  href={targetLink}
+                  target={targetLink.startsWith('http') ? '_blank' : '_self'}
+                  class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow cursor-pointer"
                 >
-                  Xem thêm
+                  {ctaLabel}
                 </a>
               ) : product.status === 'Sắp ra mắt' ? (
                 <button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">
@@ -125,7 +131,7 @@ try {
                   rel="noopener noreferrer"
                   class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow"
                 >
-                  {product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Nhắn tin tư vấn'}
+                  {ctaLabel}
                 </a>
               )}
             </div>
@@ -155,10 +161,16 @@ try {
               ? 'bg-blue-50 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800/40'
               : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800/40';
 
+            const targetLink = product.link || (product.id === 'ebook-tao-blog' ? '/ebook-tao-blog' : '');
+            const isPaid = product.price && product.price !== 'Liên hệ' && product.price !== '0đ' && product.price !== 'Miễn phí';
+            const ctaLabel = targetLink 
+              ? (product.status === 'Sắp ra mắt' ? 'Xem thêm' : (isPaid ? 'Mua ngay' : 'Xem chi tiết')) 
+              : (product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Mua ngay');
+
             const imageHtml = product.image 
               ? `<div class="w-full aspect-video rounded-xl overflow-hidden mb-4 bg-slate-100 dark:bg-slate-900 border border-slate-100 dark:border-slate-800/80">
-                  ${product.link 
-                    ? `<a href="${product.link}" target="${product.link.startsWith('http') ? '_blank' : '_self'}" class="block w-full h-full">
+                  ${targetLink 
+                    ? `<a href="${targetLink}" target="${targetLink.startsWith('http') ? '_blank' : '_self'}" class="block w-full h-full">
                         <img src="${product.image}" alt="${product.title || ''}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                       </a>`
                     : `<img src="${product.image}" alt="${product.title || ''}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />`
@@ -183,8 +195,8 @@ try {
 
             const titleHtml = `
               <h2 class="text-xl font-bold mb-3 group-hover:text-brand-600 dark:group-hover:text-brand-500 transition-colors" style="text-wrap: wrap;">
-                ${product.link 
-                  ? `<a href="${product.link}" target="${product.link.startsWith('http') ? '_blank' : '_self'}" class="hover:underline">${product.title || ''}</a>`
+                ${targetLink 
+                  ? `<a href="${targetLink}" target="${targetLink.startsWith('http') ? '_blank' : '_self'}" class="hover:underline">${product.title || ''}</a>`
                   : (product.title || '')
                 }
               </h2>
@@ -204,15 +216,15 @@ try {
               : `<div class="pt-4 border-t border-slate-100 dark:border-slate-800/60"></div>`;
 
             let actionHtml = '';
-            if (product.link) {
-              actionHtml = `<a href="${product.link}" target="${product.link.startsWith('http') ? '_blank' : '_self'}" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow">Xem thêm</a>`;
+            if (targetLink) {
+              actionHtml = `<a href="${targetLink}" target="${targetLink.startsWith('http') ? '_blank' : '_self'}" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow cursor-pointer">${ctaLabel}</a>`;
             } else if (product.status === 'Sắp ra mắt') {
               actionHtml = `<button class="w-full py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors cursor-pointer border border-transparent shadow-sm hover:shadow">Xem thêm</button>`;
             } else if (product.status === 'Nội bộ') {
               actionHtml = `<button class="w-full py-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-sm font-semibold transition-colors">Chỉ dùng nội bộ</button>`;
             } else {
               const zaloUrl = `https://zalo.me/0702286928?text=${encodeURIComponent(`Chào bạn, mình muốn tìm hiểu về sản phẩm: ${product.title || ''}`)}`;
-              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow">${product.price === '0đ' || product.price === 'Miễn phí' ? 'Nhận ngay' : 'Nhắn tin tư vấn'}</a>`;
+              actionHtml = `<a href="${zaloUrl}" target="_blank" rel="noopener noreferrer" class="block w-full text-center py-2.5 rounded-lg bg-red-600 text-white hover:bg-red-700 text-sm font-bold transition-colors border border-transparent shadow-sm hover:shadow">${ctaLabel}</a>`;
             }
 
             return `
