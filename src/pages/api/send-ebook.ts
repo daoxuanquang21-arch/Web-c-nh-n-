@@ -147,7 +147,7 @@ export const POST: APIRoute = async ({ request }) => {
     `;
 
     // 4. Gửi email qua Resend
-    const fromSender = process.env.RESEND_FROM || 'onboarding@resend.dev';
+    const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quang <ebook@daoxuanquang.com.vn>';
 
     let sendResult = await resend.emails.send({
       from: fromSender,
