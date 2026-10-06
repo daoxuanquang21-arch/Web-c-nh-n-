@@ -17,18 +17,25 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd /var/www/blog
-            # Backup user content and data to prevent losing them during git update
             mkdir -p /tmp/blog_backup
             rsync -a src/content/ /tmp/blog_backup/content/
             rsync -a src/data/ /tmp/blog_backup/data/
 
-            git fetch --all
-            git reset --hard origin/main
-            git clean -fd
+            echo "=== DEPLOY $(date) ===" > public/debug-deploy.txt
+            # Unset skip-worktree before git reset to prevent merge aborts
+            git update-index --no-skip-worktree src/data/subscribers.json src/data/leads.json src/data/products.json 2>&1 >> public/debug-deploy.txt || true
 
-            # Restore and merge user content and data back
+            git fetch origin main --force 2>&1 >> public/debug-deploy.txt
+            git reset --hard FETCH_HEAD 2>&1 >> public/debug-deploy.txt
+            git clean -fd 2>&1 >> public/debug-deploy.txt
+
+            # Restore user data
             rsync -a /tmp/blog_backup/content/ src/content/
-            rsync -a /tmp/blog_backup/data/ src/data/
+            rsync -a /tmp/blog_backup/data/subscribers.json src/data/subscribers.json 2>/dev/null || true
+            rsync -a /tmp/blog_backup/data/leads.json src/data/leads.json 2>/dev/null || true
+            if [ -s /tmp/blog_backup/data/products.json ]; then
+              cp /tmp/blog_backup/data/products.json src/data/products.json
+            fi
             rm -rf /tmp/blog_backup
 
             # Clean up duplicate and old files from server content
@@ -84,8 +91,8 @@ jobs:
 
 
 
-            echo "=== DEPLOY $(date) ===" > public/debug-deploy.txt
-            git log -n 1 --oneline >> public/debug-deploy.txt
+            echo "--- GIT LOG ---" >> public/debug-deploy.txt
+            git log -n 2 --oneline >> public/debug-deploy.txt
             echo "--- PM2 BEFORE ---" >> public/debug-deploy.txt
             pm2 list >> public/debug-deploy.txt 2>&1 || true
             npm install >> public/debug-deploy.txt 2>&1
@@ -97,3 +104,4 @@ jobs:
             echo "--- PM2 AFTER ---" >> public/debug-deploy.txt
             pm2 list >> public/debug-deploy.txt 2>&1 || true
             echo "=== DEPLOY COMPLETE ===" >> public/debug-deploy.txt
+            cp public/debug-deploy.txt dist/client/debug-deploy.txt 2>/dev/null || true
