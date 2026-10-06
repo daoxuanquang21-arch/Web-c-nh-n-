@@ -23,7 +23,7 @@ jobs:
 
             echo "=== DEPLOY $(date) ===" > public/debug-deploy.txt
             # Unset skip-worktree before git reset to prevent merge aborts
-            git update-index --no-skip-worktree src/data/subscribers.json src/data/leads.json src/data/products.json 2>&1 >> public/debug-deploy.txt || true
+            git update-index --no-skip-worktree src/data/subscribers.json src/data/leads.json src/data/products.json src/data/orders.json 2>&1 >> public/debug-deploy.txt || true
 
             git fetch origin main --force 2>&1 >> public/debug-deploy.txt
             git reset --hard FETCH_HEAD 2>&1 >> public/debug-deploy.txt
@@ -33,6 +33,7 @@ jobs:
             rsync -a /tmp/blog_backup/content/ src/content/
             rsync -a /tmp/blog_backup/data/subscribers.json src/data/subscribers.json 2>/dev/null || true
             rsync -a /tmp/blog_backup/data/leads.json src/data/leads.json 2>/dev/null || true
+            rsync -a /tmp/blog_backup/data/orders.json src/data/orders.json 2>/dev/null || true
             if [ -s /tmp/blog_backup/data/products.json ]; then
               cp /tmp/blog_backup/data/products.json src/data/products.json
             fi
@@ -71,7 +72,7 @@ jobs:
             git checkout src/content/cuoc-song/dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep.md 2>/dev/null || true
             git checkout src/content/cuoc-song/giai-ma-chuoi-gia-tri-loi-thoat-cho-su-chenh-venh-tuoi-25.md 2>/dev/null || true
             git checkout src/content/cuoc-song/thoat-khoi-bay-thu-nhap-tuyen-tinh-tuoi-25.md 2>/dev/null || true
-            git update-index --skip-worktree src/data/subscribers.json src/data/leads.json src/data/products.json 2>/dev/null || true
+            git update-index --skip-worktree src/data/subscribers.json src/data/leads.json src/data/products.json src/data/orders.json 2>/dev/null || true
 
 
 

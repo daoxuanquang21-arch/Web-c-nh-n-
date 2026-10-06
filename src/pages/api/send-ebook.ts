@@ -50,7 +50,34 @@ export const POST: APIRoute = async ({ request }) => {
     const readerUrl = 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
     const customerName = name.trim() || 'bạn';
 
-    // 2. Lưu đơn / lead vào src/data/leads.json
+    // 2. Lưu đơn vào src/data/orders.json (CRM) và src/data/leads.json
+    try {
+      const ordersFilePath = path.resolve('./src/data/orders.json');
+      let orders = [];
+      if (fs.existsSync(ordersFilePath)) {
+        const rawOrders = fs.readFileSync(ordersFilePath, 'utf-8');
+        orders = JSON.parse(rawOrders || '[]');
+      }
+      const newOrder = {
+        id: maDon,
+        customerName,
+        email,
+        phone,
+        product: 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
+        productId: 'ebook-tao-blog',
+        amount: soTien,
+        status: 'Đã thanh toán',
+        paymentMethod: 'Chuyển khoản QR',
+        date: now.toLocaleString('vi-VN'),
+        timestamp: Date.now(),
+        notes: 'Khách hàng thanh toán qua landing page /ebook-tao-blog'
+      };
+      orders.unshift(newOrder);
+      fs.writeFileSync(ordersFilePath, JSON.stringify(orders, null, 2), 'utf-8');
+    } catch (orderErr) {
+      console.error('Lỗi lưu orders.json:', orderErr);
+    }
+
     try {
       let leads = [];
       if (fs.existsSync(leadsFilePath)) {
