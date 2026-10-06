@@ -73,13 +73,13 @@ export const POST: APIRoute = async ({ request }) => {
       console.error('Lỗi lưu lead:', saveErr);
     }
 
-    // 3. Mẫu Email theo chuẩn của tác giả Đào Xuân Quang
+    // 3. Mẫu Email theo chuẩn của tác giả Đào Xuân Quảng
     const emailSubject = '🎉 Ebook của bạn đây: Tạo Blog – cỗ máy bán hàng tự động bằng AI';
     
     const emailHtml = `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.7; color: #2A1A12; max-width: 620px; margin: 0 auto; padding: 32px 24px; border: 1px solid #F0DFD2; border-radius: 14px; background: #FFFAF6;">
         <div style="border-bottom: 2px solid #E8590C; padding-bottom: 12px; margin-bottom: 24px;">
-          <h2 style="color: #E8590C; margin: 0; font-size: 19px; letter-spacing: -0.01em;">ĐÀO XUÂN QUANG · TÀI SẢN SỐ</h2>
+          <h2 style="color: #E8590C; margin: 0; font-size: 19px; letter-spacing: -0.01em;">ĐÀO XUÂN QUẢNG · TÀI SẢN SỐ</h2>
         </div>
 
         <p style="font-size: 16px; margin: 0 0 16px;">Chào <strong>${customerName}</strong>,</p>
@@ -147,7 +147,7 @@ export const POST: APIRoute = async ({ request }) => {
     `;
 
     // 4. Gửi email qua Resend
-    const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quang <ebook@daoxuanquang.com.vn>';
+    const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quảng <ebook@daoxuanquang.com.vn>';
 
     let sendResult = await resend.emails.send({
       from: fromSender,
