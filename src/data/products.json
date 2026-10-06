@@ -1,12 +1,12 @@
 [
   {
     "id": "ebook-tao-blog",
-    "title": "Hướng Dẫn Tạo Blog Cá Nhân",
+    "title": "Hướng Dẫn Tạo Blog - Cỗ Máy Bán Hàng Tự Động bằng AI ",
     "description": "Chia sẻ nội tâm, kết nối độc giả và xây dựng hệ thống tạo thu nhập từ thương hiệu cá nhân. Cẩm nang từng bước tự dựng blog tối giản, chuẩn SEO không cần biết code.",
     "type": "Ebook",
-    "status": "Đang bán",
-    "price": "299.000đ",
+    "status": "Đang hoạt động",
     "icon": "📘",
+    "price": "Liên hệ",
     "image": "/images/ebook-tao-blog-landscape.jpg",
     "link": "/ebook-tao-blog"
   },

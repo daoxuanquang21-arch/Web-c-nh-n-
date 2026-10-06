@@ -63,8 +63,7 @@ jobs:
             git checkout src/content/cuoc-song/dung-tu-nhot-minh-duoi-day-gieng-cua-mot-chuyen-mon-hep.md 2>/dev/null || true
             git checkout src/content/cuoc-song/giai-ma-chuoi-gia-tri-loi-thoat-cho-su-chenh-venh-tuoi-25.md 2>/dev/null || true
             git checkout src/content/cuoc-song/thoat-khoi-bay-thu-nhap-tuyen-tinh-tuoi-25.md 2>/dev/null || true
-            git checkout src/data/products.json 2>/dev/null || true
-            git update-index --skip-worktree src/data/subscribers.json src/data/leads.json 2>/dev/null || true
+            git update-index --skip-worktree src/data/subscribers.json src/data/leads.json src/data/products.json 2>/dev/null || true
 
 
 
