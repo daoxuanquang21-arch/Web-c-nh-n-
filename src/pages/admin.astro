@@ -606,109 +606,250 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
 
         <!-- TAB CONTENT: PRODUCTS -->
         <section id="tab-products" class="tab-pane space-y-8 hidden">
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <!-- Top bar: Title + Search/Filter + Action buttons -->
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
             <div>
-              <p class="text-slate-400 text-sm">Quản lý danh sách sản phẩm, công cụ số hiển thị tại trang /san-pham.</p>
+              <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
+                <span>📦</span> Quản Lý Sản Phẩm & Công Cụ Số
+              </h2>
+              <p class="text-slate-400 text-xs mt-1">
+                Tất cả sản phẩm hiển thị công khai trên trang <a href="/san-pham" target="_blank" class="text-emerald-400 hover:underline">/san-pham</a>
+              </p>
             </div>
-            <!-- Add New Product Button -->
-            <button id="add-product-btn" class="px-5 py-2.5 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.02] shadow-md flex items-center gap-2 cursor-pointer">
-              <span>➕</span> Thêm Sản Phẩm Mới
-            </button>
+            
+            <div class="flex flex-wrap items-center gap-3">
+              <!-- Search box -->
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="product-search-input" 
+                  placeholder="Tìm theo tên hoặc ID..." 
+                  class="px-3.5 py-2 pl-8 rounded-xl border border-slate-800 bg-slate-950/70 text-xs text-slate-200 focus:outline-none focus:border-brand-green w-48 sm:w-60"
+                />
+                <span class="absolute left-2.5 top-2 text-xs text-slate-500">🔍</span>
+              </div>
+
+              <!-- Type Filter -->
+              <select id="product-type-filter" class="px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-950/70 text-xs text-slate-200 focus:outline-none focus:border-brand-green cursor-pointer">
+                <option value="all">Tất cả phân loại</option>
+                <option value="Ebook">Ebook</option>
+                <option value="Khóa học">Khóa học</option>
+                <option value="SaaS / Tool">SaaS / Tool</option>
+                <option value="Dịch vụ">Dịch vụ</option>
+              </select>
+
+              <!-- View Live /san-pham button -->
+              <a href="/san-pham" target="_blank" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer">
+                <span>🌐</span> Xem trang web
+              </a>
+
+              <!-- Add New Product Button -->
+              <button id="add-product-btn" class="px-4 py-2 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-xs transition-all transform hover:scale-[1.02] shadow-md flex items-center gap-1.5 cursor-pointer">
+                <span>➕</span> Thêm Sản Phẩm Mới
+              </button>
+            </div>
           </div>
 
-          <!-- Product Editor Form Modal (Hidden by default) -->
-          <div id="product-editor-modal" class="hidden rounded-2xl bg-slate-900/50 border border-slate-800 p-6 md:p-8 space-y-6 backdrop-blur-md">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-              <h3 id="product-editor-title" class="text-xl font-bold">📦 Soạn Thảo Sản Phẩm Mới</h3>
-              <button id="close-product-editor-btn" class="text-slate-400 hover:text-white font-bold text-sm cursor-pointer">✖ Đóng form</button>
-            </div>
-
-            <form id="product-form" class="grid md:grid-cols-3 gap-6">
-              <!-- Left side inputs -->
-              <div class="md:col-span-2 space-y-4">
-                <div>
-                  <label for="product-title" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Tên sản phẩm *</label>
-                  <input type="text" id="product-title" required placeholder="Ví dụ: B2B Cold Email Automator" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
-                </div>
-                <div>
-                  <label for="product-description" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mô tả sản phẩm *</label>
-                  <textarea id="product-description" required rows="4" placeholder="Nhập mô tả ngắn về tính năng và giá trị sản phẩm..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm leading-relaxed"></textarea>
-                </div>
-                <div>
-                  <label for="product-image" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Đường dẫn ảnh đại diện (Tùy chọn - Ví dụ: /images/san-pham.jpg)</label>
-                  <input type="text" id="product-image" placeholder="Ví dụ: /images/ebook-tao-blog.jpg" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
-                </div>
-              </div>
-
-              <!-- Right side parameters -->
-              <div class="space-y-4">
-                <div>
-                  <label for="product-id" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Mã định danh * (ID / Slug)</label>
-                  <input type="text" id="product-id" required placeholder="vi-du-email-automator" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green font-mono text-sm" />
-                </div>
-                <div>
-                  <label for="product-type" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Phân loại * (Type)</label>
-                  <input type="text" id="product-type" required placeholder="Ví dụ: SaaS / Tool, AI System, Digital Product" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
-                </div>
-                <div>
-                  <label for="product-status" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Trạng thái hiển thị * (Status)</label>
-                  <select id="product-status" required class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm cursor-pointer">
-                    <option value="">-- Chọn trạng thái --</option>
-                    <option value="Đang hoạt động">Đang hoạt động</option>
-                    <option value="Sắp ra mắt">Sắp ra mắt</option>
-                    <option value="Nội bộ">Nội bộ</option>
-                    <option value="Miễn phí">Miễn phí</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="product-price" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Giá hiển thị * (Price / Display price)</label>
-                  <input type="text" id="product-price" required placeholder="Ví dụ: Liên hệ, Miễn phí, 990k" class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-sm" />
-                </div>
-                <div>
-                  <label for="product-icon" class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Biểu tượng * (Chọn nhanh hoặc nhập Emoji)</label>
-                  <input type="text" id="product-icon" required placeholder="Bấm chọn biểu tượng bên dưới..." class="w-full px-4 py-3 rounded-xl border border-slate-800 bg-slate-950/50 focus:outline-none focus:border-brand-green text-base text-center font-bold" />
-                  
-                  <!-- Emoji Quick Selection Grid -->
-                  <div class="mt-2.5 p-3 rounded-xl bg-slate-950/60 border border-slate-800/80 space-y-2">
-                    <div class="flex justify-between items-center">
-                      <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Bấm để chọn biểu tượng:</span>
-                      <span class="text-[10px] text-slate-500 font-mono">24 Emojis phổ biến</span>
-                    </div>
-                    <div class="flex flex-wrap gap-1.5" id="emoji-picker-container">
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">📦</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🤖</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">⚡</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🚀</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">✉️</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">✍️</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">📊</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">💻</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🎨</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">💡</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🎯</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">💎</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">📚</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🎓</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🤝</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🌐</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🔥</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">⚙️</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🔍</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🛡️</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">🏆</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">💰</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">✨</button>
-                      <button type="button" class="emoji-select-btn p-2 rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-800 text-lg transition-all hover:scale-125 cursor-pointer">📖</button>
-                    </div>
+          <!-- Product Editor Modal Overlay (Fixed Backdrop) -->
+          <div id="product-editor-modal" class="hidden fixed inset-0 z-[300] bg-slate-950/85 backdrop-blur-md p-4 sm:p-6 md:p-8 overflow-y-auto justify-center items-start">
+            <div class="w-full max-w-6xl my-auto rounded-3xl bg-slate-900 border border-slate-800 p-6 md:p-8 space-y-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+              <!-- Modal Header -->
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">📦</span>
+                  <div>
+                    <h3 id="product-editor-title" class="text-lg sm:text-xl font-bold text-white">Soạn Thảo Sản Phẩm</h3>
+                    <p class="text-xs text-slate-400">Điền thông tin và xem trước hiển thị trực tiếp bên cạnh.</p>
                   </div>
                 </div>
-                <div class="pt-4">
-                  <button type="submit" id="save-product-btn" class="w-full py-3.5 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.02] shadow-md flex items-center justify-center gap-2 cursor-pointer">
-                    💾 Lưu sản phẩm
-                  </button>
+                <button type="button" id="close-product-editor-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition-all cursor-pointer">
+                  ✖ Đóng form
+                </button>
+              </div>
+
+              <!-- 2-Column Grid: Form (Left) & Realtime Card Preview (Right) -->
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Left: Form Controls (7 cols) -->
+                <form id="product-form" class="lg:col-span-7 space-y-5">
+                  <!-- Row 1: Title & Auto-slug -->
+                  <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                      <label for="product-title" class="text-xs font-bold text-slate-300 uppercase tracking-wider">Tên sản phẩm *</label>
+                      <button type="button" id="btn-auto-slug" class="text-[11px] text-emerald-400 hover:text-emerald-300 font-semibold cursor-pointer">⚡ Tự tạo ID từ tên</button>
+                    </div>
+                    <input type="text" id="product-title" required placeholder="Ví dụ: Ebook Tạo Blog – Cỗ Máy Bán Hàng Tự Động" class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green text-sm text-white" />
+                  </div>
+
+                  <!-- Row 2: ID (Slug) & Phân loại (Type) -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label for="product-id" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mã định danh (ID / Slug) *</label>
+                      <input type="text" id="product-id" required placeholder="ebook-tao-blog" class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green font-mono text-xs text-emerald-400" />
+                    </div>
+                    <div>
+                      <label for="product-type" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Phân loại (Type) *</label>
+                      <div>
+                        <input type="text" id="product-type" required placeholder="Ebook, SaaS, Khóa học..." class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green text-xs text-white" />
+                        <div class="flex flex-wrap gap-1 mt-1.5">
+                          <button type="button" class="quick-type-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">Ebook</button>
+                          <button type="button" class="quick-type-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">Khóa học</button>
+                          <button type="button" class="quick-type-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">SaaS / Tool</button>
+                          <button type="button" class="quick-type-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">Dịch vụ</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Row 3: Giá bán & Trạng thái -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label for="product-price" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Giá bán</label>
+                      <input type="text" id="product-price" placeholder="299.000đ hoặc Miễn phí" class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green text-xs text-white" />
+                      <div class="flex flex-wrap gap-1 mt-1.5">
+                        <button type="button" class="quick-price-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">299.000đ</button>
+                        <button type="button" class="quick-price-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">199.000đ</button>
+                        <button type="button" class="quick-price-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">39.000đ</button>
+                        <button type="button" class="quick-price-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">Miễn phí</button>
+                        <button type="button" class="quick-price-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer">Liên hệ</button>
+                      </div>
+                    </div>
+                    <div>
+                      <label for="product-status" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Trạng thái / Nhãn</label>
+                      <select id="product-status" class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green text-xs text-white cursor-pointer">
+                        <option value="">(Không hiển thị nhãn trạng thái)</option>
+                        <option value="Đang bán">Đang bán</option>
+                        <option value="Sắp ra mắt">Sắp ra mắt</option>
+                        <option value="Nội bộ">Nội bộ</option>
+                        <option value="Miễn phí">Miễn phí</option>
+                        <option value="Đang hoạt động">Đang hoạt động</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Row 4: Link sản phẩm -->
+                  <div>
+                    <label for="product-link" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Đường dẫn liên kết / Landing page (Tùy chọn)
+                    </label>
+                    <input type="text" id="product-link" placeholder="Ví dụ: /ebook-tao-blog hoặc https://..." class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green text-xs text-white" />
+                    <p class="text-[11px] text-slate-400 mt-1">Nếu để trống, nút bấm trên trang sẽ mở Zalo tư vấn.</p>
+                  </div>
+
+                  <!-- Row 5: Ảnh đại diện & Quick select -->
+                  <div>
+                    <label for="product-image" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+                      Đường dẫn ảnh đại diện (Tùy chọn)
+                    </label>
+                    <input type="text" id="product-image" placeholder="Ví dụ: /images/ebook-tao-blog-landscape.jpg" class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green text-xs text-white" />
+                    <div class="flex flex-wrap gap-1.5 mt-2">
+                      <span class="text-[10px] text-slate-400 self-center">Chọn nhanh:</span>
+                      <button type="button" class="quick-img-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer" data-img="/images/ebook-tao-blog-landscape.jpg">Ebook Tạo Blog</button>
+                      <button type="button" class="quick-img-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer" data-img="/images/ebook-thu-nhap-blog.jpg">Ebook Thu Nhập</button>
+                      <button type="button" class="quick-img-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer" data-img="/images/marketing_dashboard.jpg">Dashboard</button>
+                      <button type="button" class="quick-img-btn text-[10px] px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 cursor-pointer" data-img="/images/hero_conceptual.png">Hero AI</button>
+                      <button type="button" id="btn-clear-img" class="text-[10px] px-2 py-0.5 rounded bg-rose-950/40 text-rose-300 hover:bg-rose-900/50 cursor-pointer">Xóa ảnh</button>
+                    </div>
+                  </div>
+
+                  <!-- Row 6: Icon Emoji -->
+                  <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                      <label for="product-icon" class="text-xs font-bold text-slate-300 uppercase tracking-wider">Biểu tượng / Emoji</label>
+                      <span id="selected-icon-preview" class="text-base">📘</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <input type="text" id="product-icon" value="📘" placeholder="Emoji..." class="w-20 px-3 py-2 rounded-xl border border-slate-800 bg-slate-950/70 text-center text-lg focus:outline-none focus:border-brand-green text-white" />
+                      <div class="flex flex-wrap gap-1" id="emoji-picker-container">
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">📘</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">🤖</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">⚡</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">🚀</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">💡</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">💰</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">📦</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">📊</button>
+                        <button type="button" class="emoji-select-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-sm cursor-pointer">✨</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Row 7: Description -->
+                  <div>
+                    <label for="product-description" class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Mô tả sản phẩm *</label>
+                    <textarea id="product-description" required rows="3" placeholder="Nhập mô tả giá trị, công năng hoặc đối tượng sản phẩm..." class="w-full px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-950/70 focus:outline-none focus:border-brand-green text-xs leading-relaxed text-white"></textarea>
+                  </div>
+
+                  <!-- Submit button -->
+                  <div class="pt-2 flex items-center gap-3">
+                    <button type="submit" id="save-product-btn" class="flex-1 py-3 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-sm transition-all transform hover:scale-[1.01] shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                      <span>💾</span> Lưu Thông Tin Sản Phẩm
+                    </button>
+                    <button type="button" id="cancel-product-btn" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-semibold text-xs cursor-pointer">
+                      Hủy
+                    </button>
+                  </div>
+                </form>
+
+                <!-- Right: Realtime Preview Card (5 cols) -->
+                <div class="lg:col-span-5 bg-slate-950/70 p-5 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800/80">
+                      <span class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                        <span>👁️</span> Xem Trước Giao Diện (Preview)
+                      </span>
+                      <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-800/40">Realtime</span>
+                    </div>
+
+                    <!-- The Product Card Mockup matching /san-pham exactly -->
+                    <div class="p-5 rounded-2xl border border-slate-700 bg-slate-900 text-white shadow-xl flex flex-col justify-between transition-all">
+                      <div>
+                        <!-- Image container -->
+                        <div id="preview-card-img-wrap" class="w-full aspect-video rounded-xl overflow-hidden mb-3 bg-slate-800 border border-slate-800 flex items-center justify-center">
+                          <img id="preview-card-img" src="" alt="Ảnh sản phẩm" class="w-full h-full object-cover hidden" />
+                          <span id="preview-card-img-placeholder" class="text-3xl text-slate-600">🖼️</span>
+                        </div>
+
+                        <!-- Status badge & Icon row -->
+                        <div class="flex items-center justify-between mb-3">
+                          <span id="preview-card-icon" class="text-2xl">📘</span>
+                          <span id="preview-card-status" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 hidden">Sắp ra mắt</span>
+                        </div>
+
+                        <!-- Type -->
+                        <p id="preview-card-type" class="text-xs text-brand-green font-bold uppercase tracking-wider mb-1">Ebook</p>
+
+                        <!-- Title -->
+                        <h4 id="preview-card-title" class="text-base font-bold text-white mb-2 leading-snug">
+                          Tiêu đề sản phẩm
+                        </h4>
+
+                        <!-- Description -->
+                        <p id="preview-card-desc" class="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-3">
+                          Mô tả ngắn gọn về sản phẩm sẽ hiển thị tại đây...
+                        </p>
+                      </div>
+
+                      <div>
+                        <!-- Price row -->
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-800 mb-3">
+                          <span class="text-xs text-slate-400">Giá bán:</span>
+                          <span id="preview-card-price" class="text-sm font-bold text-emerald-400">299.000đ</span>
+                        </div>
+
+                        <!-- Button -->
+                        <div id="preview-card-btn" class="w-full text-center py-2 rounded-lg bg-red-600 text-white text-xs font-bold shadow">
+                          Xem thêm
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="text-[11px] text-slate-400 text-center mt-4">
+                    Thẻ trên hiển thị tương ứng với thiết kế thực tế trên trang <code>/san-pham</code>.
+                  </p>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
 
           <!-- Products Table Card -->
@@ -720,14 +861,15 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
                     <th class="p-4">Icon & Tên sản phẩm</th>
                     <th class="p-4">Phân loại</th>
                     <th class="p-4">Giá bán</th>
-                    <th class="p-4">Mô tả chi tiết</th>
+                    <th class="p-4">Link đích</th>
+                    <th class="p-4">Mô tả</th>
                     <th class="p-4">Trạng thái</th>
                     <th class="p-4 text-right">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody id="products-table-body" class="divide-y divide-slate-800/60 text-sm">
                   <tr>
-                    <td colspan="5" class="p-8 text-center text-slate-400">Đang tải danh sách sản phẩm...</td>
+                    <td colspan="7" class="p-8 text-center text-slate-400">Đang tải danh sách sản phẩm...</td>
                   </tr>
                 </tbody>
               </table>
@@ -1097,8 +1239,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             if (prodRes.ok && (prodRes.headers.get('content-type') || '').includes('application/json')) {
               const data = await prodRes.json();
               if (data && data.success && Array.isArray(data.products)) {
-                const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
-                currentProducts = data.products.filter((p: any) => !deletedIds.includes(p.id));
+                currentProducts = data.products;
               }
             }
           } catch (e) {}
@@ -2109,12 +2250,15 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
       };
 
       // ==========================================
-      // PRODUCTS MANAGER CONTROLLER
+      // PRODUCTS MANAGER CONTROLLER (ENHANCED)
       // ==========================================
       const productModal = document.getElementById('product-editor-modal');
       const addProductBtn = document.getElementById('add-product-btn');
       const closeProductEditorBtn = document.getElementById('close-product-editor-btn');
+      const cancelProductBtn = document.getElementById('cancel-product-btn');
       const productForm = document.getElementById('product-form') as HTMLFormElement;
+      const productSearchInput = document.getElementById('product-search-input') as HTMLInputElement;
+      const productTypeFilter = document.getElementById('product-type-filter') as HTMLSelectElement;
       
       const prId = document.getElementById('product-id') as HTMLInputElement;
       const prTitle = document.getElementById('product-title') as HTMLInputElement;
@@ -2124,182 +2268,434 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
       const prPrice = document.getElementById('product-price') as HTMLInputElement;
       const prIcon = document.getElementById('product-icon') as HTMLInputElement;
       const prImage = document.getElementById('product-image') as HTMLInputElement;
+      const prLink = document.getElementById('product-link') as HTMLInputElement;
       const productEditorTitle = document.getElementById('product-editor-title');
-      const saveProductBtn = document.getElementById('save-product-btn');
+      const saveProductBtn = document.getElementById('save-product-btn') as HTMLButtonElement;
+      const btnAutoSlug = document.getElementById('btn-auto-slug');
+      const btnClearImg = document.getElementById('btn-clear-img');
+
+      // Live Preview Elements
+      const previewTitle = document.getElementById('preview-card-title');
+      const previewDesc = document.getElementById('preview-card-desc');
+      const previewType = document.getElementById('preview-card-type');
+      const previewPrice = document.getElementById('preview-card-price');
+      const previewIcon = document.getElementById('preview-card-icon');
+      const previewStatus = document.getElementById('preview-card-status');
+      const previewImg = document.getElementById('preview-card-img') as HTMLImageElement;
+      const previewImgPlaceholder = document.getElementById('preview-card-img-placeholder');
+      const previewBtn = document.getElementById('preview-card-btn');
+      const selectedIconPreview = document.getElementById('selected-icon-preview');
 
       let isProductEditMode = false;
+
+      function generateSlug(str: string): string {
+        return str
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[đĐ]/g, 'd')
+          .replace(/[^a-z0-9\s-]/g, '')
+          .trim()
+          .replace(/\s+/g, '-')
+          .replace(/-+/g, '-');
+      }
+
+      function updateLivePreview() {
+        const title = prTitle?.value.trim() || 'Tiêu đề sản phẩm';
+        const desc = prDesc?.value.trim() || 'Mô tả ngắn gọn về sản phẩm sẽ hiển thị tại đây...';
+        const type = prType?.value.trim() || 'Ebook';
+        const price = prPrice?.value.trim() || '299.000đ';
+        const status = prStatus?.value.trim() || '';
+        const icon = prIcon?.value.trim() || '📘';
+        const imgUrl = prImage?.value.trim() || '';
+        const linkUrl = prLink?.value.trim() || '';
+
+        if (previewTitle) previewTitle.textContent = title;
+        if (previewDesc) previewDesc.textContent = desc;
+        if (previewType) previewType.textContent = type;
+        if (previewPrice) previewPrice.textContent = price;
+        if (previewIcon) previewIcon.textContent = icon;
+        if (selectedIconPreview) selectedIconPreview.textContent = icon;
+
+        if (previewStatus) {
+          if (status) {
+            previewStatus.textContent = status;
+            previewStatus.classList.remove('hidden');
+            if (status === 'Sắp ra mắt') {
+              previewStatus.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30';
+            } else if (status === 'Nội bộ') {
+              previewStatus.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-500/20 text-slate-300 border border-slate-500/30';
+            } else if (status === 'Miễn phí') {
+              previewStatus.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30';
+            } else {
+              previewStatus.className = 'text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+            }
+          } else {
+            previewStatus.classList.add('hidden');
+          }
+        }
+
+        if (previewImg && previewImgPlaceholder) {
+          if (imgUrl) {
+            previewImg.src = imgUrl;
+            previewImg.classList.remove('hidden');
+            previewImgPlaceholder.classList.add('hidden');
+          } else {
+            previewImg.classList.add('hidden');
+            previewImgPlaceholder.classList.remove('hidden');
+          }
+        }
+
+        if (previewBtn) {
+          if (linkUrl) {
+            previewBtn.textContent = 'Xem thêm →';
+          } else if (status === 'Sắp ra mắt') {
+            previewBtn.textContent = 'Xem thêm';
+          } else if (status === 'Nội bộ') {
+            previewBtn.textContent = 'Chỉ dùng nội bộ';
+          } else {
+            previewBtn.textContent = 'Nhắn tin Zalo tư vấn';
+          }
+        }
+      }
+
+      // Live sync listeners
+      [prTitle, prDesc, prType, prPrice, prStatus, prIcon, prImage, prLink].forEach(el => {
+        if (el) {
+          el.addEventListener('input', updateLivePreview);
+          el.addEventListener('change', updateLivePreview);
+        }
+      });
+
+      // Auto-slug button
+      if (btnAutoSlug) {
+        btnAutoSlug.addEventListener('click', () => {
+          if (prTitle.value.trim() && !isProductEditMode) {
+            prId.value = generateSlug(prTitle.value.trim());
+          }
+        });
+      }
+
+      // Title auto-slug when typing new product
+      if (prTitle) {
+        prTitle.addEventListener('input', () => {
+          if (!isProductEditMode && (!prId.value || prId.dataset.autoSlug === 'true')) {
+            prId.value = generateSlug(prTitle.value);
+            prId.dataset.autoSlug = 'true';
+          }
+        });
+      }
+      if (prId) {
+        prId.addEventListener('input', () => {
+          prId.dataset.autoSlug = 'false';
+        });
+      }
+
+      // Clear image button
+      if (btnClearImg) {
+        btnClearImg.addEventListener('click', () => {
+          if (prImage) {
+            prImage.value = '';
+            updateLivePreview();
+          }
+        });
+      }
+
+      // Quick Type buttons
+      document.querySelectorAll('.quick-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (prType) {
+            prType.value = btn.textContent?.trim() || '';
+            updateLivePreview();
+          }
+        });
+      });
+
+      // Quick Price buttons
+      document.querySelectorAll('.quick-price-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (prPrice) {
+            prPrice.value = btn.textContent?.trim() || '';
+            updateLivePreview();
+          }
+        });
+      });
+
+      // Quick Image buttons
+      document.querySelectorAll('.quick-img-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const img = btn.getAttribute('data-img');
+          if (prImage && img) {
+            prImage.value = img;
+            updateLivePreview();
+          }
+        });
+      });
+
+      // Emoji picker
+      document.querySelectorAll('.emoji-select-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const emoji = btn.textContent?.trim() || '';
+          if (prIcon) {
+            prIcon.value = emoji;
+            updateLivePreview();
+          }
+        });
+      });
 
       function resetProductForm() {
         if (productForm) productForm.reset();
         isProductEditMode = false;
         if (productEditorTitle) productEditorTitle.textContent = '📦 Soạn Thảo Sản Phẩm Mới';
-        if (prId) prId.readOnly = false;
+        if (prId) {
+          prId.readOnly = false;
+          prId.dataset.autoSlug = 'true';
+        }
         if (prImage) prImage.value = '';
+        if (prIcon) prIcon.value = '📘';
+        if (prType) prType.value = 'Ebook';
+        if (prPrice) prPrice.value = '299.000đ';
+        updateLivePreview();
+      }
+
+      function openProductModal(isEdit = false, prod: any = null) {
+        if (!productModal) return;
+        isProductEditMode = isEdit;
+        if (isEdit && prod) {
+          if (productEditorTitle) productEditorTitle.textContent = `📦 Chỉnh Sửa Sản Phẩm: ${prod.title}`;
+          prId.value = prod.id || '';
+          prId.readOnly = true;
+          prTitle.value = prod.title || '';
+          prDesc.value = prod.description || '';
+          prType.value = prod.type || 'Ebook';
+          prStatus.value = prod.status || '';
+          prPrice.value = prod.price || '';
+          prIcon.value = prod.icon || '📘';
+          prImage.value = prod.image || '';
+          prLink.value = prod.link || '';
+        } else {
+          resetProductForm();
+        }
+        updateLivePreview();
+        productModal.classList.remove('hidden');
+        productModal.classList.add('flex');
+        prTitle.focus();
+      }
+
+      function closeProductModal() {
+        if (!productModal) return;
+        productModal.classList.add('hidden');
+        productModal.classList.remove('flex');
+        resetProductForm();
       }
 
       if (addProductBtn) {
-        addProductBtn.addEventListener('click', () => {
-          resetProductForm();
-          if (productModal) productModal.classList.remove('hidden');
-          prTitle.focus();
-        });
+        addProductBtn.addEventListener('click', () => openProductModal(false));
+      }
+      if (closeProductEditorBtn) {
+        closeProductEditorBtn.addEventListener('click', closeProductModal);
+      }
+      if (cancelProductBtn) {
+        cancelProductBtn.addEventListener('click', closeProductModal);
       }
 
-      if (closeProductEditorBtn) {
-        closeProductEditorBtn.addEventListener('click', () => {
-          if (productModal) productModal.classList.add('hidden');
-          resetProductForm();
-        });
+      // Filter & Search handler
+      function getFilteredProducts() {
+        const q = (productSearchInput?.value || '').toLowerCase().trim();
+        const typeFilter = productTypeFilter?.value || 'all';
+
+        let list = [...currentProducts];
+        if (q) {
+          list = list.filter(p => 
+            (p.title || '').toLowerCase().includes(q) || 
+            (p.id || '').toLowerCase().includes(q) ||
+            (p.description || '').toLowerCase().includes(q)
+          );
+        }
+        if (typeFilter !== 'all') {
+          list = list.filter(p => (p.type || '').toLowerCase() === typeFilter.toLowerCase());
+        }
+        return list;
+      }
+
+      if (productSearchInput) {
+        productSearchInput.addEventListener('input', () => renderProducts());
+      }
+      if (productTypeFilter) {
+        productTypeFilter.addEventListener('change', () => renderProducts());
       }
 
       function renderProducts() {
         const tbody = document.getElementById('products-table-body');
         if (!tbody) return;
 
-        if (currentProducts.length === 0) {
+        const displayList = getFilteredProducts();
+
+        if (displayList.length === 0) {
           tbody.innerHTML = `
             <tr>
-              <td colspan="5" class="p-8 text-center text-slate-500">Chưa có sản phẩm nào. Bấm nút Thêm sản phẩm mới!</td>
+              <td colspan="7" class="p-8 text-center text-slate-500">
+                ${currentProducts.length === 0 
+                  ? 'Chưa có sản phẩm nào. Bấm nút "Thêm Sản Phẩm Mới" để bắt đầu!' 
+                  : 'Không tìm thấy sản phẩm phù hợp với bộ lọc tìm kiếm.'}
+              </td>
             </tr>
           `;
           return;
         }
 
-        tbody.innerHTML = currentProducts.map(prod => {
-          const statusBadgeClass = prod.status === 'Đang hoạt động' || prod.status === 'Miễn phí'
+        tbody.innerHTML = displayList.map(prod => {
+          const statusBadgeClass = prod.status === 'Đang bán' || prod.status === 'Đang hoạt động'
             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
             : prod.status === 'Sắp ra mắt'
             ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-            : 'bg-slate-500/10 text-slate-400 border border-slate-500/20';
+            : prod.status === 'Miễn phí'
+            ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+            : prod.status === 'Nội bộ'
+            ? 'bg-slate-500/10 text-slate-400 border border-slate-500/20'
+            : 'text-slate-500 border border-slate-800';
 
           return `
-            <tr class="hover:bg-slate-900/20 transition-all align-top">
+            <tr class="hover:bg-slate-900/40 transition-all align-top">
+              <!-- Cột 1: Icon & Tên -->
               <td class="p-4 font-bold text-slate-200">
-                <div class="flex items-center gap-2">
+                <div class="flex items-start gap-3">
                   ${prod.image 
-                    ? `<img src="${prod.image}" alt="${prod.title}" class="w-8 h-8 rounded-lg object-cover bg-slate-800" />` 
-                    : `<span class="text-xl">${prod.icon || '📦'}</span>`
+                    ? `<img src="${prod.image}" alt="${prod.title}" class="w-12 h-10 rounded-lg object-cover bg-slate-800 border border-slate-700 shrink-0" />` 
+                    : `<span class="text-2xl p-1 bg-slate-800 rounded-lg shrink-0">${prod.icon || '📦'}</span>`
                   }
-                  <div>
-                    <span>${prod.title}</span>
-                    <span class="block text-xs font-mono text-slate-500 font-normal">id: ${prod.id}</span>
+                  <div class="min-w-0">
+                    <span class="text-sm font-bold text-white block leading-snug">${prod.title}</span>
+                    <span class="block text-[11px] font-mono text-emerald-400 mt-0.5">id: ${prod.id}</span>
                   </div>
                 </div>
               </td>
-              <td class="p-4 text-xs font-bold text-slate-300 font-mono">${prod.type}</td>
-              <td class="p-4 text-xs font-semibold text-slate-200 font-mono">${prod.price || 'Liên hệ'}</td>
-              <td class="p-4 text-xs text-slate-300 max-w-sm whitespace-pre-wrap leading-relaxed">${prod.description}</td>
-              <td class="p-4">
-                <span class="px-2 py-1 rounded text-xs font-bold whitespace-nowrap uppercase tracking-wider ${statusBadgeClass}">
-                  ${prod.status}
-                </span>
+
+              <!-- Cột 2: Phân loại -->
+              <td class="p-4 text-xs font-semibold text-slate-300">
+                <span class="px-2 py-1 rounded bg-slate-800 border border-slate-700/60 font-mono">${prod.type || 'Ebook'}</span>
               </td>
+
+              <!-- Cột 3: Giá bán -->
+              <td class="p-4 text-xs font-bold text-emerald-400 font-mono whitespace-nowrap">
+                ${prod.price || 'Liên hệ'}
+              </td>
+
+              <!-- Cột 4: Link đích -->
+              <td class="p-4 text-xs">
+                ${prod.link 
+                  ? `<a href="${prod.link}" target="_blank" class="inline-flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-mono hover:underline max-w-[120px] truncate" title="${prod.link}">
+                      🔗 ${prod.link}
+                    </a>`
+                  : `<span class="text-slate-500 text-[11px] italic">Zalo tư vấn</span>`
+                }
+              </td>
+
+              <!-- Cột 5: Mô tả -->
+              <td class="p-4 text-xs text-slate-400 max-w-xs leading-relaxed">
+                <span class="line-clamp-2" title="${prod.description}">${prod.description || '—'}</span>
+              </td>
+
+              <!-- Cột 6: Trạng thái -->
+              <td class="p-4">
+                ${prod.status 
+                  ? `<span class="px-2.5 py-1 rounded text-[11px] font-bold whitespace-nowrap uppercase tracking-wider ${statusBadgeClass}">
+                      ${prod.status}
+                    </span>`
+                  : `<span class="text-slate-500 text-xs">—</span>`
+                }
+              </td>
+
+              <!-- Cột 7: Thao tác -->
               <td class="p-4 text-right">
-                <div class="flex gap-2 justify-end">
-                  <button data-id="${prod.id}" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-bold transition-all edit-product-btn cursor-pointer">Sửa</button>
-                  <button onclick="window.deleteProductItem && window.deleteProductItem('${prod.id}')" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-xs font-bold transition-all delete-product-btn cursor-pointer">Xóa</button>
+                <div class="flex items-center gap-1.5 justify-end">
+                  <button data-id="${prod.id}" class="edit-product-btn px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1">
+                    ✏️ Sửa
+                  </button>
+                  ${prod.link 
+                    ? `<a href="${prod.link}" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition-all cursor-pointer">
+                        👁️
+                      </a>`
+                    : ''
+                  }
+                  <button data-id="${prod.id}" data-title="${prod.title}" class="delete-product-btn px-2.5 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-xs font-bold transition-all cursor-pointer">
+                    🗑️
+                  </button>
                 </div>
               </td>
             </tr>
           `;
         }).join('');
 
-        // Attach product click events
         attachProductEvents();
       }
 
       function attachProductEvents() {
-        // Edit Product click
+        // Edit button
         document.querySelectorAll('.edit-product-btn').forEach(btn => {
           btn.addEventListener('click', () => {
             const id = btn.getAttribute('data-id');
             const prod = currentProducts.find(p => p.id === id);
-            if (!prod) return;
-
-            isProductEditMode = true;
-            if (productEditorTitle) productEditorTitle.textContent = `📦 Chỉnh Sửa Sản Phẩm: ${prod.title}`;
-
-            prId.value = prod.id;
-            prTitle.value = prod.title;
-            prDesc.value = prod.description;
-            prType.value = prod.type;
-            prStatus.value = prod.status;
-            prPrice.value = prod.price || 'Liên hệ';
-            prIcon.value = prod.icon || '';
-            if (prImage) prImage.value = prod.image || '';
-
-            // Block id edit in edit mode
-            prId.readOnly = true;
-
-            if (productModal) productModal.classList.remove('hidden');
-            prTitle.focus();
-            window.scrollTo({ top: productModal.offsetTop - 100, behavior: 'smooth' });
+            if (prod) openProductModal(true, prod);
           });
         });
 
-        // Emoji quick selection handler
-        document.querySelectorAll('.emoji-select-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            const emoji = btn.textContent?.trim() || '';
-            if (prIcon) {
-              prIcon.value = emoji;
-              prIcon.classList.add('border-brand-green', 'bg-brand-green/10');
-              setTimeout(() => prIcon.classList.remove('border-brand-green', 'bg-brand-green/10'), 400);
-            }
-          });
-        });
-
-        // Delete Product click
-        (window as any).deleteProductItem = async (id: string) => {
-          if (!id) return;
-          try {
-            const deletedIds = JSON.parse(localStorage.getItem('deleted_product_ids') || '[]');
-            if (!deletedIds.includes(id)) {
-              deletedIds.push(id);
-              localStorage.setItem('deleted_product_ids', JSON.stringify(deletedIds));
-            }
-            currentProducts = currentProducts.filter(p => p.id !== id);
-            renderProducts();
-            updateOverviewStats();
-            showToast('Đã xóa sản phẩm thành công!');
-
-            await fetch('/api/products', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ action: 'delete', id })
-            });
-          } catch (err: any) {
-            console.error('Delete product error:', err);
-          }
-        };
-
+        // Delete button
         document.querySelectorAll('.delete-product-btn').forEach(btn => {
           btn.addEventListener('click', async () => {
             const id = btn.getAttribute('data-id');
-            if (id) (window as any).deleteProductItem(id);
+            const title = btn.getAttribute('data-title') || id;
+            if (!id) return;
+
+            const confirmed = window.confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${title}" không?\nThao tác này sẽ gỡ sản phẩm khỏi trang /san-pham.`);
+            if (!confirmed) return;
+
+            try {
+              const res = await fetch('/api/products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'delete', id })
+              });
+              const result = await res.json();
+              if (result.success) {
+                currentProducts = currentProducts.filter(p => p.id !== id);
+                renderProducts();
+                updateOverviewStats();
+                showToast(`Đã xóa sản phẩm "${title}" thành công!`);
+              } else {
+                showToast(result.error || 'Lỗi khi xóa sản phẩm', true);
+              }
+            } catch (err: any) {
+              showToast('Lỗi kết nối máy chủ: ' + err.message, true);
+            }
           });
         });
-      };
+      }
 
+      // Save product submission
       if (productForm) {
         productForm.addEventListener('submit', async (e) => {
           e.preventDefault();
 
-          if (!prId.value || !prTitle.value || !prDesc.value || !prType.value || !prStatus.value || !prPrice.value || !prIcon.value) {
-            showToast('Vui lòng điền đầy đủ các trường bắt buộc (*)!', true);
+          const idVal = prId.value.trim();
+          const titleVal = prTitle.value.trim();
+          const descVal = prDesc.value.trim();
+
+          if (!idVal || !titleVal) {
+            showToast('Vui lòng nhập Tên sản phẩm và Mã định danh (ID)!', true);
             return;
           }
 
           const payload = {
-            id: prId.value,
-            title: prTitle.value,
-            description: prDesc.value,
-            type: prType.value,
-            status: prStatus.value,
-            price: prPrice.value,
-            icon: prIcon.value,
-            image: prImage.value
+            id: idVal,
+            title: titleVal,
+            description: descVal,
+            type: prType.value.trim() || 'Ebook',
+            status: prStatus.value.trim(),
+            price: prPrice.value.trim() || 'Liên hệ',
+            icon: prIcon.value.trim() || '📦',
+            image: prImage.value.trim(),
+            link: prLink.value.trim()
           };
 
           try {
@@ -2311,15 +2707,15 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             });
             const result = await res.json();
             if (result.success) {
-              showToast('Lưu thông tin sản phẩm thành công!');
-              if (productModal) productModal.classList.add('hidden');
-              resetProductForm();
+              showToast(isProductEditMode ? 'Cập nhật sản phẩm thành công!' : 'Tạo sản phẩm mới thành công!');
+              closeProductModal();
+              // Refresh data
               loadAllData();
             } else {
               showToast(result.error || 'Lỗi khi lưu sản phẩm', true);
             }
           } catch (err: any) {
-            showToast(err.message, true);
+            showToast(err.message || 'Lỗi lưu sản phẩm', true);
           } finally {
             if (saveProductBtn) saveProductBtn.disabled = false;
           }

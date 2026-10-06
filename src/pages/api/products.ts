@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-
+export const prerender = false;
 
 const productsFilePath = path.resolve('./src/data/products.json');
 
@@ -33,7 +33,19 @@ export async function GET() {
 export async function POST({ request }: { request: Request }) {
   try {
     const body = await request.json();
-    const { id, title, description, type, status, icon, price, action, image } = body;
+    const { 
+      id, 
+      title, 
+      description, 
+      type = 'Ebook', 
+      status = '', 
+      icon = '📦', 
+      price = 'Liên hệ', 
+      action, 
+      image = '', 
+      link = '',
+      featured = false 
+    } = body;
 
     let products = [];
     if (fs.existsSync(productsFilePath)) {
@@ -44,33 +56,63 @@ export async function POST({ request }: { request: Request }) {
     // Support delete action from admin panel
     if (action === 'delete') {
       if (!id) {
-        return new Response(JSON.stringify({ success: false, error: 'Product ID required for deletion' }), {
+        return new Response(JSON.stringify({ success: false, error: 'Cần mã định danh (ID) để xóa sản phẩm.' }), {
           status: 400,
           headers: { 'Content-Type': 'application/json' }
         });
       }
       products = products.filter((p: any) => p.id !== id);
       fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2), 'utf-8');
-      return new Response(JSON.stringify({ success: true, message: 'Product deleted successfully' }), {
+      return new Response(JSON.stringify({ success: true, message: 'Xóa sản phẩm thành công!' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
-    if (!title || !description || !type || !status || !icon || !id) {
-      return new Response(JSON.stringify({ success: false, error: 'Missing required fields' }), {
+    // Validation for create/update
+    const cleanId = (id || '').trim();
+    const cleanTitle = (title || '').trim();
+    const cleanDesc = (description || '').trim();
+
+    if (!cleanId || !cleanTitle) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: 'Vui lòng nhập Tên sản phẩm và Mã định danh (ID/Slug)!' 
+      }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
-    const newProduct = { id, title, description, type, status, icon, price: price || 'Liên hệ', image: image || '' };
+    const newProduct: any = { 
+      id: cleanId, 
+      title: cleanTitle, 
+      description: cleanDesc, 
+      type: (type || 'Ebook').trim(), 
+      icon: (icon || '📦').trim()
+    };
+
+    if (status && status.trim()) {
+      newProduct.status = status.trim();
+    }
+    if (price && price.trim()) {
+      newProduct.price = price.trim();
+    }
+    if (image && image.trim()) {
+      newProduct.image = image.trim();
+    }
+    if (link && link.trim()) {
+      newProduct.link = link.trim();
+    }
+    if (typeof featured === 'boolean') {
+      newProduct.featured = featured;
+    }
 
     // Check if product ID already exists to decide between update and create
-    const existingIndex = products.findIndex((p: any) => p.id === id);
+    const existingIndex = products.findIndex((p: any) => p.id === cleanId);
     if (existingIndex !== -1) {
       // Update existing
-      products[existingIndex] = newProduct;
+      products[existingIndex] = { ...products[existingIndex], ...newProduct };
     } else {
       // Create new
       products.push(newProduct);
@@ -78,7 +120,11 @@ export async function POST({ request }: { request: Request }) {
 
     fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2), 'utf-8');
 
-    return new Response(JSON.stringify({ success: true, message: 'Product saved successfully' }), {
+    return new Response(JSON.stringify({ 
+      success: true, 
+      message: existingIndex !== -1 ? 'Cập nhật sản phẩm thành công!' : 'Tạo sản phẩm mới thành công!',
+      product: newProduct 
+    }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
