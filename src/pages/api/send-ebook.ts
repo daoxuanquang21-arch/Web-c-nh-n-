@@ -152,6 +152,7 @@ export const POST: APIRoute = async ({ request }) => {
     let sendResult = await resend.emails.send({
       from: fromSender,
       to: email,
+      reply_to: 'daoxuanquang26102003@gmail.com',
       subject: emailSubject,
       html: emailHtml
     });
