@@ -1,8 +1,8 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import fs from 'fs';
-import path from 'path';
 import { renderOrderEmailHtml, getOrderEmailSubject } from '../../utils/orderEmailTemplate';
+import { sendDripEmail, scheduleDripCampaignForOrder, DRIP_METADATA } from '../../utils/dripEmails';
 
 export const prerender = false;
 
@@ -164,6 +164,75 @@ export const POST: APIRoute = async ({ request }) => {
 
       saveOrders(orders);
       return new Response(JSON.stringify({ success: true, message: 'Cập nhật đơn hàng thành công!', order: orders[idx] }), { status: 200 });
+    }
+
+    // 5. SEND DRIP EMAIL ACTION (Gửi thử hoặc gửi bù ngày X)
+    if (action === 'send_drip_day') {
+      const order = orders.find((o: any) => o.id === id);
+      if (!order || !order.email) {
+        return new Response(JSON.stringify({ success: false, error: 'Không tìm thấy đơn hàng hoặc email khách.' }), { status: 400 });
+      }
+
+      const day = parseInt(body.day, 10);
+      if (isNaN(day) || day < 1 || day > 7) {
+        return new Response(JSON.stringify({ success: false, error: 'Ngày gửi không hợp lệ (1-7).' }), { status: 400 });
+      }
+
+      try {
+        const sendRes = await sendDripEmail(day, order.email, order.customerName || 'bạn');
+        if (sendRes.error) {
+          return new Response(JSON.stringify({ success: false, error: 'Lỗi gửi mail: ' + sendRes.error.message }), { status: 500 });
+        }
+
+        if (!order.dripCampaign) {
+          order.dripCampaign = { status: 'active', startedAt: order.timestamp || Date.now(), days: [] };
+        }
+        if (!order.dripCampaign.days) order.dripCampaign.days = [];
+
+        let dayItem = order.dripCampaign.days.find((d: any) => d.day === day);
+        if (!dayItem) {
+          dayItem = { day, title: DRIP_METADATA[day]?.badge || `Ngày ${day}` };
+          order.dripCampaign.days.push(dayItem);
+        }
+        dayItem.status = 'sent';
+        dayItem.sentAt = new Date().toISOString();
+        dayItem.resendId = sendRes.data?.id;
+
+        saveOrders(orders);
+        return new Response(JSON.stringify({
+          success: true,
+          message: `Đã gửi thành công Email Ngày ${day} tới ${order.email}!`,
+          dayItem
+        }), { status: 200 });
+      } catch (err: any) {
+        return new Response(JSON.stringify({ success: false, error: 'Lỗi gửi mail: ' + err.message }), { status: 500 });
+      }
+    }
+
+    // 6. SCHEDULE DRIP CAMPAIGN ACTION (Lên lịch lại chuỗi 7 ngày)
+    if (action === 'schedule_drip') {
+      const order = orders.find((o: any) => o.id === id);
+      if (!order || !order.email) {
+        return new Response(JSON.stringify({ success: false, error: 'Không tìm thấy đơn hàng hoặc email khách.' }), { status: 400 });
+      }
+
+      try {
+        const scheduleRes = await scheduleDripCampaignForOrder(order);
+        order.dripCampaign = {
+          status: 'active',
+          startedAt: order.timestamp || Date.now(),
+          days: scheduleRes
+        };
+        saveOrders(orders);
+
+        return new Response(JSON.stringify({
+          success: true,
+          message: `Đã lên lịch thành công chuỗi 7 ngày cho ${order.email}!`,
+          dripCampaign: order.dripCampaign
+        }), { status: 200 });
+      } catch (err: any) {
+        return new Response(JSON.stringify({ success: false, error: 'Lỗi lên lịch: ' + err.message }), { status: 500 });
+      }
     }
 
     return new Response(JSON.stringify({ success: false, error: 'Hành động không hợp lệ.' }), { status: 400 });

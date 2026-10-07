@@ -3,6 +3,7 @@ import { Resend } from 'resend';
 import fs from 'fs';
 import path from 'path';
 import { renderOrderEmailHtml, getOrderEmailSubject } from '../../utils/orderEmailTemplate';
+import { scheduleDripCampaignForOrder } from '../../utils/dripEmails';
 
 const FALLBACK_KEY = Buffer.from('cmVfZk1MeEFyaXJfQUdZdFJqUjFqNm1NR0Vvb2c2UVhZampB', 'base64').toString('utf-8');
 const RESEND_API_KEY = process.env.RESEND_API_KEY || FALLBACK_KEY;
@@ -69,7 +70,12 @@ export const POST: APIRoute = async ({ request }) => {
         paymentMethod: 'Chuyển khoản QR',
         date: now.toLocaleString('vi-VN'),
         timestamp: Date.now(),
-        notes: 'Khách hàng thanh toán qua landing page /ebook-tao-blog'
+        notes: 'Khách hàng thanh toán qua landing page /ebook-tao-blog',
+        dripCampaign: {
+          status: 'active',
+          startedAt: Date.now(),
+          days: []
+        }
       };
       orders.unshift(newOrder);
       fs.writeFileSync(ordersFilePath, JSON.stringify(orders, null, 2), 'utf-8');
@@ -117,6 +123,31 @@ export const POST: APIRoute = async ({ request }) => {
           `
         });
       }
+    }
+
+    // 5. Tự động lên lịch chuỗi Email chăm sóc 7 ngày liên tục (07:30 sáng mỗi ngày)
+    try {
+      const dripResults = await scheduleDripCampaignForOrder({
+        customerName,
+        email,
+        timestamp: Date.now()
+      });
+
+      const ordersFilePath = path.resolve('./src/data/orders.json');
+      if (fs.existsSync(ordersFilePath)) {
+        let currentOrders = JSON.parse(fs.readFileSync(ordersFilePath, 'utf-8') || '[]');
+        const idx = currentOrders.findIndex((o: any) => o.id === maDon);
+        if (idx !== -1) {
+          currentOrders[idx].dripCampaign = {
+            status: 'active',
+            startedAt: Date.now(),
+            days: dripResults
+          };
+          fs.writeFileSync(ordersFilePath, JSON.stringify(currentOrders, null, 2), 'utf-8');
+        }
+      }
+    } catch (dripErr) {
+      console.warn('Cảnh báo khi lên lịch chuỗi 7 ngày:', dripErr);
     }
 
     return new Response(JSON.stringify({ 

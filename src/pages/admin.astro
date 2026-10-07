@@ -965,6 +965,11 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
                 <span>📥</span> Xuất Excel (CSV)
               </button>
 
+              <!-- Trigger Drip Cron button -->
+              <button id="trigger-drip-cron-btn" type="button" class="px-3.5 py-2 rounded-xl bg-orange-500/10 hover:bg-orange-500 hover:text-white text-orange-400 border border-orange-500/20 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm" title="Quét toàn bộ đơn hàng và tự động gửi email đến hạn hôm nay">
+                <span>🔄</span> Quét & Gửi Email Đến Hạn
+              </button>
+
               <!-- Add New Order Button -->
               <button id="add-order-btn" type="button" class="px-4 py-2 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-xs transition-all transform hover:scale-[1.02] shadow-md flex items-center gap-1.5 cursor-pointer">
                 <span>➕</span> Tạo Đơn Thủ Công
@@ -1067,6 +1072,45 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+
+          <!-- Order Drip Campaign Modal Overlay -->
+          <div id="order-drip-modal" class="hidden fixed inset-0 z-[300] bg-slate-950/85 backdrop-blur-md p-4 sm:p-6 md:p-8 overflow-y-auto justify-center items-start">
+            <div class="w-full max-w-3xl my-auto rounded-3xl bg-slate-900 border border-slate-800 p-6 md:p-8 space-y-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+              <!-- Modal Header -->
+              <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl p-2 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">📬</span>
+                  <div>
+                    <h3 id="drip-modal-title" class="text-lg sm:text-xl font-bold text-white">Chuỗi Email Chăm Sóc 7 Ngày</h3>
+                    <p class="text-xs text-slate-400">Tự động gửi 1 email mỗi ngày vào 07:30 sáng cho khách mua Ebook.</p>
+                  </div>
+                </div>
+                <button type="button" id="close-order-drip-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold text-xs transition-all cursor-pointer">
+                  ✖ Đóng
+                </button>
+              </div>
+
+              <!-- Customer Info Bar -->
+              <div id="drip-customer-info" class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <!-- Sẽ được điền bằng JS -->
+              </div>
+
+              <!-- 7 Days List -->
+              <div class="space-y-3 max-h-[50vh] overflow-y-auto pr-1" id="drip-days-container">
+                <!-- Render 7 ngày bằng JS -->
+              </div>
+
+              <!-- Modal Footer -->
+              <div class="pt-3 border-t border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                <button type="button" id="btn-schedule-all-drip" class="px-4 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs transition-all flex items-center gap-2 cursor-pointer shadow-md">
+                  <span>⚡</span> Lên Lịch Tự Động 7 Ngày (Resend)
+                </button>
+                <button type="button" id="close-order-drip-footer-btn" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-semibold text-xs cursor-pointer">
+                  Đóng lại
+                </button>
+              </div>
             </div>
           </div>
 
@@ -3180,6 +3224,9 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
               <!-- Cột 7: Thao tác -->
               <td class="p-4 text-right whitespace-nowrap">
                 <div class="flex items-center gap-1.5 justify-end">
+                  <button data-id="${ord.id}" data-name="${ord.customerName || ord.id}" class="manage-drip-btn px-2.5 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500 hover:text-white text-orange-400 text-xs font-bold transition-all cursor-pointer flex items-center gap-1" title="Quản lý Chuỗi Email Chăm Sóc 7 Ngày">
+                    📬 Chuỗi 7N
+                  </button>
                   <button data-id="${ord.id}" data-email="${ord.email}" class="resend-order-email-btn px-2.5 py-1.5 rounded-lg bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-400 text-xs font-bold transition-all cursor-pointer flex items-center gap-1" title="Gửi lại Email Ebook">
                     ✉️ Gửi Ebook
                   </button>
@@ -3199,6 +3246,15 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
       }
 
       function attachOrderEvents() {
+        // Manage Drip Email button
+        document.querySelectorAll('.manage-drip-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-id');
+            const ord = currentOrders.find(o => o.id === id);
+            if (ord) openDripModal(ord);
+          });
+        });
+
         // Resend email button
         document.querySelectorAll('.resend-order-email-btn').forEach(btn => {
           btn.addEventListener('click', async () => {
@@ -3416,6 +3472,204 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             showToast('Lỗi máy chủ: ' + err.message, true);
           } finally {
             if (saveOrderBtn) saveOrderBtn.disabled = false;
+          }
+        });
+      }
+
+      // ===== DRIP CAMPAIGN 7 DAYS CONTROLLER =====
+      const dripModal = document.getElementById('order-drip-modal');
+      const closeDripBtn = document.getElementById('close-order-drip-btn');
+      const closeDripFooterBtn = document.getElementById('close-order-drip-footer-btn');
+      const btnScheduleAllDrip = document.getElementById('btn-schedule-all-drip');
+      const triggerDripCronBtn = document.getElementById('trigger-drip-cron-btn');
+
+      let activeDripOrder: any = null;
+
+      const DRIP_METADATA_CLIENT = [
+        { day: 1, badge: 'Bạn không đi một mình', subject: 'Thứ quyết định bạn có blog hay không, không nằm trong ebook.' },
+        { day: 2, badge: 'Gỡ kẹt cùng nhau', subject: 'Cả cuối tuần. Một trang trắng.' },
+        { day: 3, badge: 'Chọn ngách ra tiền', subject: 'Mình viết rất chăm. Và không ra nổi một đồng.' },
+        { day: 4, badge: 'Bài viết đầu tiên', subject: 'Bài viết “chẳng hay ho gì” vẫn đang mang tiền về cho mình.' },
+        { day: 5, badge: 'Đừng dừng ở giữa', subject: 'Mình đã bỏ cuộc 5 lần. Đây là điều mình ước có người nói với mình.' },
+        { day: 6, badge: 'Cùng nhìn lại', subject: 'Một tuần trước, tất cả những ô này đều trống.' },
+        { day: 7, badge: 'Một tuần nhìn lại', subject: '7 ngày trước, bạn chưa có blog. Hôm nay thì sao?' }
+      ];
+
+      function openDripModal(ord: any) {
+        activeDripOrder = ord;
+        if (!dripModal) return;
+        dripModal.classList.remove('hidden');
+        dripModal.classList.add('flex');
+        renderDripModalContent();
+      }
+
+      function closeDripModal() {
+        if (!dripModal) return;
+        dripModal.classList.add('hidden');
+        dripModal.classList.remove('flex');
+        activeDripOrder = null;
+      }
+
+      if (closeDripBtn) closeDripBtn.addEventListener('click', closeDripModal);
+      if (closeDripFooterBtn) closeDripFooterBtn.addEventListener('click', closeDripModal);
+
+      function renderDripModalContent() {
+        if (!activeDripOrder) return;
+        const ord = activeDripOrder;
+        const customerInfoEl = document.getElementById('drip-customer-info');
+        const container = document.getElementById('drip-days-container');
+
+        if (customerInfoEl) {
+          customerInfoEl.innerHTML = `
+            <div>
+              <span class="text-slate-400">Khách hàng:</span>
+              <strong class="text-white ml-1">${ord.customerName || 'Chưa có tên'}</strong>
+              <span class="text-cyan-400 font-mono ml-2">(${ord.email})</span>
+            </div>
+            <div>
+              <span class="text-slate-400">Mã đơn:</span>
+              <strong class="text-cyan-400 font-mono ml-1">${ord.id}</strong>
+              <span class="text-slate-400 ml-3">Ngày mua:</span>
+              <span class="text-slate-300 ml-1">${ord.date || '—'}</span>
+            </div>
+          `;
+        }
+
+        if (container) {
+          const daysData = ord.dripCampaign?.days || [];
+          container.innerHTML = DRIP_METADATA_CLIENT.map(meta => {
+            const dayRecord = daysData.find((d: any) => d.day === meta.day);
+            let statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-400">⚪ Đang chờ đến hạn</span>';
+            
+            if (dayRecord) {
+              if (dayRecord.status === 'sent') {
+                const sentDate = dayRecord.sentAt ? new Date(dayRecord.sentAt).toLocaleString('vi-VN') : '';
+                statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">✅ Đã gửi (${sentDate})</span>`;
+              } else if (dayRecord.status === 'scheduled') {
+                const schDate = dayRecord.scheduledFor ? new Date(dayRecord.scheduledFor).toLocaleString('vi-VN') : '';
+                statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">⏳ Đã lên lịch (${schDate})</span>`;
+              } else if (dayRecord.status === 'failed') {
+                statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30" title="${dayRecord.error || ''}">⚠️ Lỗi gửi</span>`;
+              }
+            }
+
+            return `
+              <div class="p-3.5 rounded-2xl bg-slate-950/40 border border-slate-800/80 hover:border-slate-700/80 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center gap-2 mb-1 flex-wrap">
+                    <span class="px-2 py-0.5 rounded-md bg-orange-500/10 text-orange-400 font-extrabold text-xs border border-orange-500/20">
+                      Ngày ${meta.day} · ${meta.badge}
+                    </span>
+                    ${statusBadge}
+                  </div>
+                  <p class="text-xs font-medium text-slate-200 truncate" title="${meta.subject}">${meta.subject}</p>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <button data-day="${meta.day}" class="send-single-drip-btn px-3 py-1.5 rounded-lg bg-orange-500/20 hover:bg-orange-500 hover:text-white text-orange-400 font-bold text-xs transition-all flex items-center gap-1 cursor-pointer">
+                    <span>📨</span> Gửi Thử Ngay
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+
+          // Attach event for single drip buttons
+          container.querySelectorAll('.send-single-drip-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const day = btn.getAttribute('data-day');
+              if (!day || !activeDripOrder) return;
+
+              const confirmed = window.confirm(`Bạn có chắc muốn gửi Email Ngày ${day} tới ${activeDripOrder.email}?`);
+              if (!confirmed) return;
+
+              const origHtml = btn.innerHTML;
+              btn.innerHTML = '⏳ Đang gửi...';
+              (btn as HTMLButtonElement).disabled = true;
+
+              try {
+                const res = await fetch('/api/orders', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ action: 'send_drip_day', id: activeDripOrder.id, day })
+                });
+                const result = await res.json();
+                if (result.success) {
+                  showToast(`Đã gửi thành công Email Ngày ${day} tới ${activeDripOrder.email}!`);
+                  await loadAllData();
+                  activeDripOrder = currentOrders.find(o => o.id === activeDripOrder.id) || activeDripOrder;
+                  renderDripModalContent();
+                } else {
+                  showToast(result.error || 'Lỗi gửi mail', true);
+                }
+              } catch (err: any) {
+                showToast('Lỗi mạng: ' + err.message, true);
+              } finally {
+                btn.innerHTML = origHtml;
+                (btn as HTMLButtonElement).disabled = false;
+              }
+            });
+          });
+        }
+      }
+
+      // Button schedule all
+      if (btnScheduleAllDrip) {
+        btnScheduleAllDrip.addEventListener('click', async () => {
+          if (!activeDripOrder) return;
+          const confirmed = window.confirm(`Bạn có muốn tự động lên lịch gửi 7 ngày liên tiếp qua Resend cho đơn ${activeDripOrder.id} (${activeDripOrder.email})?`);
+          if (!confirmed) return;
+
+          btnScheduleAllDrip.textContent = '⏳ Đang lên lịch...';
+          (btnScheduleAllDrip as HTMLButtonElement).disabled = true;
+
+          try {
+            const res = await fetch('/api/orders', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'schedule_drip', id: activeDripOrder.id })
+            });
+            const result = await res.json();
+            if (result.success) {
+              showToast(result.message || 'Đã lên lịch thành công chuỗi 7 ngày!');
+              await loadAllData();
+              activeDripOrder = currentOrders.find(o => o.id === activeDripOrder.id) || activeDripOrder;
+              renderDripModalContent();
+            } else {
+              showToast(result.error || 'Lỗi lên lịch', true);
+            }
+          } catch (err: any) {
+            showToast('Lỗi máy chủ: ' + err.message, true);
+          } finally {
+            btnScheduleAllDrip.innerHTML = '<span>⚡</span> Lên Lịch Tự Động 7 Ngày (Resend)';
+            (btnScheduleAllDrip as HTMLButtonElement).disabled = false;
+          }
+        });
+      }
+
+      // Button trigger cron
+      if (triggerDripCronBtn) {
+        triggerDripCronBtn.addEventListener('click', async () => {
+          const confirmed = window.confirm('Quét toàn bộ danh sách đơn hàng và gửi các email chăm sóc đã đến hạn hôm nay?');
+          if (!confirmed) return;
+
+          const origText = triggerDripCronBtn.innerHTML;
+          triggerDripCronBtn.innerHTML = '<span>⏳</span> Đang quét & gửi...';
+          (triggerDripCronBtn as HTMLButtonElement).disabled = true;
+
+          try {
+            const res = await fetch('/api/cron/send-drip');
+            const result = await res.json();
+            if (result.success) {
+              showToast(result.message || `Đã quét xong. Gửi thành công ${result.sentCount} email.`);
+              loadAllData();
+            } else {
+              showToast(result.error || 'Lỗi khi chạy quét đơn', true);
+            }
+          } catch (err: any) {
+            showToast('Lỗi kết nối: ' + err.message, true);
+          } finally {
+            triggerDripCronBtn.innerHTML = origText;
+            (triggerDripCronBtn as HTMLButtonElement).disabled = false;
           }
         });
       }
