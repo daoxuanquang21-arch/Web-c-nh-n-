@@ -133,7 +133,7 @@ export const POST: APIRoute = async ({ request }) => {
       // Cập nhật trạng thái đơn hàng thành "Đã thanh toán"
       const now = new Date();
       targetOrder.status = 'Đã thanh toán';
-      targetOrder.paymentMethod = `Chuyển khoản SePay (${gateway || 'MBBank'})`;
+      targetOrder.paymentMethod = `Chuyển khoản SePay (${gateway || 'BIDV'})`;
       targetOrder.transactionId = referenceCode || String(transactionId || '');
       targetOrder.paidAt = now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false });
       targetOrder.notes = (targetOrder.notes ? targetOrder.notes + ' | ' : '') + 
@@ -219,7 +219,7 @@ export const POST: APIRoute = async ({ request }) => {
         productId: 'ebook-tao-blog',
         amount: `${Number(transferAmount).toLocaleString('vi-VN')}đ`,
         status: 'Đã thanh toán',
-        paymentMethod: `SePay VA (${subAccount || '96247QUANG'})`,
+        paymentMethod: `SePay BIDV (${accountNumber || subAccount || '8889979511'})`,
         date: now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false }),
         timestamp: Date.now(),
         notes: `Tự động tạo từ SePay GD #${transactionId}: ${content || ''}`
