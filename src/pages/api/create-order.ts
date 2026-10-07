@@ -91,10 +91,10 @@ export const POST: APIRoute = async ({ request }) => {
       productId: 'ebook-tao-blog',
       amount: amountStr,
       status: 'Chờ thanh toán',
-      paymentMethod: 'Chuyển khoản BIDV (8889979511)',
+      paymentMethod: 'Chuyển khoản SePay (MBBank: 96247DAOXUANQUANG)',
       date: now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false }),
       timestamp: Date.now(),
-      notes: 'Đang chờ chuyển khoản qua mã VietQR BIDV 8889979511'
+      notes: 'Đang chờ chuyển khoản qua mã VietQR SePay MB 96247DAOXUANQUANG'
     };
 
     const orders = getOrders();
@@ -111,15 +111,15 @@ export const POST: APIRoute = async ({ request }) => {
       createdAt: now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false })
     });
 
-    const qrUrl = `https://qr.sepay.vn/img?acc=8889979511&bank=BIDV&amount=${amountNum}&des=${orderId}&template=compact`;
+    const qrUrl = `https://qr.sepay.vn/img?acc=96247DAOXUANQUANG&bank=MBBank&amount=${amountNum}&des=${orderId}&template=compact`;
 
     return new Response(JSON.stringify({
       success: true,
       orderId,
       amount: amountNum,
       formattedAmount: amountStr,
-      bank: 'BIDV',
-      accountNumber: '8889979511',
+      bank: 'MBBank',
+      accountNumber: '96247DAOXUANQUANG',
       accountName: 'DAO XUAN QUANG',
       qrUrl
     }), {
