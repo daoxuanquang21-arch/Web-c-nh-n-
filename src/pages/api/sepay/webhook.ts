@@ -219,7 +219,7 @@ export const POST: APIRoute = async ({ request }) => {
         productId: 'ebook-tao-blog',
         amount: `${Number(transferAmount).toLocaleString('vi-VN')}đ`,
         status: 'Đã thanh toán',
-        paymentMethod: `SePay (${gateway || 'MBBank'}) - VA: ${subAccount || '96247DAOXUANQUANG'}`,
+        paymentMethod: `SePay (${gateway || 'MBBank'}) - TK: ${accountNumber || subAccount || '0000485725573'}`,
         date: now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false }),
         timestamp: Date.now(),
         notes: `Tự động tạo từ SePay GD #${transactionId}: ${content || ''}`
