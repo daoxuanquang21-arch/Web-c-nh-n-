@@ -32,6 +32,14 @@ function saveOrders(orders: any[]): void {
 export const GET: APIRoute = async () => {
   try {
     const orders = getOrders();
+    orders.forEach((o: any) => {
+      if (o.timestamp) {
+        o.date = new Date(o.timestamp).toLocaleString('vi-VN', {
+          timeZone: 'Asia/Ho_Chi_Minh',
+          hour12: false
+        });
+      }
+    });
     // Sort newest first
     orders.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
@@ -133,7 +141,7 @@ export const POST: APIRoute = async ({ request }) => {
         amount,
         status,
         paymentMethod,
-        date: now.toLocaleString('vi-VN'),
+        date: now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false }),
         timestamp: Date.now(),
         notes
       };

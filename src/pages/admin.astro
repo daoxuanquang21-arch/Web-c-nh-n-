@@ -3133,6 +3133,16 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         }
       }
 
+      function formatOrderDate(ord: any) {
+        if (ord && ord.timestamp) {
+          return new Date(ord.timestamp).toLocaleString('vi-VN', {
+            timeZone: 'Asia/Ho_Chi_Minh',
+            hour12: false
+          });
+        }
+        return ord?.date || '—';
+      }
+
       function renderOrders() {
         const tbody = document.getElementById('orders-table-body');
         if (!tbody) return;
@@ -3172,7 +3182,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
                 <span class="px-2 py-0.5 rounded bg-cyan-950/50 text-cyan-400 border border-cyan-800/40 font-bold block w-fit mb-1 cursor-pointer hover:bg-cyan-900/60" title="Bấm để sao chép" onclick="navigator.clipboard.writeText('${ord.id}')">
                   ${ord.id}
                 </span>
-                <span class="text-[11px] text-slate-400 block">${ord.date || '—'}</span>
+                <span class="text-[11px] text-slate-400 block">${formatOrderDate(ord)}</span>
               </td>
 
               <!-- Cột 2: Khách hàng -->
@@ -3410,7 +3420,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             `"${(o.amount || '').replace(/"/g, '""')}"`,
             `"${(o.status || '').replace(/"/g, '""')}"`,
             `"${(o.paymentMethod || '').replace(/"/g, '""')}"`,
-            `"${(o.date || '').replace(/"/g, '""')}"`,
+            `"${formatOrderDate(o).replace(/"/g, '""')}"`,
             `"${(o.notes || '').replace(/"/g, '""')}"`
           ]);
 
@@ -3530,7 +3540,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
               <span class="text-slate-400">Mã đơn:</span>
               <strong class="text-cyan-400 font-mono ml-1">${ord.id}</strong>
               <span class="text-slate-400 ml-3">Ngày mua:</span>
-              <span class="text-slate-300 ml-1">${ord.date || '—'}</span>
+              <span class="text-slate-300 ml-1">${formatOrderDate(ord)}</span>
             </div>
           `;
         }
@@ -3543,10 +3553,10 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             
             if (dayRecord) {
               if (dayRecord.status === 'sent') {
-                const sentDate = dayRecord.sentAt ? new Date(dayRecord.sentAt).toLocaleString('vi-VN') : '';
+                const sentDate = dayRecord.sentAt ? new Date(dayRecord.sentAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false }) : '';
                 statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">✅ Đã gửi (${sentDate})</span>`;
               } else if (dayRecord.status === 'scheduled') {
-                const schDate = dayRecord.scheduledFor ? new Date(dayRecord.scheduledFor).toLocaleString('vi-VN') : '';
+                const schDate = dayRecord.scheduledFor ? new Date(dayRecord.scheduledFor).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false }) : '';
                 statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">⏳ Đã lên lịch (${schDate})</span>`;
               } else if (dayRecord.status === 'failed') {
                 statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30" title="${dayRecord.error || ''}">⚠️ Lỗi gửi</span>`;

@@ -45,7 +45,7 @@ export const POST: APIRoute = async ({ request }) => {
     // 1. Chuẩn bị thông tin đơn hàng
     const now = new Date();
     const maDon = 'EB' + now.getFullYear().toString().slice(-2) + (now.getMonth() + 1).toString().padStart(2, '0') + Math.floor(1000 + Math.random() * 9000);
-    const ngayFormatted = now.toLocaleDateString('vi-VN');
+    const ngayFormatted = now.toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
     const soTien = '299.000đ';
     const readerUrl = 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
     const customerName = name.trim() || 'bạn';
@@ -68,7 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
         amount: soTien,
         status: 'Đã thanh toán',
         paymentMethod: 'Chuyển khoản QR',
-        date: now.toLocaleString('vi-VN'),
+        date: now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false }),
         timestamp: Date.now(),
         notes: 'Khách hàng thanh toán qua landing page /ebook-tao-blog',
         dripCampaign: {
