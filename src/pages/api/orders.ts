@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { Resend } from 'resend';
 import fs from 'fs';
+import path from 'path';
 import { renderOrderEmailHtml, getOrderEmailSubject } from '../../utils/orderEmailTemplate';
 import { sendDripEmail, scheduleDripCampaignForOrder, DRIP_METADATA } from '../../utils/dripEmails';
 
