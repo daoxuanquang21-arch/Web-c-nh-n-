@@ -704,6 +704,51 @@ footer{background:var(--dark);color:#CFC4BA;text-align:center;padding:36px 20px 
 
 }
 
+/* ===== SEPAY VIETQR MODAL ===== */
+.sepay-modal-overlay{position:fixed;inset:0;background:rgba(18,13,10,0.85);backdrop-filter:blur(6px);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;opacity:1;transition:opacity .25s ease}
+.sepay-modal-overlay[hidden]{display:none!important}
+.sepay-modal-card{background:#FFFDFB;border-radius:24px;border:1px solid #F5DECF;box-shadow:0 25px 60px rgba(0,0,0,0.4);max-width:640px;width:100%;position:relative;overflow:hidden;animation:sepayModalPop .3s cubic-bezier(0.16,1,0.3,1);font-family:var(--body);color:#1F1915}
+@keyframes sepayModalPop{from{opacity:0;transform:scale(0.95) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.sepay-modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:#F4EDE6;border:none;color:#55483F;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;z-index:10}
+.sepay-modal-close:hover{background:#E8D8CC;color:#18110D;transform:rotate(90deg)}
+.sepay-modal-header{padding:26px 24px 14px;text-align:center;border-bottom:1px solid #F4E8DF}
+.sepay-badge-bank{display:inline-flex;align-items:center;gap:8px;background:#FDF3EC;color:#B8532F;font-weight:700;font-size:13px;padding:6px 14px;border-radius:999px;margin-bottom:10px;border:1px solid #FBDCCB}
+.sepay-pulse-dot{width:8px;height:8px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 0 rgba(34,197,94,0.7);animation:sepayPulse 1.8s infinite}
+@keyframes sepayPulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.7)}70%{box-shadow:0 0 0 8px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+.sepay-title{font-family:var(--display);font-size:clamp(22px,2.5vw,26px);margin:0 0 6px;color:#1B130E;line-height:1.25}
+.sepay-sub{font-size:13.5px;color:#6C5D53;margin:0 auto;max-width:500px;line-height:1.5}
+.sepay-modal-body{display:grid;grid-template-columns:240px 1fr;gap:20px;padding:20px 24px 26px;align-items:center}
+.sepay-qr-container{display:flex;flex-direction:column;align-items:center;gap:10px}
+.sepay-qr-frame{position:relative;background:#fff;padding:10px;border-radius:18px;border:2px solid #EADBCE;box-shadow:0 10px 24px rgba(184,83,47,0.08);width:220px;height:220px;display:flex;align-items:center;justify-content:center}
+.sepay-qr-frame img{width:100%;height:100%;object-fit:contain;border-radius:8px}
+.sepay-qr-status{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:#059669;background:#ECFDF5;padding:6px 12px;border-radius:999px;border:1px solid #A7F3D0}
+.sepay-spin{animation:sepaySpin 1.4s linear infinite}
+@keyframes sepaySpin{to{transform:rotate(360deg)}}
+.sepay-details{display:flex;flex-direction:column;gap:8px}
+.sepay-detail-row{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:#F9F4EE;border-radius:10px;font-size:13px}
+.sepay-detail-row.highlight-code{background:#FEF3C7;border:1.5px dashed #F59E0B}
+.sepay-detail-label{color:#6E6056;font-size:12.5px}
+.sepay-detail-val{display:flex;align-items:center;gap:8px}
+.sepay-amount{color:#DC2626;font-size:16px;font-weight:800}
+.sepay-code{font-family:monospace;font-size:15px;font-weight:800;color:#B45309;background:#FDE68A;padding:2px 8px;border-radius:6px;letter-spacing:1px}
+.btn-copy{background:#EADBCE;border:none;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:700;cursor:pointer;color:#3D3128;transition:all .2s}
+.btn-copy:hover{background:#D3BEAD;color:#000}
+.btn-copy.copied{background:#10B981;color:#fff}
+.sepay-tip-box{font-size:12px;line-height:1.45;color:#92400E;background:#FFFBEB;border:1px solid #FCD34D;border-radius:10px;padding:9px 12px;margin-top:4px}
+.sepay-success-box{padding:44px 28px;text-align:center}
+.sepay-success-icon{width:68px;height:68px;border-radius:50%;background:#10B981;color:#fff;font-size:36px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 12px 28px rgba(16,185,129,0.35)}
+.sepay-success-title{font-family:var(--display);font-size:26px;color:#12100E;margin:0 0 10px}
+.sepay-success-sub{font-size:14.5px;color:#4B3F36;margin:0 0 18px}
+.sepay-success-info{background:#F7F1EB;border-radius:14px;padding:14px 18px;margin-bottom:22px;font-size:13.5px;line-height:1.6}
+.sepay-actions{display:flex;justify-content:center;gap:12px}
+.sepay-btn-primary{display:inline-flex;align-items:center;gap:8px;background:#B8532F;color:#fff!important;text-decoration:none;font-weight:800;font-size:15px;padding:12px 26px;border-radius:999px;box-shadow:0 8px 20px rgba(184,83,47,0.3);transition:transform .2s,background .2s}
+.sepay-btn-primary:hover{background:#9E4222;transform:translateY(-2px)}
+@media (max-width:640px){
+  .sepay-modal-body{grid-template-columns:1fr;gap:18px;padding:16px 18px 22px}
+  .sepay-qr-frame{width:200px;height:200px}
+  .sepay-modal-header{padding:22px 18px 12px}
+}
+
 </style>
 
 </head>
@@ -1298,6 +1343,90 @@ Yêu cầu: tiêu đề hấp dẫn, các mục H2/H3 rõ ràng, trả lời đ�
 
 <div class="lightbox" id="lightbox" hidden role="dialog" aria-label="Ảnh bằng chứng thu nhập"><img alt="" id="lightbox-img"></div>
 
+<!-- ===== MODAL THANH TOÁN SEPAY VIETQR TỰ ĐỘNG ===== -->
+<div class="sepay-modal-overlay" id="sepay-modal" hidden role="dialog" aria-modal="true" aria-labelledby="sepay-modal-title">
+  <div class="sepay-modal-card">
+    <button class="sepay-modal-close" id="sepay-modal-close-btn" type="button" aria-label="Đóng popup">&times;</button>
+    
+    <!-- TRẠNG THÁI 1: ĐANG CHỜ THANH TOÁN QR -->
+    <div id="sepay-modal-pending">
+      <div class="sepay-modal-header">
+        <div class="sepay-badge-bank">
+          <span class="sepay-pulse-dot"></span>
+          <span>Thanh toán tự động qua VietQR · MBBank</span>
+        </div>
+        <h3 id="sepay-modal-title" class="sepay-title">Quét mã QR để hoàn tất đơn hàng</h3>
+        <p class="sepay-sub">Mở App ngân hàng bất kỳ (MBBank, Vietcombank, Techcombank, BIDV...) quét mã để chuyển khoản. Hệ thống tự động kích hoạt sau <strong>3-5 giây</strong>.</p>
+      </div>
+
+      <div class="sepay-modal-body">
+        <div class="sepay-qr-container">
+          <div class="sepay-qr-frame">
+            <img id="sepay-qr-img" src="" alt="Mã VietQR thanh toán" width="220" height="220" />
+            <div class="sepay-scan-line"></div>
+          </div>
+          <div class="sepay-qr-status">
+            <svg class="sepay-spin" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>
+            <span>Đang chờ nhận tiền...</span>
+          </div>
+        </div>
+
+        <div class="sepay-details">
+          <div class="sepay-detail-row">
+            <span class="sepay-detail-label">Ngân hàng:</span>
+            <span class="sepay-detail-val"><b>MBBank</b> (Quân Đội)</span>
+          </div>
+          <div class="sepay-detail-row">
+            <span class="sepay-detail-label">Chủ tài khoản:</span>
+            <span class="sepay-detail-val"><b>DAO XUAN QUANG</b></span>
+          </div>
+          <div class="sepay-detail-row">
+            <span class="sepay-detail-label">Số TK nhận:</span>
+            <span class="sepay-detail-val">
+              <code id="sepay-val-acc">96247QUANG</code>
+              <button type="button" class="btn-copy" id="btn-copy-acc" data-copy="96247QUANG" title="Sao chép số tài khoản">📋 Copy</button>
+            </span>
+          </div>
+          <div class="sepay-detail-row">
+            <span class="sepay-detail-label">Số tiền:</span>
+            <span class="sepay-detail-val">
+              <b class="sepay-amount" id="sepay-val-amount">299.000đ</b>
+              <button type="button" class="btn-copy" id="btn-copy-amount" data-copy="299000" title="Sao chép số tiền">📋 Copy</button>
+            </span>
+          </div>
+          <div class="sepay-detail-row highlight-code">
+            <span class="sepay-detail-label">Nội dung CK:</span>
+            <span class="sepay-detail-val">
+              <code class="sepay-code" id="sepay-val-code">---</code>
+              <button type="button" class="btn-copy" id="btn-copy-code" data-copy="" title="Sao chép mã đơn">📋 Copy</button>
+            </span>
+          </div>
+          
+          <div class="sepay-tip-box">
+            ⚠️ <b>Lưu ý quan trọng:</b> Giữ nguyên mã nội dung chuyển khoản để hệ thống tự động nhận diện và gửi email Ebook ngay lập tức!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRẠNG THÁI 2: ĐÃ THANH TOÁN THÀNH CÔNG -->
+    <div id="sepay-modal-success" hidden class="sepay-success-box">
+      <div class="sepay-success-icon">&#10003;</div>
+      <h3 class="sepay-success-title">🎉 Thanh toán thành công!</h3>
+      <p class="sepay-success-sub">Hệ thống đã nhận được tiền cho đơn hàng <strong id="sepay-success-order-id"></strong>.</p>
+      <div class="sepay-success-info">
+        <p>Ebook và hướng dẫn đã được gửi tự động tới email: <b id="sepay-success-email"></b></p>
+        <p style="font-size:12.5px;color:#78695E;margin-top:6px;">Vui lòng kiểm tra hộp thư đến (hoặc hòm thư Quảng cáo/Spam nếu chưa thấy sau 1 phút).</p>
+      </div>
+      <div class="sepay-actions">
+        <a href="/doc-sach/tao-blog-co-may-ban-hang-tu-dong" class="sepay-btn-primary">
+          📖 Mở Đọc Ebook Ngay Bây Giờ
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===== THANH DÍNH ĐÁY ===== -->
 
 <div class="sticky hide" id="sticky">
@@ -1416,43 +1545,137 @@ Yêu cầu: tiêu đề hấp dẫn, các mục H2/H3 rõ ràng, trả lời đ�
 
 (function(){
 
-  var FORM_ENDPOINT = '/api/send-ebook';
-
-  var PAYMENT_URL  = '';
-
   var form = document.getElementById('order-form');
+  var submitBtn = form.querySelector('button[type="submit"]');
+  var modal = document.getElementById('sepay-modal');
+  var modalCloseBtn = document.getElementById('sepay-modal-close-btn');
+  var modalPending = document.getElementById('sepay-modal-pending');
+  var modalSuccess = document.getElementById('sepay-modal-success');
+  var qrImg = document.getElementById('sepay-qr-img');
+  var valCode = document.getElementById('sepay-val-code');
+  var btnCopyCode = document.getElementById('btn-copy-code');
+  var successOrderId = document.getElementById('sepay-success-order-id');
+  var successEmail = document.getElementById('sepay-success-email');
+  var formOk = document.getElementById('form-ok');
 
-  function setErr(id,msg){
+  var pollTimer = null;
 
+  function setErr(id, msg){
     document.getElementById('e-'+id).textContent = msg;
-
     document.getElementById('f-'+id).setAttribute('aria-invalid', msg ? 'true':'false');
-
     return !msg;
-
   }
 
-  form.addEventListener('submit', function(ev){
+  // Xử lý sao chép
+  document.querySelectorAll('.btn-copy').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var text = btn.getAttribute('data-copy') || '';
+      if(!text) return;
+      navigator.clipboard.writeText(text).then(function(){
+        var origText = btn.textContent;
+        btn.textContent = 'Đã chép! ✓';
+        btn.classList.add('copied');
+        setTimeout(function(){
+          btn.textContent = origText;
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(function(){
+        prompt('Sao chép thông tin:', text);
+      });
+    });
+  });
 
+  // Đóng Modal
+  function closeModal(){
+    if(modal) modal.hidden = true;
+  }
+
+  if(modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+  if(modal) {
+    modal.addEventListener('click', function(e){
+      if(e.target === modal) closeModal();
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal && !modal.hidden) closeModal();
+  });
+
+  // Xử lý gửi Form
+  form.addEventListener('submit', function(ev){
     ev.preventDefault();
 
-    var name=form.name.value.trim(), phone=form.phone.value.replace(/\s+/g,''), email=form.email.value.trim(), ok=true;
+    var name = form.name.value.trim();
+    var phone = form.phone.value.replace(/\s+/g,'');
+    var email = form.email.value.trim();
+    var ok = true;
 
-    ok = setErr('name', name.length<2 ? 'Vui lòng nhập họ và tên.' : '') && ok;
-
+    ok = setErr('name', name.length < 2 ? 'Vui lòng nhập họ và tên.' : '') && ok;
     ok = setErr('phone', /^(\+84|0)\d{9,10}$/.test(phone) ? '' : 'Số điện thoại chưa đúng định dạng.') && ok;
-
     ok = setErr('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Email chưa đúng định dạng.') && ok;
 
     if(!ok) return;
 
-    function done(){ document.getElementById('form-ok').hidden=false; form.reset(); if(PAYMENT_URL) location.href=PAYMENT_URL; }
+    var origBtnText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Đang tạo mã VietQR...';
 
-    if(FORM_ENDPOINT){
+    // Gọi API tạo đơn hàng SePay
+    fetch('/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, phone: phone, email: email })
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnText;
 
-      fetch(FORM_ENDPOINT,{method:'POST',mode:'no-cors',body:new URLSearchParams({name:name,phone:phone,email:email,time:new Date().toISOString()})}).then(done).catch(done);
+      if(!data.success){
+        alert(data.error || 'Có lỗi xảy ra khi tạo mã thanh toán. Vui lòng thử lại!');
+        return;
+      }
 
-    } else done();
+      // Đưa dữ liệu vào Modal
+      if(qrImg) qrImg.src = data.qrUrl;
+      if(valCode) valCode.textContent = data.orderId;
+      if(btnCopyCode) btnCopyCode.setAttribute('data-copy', data.orderId);
+
+      // Hiển thị phần Chờ thanh toán
+      if(modalPending) modalPending.hidden = false;
+      if(modalSuccess) modalSuccess.hidden = true;
+      if(modal) modal.hidden = false;
+
+      // Hủy poll cũ nếu có
+      if(pollTimer) clearInterval(pollTimer);
+
+      // Bắt đầu kiểm tra trạng thái thanh toán tự động (mỗi 2 giây)
+      pollTimer = setInterval(function(){
+        fetch('/api/check-order?id=' + encodeURIComponent(data.orderId) + '&t=' + Date.now())
+          .then(function(r){ return r.json(); })
+          .then(function(st){
+            if(st && st.paid){
+              clearInterval(pollTimer);
+              pollTimer = null;
+
+              // Chuyển sang màn hình thành công
+              if(modalPending) modalPending.hidden = true;
+              if(modalSuccess) modalSuccess.hidden = false;
+              if(successOrderId) successOrderId.textContent = data.orderId;
+              if(successEmail) successEmail.textContent = email;
+              if(formOk) formOk.hidden = false;
+              form.reset();
+            }
+          })
+          .catch(function(){});
+      }, 2000);
+
+    })
+    .catch(function(err){
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnText;
+      alert('Không thể kết nối đến máy chủ thanh toán. Vui lòng kiểm tra kết nối mạng!');
+    });
 
   });
 
