@@ -1493,9 +1493,10 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         const revenueTotal = document.getElementById('stat-revenue-total');
         const ordersNavBadge = document.getElementById('orders-nav-badge');
 
+        const validLeads = currentLeads.filter(l => l && (l.position || l.problem || (!l.product && (l.contact || l.phone))));
         if (postsCount) postsCount.textContent = String(currentPosts.length);
         if (subsCount) subsCount.textContent = String(currentSubscribers.length);
-        if (leadsCount) leadsCount.textContent = String(currentLeads.length);
+        if (leadsCount) leadsCount.textContent = String(validLeads.length);
         if (prodsCount) prodsCount.textContent = String(currentProducts.length);
         if (ordersCount) ordersCount.textContent = String(currentOrders.length);
         if (ordersNavBadge) ordersNavBadge.textContent = String(currentOrders.length);
@@ -1523,17 +1524,29 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         currentSubscribers.forEach(sub => {
           allActivities.push({
             type: 'sub',
-            name: sub.name,
+            name: sub.name || 'Độc giả',
             email: sub.email,
             date: new Date(sub.date),
             desc: `đăng ký bản tin từ trang chủ.`
           });
         });
 
-        currentLeads.forEach(lead => {
+        currentOrders.forEach(ord => {
+          const orderDate = ord.timestamp ? new Date(ord.timestamp) : new Date(ord.date);
+          allActivities.push({
+            type: 'order',
+            name: ord.customerName || ord.name || 'Khách hàng',
+            email: ord.email,
+            date: isNaN(orderDate.getTime()) ? new Date() : orderDate,
+            desc: `đặt mua "${ord.product || 'Ebook'}" (${ord.amount || '299.000đ'}).`
+          });
+        });
+
+        const validLeads = currentLeads.filter(l => l && (l.position || l.problem || (!l.product && (l.contact || l.phone))));
+        validLeads.forEach(lead => {
           allActivities.push({
             type: 'lead',
-            name: lead.name,
+            name: lead.name || 'Học viên',
             email: lead.email,
             date: new Date(lead.date),
             desc: `đăng ký khảo sát nhận chuyển giao hệ thống 1-1.`
@@ -1553,12 +1566,25 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         }
 
         list.innerHTML = allActivities.slice(0, 10).map(act => {
-          const icon = act.type === 'sub' ? '📨' : '🤝';
-          const badgeClass = act.type === 'sub' ? 'text-blue-400 bg-blue-500/10' : 'text-indigo-400 bg-indigo-500/10';
-          const timeStr = act.date.toLocaleDateString('vi-VN', {
-            hour: '2-digit',
-            minute: '2-digit'
-          });
+          let icon = '📨';
+          let badgeClass = 'text-blue-400 bg-blue-500/10';
+          if (act.type === 'order') {
+            icon = '💳';
+            badgeClass = 'text-amber-400 bg-amber-500/10';
+          } else if (act.type === 'lead') {
+            icon = '🤝';
+            badgeClass = 'text-emerald-400 bg-emerald-500/10';
+          }
+
+          let timeStr = '';
+          try {
+            timeStr = act.date.toLocaleDateString('vi-VN', {
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+          } catch (_) {
+            timeStr = '';
+          }
 
           return `
             <div class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-800/20 transition-all border border-transparent hover:border-slate-800/40">
@@ -1724,55 +1750,73 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         });
       }
 
-      // LEADS RENDERING
+      // LEADS RENDERING (KHẢO SÁT CHUYỂN GIAO 1-1)
       function renderLeads() {
         const tbody = document.getElementById('leads-table-body');
         if (!tbody) return;
 
-        if (currentLeads.length === 0) {
+        // Chỉ hiển thị các bản ghi khảo sát thực tế (loại bỏ đơn đặt mua Ebook nếu có lẫn)
+        const validLeads = currentLeads.filter(l => l && (l.position || l.problem || (!l.product && (l.contact || l.phone))));
+
+        if (validLeads.length === 0) {
           tbody.innerHTML = `
             <tr>
-              <td colspan="6" class="p-8 text-center text-slate-500">Chưa có bài đăng ký chuyển giao nào.</td>
+              <td colspan="6" class="p-8 text-center text-slate-500">Chưa có bài đăng ký khảo sát chuyển giao nào.</td>
             </tr>
           `;
           return;
         }
 
-        tbody.innerHTML = currentLeads.map(lead => {
-          const timeStr = new Date(lead.date).toLocaleDateString('vi-VN', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit'
-          });
+        tbody.innerHTML = validLeads.map((lead, idx) => {
+          let timeStr = 'Vừa xong';
+          try {
+            timeStr = new Date(lead.date).toLocaleDateString('vi-VN', {
+              year: 'numeric',
+              month: '2-digit',
+              day: '2-digit',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+          } catch (_) {
+            timeStr = lead.date || '-';
+          }
+
+          const contactVal = lead.contact || lead.phone || 'Chưa cung cấp';
+          const positionVal = lead.position || 'Học viên tiềm năng';
+          const problemVal = lead.problem || 'Chưa cung cấp bài toán cụ thể';
+          const leadId = lead.id || `lead-${idx}`;
 
           return `
             <tr class="hover:bg-slate-900/20 transition-all align-top text-xs md:text-sm">
               <td class="p-4 font-bold text-slate-200">
-                <span class="block">${lead.name}</span>
+                <span class="block">${lead.name || 'Khách hàng'}</span>
               </td>
               <td class="p-4 space-y-1">
-                <span class="block text-slate-300 font-mono">📱 SĐT: ${lead.contact}</span>
-                <span class="block text-slate-400 font-mono">📧 Email: ${lead.email}</span>
+                <span class="block text-slate-300 font-mono">📱 SĐT: ${contactVal}</span>
+                <span class="block text-slate-400 font-mono">📧 Email: ${lead.email || 'Chưa có'}</span>
               </td>
               <td class="p-4 space-y-1">
-                <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 font-bold block w-fit">${lead.position}</span>
-                <span class="text-[10px] text-brand-green font-bold block">${lead.commitment === 'Yes' ? '✓ Cam kết 2h/ngày' : '✗ Không cam kết'}</span>
+                <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 font-bold block w-fit">${positionVal}</span>
+                <span class="text-[10px] text-brand-green font-bold block">${lead.commitment === 'Yes' || lead.commitment === true ? '✓ Cam kết 2h/ngày' : '✗ Không cam kết'}</span>
               </td>
-              <td class="p-4 max-w-xs whitespace-pre-wrap leading-relaxed text-xs text-slate-300">${lead.problem}</td>
+              <td class="p-4 max-w-xs whitespace-pre-wrap leading-relaxed text-xs text-slate-300">${problemVal}</td>
               <td class="p-4 font-mono text-[10px] text-slate-400">${timeStr}</td>
               <td class="p-4 text-right">
-                <button onclick="window.deleteLeadItem('${lead.email}', '${lead.date}')" data-email="${lead.email}" data-date="${lead.date}" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-[11px] font-bold transition-all delete-lead-btn cursor-pointer">Xóa</button>
+                <button data-id="${leadId}" data-email="${lead.email || ''}" data-date="${lead.date || ''}" class="px-3 py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 text-[11px] font-bold transition-all delete-lead-btn cursor-pointer">Xóa</button>
               </td>
             </tr>
           `;
         }).join('');
 
         // Global Delete Lead Handler
-        (window as any).deleteLeadItem = async (email: string, date: string) => {
-          if (!email) return;
-          currentLeads = currentLeads.filter(l => !(l.email === email && l.date === date));
+        (window as any).deleteLeadItem = async (email: string, date: string, id?: string) => {
+          if (!email && !id) return;
+          currentLeads = currentLeads.filter(l => {
+            if (id && l.id === id) return false;
+            if (email && date) return !(l.email === email && l.date === date);
+            if (email) return l.email !== email;
+            return true;
+          });
           renderLeads();
           updateOverviewStats();
           showToast('Đã xóa yêu cầu chuyển giao học viên!');
@@ -1781,7 +1825,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             await fetch('/api/leads', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ action: 'delete', email, date })
+              body: JSON.stringify({ action: 'delete', email, date, id })
             });
           } catch (err) {
             console.error('Delete lead fetch error:', err);
@@ -1792,9 +1836,10 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         document.querySelectorAll('.delete-lead-btn').forEach(btn => {
           btn.addEventListener('click', async (e) => {
             e.preventDefault();
+            const id = btn.getAttribute('data-id') || '';
             const email = btn.getAttribute('data-email') || '';
             const date = btn.getAttribute('data-date') || '';
-            (window as any).deleteLeadItem(email, date);
+            (window as any).deleteLeadItem(email, date, id);
           });
         });
       };

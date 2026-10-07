@@ -7,8 +7,6 @@ const FALLBACK_KEY = Buffer.from('cmVfZk1MeEFyaXJfQUdZdFJqUjFqNm1NR0Vvb2c2UVhZam
 const RESEND_API_KEY = process.env.RESEND_API_KEY || FALLBACK_KEY;
 const resend = new Resend(RESEND_API_KEY);
 
-const leadsFilePath = path.resolve('./src/data/leads.json');
-
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request }) => {
@@ -77,29 +75,6 @@ export const POST: APIRoute = async ({ request }) => {
     } catch (orderErr) {
       console.error('Lỗi lưu orders.json:', orderErr);
     }
-
-    try {
-      let leads = [];
-      if (fs.existsSync(leadsFilePath)) {
-        const raw = fs.readFileSync(leadsFilePath, 'utf-8');
-        leads = JSON.parse(raw || '[]');
-      }
-      const newLead = {
-        id: maDon,
-        name: customerName,
-        email,
-        phone,
-        product: 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
-        amount: soTien,
-        date: now.toLocaleString('vi-VN'),
-        timestamp: Date.now()
-      };
-      leads.unshift(newLead);
-      fs.writeFileSync(leadsFilePath, JSON.stringify(leads, null, 2), 'utf-8');
-    } catch (saveErr) {
-      console.error('Lỗi lưu lead:', saveErr);
-    }
-
     // 3. Mẫu Email theo chuẩn của tác giả Đào Xuân Quảng
     const emailSubject = '🎉 Ebook của bạn đây: Tạo Blog – cỗ máy bán hàng tự động bằng AI';
     
