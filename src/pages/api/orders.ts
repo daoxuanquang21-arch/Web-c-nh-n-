@@ -31,7 +31,7 @@ function saveOrders(orders: any[]): void {
 
 export const GET: APIRoute = async () => {
   try {
-    const orders = getOrders();
+    let isDirty = false;
     orders.forEach((o: any) => {
       if (o.timestamp) {
         o.date = new Date(o.timestamp).toLocaleString('vi-VN', {
@@ -39,7 +39,23 @@ export const GET: APIRoute = async () => {
           hour12: false
         });
       }
+      // Dọn dẹp ghi chú tạm thời "Đang chờ chuyển khoản..." nếu đơn đã được xác nhận thanh toán
+      if ((o.status === 'Đã thanh toán' || o.status === 'Đã hoàn tất') && o.notes && o.notes.includes('Đang chờ chuyển khoản')) {
+        const cleaned = o.notes
+          .replace(/Đang chờ chuyển khoản[^\n|]*\s*\|\s*/gi, '')
+          .replace(/Đang chờ chuyển khoản[^\n|]*/gi, '')
+          .trim();
+        if (cleaned !== o.notes) {
+          o.notes = cleaned;
+          isDirty = true;
+        }
+      }
     });
+
+    if (isDirty) {
+      saveOrders(orders);
+    }
+
     // Sort newest first
     orders.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
@@ -159,6 +175,15 @@ export const POST: APIRoute = async ({ request }) => {
         return new Response(JSON.stringify({ success: false, error: 'Không tìm thấy đơn hàng cần sửa.' }), { status: 404 });
       }
 
+      const newStatus = body.status !== undefined ? body.status.trim() : orders[idx].status;
+      let newNotes = body.notes !== undefined ? body.notes.trim() : orders[idx].notes;
+      if ((newStatus === 'Đã thanh toán' || newStatus === 'Đã hoàn tất') && newNotes && newNotes.includes('Đang chờ chuyển khoản')) {
+        newNotes = newNotes
+          .replace(/Đang chờ chuyển khoản[^\n|]*\s*\|\s*/gi, '')
+          .replace(/Đang chờ chuyển khoản[^\n|]*/gi, '')
+          .trim();
+      }
+
       orders[idx] = {
         ...orders[idx],
         customerName: body.customerName !== undefined ? body.customerName.trim() : orders[idx].customerName,
@@ -166,9 +191,9 @@ export const POST: APIRoute = async ({ request }) => {
         phone: body.phone !== undefined ? body.phone.trim() : orders[idx].phone,
         product: body.product !== undefined ? body.product.trim() : orders[idx].product,
         amount: body.amount !== undefined ? body.amount.trim() : orders[idx].amount,
-        status: body.status !== undefined ? body.status.trim() : orders[idx].status,
+        status: newStatus,
         paymentMethod: body.paymentMethod !== undefined ? body.paymentMethod.trim() : orders[idx].paymentMethod,
-        notes: body.notes !== undefined ? body.notes.trim() : orders[idx].notes
+        notes: newNotes
       };
 
       saveOrders(orders);

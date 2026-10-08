@@ -3175,6 +3175,14 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           const cleanPhone = (ord.phone || '').replace(/[^0-9]/g, '');
           const initial = (ord.customerName || 'K').trim().charAt(0).toUpperCase();
 
+          let displayNotes = (ord.notes || '').trim();
+          if (ord.status === 'Đã thanh toán' || ord.status === 'Đã hoàn tất') {
+            displayNotes = displayNotes
+              .replace(/Đang chờ chuyển khoản[^\n|]*\s*\|\s*/gi, '')
+              .replace(/Đang chờ chuyển khoản[^\n|]*/gi, '')
+              .trim();
+          }
+
           return `
             <tr class="hover:bg-slate-900/40 transition-all align-top">
               <!-- Cột 1: Mã đơn & Ngày -->
@@ -3228,7 +3236,7 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
                 <span class="px-2 py-0.5 rounded bg-slate-800/80 text-slate-300 font-medium block w-fit mb-1">
                   ${ord.paymentMethod || 'Chuyển khoản QR'}
                 </span>
-                ${ord.notes ? `<p class="text-slate-400 text-[11px] italic line-clamp-2" title="${ord.notes}">${ord.notes}</p>` : '<span class="text-slate-600 text-[11px]">—</span>'}
+                ${displayNotes ? `<p class="text-slate-400 text-[11px] italic line-clamp-2" title="${displayNotes}">${displayNotes}</p>` : '<span class="text-slate-600 text-[11px]">—</span>'}
               </td>
 
               <!-- Cột 7: Thao tác -->
@@ -3358,7 +3366,14 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           if (ordAmountInput) ordAmountInput.value = ord.amount || '299.000đ';
           if (ordStatusSelect) ordStatusSelect.value = ord.status || 'Đã thanh toán';
           if (ordMethodSelect) ordMethodSelect.value = ord.paymentMethod || 'Chuyển khoản QR';
-          if (ordNotesInput) ordNotesInput.value = ord.notes || '';
+          let currentNotes = ord.notes || '';
+          if (ord.status === 'Đã thanh toán' || ord.status === 'Đã hoàn tất') {
+            currentNotes = currentNotes
+              .replace(/Đang chờ chuyển khoản[^\n|]*\s*\|\s*/gi, '')
+              .replace(/Đang chờ chuyển khoản[^\n|]*/gi, '')
+              .trim();
+          }
+          if (ordNotesInput) ordNotesInput.value = currentNotes;
         } else {
           if (orderForm) orderForm.reset();
           isOrderEditMode = false;

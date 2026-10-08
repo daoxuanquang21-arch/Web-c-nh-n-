@@ -133,11 +133,16 @@ export const POST: APIRoute = async ({ request }) => {
       // Cập nhật trạng thái đơn hàng thành "Đã thanh toán"
       const now = new Date();
       targetOrder.status = 'Đã thanh toán';
-      targetOrder.paymentMethod = `Chuyển khoản SePay (${gateway || 'BIDV'})`;
+      targetOrder.paymentMethod = `Chuyển khoản SePay (${gateway || 'MBBank'})`;
       targetOrder.transactionId = referenceCode || String(transactionId || '');
       targetOrder.paidAt = now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false });
-      targetOrder.notes = (targetOrder.notes ? targetOrder.notes + ' | ' : '') + 
-        `SePay tự động kích hoạt GD #${transactionId || ''} (${Number(transferAmount || 0).toLocaleString('vi-VN')}đ) lúc ${now.toLocaleTimeString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false })}`;
+      
+      const sepayNote = `SePay tự động kích hoạt GD #${transactionId || ''} (${Number(transferAmount || 0).toLocaleString('vi-VN')}đ) lúc ${now.toLocaleTimeString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false })}`;
+      const cleanExistingNotes = (targetOrder.notes || '')
+        .replace(/Đang chờ chuyển khoản[^\n|]*/gi, '')
+        .replace(/^\s*\|\s*|\s*\|\s*$/g, '')
+        .trim();
+      targetOrder.notes = cleanExistingNotes ? `${cleanExistingNotes} | ${sepayNote}` : sepayNote;
 
       saveOrders(orders);
 
