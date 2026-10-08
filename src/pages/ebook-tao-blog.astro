@@ -1,3 +1,6 @@
+---
+import MetaPixel from '../components/MetaPixel.astro';
+---
 <!doctype html>
 
 <html lang="vi">
@@ -751,6 +754,17 @@ footer{background:var(--dark);color:#CFC4BA;text-align:center;padding:36px 20px 
 
 </style>
 
+  <MetaPixel />
+  <script is:inline>
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq('track', 'ViewContent', {
+        content_name: 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
+        content_type: 'product',
+        value: 299000,
+        currency: 'VND'
+      });
+    }
+  </script>
 </head>
 
 <body>
@@ -1601,6 +1615,24 @@ Yêu cầu: tiêu đề hấp dẫn, các mục H2/H3 rõ ràng, trả lời đ�
     if(e.key === 'Escape' && modal && !modal.hidden) closeModal();
   });
 
+  function trackInitiateCheckout(){
+    if(typeof window !== 'undefined' && typeof window.fbq === 'function'){
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
+        content_type: 'product',
+        value: 299000,
+        currency: 'VND',
+        num_items: 1
+      });
+    }
+  }
+
+  document.querySelectorAll('a[href="#dat-mua"]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      trackInitiateCheckout();
+    });
+  });
+
   // Xử lý gửi Form
   form.addEventListener('submit', function(ev){
     ev.preventDefault();
@@ -1615,6 +1647,9 @@ Yêu cầu: tiêu đề hấp dẫn, các mục H2/H3 rõ ràng, trả lời đ�
     ok = setErr('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Email chưa đúng định dạng.') && ok;
 
     if(!ok) return;
+
+    // Kích hoạt sự kiện InitiateCheckout khi mở bước thanh toán
+    trackInitiateCheckout();
 
     var origBtnText = submitBtn.innerHTML;
     submitBtn.disabled = true;
@@ -1657,6 +1692,19 @@ Yêu cầu: tiêu đề hấp dẫn, các mục H2/H3 rõ ràng, trả lời đ�
             if(st && st.paid){
               clearInterval(pollTimer);
               pollTimer = null;
+
+              // Ghi nhận sự kiện Purchase qua Meta Pixel với eventID = orderId để tránh trùng với Conversions API
+              if(typeof window !== 'undefined' && typeof window.fbq === 'function'){
+                window.fbq('track', 'Purchase', {
+                  content_name: 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
+                  content_type: 'product',
+                  value: 299000,
+                  currency: 'VND',
+                  num_items: 1
+                }, {
+                  eventID: data.orderId
+                });
+              }
 
               // Chuyển sang màn hình thành công
               if(modalPending) modalPending.hidden = true;

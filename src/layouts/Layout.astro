@@ -1,6 +1,7 @@
 ---
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import MetaPixel from '../components/MetaPixel.astro';
 import '../styles/global.css';
 import fs from 'fs';
 import path from 'path';
@@ -65,6 +66,9 @@ for (const cat of categories) {
 
       gtag('config', 'G-LNV2YN50E0');
     </script>
+
+    <!-- Meta Pixel -->
+    <MetaPixel />
 
     <!-- Robots index control -->
     {noindex && <meta name="robots" content="noindex, nofollow" />}

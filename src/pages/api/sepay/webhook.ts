@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { renderOrderEmailHtml, getOrderEmailSubject } from '../../../utils/orderEmailTemplate';
 import { scheduleDripCampaignForOrder } from '../../../utils/dripEmails';
+import { sendMetaCapiPurchase } from '../../../utils/metaCapi';
 
 export const prerender = false;
 
@@ -146,7 +147,30 @@ export const POST: APIRoute = async ({ request }) => {
 
       saveOrders(orders);
 
-      // 5. Tự động gửi Email giao Ebook cho khách hàng
+      // 5. Gửi sự kiện Purchase từ máy chủ qua Meta Conversions API (CAPI)
+      try {
+        const numericAmount = Number(
+          String(targetOrder.amount || transferAmount || 299000).replace(/[^\d]/g, '')
+        ) || 299000;
+
+        const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || request.headers.get('x-real-ip') || undefined;
+        const userAgent = request.headers.get('user-agent') || undefined;
+
+        await sendMetaCapiPurchase({
+          orderId: targetOrder.id,
+          amount: numericAmount,
+          currency: 'VND',
+          email: targetOrder.email,
+          phone: targetOrder.phone,
+          clientIp,
+          clientUserAgent: userAgent,
+          sourceUrl: 'https://daoxuanquang.com.vn/ebook-tao-blog'
+        });
+      } catch (capiErr) {
+        console.warn('[SePay Webhook] Cảnh báo gửi Meta CAPI Purchase:', capiErr);
+      }
+
+      // 6. Tự động gửi Email giao Ebook cho khách hàng
       const customerName = targetOrder.customerName || 'bạn';
       const email = targetOrder.email;
       const readerUrl = 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
