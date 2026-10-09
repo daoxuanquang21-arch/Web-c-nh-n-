@@ -7,14 +7,24 @@ const ordersFilePath = path.resolve('./src/data/orders.json');
 // Helper kiểm tra xem bản ghi có phải là khảo sát hợp lệ hay không (không phải đơn hàng đặt mua)
 function isRealLead(item: any): boolean {
   if (!item || typeof item !== 'object') return false;
-  // Nếu có trường product và không có bài toán/vị thế khảo sát thì đó là đơn hàng bị lưu nhầm
-  if (item.product && !item.position && !item.problem) {
+  // Bỏ qua tất cả đơn hàng mua sản phẩm/ebook (mã EB, có product, hoặc nguồn từ landing page mua hàng)
+  if (item.id && String(item.id).startsWith('EB')) return false;
+  if (item.product) return false;
+  if (item.source && (
+    String(item.source).includes('Landing') || 
+    String(item.source).includes('landing') || 
+    String(item.source).includes('Ebook') || 
+    String(item.source).includes('9 Nguồn')
+  )) return false;
+
+  // Một bản ghi khảo sát chuyển giao 1-1 hợp lệ phải có bài toán (problem) hoặc vị thế (position) hoặc cam kết (commitment)
+  if (!item.problem && !item.position && !item.commitment && !item.solution) {
     return false;
   }
   return true;
 }
 
-// Hàm đọc và làm sạch dữ liệu leads, di chuyển đơn hàng bị lẫn sang orders.json nếu cần
+// Hàm đọc và làm sạch dữ liệu leads, loại bỏ hoàn toàn các đơn hàng bị lưu nhầm vào mục khảo sát
 function getCleanLeads(): any[] {
   let leads: any[] = [];
   if (fs.existsSync(leadsFilePath)) {
@@ -26,44 +36,10 @@ function getCleanLeads(): any[] {
     }
   }
 
-  const validLeads: any[] = [];
-  let isDirty = false;
+  const validLeads = leads.filter(isRealLead);
 
-  for (const item of leads) {
-    if (isRealLead(item)) {
-      validLeads.push(item);
-    } else {
-      isDirty = true;
-      // Nếu là đơn hàng bị ghi nhầm vào leads.json, đảm bảo đã có trong orders.json
-      if (item && item.product && fs.existsSync(ordersFilePath)) {
-        try {
-          const rawOrders = fs.readFileSync(ordersFilePath, 'utf-8');
-          const orders = JSON.parse(rawOrders || '[]');
-          const exists = orders.some((o: any) => o.id === item.id || (o.email === item.email && o.timestamp === item.timestamp));
-          if (!exists) {
-            orders.unshift({
-              id: item.id || ('EB' + Date.now()),
-              customerName: item.name || 'Khách hàng',
-              email: item.email,
-              phone: item.phone || '',
-              product: item.product,
-              productId: 'ebook-tao-blog',
-              amount: item.amount || '299.000đ',
-              status: 'Đã thanh toán',
-              paymentMethod: 'Chuyển khoản QR',
-              date: item.date || new Date().toLocaleString('vi-VN'),
-              timestamp: item.timestamp || Date.now(),
-              notes: 'Được tự động chuyển từ mục lưu nhầm'
-            });
-            fs.writeFileSync(ordersFilePath, JSON.stringify(orders, null, 2), 'utf-8');
-          }
-        } catch (_) {}
-      }
-    }
-  }
-
-  // Tự động ghi đè file leads.json sạch nếu phát hiện dữ liệu đơn hàng bị lẫn
-  if (isDirty) {
+  // Tự động ghi đè file leads.json sạch sẽ nếu phát hiện đơn hàng bị lẫn
+  if (validLeads.length !== leads.length) {
     try {
       fs.writeFileSync(leadsFilePath, JSON.stringify(validLeads, null, 2), 'utf-8');
     } catch (_) {}

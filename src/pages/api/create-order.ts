@@ -5,7 +5,6 @@ import path from 'path';
 export const prerender = false;
 
 const ordersFilePath = path.resolve('./src/data/orders.json');
-const leadsFilePath = path.resolve('./src/data/leads.json');
 
 function getOrders(): any[] {
   try {
@@ -24,19 +23,6 @@ function saveOrders(orders: any[]): void {
     fs.writeFileSync(ordersFilePath, JSON.stringify(orders, null, 2), 'utf-8');
   } catch (e) {
     console.error('Error saving orders.json:', e);
-  }
-}
-
-function saveLead(lead: any): void {
-  try {
-    let leads: any[] = [];
-    if (fs.existsSync(leadsFilePath)) {
-      leads = JSON.parse(fs.readFileSync(leadsFilePath, 'utf-8') || '[]');
-    }
-    leads.unshift(lead);
-    fs.writeFileSync(leadsFilePath, JSON.stringify(leads, null, 2), 'utf-8');
-  } catch (e) {
-    console.warn('Lỗi lưu leads.json:', e);
   }
 }
 
@@ -100,16 +86,6 @@ export const POST: APIRoute = async ({ request }) => {
     const orders = getOrders();
     orders.unshift(newOrder);
     saveOrders(orders);
-
-    // Lưu lead vào danh sách khảo sát/tiềm năng
-    saveLead({
-      id: orderId,
-      name,
-      email,
-      phone,
-      source: 'Landing Page Ebook',
-      createdAt: now.toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', hour12: false })
-    });
 
     const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${amountNum}&des=${orderId}&template=compact`;
 
