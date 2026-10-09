@@ -1,0 +1,1162 @@
+---
+import MetaPixel from '../../components/MetaPixel.astro';
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>9 Nguồn Thu Nhập Từ Blog – Ebook</title>
+<meta name="description" content="Bạn từng nghe có người kiếm được tiền từ blog — nhưng không biết họ làm thế nào? Cuốn sách nhỏ này mở ra 9 con đường, giải thích dễ hiểu cho cả người chưa từng viết bài nào.">
+<link rel="canonical" href="https://daoxuanquang.com.vn/doc-sach/9-nguon-thu-nhap-tu-blog" />
+<meta property="og:type" content="book">
+<meta property="og:title" content="9 Nguồn Thu Nhập Từ Blog – Ebook">
+<meta property="og:description" content="Khám phá 9 con đường kiếm tiền từ blog, giải thích dễ hiểu bằng số liệu và ví dụ thực tế.">
+<meta property="og:url" content="https://daoxuanquang.com.vn/doc-sach/9-nguon-thu-nhap-tu-blog">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23D7141A%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2254%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3E9%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;800;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<MetaPixel />
+
+<style is:global is:inline>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#EFE8DA; --ink:#231F18; --muted:#6B6355; --line:#DCD2BF; --card:#FBF8F2;
+  --c1:#E63946; --c2:#F77F00; --c3:#D9A400; --c4:#2A9D8F; --c5:#3A86FF;
+  --c6:#7B2CBF; --c7:#D63384; --c8:#06A77D; --c9:#1D3557;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1B1813; --ink:#F1ECE2; --muted:#B2A994; --line:#3A3429; --card:#25211A;
+    --c9:#6C8EC9; --c3:#F2C230;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1B1813; --ink:#F1ECE2; --muted:#B2A994; --line:#3A3429; --card:#25211A;
+  --c9:#6C8EC9; --c3:#F2C230;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Lora",Georgia,"Times New Roman",serif;font-size:1.0625rem;line-height:1.75}
+h1,h2,h3,h4,.sans{font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+img{max-width:100%}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--c5);outline-offset:3px;border-radius:4px}
+.wrap{max-width:46rem;margin:0 auto;padding:0 1.25rem}
+
+/* ===== COVER ===== */
+.cover{min-height:100vh;display:grid;align-content:center;padding:3rem 1.25rem}
+.cover-inner{max-width:62rem;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.cover h1{font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.05;font-weight:900;margin:0 0 1rem;letter-spacing:-.02em}
+.cover .sub{font-size:1.15rem;color:var(--muted);margin:0 0 1.5rem;max-width:28rem}
+.cover .author{font-family:"Be Vietnam Pro",sans-serif;font-weight:600;font-size:.95rem;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.tile{aspect-ratio:1;border-radius:14px;color:#fff;padding:.75rem;display:flex;flex-direction:column;justify-content:space-between;
+  text-decoration:none;font-family:"Be Vietnam Pro",sans-serif;transition:transform .2s ease}
+.tile:hover{transform:translateY(-4px) rotate(-1deg)}
+.tile b{font-size:clamp(1.6rem,4vw,2.6rem);font-weight:900;line-height:1}
+.tile span{font-size:clamp(.68rem,1.4vw,.85rem);font-weight:600;line-height:1.25}
+.tile:nth-child(1){background:var(--c1)}.tile:nth-child(2){background:var(--c2)}.tile:nth-child(3){background:var(--c3);color:#1B1F2A}
+.tile:nth-child(4){background:var(--c4)}.tile:nth-child(5){background:var(--c5)}.tile:nth-child(6){background:var(--c6)}
+.tile:nth-child(7){background:var(--c7)}.tile:nth-child(8){background:var(--c8)}.tile:nth-child(9){background:var(--c9)}
+@media (max-width:760px){.cover-inner{grid-template-columns:1fr;gap:2rem}.cover{min-height:auto}}
+
+/* ===== GENERIC SECTIONS ===== */
+section.part{padding:4rem 0;border-top:1px solid var(--line)}
+section.part h2{font-size:clamp(1.7rem,4vw,2.3rem);line-height:1.2;margin:0 0 1.25rem;font-weight:800;letter-spacing:-.01em}
+p{margin:0 0 1.1rem}
+.lead{font-size:1.18rem;color:var(--ink)}
+.toc ol{list-style:none;padding:0;margin:0;display:grid;gap:.4rem}
+.toc a{display:flex;gap:1rem;align-items:baseline;padding:.6rem .2rem;text-decoration:none;border-bottom:1px dashed var(--line);font-family:"Be Vietnam Pro",sans-serif}
+.toc a:hover{background:var(--card)}
+.toc .n{font-weight:900;font-size:1.3rem;min-width:2rem}
+.toc .t{font-weight:600}
+.toc small{display:block;color:var(--muted);font-weight:400;font-size:.85rem}
+
+/* ===== CHAPTERS ===== */
+.chapter{padding:4.5rem 0 3.5rem;border-top:1px solid var(--line);position:relative}
+.ch-head{display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:end;margin-bottom:1.75rem}
+.ch-num{font-family:"Be Vietnam Pro",sans-serif;font-weight:900;font-size:clamp(5rem,16vw,8.5rem);line-height:.8;color:var(--cc)}
+.ch-head h2{font-size:clamp(1.6rem,4vw,2.25rem);line-height:1.15;margin:0;font-weight:800}
+.ch-head .tag{font-family:"Be Vietnam Pro",sans-serif;font-size:.9rem;color:var(--muted);margin-top:.35rem}
+.chapter h3{font-size:1.15rem;font-weight:800;margin:2rem 0 .6rem;color:var(--cc)}
+.chapter ul,.chapter ol{padding-left:1.3rem;margin:0 0 1.1rem}
+.chapter li{margin-bottom:.45rem}
+.chapter li::marker{color:var(--cc);font-weight:700}
+.meter{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:1.5rem 0}
+.meter div{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--cc);border-radius:10px;padding:.75rem .85rem;font-family:"Be Vietnam Pro",sans-serif}
+.meter small{display:block;color:var(--muted);font-size:.78rem}
+.meter strong{font-size:.98rem}
+@media (max-width:560px){.meter{grid-template-columns:1fr}}
+.proscons{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.proscons div{background:var(--card);border-radius:12px;padding:1rem 1.1rem;border:1px solid var(--line)}
+.proscons h4{margin:0 0 .5rem;font-size:.95rem}
+.proscons ul{margin:0;padding-left:1.1rem;font-size:.97rem}
+.pros h4{color:#06A77D}.cons h4{color:#E63946}
+@media (max-width:560px){.proscons{grid-template-columns:1fr}}
+.tip{background:color-mix(in srgb,var(--cc) 12%,var(--card));border-left:5px solid var(--cc);border-radius:0 12px 12px 0;padding:1rem 1.2rem;margin:1.5rem 0}
+.tip strong{font-family:"Be Vietnam Pro",sans-serif;color:var(--cc)}
+.tip p:last-child{margin:0}
+#c1{--cc:var(--c1)}#c2{--cc:var(--c2)}#c3{--cc:var(--c3)}#c4{--cc:var(--c4)}#c5{--cc:var(--c5)}
+#c6{--cc:var(--c6)}#c7{--cc:var(--c7)}#c8{--cc:var(--c8)}#c9{--cc:var(--c9)}
+
+/* ===== TABLE ===== */
+.table-scroll{overflow-x:auto;margin:1.5rem 0;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-family:"Be Vietnam Pro",sans-serif;font-size:.9rem}
+th,td{padding:.7rem .8rem;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:800;background:color-mix(in srgb,var(--ink) 5%,var(--card))}
+tr:last-child td{border-bottom:0}
+td .dot{display:inline-block;width:.7rem;height:.7rem;border-radius:50%;margin-right:.45rem;vertical-align:middle}
+.stars{letter-spacing:.1em;color:var(--c2)}
+
+/* ===== ROADMAP ===== */
+.stage{display:grid;grid-template-columns:7rem 1fr;gap:1.25rem;padding:1.25rem 0;border-bottom:1px dashed var(--line)}
+.stage:last-child{border-bottom:0}
+.stage .lvl{font-family:"Be Vietnam Pro",sans-serif;font-weight:800;font-size:.9rem}
+.stage .lvl span{display:block;font-weight:400;color:var(--muted);font-size:.8rem}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.5rem}
+.chip{font-family:"Be Vietnam Pro",sans-serif;font-size:.8rem;font-weight:600;color:#fff;padding:.2rem .6rem;border-radius:99px}
+@media (max-width:560px){.stage{grid-template-columns:1fr;gap:.25rem}}
+
+.checklist{list-style:none;padding:0}
+.checklist li{padding-left:2rem;position:relative;margin-bottom:.7rem}
+.checklist li::before{content:"";position:absolute;left:0;top:.35rem;width:1.1rem;height:1.1rem;border:2px solid var(--c8);border-radius:5px}
+footer{padding:3rem 1.25rem 4rem;text-align:center;color:var(--muted);font-family:"Be Vietnam Pro",sans-serif;font-size:.85rem;border-top:1px solid var(--line)}
+.rainbow{height:8px;background:linear-gradient(90deg,var(--c1) 0 11.1%,var(--c2) 0 22.2%,var(--c3) 0 33.3%,var(--c4) 0 44.4%,var(--c5) 0 55.5%,var(--c6) 0 66.6%,var(--c7) 0 77.7%,var(--c8) 0 88.8%,var(--c9) 0)}
+
+.calc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.1rem 1.25rem;margin:1.25rem 0;font-family:"Be Vietnam Pro",sans-serif;font-size:.95rem}
+.calc h4{margin:0 0 .6rem;font-size:1rem;color:var(--cc,var(--ink))}
+.calc .row{display:flex;justify-content:space-between;gap:1rem;padding:.35rem 0;border-bottom:1px dashed var(--line)}
+.calc .row:last-of-type{border-bottom:0}
+.calc .row b{white-space:nowrap}
+.calc .total{margin-top:.5rem;padding-top:.6rem;border-top:2px solid var(--cc,var(--ink));font-weight:800;display:flex;justify-content:space-between;gap:1rem}
+.calc .note{color:var(--muted);font-size:.82rem;margin:.6rem 0 0}
+.mistakes{list-style:none;padding-left:0!important}
+.mistakes li{padding-left:1.8rem;position:relative}
+.mistakes li::before{content:"✕";position:absolute;left:.2rem;color:#E63946;font-weight:900;font-family:"Be Vietnam Pro",sans-serif}
+.tools{display:flex;flex-wrap:wrap;gap:.45rem;margin:.4rem 0 1.2rem}
+.tools span{font-family:"Be Vietnam Pro",sans-serif;font-size:.85rem;font-weight:600;padding:.25rem .7rem;border-radius:99px;border:1.5px solid var(--cc,var(--line));color:var(--cc,var(--ink))}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;margin-bottom:.6rem}
+summary{cursor:pointer;font-family:"Be Vietnam Pro",sans-serif;font-weight:700}
+details p{margin:.7rem 0 0}
+.week{display:grid;grid-template-columns:6.5rem 1fr;gap:1rem;padding:1rem 0;border-bottom:1px dashed var(--line)}
+.week:last-child{border-bottom:0}
+.week b{font-family:"Be Vietnam Pro",sans-serif;color:var(--c5)}
+.week ul{margin:0;padding-left:1.1rem}
+@media (max-width:560px){.week{grid-template-columns:1fr;gap:.25rem}}
+
+/* ===== FUNNEL ===== */
+.bridge{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;margin:2rem 0 0;padding:1.1rem 1.25rem;border-radius:14px;
+  background:color-mix(in srgb,var(--c5) 10%,var(--card));border:1.5px dashed var(--c5);font-family:"Be Vietnam Pro",sans-serif}
+.bridge .ic{font-size:1.8rem;line-height:1}
+.bridge p{margin:0;font-size:.95rem;line-height:1.55}
+.bridge a{color:var(--c5);font-weight:700}
+.offer{padding:5rem 0;background:linear-gradient(160deg,color-mix(in srgb,var(--c5) 14%,var(--paper)),color-mix(in srgb,var(--c6) 12%,var(--paper)));border-top:1px solid var(--line)}
+.offer-grid{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:2.5rem;align-items:start;max-width:58rem;margin:0 auto;padding:0 1.25rem}
+@media (max-width:760px){.offer-grid{grid-template-columns:minmax(0,1fr)}.bookmock{margin:0 auto}}
+.bookmock{width:15rem;aspect-ratio:3/4;border-radius:6px 14px 14px 6px;background:var(--c9);color:#fff;padding:1.4rem 1.2rem;position:relative;
+  box-shadow:-6px 0 0 rgba(0,0,0,.25) inset, 0 20px 40px -15px rgba(29,53,87,.55);display:flex;flex-direction:column;justify-content:space-between;font-family:"Be Vietnam Pro",sans-serif}
+.bookmock .bars{display:flex;gap:4px}
+.bookmock .bars i{flex:1;height:6px;border-radius:3px}
+.bookmock h3{font-size:1.65rem;line-height:1.1;margin:0;font-weight:900;color:#fff}
+.bookmock small{opacity:.8;font-size:.8rem}
+.offer h2{font-size:clamp(1.8rem,4vw,2.5rem);line-height:1.15;margin:0 0 1rem;font-weight:900}
+.offer .inside{list-style:none;padding:0;margin:1rem 0 1.5rem}
+.offer .inside li{padding:.45rem 0 .45rem 1.9rem;position:relative;border-bottom:1px dashed var(--line)}
+.offer .inside li::before{content:"✓";position:absolute;left:.25rem;color:var(--c8);font-weight:900;font-family:"Be Vietnam Pro",sans-serif}
+.pricebox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.4rem;margin:1.5rem 0;font-family:"Be Vietnam Pro",sans-serif}
+.pricebox .old{text-decoration:line-through;color:var(--muted);margin-right:.6rem}
+.pricebox .new{font-size:2rem;font-weight:900;color:var(--c1)}
+.pricebox .code{display:inline-block;margin-top:.5rem;font-weight:800;border:2px dashed var(--c2);color:var(--c2);padding:.15rem .6rem;border-radius:8px}
+.btn{display:inline-block;background:var(--c1);color:#fff!important;text-decoration:none;font-family:"Be Vietnam Pro",sans-serif;font-weight:800;
+  padding:.95rem 1.6rem;border-radius:12px;font-size:1.05rem;margin-top:1rem;box-shadow:0 6px 0 color-mix(in srgb,var(--c1) 60%,#000)}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 color-mix(in srgb,var(--c1) 60%,#000)}
+.guarantee{font-size:.9rem;color:var(--muted);margin-top:1rem}
+.forwho{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.25rem 0}
+.forwho div{background:var(--card);border-radius:12px;padding:1rem;border:1px solid var(--line);font-size:.95rem}
+.forwho h4{margin:0 0 .4rem;font-family:"Be Vietnam Pro",sans-serif;font-size:.95rem}
+@media (max-width:560px){.forwho{grid-template-columns:1fr}}
+.authorbox{display:flex;gap:1rem;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:1.5rem 0;font-family:"Be Vietnam Pro",sans-serif}
+.authorbox .av{flex:none;width:3.4rem;height:3.4rem;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:900;font-size:1.4rem;background:linear-gradient(135deg,var(--c5),var(--c6))}
+.authorbox strong{display:block;font-size:1.05rem}
+.authorbox span{font-size:.9rem;color:var(--muted)}
+.authorbox a,.author a,footer a{color:var(--c5);font-weight:700;text-decoration:none}
+@media (min-width:761px){.offer-grid>.bookmock{position:sticky;top:calc(2rem + env(safe-area-inset-top,0px))}}
+.toc .extras{margin-top:2.5rem}
+.toc .extras-label{font-family:"Be Vietnam Pro",sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 .75rem}
+.toc .extras-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.toc .extras-grid a{display:block;padding:.75rem .9rem;border:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:10px;background:var(--card);transition:border-color .15s ease,transform .15s ease}
+.toc .extras-grid a:hover{border-color:var(--ink);transform:translateY(-2px);background:var(--card)}
+.toc .extras-grid small{display:block;font-size:.72rem;color:var(--muted);font-weight:600;margin-bottom:.15rem}
+.toc .extras-grid span{font-weight:700;font-size:.95rem}
+.toc a.extras-offer{display:flex;justify-content:space-between;align-items:center;margin-top:.6rem;padding:.9rem 1.1rem;border-radius:10px;border:0;background:var(--c1);color:#fff}
+.toc a.extras-offer:hover{background:var(--c1);filter:brightness(1.06)}
+.toc a.extras-offer small{display:block;font-size:.72rem;opacity:.9;font-weight:600;color:#fff}
+.toc a.extras-offer strong{font-size:.98rem}
+.toc a.extras-offer b{font-size:1.3rem}
+@media (max-width:560px){.toc .extras-grid{grid-template-columns:1fr 1fr}}
+.toc p a{display:inline;padding:0;border:0;background:none}
+.toc p a:hover{background:none;text-decoration:underline}
+.gloss{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin:1.25rem 0 0}
+.gloss div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
+.gloss dt{font-family:"Be Vietnam Pro",sans-serif;font-weight:800;color:var(--c5);margin-bottom:.2rem}
+.gloss dd{margin:0;font-size:.95rem;line-height:1.55}
+@media (max-width:560px){.gloss{grid-template-columns:1fr}}
+.inside-groups{margin:1rem 0 1.5rem}
+.ig-title{font-family:"Be Vietnam Pro",sans-serif;font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--c5);margin:1.4rem 0 .2rem}
+.inside-groups .inside{margin:0}
+.ig-n{font-family:"Be Vietnam Pro",sans-serif;font-weight:800;font-size:.78rem;color:var(--muted);margin-right:.45rem}
+.bonus{margin-top:1.5rem;background:var(--card);border:1.5px dashed var(--c2);border-radius:14px;padding:1rem 1.2rem .4rem}
+.bonus .ig-title{color:var(--c2)}
+.bonus .inside li{border-bottom:0}
+.bonus .inside li::before{content:"★";color:var(--c2)}
+.quick{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1rem 1.2rem;margin:0 0 1.75rem}
+.quick-top{display:flex;justify-content:space-between;align-items:center;gap:.75rem;margin-bottom:.5rem}
+.quick-label{font-family:"Be Vietnam Pro",sans-serif;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cc)}
+.pill{font-family:"Be Vietnam Pro",sans-serif;font-size:.75rem;font-weight:700;padding:.2rem .65rem;border-radius:99px;white-space:nowrap}
+.pill.now{background:color-mix(in srgb,var(--c8) 16%,var(--card));color:var(--c8)}
+.pill.later{background:color-mix(in srgb,var(--muted) 14%,var(--card));color:var(--muted)}
+.quick p{margin:0;font-size:1rem;line-height:1.6}
+.quick p.when{margin-top:.5rem;font-family:"Be Vietnam Pro",sans-serif;font-size:.88rem;color:var(--muted)}
+.kicker{font-family:"Be Vietnam Pro",sans-serif;font-weight:800;color:var(--c1);text-transform:uppercase;letter-spacing:.06em;font-size:.82rem;margin:0 0 .6rem}
+.deadline{font-family:"Be Vietnam Pro",sans-serif;font-weight:700;color:var(--c1);margin:.6rem 0 0}
+.testi{display:grid;gap:.8rem;margin:1.5rem 0}
+.testi blockquote{margin:0;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c8);border-radius:0 12px 12px 0;padding:1rem 1.2rem}
+.testi cite{display:block;font-style:normal;font-family:"Be Vietnam Pro",sans-serif;font-size:.85rem;color:var(--muted);margin-top:.5rem}
+.ps{font-style:italic;color:var(--muted);border-top:1px solid var(--line);padding-top:1rem;margin-top:2rem}
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;padding:.65rem 1rem;padding-bottom:calc(.65rem + env(safe-area-inset-bottom,0px));
+  background:var(--card);border-top:1px solid var(--line);display:flex;gap:1rem;justify-content:center;align-items:center;
+  font-family:"Be Vietnam Pro",sans-serif;font-size:.92rem;transform:translateY(110%);transition:transform .3s ease;z-index:20;box-shadow:0 -8px 24px -12px rgba(0,0,0,.25)}
+.sticky-cta.show{transform:none}
+.sticky-cta a{background:var(--c1);color:#fff;text-decoration:none;font-weight:800;padding:.5rem 1rem;border-radius:10px;white-space:nowrap}
+.sticky-cta button{background:none;border:0;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:.2rem .4rem}
+@media (max-width:560px){.sticky-cta span.txt{display:none}}
+@media print{.sticky-cta{display:none}}
+
+/* ===== ILLUSTRATIONS ===== */
+figure.ill{margin:0 0 2rem}
+figure.ill svg{display:block;width:100%;height:auto;border-radius:16px}
+figure.ill figcaption{font-family:"Be Vietnam Pro",sans-serif;font-size:.82rem;color:var(--muted);margin-top:.5rem;text-align:center}
+.ill .bg{fill:color-mix(in srgb,var(--cc,var(--c5)) 11%,var(--paper))}
+.ill .card{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.ill .ln{fill:var(--line)}
+.ill .acc{fill:var(--cc,var(--c5))}
+.ill .accs{stroke:var(--cc,var(--c5));fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ill .soft{fill:color-mix(in srgb,var(--cc,var(--c5)) 22%,var(--card))}
+.ill .t{fill:var(--ink);font-family:"Be Vietnam Pro",system-ui,sans-serif;font-weight:700}
+.ill .m{fill:var(--muted);font-family:"Be Vietnam Pro",system-ui,sans-serif}
+.ill .w{fill:#fff;font-family:"Be Vietnam Pro",system-ui,sans-serif;font-weight:800}
+.ill .g{fill:var(--c8)}
+.ill .r{fill:var(--c1)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media print{
+  .tile:hover{transform:none}
+  .chapter,section.part{page-break-before:always}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<!--
+  ===== CẤU HÌNH SẢN PHẨM CHÍNH =====
+  Anh chỉ cần sửa các giá trị trong khối script dưới đây, toàn bộ ebook sẽ tự cập nhật
+  (tên ebook, giá, mã giảm giá, link mua, tên tác giả).
+-->
+<script is:inline>
+window.PRODUCT = {
+  author:   "Đào Xuân Quảng",
+  website:  "daoxuanquang.com.vn",
+  name:     "Tạo Blog Bằng AI",
+  price:    "299.000đ",
+  testimonials: [
+    // Thêm nhận xét THẬT của người mua, ví dụ:
+    // { name: "Nguyễn Văn A", role: "Giáo viên, Hà Nội", text: "Mình dựng xong blog chỉ trong 2 buổi tối..." },
+  ],
+  link:     "https://daoxuanquang.com.vn/ebook-tao-blog"
+};
+</script>
+<div class="rainbow" aria-hidden="true"></div>
+
+<!-- ===== BÌA ===== -->
+<header class="cover">
+  <div class="cover-inner">
+    <div>
+      <h1>9 nguồn thu nhập từ blog</h1>
+      <p class="sub">Bạn từng nghe có người kiếm được tiền từ blog — nhưng không biết họ làm thế nào? Cuốn sách nhỏ này mở ra <strong>9 con đường</strong>, giải thích dễ hiểu cho cả người chưa từng viết bài nào.</p>
+      <p class="author">Tác giả: <strong data-fill="author" style="color:var(--ink)">Đào Xuân Quảng</strong><br>🌐 <a data-site href="https://daoxuanquang.com.vn" target="_blank" rel="noopener"><span data-fill="website">daoxuanquang.com.vn</span></a></p>
+    </div>
+    <nav class="tiles" aria-label="Chín nguồn thu nhập">
+      <a class="tile" href="#c1"><b>1</b><span>Quảng cáo hiển thị</span></a>
+      <a class="tile" href="#c2"><b>2</b><span>Tiếp thị liên kết</span></a>
+      <a class="tile" href="#c3"><b>3</b><span>Bài viết tài trợ</span></a>
+      <a class="tile" href="#c4"><b>4</b><span>Sản phẩm số</span></a>
+      <a class="tile" href="#c5"><b>5</b><span>Khóa học online</span></a>
+      <a class="tile" href="#c6"><b>6</b><span>Hội viên trả phí</span></a>
+      <a class="tile" href="#c7"><b>7</b><span>Dịch vụ & tư vấn</span></a>
+      <a class="tile" href="#c8"><b>8</b><span>Email newsletter</span></a>
+      <a class="tile" href="#c9"><b>9</b><span>Mua bán blog</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- ===== LỜI MỞ ĐẦU ===== -->
+<section class="part"><div class="wrap">
+  <h2>Lời mở đầu</h2>
+  <p class="lead">Có thể bạn vừa nghe ai đó nói: “Mình có thu nhập từ blog.” Và câu hỏi đầu tiên bật ra trong đầu bạn là: <em>bằng cách nào?</em></p>
+  <p>Viết bài thì ai trả tiền cho mình? Không rành công nghệ có làm được không? Giờ ai cũng xem video, blog còn ai đọc? Bắt đầu lúc này có muộn quá không?</p>
+  <p>Nếu bạn đang có những câu hỏi đó, bạn đang ở đúng chỗ — và bạn <strong>không hề đi muộn</strong>. Rất nhiều người có thu nhập từ blog hôm nay cũng từng đứng đúng ở vị trí của bạn: không biết gì về website, không có người đọc, chưa viết bài nào.</p>
+  <p>Điều họ biết mà phần lớn người mới không biết là: blog không chỉ kiếm tiền bằng quảng cáo. Có tới <strong>9 con đường</strong> để tiền đi vào — và có những con đường bạn không cần hàng chục nghìn người đọc mới bắt đầu có thu nhập. Người mới thường chỉ nghe về một cách, thử, thấy chậm rồi bỏ cuộc, trong khi cánh cửa phù hợp với họ nằm ngay bên cạnh.</p>
+  <p>Cuốn sách này giải thích cả 9 con đường bằng ngôn ngữ đơn giản nhất: mỗi cách hoạt động ra sao, kiếm được khoảng bao nhiêu, bắt đầu từ đâu, và những sai lầm người mới hay mắc. Đọc xong, bạn sẽ biết con đường nào hợp với mình — thay vì loay hoay đoán mò.</p>
+  <p>Còn một điều nữa. Bước khiến người mới chần chừ nhất là <strong>dựng blog</strong>. Tin tốt là ngày nay bạn không cần biết lập trình: AI có thể làm trợ lý cho bạn ở từng bước. Ở cuối sách, Quảng sẽ chỉ cho bạn cách làm.</p>
+  <div class="tip" style="--cc:var(--c5)"><p><strong>Lưu ý:</strong> Các con số thu nhập trong sách chỉ mang tính tham khảo, phụ thuộc rất lớn vào chủ đề (niche), quốc gia của người đọc và chất lượng nội dung. Hãy dùng chúng để định hướng, không phải để cam kết.</p></div>
+</div></section>
+
+
+<!-- ===== MỤC LỤC ===== -->
+<section class="part toc"><div class="wrap">
+  <h2>Mục lục</h2>
+  <p class="sans" style="font-size:.92rem;color:var(--muted);margin-top:-.5rem">Mới làm quen với blog? Ngay sau mục lục là <a href="#glossary" style="color:var(--c5);font-weight:700">Từ điển nhỏ cho người mới</a>.</p>
+  <ol>
+    <li><a href="#c1"><span class="n" style="color:var(--c1)">1</span><span class="t">Quảng cáo hiển thị<small>Kiếm tiền thụ động từ lượt xem</small></span></a></li>
+    <li><a href="#c2"><span class="n" style="color:var(--c2)">2</span><span class="t">Tiếp thị liên kết (Affiliate)<small>Nhận hoa hồng khi giới thiệu sản phẩm</small></span></a></li>
+    <li><a href="#c3"><span class="n" style="color:var(--c3)">3</span><span class="t">Bài viết tài trợ<small>Nhãn hàng trả tiền để xuất hiện trên blog</small></span></a></li>
+    <li><a href="#c4"><span class="n" style="color:var(--c4)">4</span><span class="t">Bán sản phẩm số<small>Ebook, template, tài liệu</small></span></a></li>
+    <li><a href="#c5"><span class="n" style="color:var(--c5)">5</span><span class="t">Khóa học online<small>Đóng gói kiến thức thành chương trình</small></span></a></li>
+    <li><a href="#c6"><span class="n" style="color:var(--c6)">6</span><span class="t">Hội viên trả phí<small>Thu nhập định kỳ mỗi tháng</small></span></a></li>
+    <li><a href="#c7"><span class="n" style="color:var(--c7)">7</span><span class="t">Dịch vụ & tư vấn<small>Blog là hồ sơ năng lực của bạn</small></span></a></li>
+    <li><a href="#c8"><span class="n" style="color:var(--c8)">8</span><span class="t">Email newsletter<small>Tài sản quý nhất của blogger</small></span></a></li>
+    <li><a href="#c9"><span class="n" style="color:var(--c9)">9</span><span class="t">Mua bán blog<small>Bán cả “ngôi nhà” bạn đã xây</small></span></a></li>
+  </ol>
+  <div class="extras">
+    <p class="extras-label">Phần bổ sung</p>
+    <div class="extras-grid">
+      <a href="#foundation"><small>Mở đầu</small><span>Xây nền móng</span></a>
+      <a href="#compare"><small>Tham khảo</small><span>Bảng so sánh</span></a>
+      <a href="#roadmap"><small>Chiến lược</small><span>Lộ trình kết hợp</span></a>
+      <a href="#plan90"><small>Hành động</small><span>Kế hoạch 90 ngày</span></a>
+      <a href="#faq"><small>Giải đáp</small><span>Câu hỏi thường gặp</span></a>
+      <a href="#end"><small>Kết thúc</small><span>Lời kết</span></a>
+    </div>
+    <a class="extras-offer" href="#offer"><span><small>Bước tiếp theo</small><strong>Ebook <span data-fill="name">Tạo Blog Bằng AI</span></strong></span><b aria-hidden="true">→</b></a>
+  </div>
+</div></section>
+
+
+<!-- ===== TỪ ĐIỂN ===== -->
+<section class="part" id="glossary"><div class="wrap">
+  <h2>Từ điển nhỏ cho người mới</h2>
+  <p>Gặp từ lạ trong sách? Quay lại đây tra nhanh — 10 từ bạn sẽ gặp nhiều nhất.</p>
+  <dl class="gloss">
+    <div><dt>Blog</dt><dd>Trang web nơi bạn đăng bài viết thường xuyên về một chủ đề.</dd></div>
+    <div><dt>Ngách (niche)</dt><dd>Chủ đề hẹp mà blog tập trung, ví dụ “nấu ăn nhanh cho dân văn phòng”.</dd></div>
+    <div><dt>Tên miền</dt><dd>Địa chỉ của blog, ví dụ daoxuanquang.com.vn.</dd></div>
+    <div><dt>Hosting</dt><dd>Nơi “thuê chỗ” để chứa blog trên Internet.</dd></div>
+    <div><dt>Traffic</dt><dd>Lượng người truy cập vào blog.</dd></div>
+    <div><dt>SEO</dt><dd>Cách tối ưu bài viết để xuất hiện cao trên Google.</dd></div>
+    <div><dt>RPM</dt><dd>Số tiền quảng cáo nhận được trên mỗi 1.000 lượt xem.</dd></div>
+    <div><dt>Affiliate</dt><dd>Giới thiệu sản phẩm qua link riêng, có người mua thì bạn nhận hoa hồng.</dd></div>
+    <div><dt>Newsletter</dt><dd>Bản tin bạn gửi định kỳ qua email cho người đăng ký.</dd></div>
+    <div><dt>Prompt</dt><dd>Câu lệnh bạn gõ để yêu cầu AI làm một việc.</dd></div>
+  </dl>
+</div></section>
+
+<!-- ===== NỀN MÓNG ===== -->
+<section class="part" id="foundation"><div class="wrap">
+  <h2>Trước khi kiếm tiền: xây nền móng</h2>
+  <p class="lead">Mọi nguồn thu trong sách đều dựa trên một điều: có người đọc tin tưởng bạn. Phần này giúp bạn chuẩn bị đúng ngay từ đầu.</p>
+  <figure class="ill" style="--cc:var(--c5)"><svg viewBox="0 0 640 360" role="img" aria-label="Trợ lý AI giúp lên ý tưởng và dựng blog" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><rect class="card" x="40" y="36" width="280" height="288" rx="14"/><text class="t" x="60" y="66" font-size="14">Trợ lý AI</text><rect class="ln" x="40" y="80" width="280" height="1.5"/><rect class="acc" x="104" y="96" width="200" height="54" rx="12"/><text class="w" x="118" y="118" font-size="11" style="font-weight:500">Gợi ý 10 ngách blog về</text><text class="w" x="118" y="136" font-size="11" style="font-weight:500">nấu ăn cho dân văn phòng</text><rect class="soft" x="56" y="162" width="220" height="104" rx="12"/><rect class="ln" x="70" y="180" width="180" height="6" rx="3"/><rect class="ln" x="70" y="196" width="160" height="6" rx="3"/><rect class="ln" x="70" y="212" width="190" height="6" rx="3"/><rect class="ln" x="70" y="228" width="140" height="6" rx="3"/><rect class="ln" x="70" y="244" width="170" height="6" rx="3"/><rect class="ln" x="56" y="280" width="248" height="30" rx="15" opacity=".7"/><text class="m" x="72" y="299" font-size="11">Viết trang Giới thiệu cho blog…</text><path d="M332 180 h44" class="accs"/><path d="M366 170 l12 10 l-12 10" class="accs"/><rect class="card" x="390" y="36" width="216" height="288" rx="14"/>
+<rect class="ln" x="390" y="70" width="216" height="1.5"/>
+<circle class="r" cx="410" cy="53" r="5"/><circle cx="426" cy="53" r="5" style="fill:var(--c3)"/><circle class="g" cx="442" cy="53" r="5"/>
+<rect class="ln" x="466" y="44" width="116" height="18" rx="9" opacity=".6"/>
+<text class="m" x="480" y="57" font-size="11">bepvanphong.com</text>
+<rect class="soft" x="400" y="80" width="196" height="70" rx="8"/><text class="t" x="408" y="176" font-size="13">Bếp Văn Phòng</text><rect class="ln" x="408" y="190" width="170" height="6" rx="3"/><rect class="ln" x="408" y="204" width="150" height="6" rx="3"/><rect class="ln" x="408" y="218" width="160" height="6" rx="3"/><rect class="ln" x="408" y="232" width="120" height="6" rx="3"/><rect class="acc" x="408" y="252" width="90" height="26" rx="8"/><text class="w" x="453" y="269" font-size="10" text-anchor="middle">Đăng ký</text></svg></figure>
+  <h3 style="color:var(--c5);font-size:1.15rem">Chọn ngách đúng</h3>
+  <p>Một ngách tốt nằm ở giao điểm của ba yếu tố: bạn có hiểu biết hoặc đam mê đủ để viết lâu dài; có nhiều người đang tìm kiếm thông tin; và có người sẵn sàng chi tiền để giải quyết vấn đề đó. “Ẩm thực” là quá rộng; “nấu ăn healthy cho dân văn phòng bận rộn” là một ngách rõ ràng.</p>
+  <h3 style="color:var(--c5);font-size:1.15rem">Ba loại nội dung cần có</h3>
+  <ul>
+    <li><strong>Nội dung thu hút:</strong> bài hướng dẫn, giải đáp câu hỏi phổ biến — mang người đọc mới từ Google.</li>
+    <li><strong>Nội dung xây niềm tin:</strong> câu chuyện cá nhân, case study, bài phân tích sâu — biến người lạ thành người theo dõi.</li>
+    <li><strong>Nội dung chuyển đổi:</strong> review, so sánh, giới thiệu sản phẩm — nơi tạo ra thu nhập.</li>
+  </ul>
+  <h3 style="color:var(--c5);font-size:1.15rem">Nền tảng kỹ thuật</h3>
+  <p>Hãy dùng tên miền riêng và một nền tảng bạn toàn quyền kiểm soát. Blog trên nền tảng miễn phí có tên miền phụ khó được mạng quảng cáo duyệt, khó bán, và có thể bị đóng bất cứ lúc nào. Chọn hosting, cài đặt, cấu hình tốc độ, các trang bắt buộc và công cụ đo lường là phần nhiều người mới mất hàng tuần mày mò nhất — trong khi với trợ lý AI hướng dẫn từng bước, việc này có thể xong trong vài buổi tối.</p>
+  <div class="bridge"><span class="ic">🛠️</span><p>Hosting, tên miền và cấu hình được giải thích dễ hiểu, kèm hướng dẫn cài đặt từng bước, trong ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a>.</p></div>
+  <h3 style="color:var(--c5);font-size:1.15rem">Viết cho cả người đọc, Google và AI</h3>
+  <p>Ngày nay người dùng tìm thông tin qua cả công cụ tìm kiếm lẫn trợ lý AI. Nội dung được ưu tiên là nội dung có trải nghiệm thật: ảnh bạn tự chụp, số liệu bạn tự đo, quan điểm riêng của bạn. Những thứ một bài tổng hợp không thể sao chép chính là lợi thế cạnh tranh của blogger.</p>
+  <div class="tip" style="--cc:var(--c5)"><p><strong>Về thuế:</strong> Thu nhập từ blog (quảng cáo, affiliate, bán hàng, dịch vụ) là thu nhập cần kê khai theo quy định. Hãy tìm hiểu quy định thuế hiện hành hoặc hỏi kế toán khi thu nhập bắt đầu ổn định.</p></div>
+</div></section>
+
+<!-- ===== 1 ===== -->
+<article class="chapter" id="c1"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">1</div><div><h2>Quảng cáo hiển thị</h2><div class="tag">Google AdSense, Ezoic, Mediavine, Raptive…</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill later">Giai đoạn sau</span></div><p>Đặt quảng cáo lên blog, nhận tiền theo lượt xem. Dễ làm, nhưng cần nhiều người đọc mới có thu nhập đáng kể.</p><p class="when"><strong>Phù hợp:</strong> Khi blog đã có lượng truy cập ổn định.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Mô phỏng blog có khung quảng cáo trong bài và thanh bên" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><rect class="card" x="40" y="28" width="560" height="304" rx="14"/>
+<rect class="ln" x="40" y="62" width="560" height="1.5"/>
+<circle class="r" cx="60" cy="45" r="5"/><circle cx="76" cy="45" r="5" style="fill:var(--c3)"/><circle class="g" cx="92" cy="45" r="5"/>
+<rect class="ln" x="116" y="36" width="460" height="18" rx="9" opacity=".6"/>
+<text class="m" x="130" y="49" font-size="11">blogcuaban.com/bai-viet</text>
+<text class="t" x="64" y="92" font-size="20">Cách tiết kiệm 5 triệu/tháng</text><rect class="ln" x="64" y="108" width="330" height="6" rx="3"/><rect class="ln" x="64" y="122" width="300" height="6" rx="3"/><rect class="ln" x="64" y="136" width="320" height="6" rx="3"/><rect class="ln" x="64" y="150" width="260" height="6" rx="3"/><rect class="soft" x="64" y="170" width="330" height="56" rx="8"/><rect class="accs" x="64" y="170" width="330" height="56" rx="8" style="stroke-dasharray:6 5"/><text class="t" x="229" y="203" font-size="13" text-anchor="middle" style="fill:var(--cc)">KHUNG QUẢNG CÁO TRONG BÀI</text><rect class="ln" x="64" y="242" width="330" height="6" rx="3"/><rect class="ln" x="64" y="256" width="310" height="6" rx="3"/><rect class="ln" x="64" y="270" width="280" height="6" rx="3"/><rect class="ln" x="64" y="284" width="300" height="6" rx="3"/><rect class="ln" x="64" y="298" width="200" height="6" rx="3"/><rect class="acc" x="420" y="84" width="156" height="200" rx="10"/><text class="w" x="498" y="176" font-size="14" text-anchor="middle">QUẢNG CÁO</text><text class="w" x="498" y="196" font-size="11" text-anchor="middle" style="font-weight:500">300 × 250</text><g transform="translate(470,268)"><rect x="0" y="0" width="150" height="62" rx="12" style="fill:var(--ink)"/><text x="16" y="25" font-size="11" style="fill:var(--paper);font-family:Be Vietnam Pro,sans-serif">RPM trung bình</text><text x="16" y="48" font-size="20" style="fill:var(--paper);font-family:Be Vietnam Pro,sans-serif;font-weight:900">$15,00</text></g></svg></figure>
+  <p>Đây là cách kiếm tiền quen thuộc nhất: bạn đặt các khung quảng cáo lên blog, mạng quảng cáo tự động hiển thị nội dung phù hợp và trả tiền cho bạn theo lượt xem (CPM) hoặc lượt nhấp (CPC).</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Dễ</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Cao</strong></div>
+    <div><small>Mức thụ động</small><strong>Rất cao</strong></div>
+  </div>
+  <h3>Cách hoạt động</h3>
+  <p>Chỉ số quan trọng nhất là <em>RPM</em> — số tiền bạn nhận được trên mỗi 1.000 lượt xem trang. Blog có người đọc chủ yếu ở Việt Nam thường có RPM thấp, trong khi người đọc từ Mỹ, Anh, Úc mang lại RPM cao hơn nhiều lần. Chủ đề tài chính, công nghệ, bảo hiểm thường có RPM cao hơn chủ đề giải trí.</p>
+  <h3>Bắt đầu như thế nào</h3>
+  <ol>
+    <li>Viết ít nhất 20–30 bài chất lượng, có đầy đủ trang Giới thiệu, Liên hệ, Chính sách bảo mật.</li>
+    <li>Đăng ký Google AdSense — mạng dễ được duyệt nhất cho người mới.</li>
+    <li>Khi lượng truy cập tăng, chuyển sang các mạng quảng cáo cao cấp hơn (Ezoic, Mediavine, Raptive). Mỗi mạng có yêu cầu lượng truy cập tối thiểu riêng, hãy kiểm tra trên website của họ.</li>
+    <li>Theo dõi tốc độ tải trang — quá nhiều quảng cáo làm trang chậm và giảm thứ hạng SEO.</li>
+  </ol>
+    <h3>Ví dụ tính thu nhập</h3>
+  <p>Công thức rất đơn giản: <em>Thu nhập = (Lượt xem trang ÷ 1.000) × RPM</em>. Cùng một lượng truy cập, nguồn gốc người đọc tạo ra khác biệt rất lớn:</p>
+  <div class="calc"><h4>Blog 50.000 lượt xem/tháng</h4>
+    <div class="row"><span>Người đọc chủ yếu Việt Nam, RPM ~ $1,5</span><b>~ $75/tháng</b></div>
+    <div class="row"><span>Người đọc chủ yếu Mỹ/Anh, RPM ~ $15</span><b>~ $750/tháng</b></div>
+    <div class="row"><span>Chủ đề tài chính, traffic quốc tế, RPM ~ $30</span><b>~ $1.500/tháng</b></div>
+    <p class="note">Số liệu minh họa. RPM thực tế dao động theo mùa — thường cao nhất vào quý 4 (mùa mua sắm cuối năm) và thấp nhất vào tháng 1.</p>
+  </div>
+  <h3>Tối ưu vị trí đặt quảng cáo</h3>
+  <ul>
+    <li>Khung quảng cáo trong thân bài (sau đoạn 2–3) thường hiệu quả hơn khung ở đầu trang.</li>
+    <li>Thanh bên dính (sticky sidebar) trên máy tính cho lượt hiển thị lâu hơn.</li>
+    <li>Bài dài, giữ chân người đọc lâu sẽ có nhiều vị trí quảng cáo hơn mà không gây khó chịu.</li>
+    <li>Thử nghiệm từng thay đổi trong 2–4 tuần rồi mới so sánh, vì RPM biến động theo ngày.</li>
+  </ul>
+  <h3>Chỉ số cần theo dõi</h3>
+  <p>Ngoài RPM, hãy để ý <em>lượt xem/phiên</em> (người đọc có đọc tiếp bài khác không), <em>thời gian trên trang</em> và chỉ số tốc độ Core Web Vitals trong Google Search Console. Tăng lượt xem/phiên từ 1,2 lên 1,8 đồng nghĩa với tăng 50% thu nhập quảng cáo mà không cần thêm người đọc mới — hãy làm điều này bằng liên kết nội bộ giữa các bài.</p>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Tự bấm vào quảng cáo của mình hoặc nhờ người quen bấm — có thể bị khóa tài khoản vĩnh viễn.</li>
+    <li>Mua traffic giá rẻ để tăng lượt xem: mạng quảng cáo phát hiện được và giảm giá trị hoặc cấm.</li>
+    <li>Nhồi quảng cáo che nội dung khiến tỷ lệ thoát tăng, thứ hạng Google giảm.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Gần như hoàn toàn thụ động</li><li>Không cần bán hàng</li><li>Phù hợp mọi chủ đề</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Thu nhập thấp nếu ít traffic</li><li>Ảnh hưởng trải nghiệm đọc</li><li>Phụ thuộc vào Google</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Đừng gắn quảng cáo quá sớm. Khi blog còn dưới vài nghìn lượt xem/tháng, số tiền kiếm được rất nhỏ nhưng lại làm người đọc mới khó chịu. Hãy ưu tiên xây nội dung và danh sách email trước.</p></div>
+  <div class="bridge"><span class="ic">🚦</span><p>Blog tải nhanh được duyệt quảng cáo dễ hơn và xếp hạng tốt hơn. Cách cấu hình hosting đúng ngay từ đầu có trong ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a>.</p></div>
+</div></article>
+
+<!-- ===== 2 ===== -->
+<article class="chapter" id="c2"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">2</div><div><h2>Tiếp thị liên kết (Affiliate)</h2><div class="tag">Shopee, Lazada, Tiki, Accesstrade, Amazon Associates…</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill now">Bắt đầu ngay</span></div><p>Giới thiệu sản phẩm bằng link riêng, có người mua thì bạn nhận hoa hồng. Một trong những nguồn thu hợp nhất với người mới.</p><p class="when"><strong>Phù hợp:</strong> Ngay từ những bài viết đầu tiên.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Phễu affiliate từ lượt xem đến hoa hồng" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><text class="t" x="320" y="48" font-size="18" text-anchor="middle">Phễu tiếp thị liên kết của một bài review</text><rect class="acc" x="80.0" y="70" width="480" height="46" rx="10" opacity="0.9299999999999999"/><text class="w" x="320" y="91" font-size="16" text-anchor="middle">10.000</text><text class="w" x="320" y="107" font-size="11" text-anchor="middle" style="font-weight:500">lượt xem bài viết</text><rect class="acc" x="140.0" y="126" width="360" height="46" rx="10" opacity="0.81"/><text class="w" x="320" y="147" font-size="16" text-anchor="middle">500</text><text class="w" x="320" y="163" font-size="11" text-anchor="middle" style="font-weight:500">bấm vào link (5%)</text><rect class="acc" x="200.0" y="182" width="240" height="46" rx="10" opacity="0.69"/><text class="w" x="320" y="203" font-size="16" text-anchor="middle">15 đơn</text><text class="w" x="320" y="219" font-size="11" text-anchor="middle" style="font-weight:500">mua hàng (3%)</text><rect class="card" x="200" y="244" width="240" height="78" rx="14"/><circle class="g" cx="236" cy="283" r="18"/><path d="M228 283 l6 6 l11 -12" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text class="m" x="266" y="276" font-size="12">Hoa hồng nhận được</text><text class="t" x="266" y="302" font-size="22" style="fill:var(--c8)">+2.250.000đ</text></svg></figure>
+  <p>Bạn giới thiệu sản phẩm hoặc dịch vụ bằng một đường link riêng. Khi người đọc bấm vào và mua hàng, bạn nhận hoa hồng — người mua không phải trả thêm đồng nào.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Trung bình</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Vừa phải</strong></div>
+    <div><small>Mức thụ động</small><strong>Cao</strong></div>
+  </div>
+  <h3>Loại bài viết hiệu quả nhất</h3>
+  <ul>
+    <li><strong>Bài review chi tiết:</strong> “Đánh giá máy lọc không khí X sau 6 tháng sử dụng”.</li>
+    <li><strong>Bài so sánh:</strong> “Kindle Paperwhite và Kobo Clara: nên mua máy nào?”.</li>
+    <li><strong>Bài danh sách:</strong> “7 phần mềm kế toán tốt nhất cho cửa hàng nhỏ”.</li>
+    <li><strong>Bài hướng dẫn:</strong> “Cách tạo website với hosting X trong 15 phút”.</li>
+  </ul>
+  <h3>Bắt đầu như thế nào</h3>
+  <ol>
+    <li>Liệt kê các sản phẩm bạn đã thật sự dùng và tin tưởng.</li>
+    <li>Tìm chương trình affiliate của chúng: sàn thương mại điện tử, mạng tiếp thị liên kết, hoặc chương trình riêng của từng hãng (phần mềm, hosting thường trả hoa hồng cao và định kỳ).</li>
+    <li>Viết bài trả lời đúng câu hỏi người mua đang tìm trên Google.</li>
+    <li>Ghi rõ trong bài rằng bạn có dùng link tiếp thị liên kết.</li>
+  </ol>
+    <h3>Ví dụ tính thu nhập</h3>
+  <p>Affiliate là một “phễu” gồm nhiều bước. Hiểu từng bước giúp bạn biết cần cải thiện chỗ nào:</p>
+  <div class="calc"><h4>Một bài review được 10.000 lượt xem/tháng</h4>
+    <div class="row"><span>Tỷ lệ bấm vào link (CTR) 5%</span><b>500 lượt bấm</b></div>
+    <div class="row"><span>Tỷ lệ mua hàng 3%</span><b>15 đơn</b></div>
+    <div class="row"><span>Hoa hồng trung bình 150.000đ/đơn</span><b>2.250.000đ</b></div>
+    <div class="total"><span>Mỗi tháng, chỉ từ một bài viết</span><span>~ 2,25 triệu</span></div>
+    <p class="note">Nâng CTR từ 5% lên 8% bằng nút bấm rõ ràng và bảng so sánh đặt đầu bài sẽ tăng thu nhập thêm 60%.</p>
+  </div>
+  <h3>Chọn sản phẩm để giới thiệu</h3>
+  <p>Có ba nhóm chính, mỗi nhóm có đặc điểm khác nhau:</p>
+  <ul>
+    <li><strong>Hàng tiêu dùng trên sàn TMĐT:</strong> dễ bán, người mua đông, nhưng hoa hồng thấp (thường vài phần trăm) và cookie ngắn.</li>
+    <li><strong>Phần mềm, hosting, dịch vụ online:</strong> hoa hồng cao, nhiều chương trình trả theo tháng suốt thời gian khách còn dùng.</li>
+    <li><strong>Khóa học, sản phẩm số của người khác:</strong> hoa hồng có thể lên tới 30–50%.</li>
+  </ul>
+  <p>Chiến lược tốt là kết hợp: sản phẩm giá thấp để tạo lượng đơn ổn định, sản phẩm giá trị cao để tạo khoản thu lớn.</p>
+  <h3>Cấu trúc một bài review chuyển đổi tốt</h3>
+  <ol>
+    <li>Kết luận nhanh ngay đầu bài: sản phẩm này hợp với ai, không hợp với ai.</li>
+    <li>Ảnh chụp thực tế do chính bạn chụp, không dùng ảnh của hãng.</li>
+    <li>Trải nghiệm sử dụng cụ thể, có số liệu, có thời gian dùng.</li>
+    <li>So sánh với 1–2 lựa chọn thay thế.</li>
+    <li>Phần câu hỏi thường gặp và nút mua rõ ràng ở cuối bài.</li>
+  </ol>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Viết review sản phẩm chưa từng dùng, chỉ tổng hợp lại thông tin của hãng — Google ngày càng đánh giá thấp loại nội dung này.</li>
+    <li>Rải link khắp nơi trong những bài không có ý định mua hàng.</li>
+    <li>Không cập nhật bài: giá, phiên bản, link hết hạn khiến mất đơn mà không biết.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Không cần tạo sản phẩm</li><li>Một bài tốt có thể bán hàng nhiều năm</li><li>Hoa hồng phần mềm có thể lặp lại hằng tháng</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Hoa hồng có thể bị cắt bất ngờ</li><li>Cookie ngắn, khó theo dõi</li><li>Dễ mất uy tín nếu giới thiệu bừa</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Người đọc tin những bài dám nói nhược điểm. Một bài review có phần “Ai không nên mua sản phẩm này” thường chuyển đổi tốt hơn bài chỉ khen.</p></div>
+  <div class="bridge"><span class="ic">🔗</span><p>Bài review chỉ ra tiền khi lên được trang đầu Google. Cách tối ưu SEO off-page để đẩy bài lên có trong ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a>.</p></div>
+</div></article>
+
+<!-- ===== 3 ===== -->
+<article class="chapter" id="c3"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">3</div><div><h2>Bài viết tài trợ</h2><div class="tag">Booking bài PR, review nhãn hàng, đặt banner trực tiếp</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill later">Giai đoạn sau</span></div><p>Nhãn hàng trả tiền để bạn viết về sản phẩm của họ. Giá trị cao, nhưng cần giữ uy tín với người đọc.</p><p class="when"><strong>Phù hợp:</strong> Khi blog đã 6–12 tháng tuổi, có độc giả ổn định.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Mô phỏng bài viết có tài trợ và media kit" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><rect class="card" x="40" y="28" width="560" height="304" rx="14"/>
+<rect class="ln" x="40" y="62" width="560" height="1.5"/>
+<circle class="r" cx="60" cy="45" r="5"/><circle cx="76" cy="45" r="5" style="fill:var(--c3)"/><circle class="g" cx="92" cy="45" r="5"/>
+<rect class="ln" x="116" y="36" width="460" height="18" rx="9" opacity=".6"/>
+<text class="m" x="130" y="49" font-size="11">blogcuaban.com/review-may-loc-khong-khi</text>
+<rect class="acc" x="64" y="80" width="170" height="24" rx="12"/><text class="w" x="149" y="96" font-size="11" text-anchor="middle">BÀI VIẾT CÓ TÀI TRỢ</text><text class="t" x="64" y="134" font-size="19">Trải nghiệm máy lọc X sau 30 ngày</text><rect class="soft" x="64" y="150" width="250" height="140" rx="10"/><rect class="acc" x="160" y="186" width="58" height="80" rx="10" opacity=".85"/><rect x="172" y="198" width="34" height="34" rx="17" style="fill:#fff;opacity:.7"/><rect class="ln" x="330" y="154" width="220" height="6" rx="3"/><rect class="ln" x="330" y="168" width="200" height="6" rx="3"/><rect class="ln" x="330" y="182" width="215" height="6" rx="3"/><rect class="ln" x="330" y="196" width="180" height="6" rx="3"/><rect class="ln" x="330" y="210" width="210" height="6" rx="3"/><rect class="ln" x="330" y="224" width="190" height="6" rx="3"/><rect class="ln" x="330" y="238" width="160" height="6" rx="3"/><rect class="ln" x="330" y="252" width="205" height="6" rx="3"/><rect class="ln" x="330" y="266" width="150" height="6" rx="3"/><g transform="translate(430,236)"><rect class="card" x="0" y="0" width="186" height="104" rx="12"/><text class="t" x="16" y="26" font-size="13">Media kit</text><text class="m" x="16" y="48" font-size="11">Lượt xem/tháng</text><text class="t" x="170" y="48" font-size="11" text-anchor="end">45.000</text><text class="m" x="16" y="68" font-size="11">Người đăng ký email</text><text class="t" x="170" y="68" font-size="11" text-anchor="end">3.200</text><text class="m" x="16" y="88" font-size="11">Tỷ lệ mở thư</text><text class="t" x="170" y="88" font-size="11" text-anchor="end">42%</text></g></svg></figure>
+  <p>Khi blog có lượng độc giả ổn định trong một lĩnh vực, các thương hiệu sẽ sẵn sàng trả tiền để bạn viết về sản phẩm của họ, hoặc đặt banner trực tiếp mà không qua mạng quảng cáo.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Trung bình</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Vừa – cao</strong></div>
+    <div><small>Mức thụ động</small><strong>Thấp</strong></div>
+  </div>
+  <h3>Cách thu hút nhãn hàng</h3>
+  <ol>
+    <li>Tạo trang “Hợp tác quảng cáo” trên blog: giới thiệu độc giả, số liệu truy cập, các hình thức hợp tác và cách liên hệ.</li>
+    <li>Chuẩn bị bảng giá (media kit) dạng PDF ngắn gọn.</li>
+    <li>Chủ động gửi email cho các thương hiệu nhỏ và vừa trong ngách của bạn — họ thường dễ hợp tác hơn tập đoàn lớn.</li>
+    <li>Sau mỗi chiến dịch, gửi báo cáo kết quả để được thuê lại.</li>
+  </ol>
+    <h3>Các gói hợp tác nên có</h3>
+  <p>Thay vì chỉ bán “một bài viết”, hãy thiết kế gói để tăng giá trị mỗi hợp đồng:</p>
+  <div class="calc"><h4>Ví dụ bảng gói dịch vụ</h4>
+    <div class="row"><span>Gói cơ bản: 1 bài review trên blog</span><b>Giá gốc</b></div>
+    <div class="row"><span>Gói tiêu chuẩn: bài review + giới thiệu trong newsletter</span><b>~ 1,5 lần</b></div>
+    <div class="row"><span>Gói chiến dịch: 3 bài trong 3 tháng + banner + newsletter</span><b>~ 3,5 lần</b></div>
+    <p class="note">Gói lớn có giá theo từng hạng mục thấp hơn, nhưng giá trị hợp đồng cao hơn và giúp bạn có thu nhập ổn định trong nhiều tháng.</p>
+  </div>
+  <h3>Định giá dựa trên điều gì</h3>
+  <ul>
+    <li><strong>Lượng truy cập và độ đúng đối tượng:</strong> 5.000 người đọc là kế toán có giá trị hơn 50.000 người đọc ngẫu nhiên đối với một hãng phần mềm kế toán.</li>
+    <li><strong>Mức độ tương tác:</strong> bình luận, tỷ lệ mở email, lượt chia sẻ.</li>
+    <li><strong>Thời gian và công sức:</strong> có cần dùng thử sản phẩm, chụp ảnh, quay video không.</li>
+    <li><strong>Quyền sử dụng nội dung:</strong> nếu nhãn hàng muốn dùng lại bài/ảnh của bạn cho quảng cáo của họ, tính thêm phí.</li>
+  </ul>
+  <h3>Mẫu email chào hợp tác</h3>
+  <div class="tip" style="--cc:var(--c3)"><p>“Chào anh/chị, em là [tên], tác giả blog [tên blog] chuyên về [chủ đề] với khoảng [số] người đọc mỗi tháng, chủ yếu là [mô tả độc giả]. Em đã dùng [sản phẩm] được [thời gian] và nghĩ độc giả của em sẽ rất quan tâm. Em gửi kèm media kit, rất mong được trao đổi thêm về khả năng hợp tác.”</p></div>
+  <h3>Lưu ý kỹ thuật</h3>
+  <p>Theo hướng dẫn của Google, các liên kết trong bài được trả tiền cần gắn thuộc tính <em>rel="sponsored"</em> (hoặc nofollow). Bán link “dofollow” để tăng thứ hạng cho bên khác có thể khiến blog bị phạt trên kết quả tìm kiếm.</p>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Nhận mọi lời mời, kể cả sản phẩm không liên quan chủ đề blog.</li>
+    <li>Không có hợp đồng hoặc email xác nhận rõ phạm vi công việc, số lần chỉnh sửa, thời hạn thanh toán.</li>
+    <li>Để nhãn hàng duyệt và sửa toàn bộ nội dung khiến bài viết giống quảng cáo.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Mỗi bài có giá trị cao</li><li>Không cần lượng truy cập khổng lồ nếu ngách hẹp</li><li>Xây quan hệ với thương hiệu</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Thu nhập không đều</li><li>Phải đàm phán, chăm sóc khách</li><li>Quá nhiều bài PR làm độc giả mất niềm tin</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Chỉ nhận tài trợ cho sản phẩm bạn sẵn sàng giới thiệu cả khi không được trả tiền, và luôn ghi rõ “bài viết có tài trợ”. Uy tín là thứ bạn đang thật sự bán.</p></div>
+</div></article>
+
+<!-- ===== 4 ===== -->
+<article class="chapter" id="c4"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">4</div><div><h2>Bán sản phẩm số</h2><div class="tag">Ebook, template, checklist, preset, file thiết kế</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill later">Giai đoạn sau</span></div><p>Tạo một lần, bán nhiều lần: ebook, template, checklist. Lợi nhuận cao mà không cần quá nhiều người đọc.</p><p class="when"><strong>Phù hợp:</strong> Khi đã có vài trăm người đăng ký email.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Ebook, template và bảng tính được bán dưới dạng sản phẩm số" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><g transform="translate(36,118) rotate(-8)"><rect x="0" y="0" width="120" height="160" rx="6" style="fill:var(--c4)"/><rect x="0" y="0" width="10" height="160" style="fill:#000;opacity:.18"/><text class="w" x="20" y="40" font-size="15">Thực đơn</text><text class="w" x="20" y="60" font-size="15">30 ngày</text><rect x="20" y="130" width="60" height="5" rx="2.5" style="fill:#fff;opacity:.6"/></g><g transform="translate(176,90) rotate(0)"><rect x="0" y="0" width="120" height="160" rx="6" style="fill:var(--c2)"/><rect x="0" y="0" width="10" height="160" style="fill:#000;opacity:.18"/><text class="w" x="20" y="40" font-size="15">Checklist</text><text class="w" x="20" y="60" font-size="15">du lịch</text><rect x="20" y="130" width="60" height="5" rx="2.5" style="fill:#fff;opacity:.6"/></g><g transform="translate(320,96)"><rect class="card" x="0" y="0" width="160" height="170" rx="10"/><rect class="acc" x="0" y="0" width="160" height="30" rx="10"/><rect class="acc" x="0" y="15" width="160" height="15"/><text class="w" x="12" y="20" font-size="12">Quản lý chi tiêu.xlsx</text><rect class="ln" x="12" y="44" width="60" height="12" rx="3"/><rect class="soft" x="82" y="44" width="66" height="12" rx="3"/><rect class="ln" x="12" y="68" width="60" height="12" rx="3"/><rect class="soft" x="82" y="68" width="66" height="12" rx="3"/><rect class="ln" x="12" y="92" width="60" height="12" rx="3"/><rect class="soft" x="82" y="92" width="66" height="12" rx="3"/><rect class="ln" x="12" y="116" width="60" height="12" rx="3"/><rect class="soft" x="82" y="116" width="66" height="12" rx="3"/><rect class="ln" x="12" y="140" width="60" height="12" rx="3"/><rect class="soft" x="82" y="140" width="66" height="12" rx="3"/></g><g transform="translate(500,70) rotate(12)"><path d="M0 0 h96 l18 30 l-18 30 h-96 z" class="acc"/><circle cx="12" cy="30" r="6" style="fill:#fff"/><text class="w" x="24" y="36" font-size="16">199.000đ</text></g><g transform="translate(500,230)"><circle cx="45" cy="45" r="45" class="g"/><path d="M45 22 v34 M30 44 l15 15 l15 -15 M28 68 h34" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g><text class="t" x="320" y="322" font-size="15" text-anchor="middle">Tạo một lần · bán không giới hạn</text></svg></figure>
+  <p>Sản phẩm số được tạo một lần và bán không giới hạn. Không tồn kho, không phí vận chuyển — biên lợi nhuận có thể lên tới gần như 100%.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Trung bình</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Thấp – vừa</strong></div>
+    <div><small>Mức thụ động</small><strong>Cao</strong></div>
+  </div>
+  <h3>Ý tưởng sản phẩm theo chủ đề</h3>
+  <ul>
+    <li><strong>Blog tài chính cá nhân:</strong> file Google Sheets quản lý chi tiêu.</li>
+    <li><strong>Blog nấu ăn:</strong> ebook thực đơn 30 ngày kèm danh sách đi chợ.</li>
+    <li><strong>Blog marketing:</strong> bộ template bài đăng mạng xã hội.</li>
+    <li><strong>Blog du lịch:</strong> cẩm nang lịch trình chi tiết cho một điểm đến.</li>
+  </ul>
+  <h3>Bắt đầu như thế nào</h3>
+  <ol>
+    <li>Xem bài nào trên blog được đọc nhiều và được hỏi nhiều nhất — đó là gợi ý sản phẩm tốt nhất.</li>
+    <li>Tạo phiên bản đầu tiên thật gọn, bán giá thấp để thử phản hồi.</li>
+    <li>Dùng các nền tảng bán sản phẩm số có sẵn cổng thanh toán, hoặc plugin bán hàng trên website.</li>
+    <li>Gắn sản phẩm vào cuối các bài viết liên quan.</li>
+  </ol>
+    <h3>Ví dụ tính thu nhập</h3>
+  <div class="calc"><h4>Blog 20.000 lượt xem/tháng bán một bộ template 199.000đ</h4>
+    <div class="row"><span>2% người đọc đăng ký nhận email</span><b>400 người mới/tháng</b></div>
+    <div class="row"><span>3% người đăng ký mua sau chuỗi email</span><b>12 đơn</b></div>
+    <div class="row"><span>Bán trực tiếp từ bài viết</span><b>~ 8 đơn</b></div>
+    <div class="total"><span>20 đơn × 199.000đ</span><span>~ 4 triệu/tháng</span></div>
+    <p class="note">Số liệu minh họa. Điểm mấu chốt: với sản phẩm của riêng mình, 20.000 lượt xem có thể mang lại nhiều hơn hẳn so với quảng cáo hiển thị.</p>
+  </div>
+  <h3>Xây “bậc thang giá”</h3>
+  <p>Đừng chỉ có một sản phẩm. Hãy tạo các bậc để người đọc đi từ miễn phí đến trả tiền cao dần:</p>
+  <ol>
+    <li><strong>Miễn phí:</strong> checklist, mẫu nhỏ để đổi lấy email.</li>
+    <li><strong>Giá thấp (99.000–299.000đ):</strong> ebook, bộ template — giúp người đọc “mua lần đầu”.</li>
+    <li><strong>Giá trung bình:</strong> bộ tài nguyên đầy đủ, gói combo nhiều sản phẩm.</li>
+    <li><strong>Giá cao:</strong> khóa học hoặc dịch vụ (xem nguồn 5 và 7).</li>
+  </ol>
+  <p>Người đã mua một lần có khả năng mua tiếp cao hơn rất nhiều so với người chưa từng mua.</p>
+  <h3>Trang bán hàng cần có</h3>
+  <ul>
+    <li>Tiêu đề nói rõ kết quả người mua đạt được.</li>
+    <li>Ảnh xem trước bên trong sản phẩm.</li>
+    <li>Danh sách những gì nhận được, dành cho ai và không dành cho ai.</li>
+    <li>Nhận xét của người mua thật.</li>
+    <li>Chính sách hoàn tiền rõ ràng để giảm rủi ro cho người mua.</li>
+  </ul>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Mất nhiều tháng làm sản phẩm “hoàn hảo” rồi mới biết không ai cần.</li>
+    <li>Định giá quá thấp vì thiếu tự tin, khiến sản phẩm bị đánh giá là kém chất lượng.</li>
+    <li>Chỉ đăng một bài thông báo ra mắt rồi không nhắc lại nữa.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Lợi nhuận cao</li><li>Bạn toàn quyền kiểm soát giá</li><li>Không cần quá nhiều traffic</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Tốn công tạo ban đầu</li><li>Phải tự làm marketing</li><li>Dễ bị sao chép, chia sẻ lậu</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Hỏi trực tiếp độc giả trước khi làm. Một khảo sát 3 câu gửi qua email có thể giúp bạn tránh mất hàng tuần làm một sản phẩm không ai cần.</p></div>
+  <div class="bridge"><span class="ic">🛒</span><p>Muốn AI soạn nội dung giúp bạn nhanh hơn? Ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a> có bộ prompt mẫu — sao chép, dán vào AI là ra kết quả.</p></div>
+</div></article>
+
+<!-- ===== 5 ===== -->
+<article class="chapter" id="c5"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">5</div><div><h2>Khóa học online</h2><div class="tag">Video, bài tập, cộng đồng học viên</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill later">Giai đoạn sau</span></div><p>Đóng gói kiến thức thành chương trình học có hướng dẫn. Giá bán cao nhất, nhưng cũng tốn công nhất.</p><p class="when"><strong>Phù hợp:</strong> Khi đã có uy tín và danh sách email.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Giao diện khóa học online với video và danh sách bài học" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><rect class="card" x="40" y="28" width="560" height="304" rx="14"/>
+<rect class="ln" x="40" y="62" width="560" height="1.5"/>
+<circle class="r" cx="60" cy="45" r="5"/><circle cx="76" cy="45" r="5" style="fill:var(--c3)"/><circle class="g" cx="92" cy="45" r="5"/>
+<rect class="ln" x="116" y="36" width="460" height="18" rx="9" opacity=".6"/>
+<text class="m" x="130" y="49" font-size="11">hoc.blogcuaban.com/khoa-hoc</text>
+<rect x="60" y="80" width="340" height="190" rx="10" style="fill:var(--ink)"/><circle class="acc" cx="230" cy="168" r="30"/><path d="M220 153 v30 l26 -15 z" style="fill:#fff"/><rect x="76" y="246" width="308" height="5" rx="2.5" style="fill:#fff;opacity:.25"/><rect class="acc" x="76" y="246" width="140" height="5" rx="2.5"/><text class="t" x="60" y="300" font-size="14">Bài 4: Viết bài chuẩn SEO đầu tiên</text><rect class="soft" x="418" y="80" width="166" height="232" rx="10"/><circle class="g" cx="438" cy="108" r="9"/><path d="M434 108 l3 3 l6 -6" stroke="#fff" stroke-width="2" fill="none"/><text class="m" x="456" y="112" font-size="12">1. Chọn ngách</text><circle class="g" cx="438" cy="144" r="9"/><path d="M434 144 l3 3 l6 -6" stroke="#fff" stroke-width="2" fill="none"/><text class="m" x="456" y="148" font-size="12">2. Dựng blog</text><circle class="g" cx="438" cy="180" r="9"/><path d="M434 180 l3 3 l6 -6" stroke="#fff" stroke-width="2" fill="none"/><text class="m" x="456" y="184" font-size="12">3. Từ khóa</text><circle cx="438" cy="216" r="9" style="fill:none;stroke:var(--muted);stroke-width:2;opacity:.6"/><text class="t" x="456" y="220" font-size="12">4. Viết bài SEO</text><circle cx="438" cy="252" r="9" style="fill:none;stroke:var(--muted);stroke-width:2;opacity:.6"/><text class="m" x="456" y="256" font-size="12">5. Thu email</text><circle cx="438" cy="288" r="9" style="fill:none;stroke:var(--muted);stroke-width:2;opacity:.6"/><text class="m" x="456" y="292" font-size="12">6. Kiếm tiền</text></svg></figure>
+  <p>Khóa học là “phiên bản cao cấp” của sản phẩm số. Thay vì chỉ cung cấp thông tin, bạn dẫn dắt người học đạt được một kết quả cụ thể — vì thế giá bán cao hơn nhiều.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Khó</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Vừa phải</strong></div>
+    <div><small>Mức thụ động</small><strong>Trung bình</strong></div>
+  </div>
+  <h3>Công thức một khóa học bán được</h3>
+  <ul>
+    <li><strong>Kết quả rõ ràng:</strong> “Viết được bài chuẩn SEO đầu tiên lên top Google” tốt hơn “Học SEO từ A–Z”.</li>
+    <li><strong>Lộ trình từng bước:</strong> chia thành các module ngắn, mỗi module giải quyết một việc.</li>
+    <li><strong>Bài tập thực hành:</strong> người học làm, không chỉ xem.</li>
+    <li><strong>Hỗ trợ:</strong> nhóm hỏi đáp hoặc buổi live định kỳ.</li>
+  </ul>
+  <h3>Bắt đầu như thế nào</h3>
+  <ol>
+    <li>Mở bán trước (pre-sale) cho danh sách email với giá ưu đãi để kiểm chứng nhu cầu.</li>
+    <li>Dạy lứa đầu tiên trực tiếp qua Zoom, ghi hình lại.</li>
+    <li>Chỉnh sửa dựa trên câu hỏi thật của học viên rồi đóng gói thành khóa học tự học.</li>
+  </ol>
+    <h3>Ví dụ: mở bán trước để kiểm chứng</h3>
+  <div class="calc"><h4>Danh sách 1.000 email, khóa học 1.990.000đ</h4>
+    <div class="row"><span>Giá ưu đãi lứa đầu: 990.000đ</span><b>Giảm 50%</b></div>
+    <div class="row"><span>2,5% người trong danh sách đăng ký</span><b>25 học viên</b></div>
+    <div class="total"><span>Doanh thu lứa đầu</span><span>~ 24,75 triệu</span></div>
+    <p class="note">Nếu chưa tới 10 người đăng ký, bạn hoàn tiền và biết ngay chủ đề chưa đúng — trước khi tốn hàng tháng sản xuất.</p>
+  </div>
+  <h3>Dàn bài mẫu cho một khóa học</h3>
+  <p>Ví dụ khóa “Viết blog kiếm tiền trong 60 ngày”:</p>
+  <ol>
+    <li>Chọn ngách và độc giả mục tiêu.</li>
+    <li>Dựng blog: tên miền, hosting, giao diện cơ bản.</li>
+    <li>Nghiên cứu từ khóa và lên kế hoạch 30 bài đầu tiên.</li>
+    <li>Viết bài chuẩn SEO, kèm bài tập viết thật.</li>
+    <li>Xây danh sách email.</li>
+    <li>Gắn nguồn thu đầu tiên: affiliate hoặc dịch vụ.</li>
+  </ol>
+  <p>Mỗi module nên kết thúc bằng một việc cụ thể học viên phải làm xong. Học viên hoàn thành khóa học sẽ là người viết nhận xét tốt nhất cho bạn.</p>
+  <h3>Chọn nền tảng</h3>
+  <div class="tools"><span>Teachable</span><span>Thinkific</span><span>Kajabi</span><span>LearnDash (WordPress)</span><span>Nhóm kín + Google Drive</span></div>
+  <p>Nền tảng chuyên dụng tiện lợi nhưng có phí; plugin trên WordPress rẻ hơn nhưng cần tự quản lý kỹ thuật. Với lứa đầu, một nhóm kín cùng các buổi Zoom là hoàn toàn đủ.</p>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Nhồi quá nhiều nội dung — khóa học dài không đồng nghĩa với giá trị cao, mà thường làm học viên bỏ dở.</li>
+    <li>Không có hạn chót hay đợt mở bán, khiến người đọc cứ “để sau”.</li>
+    <li>Bỏ quên học viên sau khi họ đã trả tiền.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Giá trị mỗi đơn hàng lớn</li><li>Khẳng định vị thế chuyên gia</li><li>Có thể bán lại nhiều đợt</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Tốn nhiều thời gian sản xuất</li><li>Cần kỹ năng giảng dạy</li><li>Phải hỗ trợ học viên liên tục</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Đừng quay video hoàn hảo ngay từ đầu. Học viên trả tiền vì kết quả, không phải vì ánh sáng studio.</p></div>
+</div></article>
+
+<!-- ===== 6 ===== -->
+<article class="chapter" id="c6"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">6</div><div><h2>Hội viên trả phí</h2><div class="tag">Membership, nội dung độc quyền, cộng đồng kín</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill later">Giai đoạn sau</span></div><p>Người đọc trả phí hằng tháng cho nội dung độc quyền. Thu nhập đều đặn, đổi lại phải duy trì nội dung liên tục.</p><p class="when"><strong>Phù hợp:</strong> Khi đã có cộng đồng độc giả trung thành.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Khu vực nội dung dành cho hội viên trả phí" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><text class="t" x="40" y="54" font-size="18">Khu vực hội viên</text><rect class="acc" x="232" y="36" width="110" height="26" rx="13"/><text class="w" x="287" y="53" font-size="11" text-anchor="middle">99.000đ/tháng</text><rect class="card" x="40" y="80" width="128" height="120" rx="12"/><circle class="g" cx="104.0" cy="142" r="13"/><path d="M98.0 142 l4 4 l8 -8" stroke="#fff" stroke-width="2.5" fill="none"/><text class="t" x="104.0" y="184" font-size="12" text-anchor="middle">Phân tích tuần</text><rect class="card" x="184" y="80" width="128" height="120" rx="12"/><g transform="translate(248.0,132)"><rect x="-14" y="0" width="28" height="22" rx="4" class="acc"/><path d="M-8 0 v-6 a8 8 0 0 1 16 0 v6" class="accs" style="stroke-width:3.5"/></g><text class="t" x="248.0" y="184" font-size="12" text-anchor="middle">Kho template</text><rect class="card" x="328" y="80" width="128" height="120" rx="12"/><g transform="translate(392.0,132)"><rect x="-14" y="0" width="28" height="22" rx="4" class="acc"/><path d="M-8 0 v-6 a8 8 0 0 1 16 0 v6" class="accs" style="stroke-width:3.5"/></g><text class="t" x="392.0" y="184" font-size="12" text-anchor="middle">Hỏi đáp live</text><rect class="card" x="472" y="80" width="128" height="120" rx="12"/><g transform="translate(536.0,132)"><rect x="-14" y="0" width="28" height="22" rx="4" class="acc"/><path d="M-8 0 v-6 a8 8 0 0 1 16 0 v6" class="accs" style="stroke-width:3.5"/></g><text class="t" x="536.0" y="184" font-size="12" text-anchor="middle">Báo cáo quý</text><rect class="card" x="40" y="230" width="300" height="100" rx="12"/><text class="m" x="60" y="260" font-size="12">Hội viên đang hoạt động</text><text class="t" x="60" y="296" font-size="30">128</text><text class="g" x="140" y="296" font-size="13" style="font-family:Be Vietnam Pro,sans-serif;font-weight:700">▲ +14 tháng này</text><circle cx="400" cy="292" r="20" style="fill:var(--c1);stroke:var(--card);stroke-width:3"/><circle cx="430" cy="292" r="20" style="fill:var(--c2);stroke:var(--card);stroke-width:3"/><circle cx="460" cy="292" r="20" style="fill:var(--c4);stroke:var(--card);stroke-width:3"/><circle cx="490" cy="292" r="20" style="fill:var(--c5);stroke:var(--card);stroke-width:3"/><circle cx="520" cy="292" r="20" style="fill:var(--c7);stroke:var(--card);stroke-width:3"/><text class="m" x="400" y="336" font-size="12">Cộng đồng thành viên</text></svg></figure>
+  <p>Độc giả trả một khoản cố định mỗi tháng hoặc mỗi năm để nhận nội dung chuyên sâu, tài nguyên độc quyền hoặc quyền tham gia cộng đồng. Đây là nguồn thu định kỳ — thứ giúp bạn ngủ ngon nhất.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Khó</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Vừa phải</strong></div>
+    <div><small>Mức thụ động</small><strong>Thấp</strong></div>
+  </div>
+  <h3>Những gì có thể đặt sau “bức tường trả phí”</h3>
+  <ul>
+    <li>Bài phân tích chuyên sâu hằng tuần.</li>
+    <li>Thư viện template, tài liệu cập nhật liên tục.</li>
+    <li>Buổi hỏi đáp trực tiếp hằng tháng.</li>
+    <li>Nhóm cộng đồng kín để kết nối các thành viên.</li>
+  </ul>
+  <h3>Giữ chân hội viên</h3>
+  <p>Khó khăn lớn nhất không phải là có hội viên mới mà là giữ họ ở lại. Hãy đăng nội dung theo lịch cố định, tạo cảm giác “mất gì đó” nếu hủy, và hỏi lý do mỗi khi có người rời đi.</p>
+    <h3>Ví dụ tính thu nhập</h3>
+  <div class="calc"><h4>Cộng đồng 100 hội viên, phí 99.000đ/tháng</h4>
+    <div class="row"><span>Doanh thu hằng tháng</span><b>9.900.000đ</b></div>
+    <div class="row"><span>Tỷ lệ hủy 10%/tháng</span><b>Mất 10 người</b></div>
+    <div class="row"><span>Cần thêm mỗi tháng chỉ để giữ nguyên</span><b>10 hội viên mới</b></div>
+    <p class="note">Giảm tỷ lệ hủy từ 10% xuống 5% có tác dụng tương đương tăng gấp đôi lượng hội viên mới. Vì thế giữ chân quan trọng không kém tìm khách mới.</p>
+  </div>
+  <h3>Ba mô hình hội viên phổ biến</h3>
+  <ul>
+    <li><strong>Nội dung:</strong> bài viết, báo cáo chuyên sâu định kỳ. Phù hợp blog phân tích, đầu tư, chuyên ngành.</li>
+    <li><strong>Thư viện tài nguyên:</strong> kho template, ảnh, mẫu thiết kế được bổ sung liên tục.</li>
+    <li><strong>Cộng đồng:</strong> nhóm kín, sự kiện online, kết nối thành viên. Giá trị đến từ chính các thành viên.</li>
+  </ul>
+  <h3>Công cụ gợi ý</h3>
+  <div class="tools"><span>Patreon</span><span>Ghost</span><span>Memberful</span><span>MemberPress</span><span>Substack</span></div>
+  <h3>Lịch nội dung mẫu cho hội viên</h3>
+  <ul>
+    <li><strong>Hằng tuần:</strong> một bài chuyên sâu hoặc tài nguyên mới.</li>
+    <li><strong>Hằng tháng:</strong> một buổi hỏi đáp trực tiếp, có ghi hình cho người vắng mặt.</li>
+    <li><strong>Hằng quý:</strong> một “món quà lớn”: báo cáo tổng hợp, workshop, hoặc mini-course.</li>
+  </ul>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Hứa quá nhiều quyền lợi rồi không duy trì được.</li>
+    <li>Mở cộng đồng khi chưa có đủ độc giả trung thành — một nhóm vắng vẻ khiến người mới rời đi nhanh.</li>
+    <li>Không chào đón, hướng dẫn hội viên mới trong tuần đầu tiên.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Thu nhập ổn định, dự đoán được</li><li>Gắn kết sâu với độc giả trung thành</li><li>Cộng đồng tự tạo giá trị cho nhau</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Áp lực sản xuất nội dung đều đặn</li><li>Tỷ lệ hủy đăng ký là thách thức</li><li>Cần nền tảng kỹ thuật phù hợp</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Gói theo năm (rẻ hơn khoảng hai tháng so với trả theo tháng) giúp bạn có dòng tiền lớn ngay và giảm tỷ lệ hủy đáng kể.</p></div>
+</div></article>
+
+<!-- ===== 7 ===== -->
+<article class="chapter" id="c7"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">7</div><div><h2>Dịch vụ & tư vấn</h2><div class="tag">Coaching, freelance, tư vấn 1–1, diễn giả</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill now">Bắt đầu ngay</span></div><p>Dùng blog như hồ sơ năng lực để nhận việc. Cách có tiền nhanh nhất, gần như không cần lượng truy cập.</p><p class="when"><strong>Phù hợp:</strong> Ngay từ đầu, nếu bạn có chuyên môn.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Lịch đặt tư vấn và báo giá dịch vụ" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><rect class="card" x="40" y="40" width="340" height="280" rx="14"/><text class="t" x="68" y="74" font-size="16">Lịch tư vấn tuần này</text><text class="m" x="92" y="100" font-size="12" text-anchor="middle">T2</text><rect class="soft" x="68" y="112" width="48" height="36" rx="8"/><rect class="acc" x="68" y="158" width="48" height="36" rx="8"/><text class="w" x="92" y="180" font-size="10" text-anchor="middle">Đã đặt</text><rect class="soft" x="68" y="204" width="48" height="36" rx="8"/><text class="m" x="154" y="100" font-size="12" text-anchor="middle">T3</text><rect class="acc" x="130" y="112" width="48" height="36" rx="8"/><text class="w" x="154" y="134" font-size="10" text-anchor="middle">Đã đặt</text><rect class="soft" x="130" y="158" width="48" height="36" rx="8"/><rect class="acc" x="130" y="204" width="48" height="36" rx="8"/><text class="w" x="154" y="226" font-size="10" text-anchor="middle">Đã đặt</text><text class="m" x="216" y="100" font-size="12" text-anchor="middle">T4</text><rect class="soft" x="192" y="112" width="48" height="36" rx="8"/><rect class="soft" x="192" y="158" width="48" height="36" rx="8"/><rect class="acc" x="192" y="204" width="48" height="36" rx="8"/><text class="w" x="216" y="226" font-size="10" text-anchor="middle">Đã đặt</text><text class="m" x="278" y="100" font-size="12" text-anchor="middle">T5</text><rect class="soft" x="254" y="112" width="48" height="36" rx="8"/><rect class="acc" x="254" y="158" width="48" height="36" rx="8"/><text class="w" x="278" y="180" font-size="10" text-anchor="middle">Đã đặt</text><rect class="soft" x="254" y="204" width="48" height="36" rx="8"/><text class="m" x="340" y="100" font-size="12" text-anchor="middle">T6</text><rect class="acc" x="316" y="112" width="48" height="36" rx="8"/><text class="w" x="340" y="134" font-size="10" text-anchor="middle">Đã đặt</text><rect class="soft" x="316" y="158" width="48" height="36" rx="8"/><rect class="soft" x="316" y="204" width="48" height="36" rx="8"/><text class="m" x="68" y="290" font-size="12">6/15 khung giờ đã được đặt</text><g transform="translate(404,56)"><rect class="card" x="0" y="0" width="200" height="80" rx="14"/><text class="m" x="16" y="30" font-size="12">Khách mới:</text><text class="t" x="16" y="54" font-size="12">“Em đọc blog của anh và</text><text class="t" x="70" y="70" font-size="12">muốn thuê viết 8 bài/tháng”</text></g><g transform="translate(404,156)"><rect class="card" x="0" y="0" width="200" height="164" rx="14"/><text class="t" x="16" y="30" font-size="14">Báo giá</text><text class="m" x="16" y="58" font-size="12">Gói 8 bài</text><text class="t" x="184" y="58" font-size="12" text-anchor="end">6.000.000đ</text><text class="m" x="16" y="82" font-size="12">Tư vấn 1–1</text><text class="t" x="184" y="82" font-size="12" text-anchor="end">1.000.000đ</text><rect class="ln" x="16" y="96" width="168" height="1.5"/><text class="t" x="16" y="122" font-size="13">Đặt cọc 50%</text><rect class="g" x="16" y="134" width="168" height="20" rx="10"/><text class="w" x="100" y="148" font-size="11" text-anchor="middle">ĐÃ XÁC NHẬN</text></g></svg></figure>
+  <p>Đây là nguồn thu nhanh nhất cho blog mới. Bạn không cần hàng chục nghìn lượt xem — chỉ cần vài người đọc đúng đối tượng tin rằng bạn giỏi và thuê bạn làm việc.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Dễ – trung bình</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Rất thấp</strong></div>
+    <div><small>Mức thụ động</small><strong>Không thụ động</strong></div>
+  </div>
+  <h3>Ví dụ</h3>
+  <ul>
+    <li>Blog về viết lách → nhận viết content, biên tập nội dung.</li>
+    <li>Blog về thiết kế → nhận thiết kế logo, nhận diện thương hiệu.</li>
+    <li>Blog về sức khỏe, thể hình → huấn luyện cá nhân trực tuyến.</li>
+    <li>Blog về kinh doanh online → tư vấn chiến lược cho chủ shop.</li>
+  </ul>
+  <h3>Bắt đầu như thế nào</h3>
+  <ol>
+    <li>Tạo trang “Làm việc với tôi” mô tả rõ dịch vụ, quy trình và kết quả khách nhận được.</li>
+    <li>Đặt lời mời ngắn ở cuối các bài viết liên quan.</li>
+    <li>Đăng các case study: bạn đã giúp khách hàng nào, kết quả ra sao.</li>
+  </ol>
+    <h3>Cách định giá dịch vụ</h3>
+  <ul>
+    <li><strong>Theo giờ:</strong> dễ tính nhưng càng làm nhanh càng kiếm ít. Phù hợp tư vấn ngắn.</li>
+    <li><strong>Theo dự án:</strong> báo giá trọn gói theo kết quả bàn giao. Hợp với viết nội dung, thiết kế.</li>
+    <li><strong>Theo tháng (retainer):</strong> khách trả cố định hằng tháng cho một khối lượng công việc. Ổn định nhất.</li>
+  </ul>
+  <div class="calc"><h4>Ví dụ: blogger viết về marketing nhận viết content</h4>
+    <div class="row"><span>3 khách retainer, mỗi khách 8 bài/tháng</span><b>3 × 6 triệu</b></div>
+    <div class="row"><span>2 buổi tư vấn 1–1</span><b>2 × 1 triệu</b></div>
+    <div class="total"><span>Tổng mỗi tháng</span><span>~ 20 triệu</span></div>
+    <p class="note">Số liệu minh họa. Blog chỉ cần vài nghìn lượt xem đúng đối tượng là đủ để có những khách hàng này.</p>
+  </div>
+  <h3>“Đóng gói” dịch vụ</h3>
+  <p>Thay vì “nhận làm SEO”, hãy bán một gói có tên, phạm vi và giá cố định, ví dụ: <em>“Gói kiểm tra SEO website: báo cáo 20 trang + 1 buổi gọi 60 phút, bàn giao trong 7 ngày”</em>. Dịch vụ đóng gói dễ hiểu, dễ mua, và về sau có thể giao cho cộng sự làm.</p>
+  <h3>Quy trình làm việc chuyên nghiệp</h3>
+  <ol>
+    <li>Form đăng ký để lọc khách: ngân sách, mục tiêu, thời gian.</li>
+    <li>Buổi gọi ngắn 15–20 phút để hiểu nhu cầu.</li>
+    <li>Báo giá bằng văn bản, nhận cọc trước khi bắt đầu.</li>
+    <li>Bàn giao đúng hạn, xin nhận xét và cho phép đăng case study.</li>
+  </ol>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Nhận việc không cọc, không thống nhất số lần chỉnh sửa.</li>
+    <li>Ngừng viết blog vì bận khách hàng — nguồn khách mới sẽ cạn sau vài tháng.</li>
+    <li>Giữ mức giá cũ quá lâu dù đã có nhiều kinh nghiệm và nhận xét tốt.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Có tiền ngay từ sớm</li><li>Đơn giá cao</li><li>Hiểu sâu nhu cầu khách để làm sản phẩm sau này</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Đổi thời gian lấy tiền</li><li>Khó mở rộng</li><li>Phụ thuộc vào sức lao động của bạn</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Ghi lại mọi câu hỏi khách hàng hay hỏi. Sau một thời gian, đó chính là dàn bài cho ebook (nguồn 4) hoặc khóa học (nguồn 5) của bạn.</p></div>
+</div></article>
+
+<!-- ===== 8 ===== -->
+<article class="chapter" id="c8"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">8</div><div><h2>Email newsletter</h2><div class="tag">Tài trợ bản tin, bán hàng qua email, newsletter trả phí</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill now">Bắt đầu ngay</span></div><p>Thu email người đọc để giữ liên lạc và bán hàng sau này. Đây là tài sản bạn thật sự sở hữu.</p><p class="when"><strong>Phù hợp:</strong> Ngay từ ngày đầu tiên.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Hộp thư email và số liệu bản tin" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><rect class="card" x="40" y="36" width="360" height="296" rx="14"/><text class="t" x="56" y="66" font-size="15">Hộp thư người đọc</text><rect class="soft" x="56" y="84" width="328" height="50" rx="10"/><circle class="acc" cx="80" cy="109" r="12" opacity="1"/><text class="t" x="102" y="105" font-size="12">Bản tin tuần #12: 5 công cụ AI viết blog</text><text class="m" x="102" y="122" font-size="11">Hôm nay mình chia sẻ…</text><rect class="card" x="56" y="142" width="328" height="50" rx="10"/><circle class="acc" cx="80" cy="167" r="12" opacity="0.45"/><text class="t" x="102" y="163" font-size="12">Món quà của bạn đây 🎁</text><text class="m" x="102" y="180" font-size="11">Checklist 30 bài viết đầu…</text><rect class="card" x="56" y="200" width="328" height="50" rx="10"/><circle class="acc" cx="80" cy="225" r="12" opacity="0.45"/><text class="t" x="102" y="221" font-size="12">Câu chuyện vì sao mình viết blog</text><text class="m" x="102" y="238" font-size="11">Ba năm trước mình…</text><rect class="card" x="56" y="258" width="328" height="50" rx="10"/><circle class="acc" cx="80" cy="283" r="12" opacity="0.45"/><text class="t" x="102" y="279" font-size="12">[Tài trợ] Hosting giảm 40%</text><text class="m" x="102" y="296" font-size="11">Ưu đãi dành riêng…</text><g transform="translate(430,60)"><rect class="card" x="0" y="0" width="170" height="270" rx="14"/><text class="t" x="85" y="32" font-size="13" text-anchor="middle">Bản tin #12</text><circle cx="85" cy="104" r="46" style="fill:none;stroke:var(--line);stroke-width:14"/><circle cx="85" cy="104" r="46" class="accs" style="stroke-width:14;stroke-dasharray:115.6 289;stroke-linecap:butt" transform="rotate(-90 85 104)"/><text class="t" x="85" y="110" font-size="20" text-anchor="middle">40%</text><text class="m" x="85" y="172" font-size="11" text-anchor="middle">tỷ lệ mở thư</text><text class="m" x="20" y="208" font-size="11">Người đăng ký</text><text class="t" x="150" y="208" font-size="11" text-anchor="end">5.000</text><text class="m" x="20" y="230" font-size="11">Lượt nhấp</text><text class="t" x="150" y="230" font-size="11" text-anchor="end">6,2%</text><text class="m" x="20" y="252" font-size="11">Hủy đăng ký</text><text class="t" x="150" y="252" font-size="11" text-anchor="end">0,3%</text></g></svg></figure>
+  <p>Traffic từ Google có thể biến mất sau một lần cập nhật thuật toán, nhưng danh sách email thì thuộc về bạn. Newsletter vừa là kênh bán hàng cho mọi nguồn thu khác, vừa tự nó tạo ra tiền.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Trung bình</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Vừa phải</strong></div>
+    <div><small>Mức thụ động</small><strong>Trung bình</strong></div>
+  </div>
+  <h3>Ba cách kiếm tiền từ newsletter</h3>
+  <ul>
+    <li><strong>Tài trợ bản tin:</strong> thương hiệu trả tiền để xuất hiện trong email của bạn.</li>
+    <li><strong>Bán hàng:</strong> giới thiệu sản phẩm số, khóa học, link affiliate tới người đọc đã tin bạn.</li>
+    <li><strong>Bản tin trả phí:</strong> một phần nội dung chỉ dành cho người đăng ký có trả tiền.</li>
+  </ul>
+  <h3>Xây danh sách email</h3>
+  <ol>
+    <li>Tạo “quà tặng” (lead magnet): checklist, ebook mini, template miễn phí đổi lấy email.</li>
+    <li>Đặt form đăng ký ở cuối bài, thanh bên và trang Giới thiệu.</li>
+    <li>Viết chuỗi email chào mừng tự động 3–5 thư giới thiệu bài hay nhất của bạn.</li>
+    <li>Gửi bản tin đều đặn, dù chỉ mỗi tuần một lần.</li>
+  </ol>
+    <h3>Ví dụ tính giá trị danh sách email</h3>
+  <div class="calc"><h4>Danh sách 5.000 người đăng ký</h4>
+    <div class="row"><span>Tài trợ bản tin: 2 suất/tháng</span><b>Thu theo suất</b></div>
+    <div class="row"><span>Tỷ lệ mở 40%</span><b>~ 2.000 người đọc/bản tin</b></div>
+    <div class="row"><span>Một đợt giới thiệu sản phẩm 499.000đ, 1% mua</span><b>50 đơn ≈ 25 triệu</b></div>
+    <p class="note">Số liệu minh họa. Một danh sách nhỏ nhưng gắn bó thường mang lại nhiều hơn một danh sách lớn nhưng ít ai mở thư.</p>
+  </div>
+  <h3>Công cụ gợi ý</h3>
+  <div class="tools"><span>MailerLite</span><span>Kit (ConvertKit)</span><span>Beehiiv</span><span>Mailchimp</span><span>Substack</span></div>
+  <p>Hầu hết đều có gói miễn phí cho danh sách nhỏ. Hãy chọn công cụ có chức năng tự động hóa (automation) và gắn thẻ (tag) người đăng ký theo sở thích.</p>
+  <h3>Chuỗi email chào mừng mẫu</h3>
+  <ol>
+    <li><strong>Ngày 0:</strong> gửi quà tặng, giới thiệu bạn là ai và bản tin sẽ gửi gì.</li>
+    <li><strong>Ngày 2:</strong> câu chuyện của bạn, vì sao bạn viết về chủ đề này.</li>
+    <li><strong>Ngày 4:</strong> 3 bài viết hay nhất trên blog.</li>
+    <li><strong>Ngày 6:</strong> hỏi người đọc đang gặp khó khăn gì (để họ trả lời lại).</li>
+    <li><strong>Ngày 8:</strong> giới thiệu nhẹ nhàng sản phẩm hoặc dịch vụ phù hợp.</li>
+  </ol>
+  <h3>Chỉ số cần theo dõi</h3>
+  <ul>
+    <li><strong>Tỷ lệ chuyển đổi đăng ký</strong> trên blog: bao nhiêu % người đọc để lại email.</li>
+    <li><strong>Tỷ lệ nhấp</strong> trong email: phản ánh nội dung có hữu ích không (tỷ lệ mở ngày càng kém chính xác do tính năng bảo mật của các ứng dụng email).</li>
+    <li><strong>Tỷ lệ hủy đăng ký</strong> sau mỗi thư: tăng đột biến là dấu hiệu bạn bán quá nhiều.</li>
+  </ul>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Mua danh sách email — vi phạm quy định, làm thư rơi vào spam.</li>
+    <li>Chỉ gửi email khi có thứ cần bán.</li>
+    <li>Không dọn dẹp danh sách: người không mở thư nhiều tháng vẫn tốn phí và kéo giảm độ uy tín gửi thư.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Bạn sở hữu kênh tiếp cận</li><li>Tỷ lệ chuyển đổi cao hơn mạng xã hội</li><li>Hỗ trợ mọi nguồn thu khác</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Tăng trưởng chậm lúc đầu</li><li>Chi phí phần mềm tăng theo danh sách</li><li>Dễ bị coi là spam nếu bán quá nhiều</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Bắt đầu thu email từ ngày đầu tiên viết blog. Đây là việc gần như mọi blogger thành công đều nói rằng họ ước đã làm sớm hơn.</p></div>
+  <div class="bridge"><span class="ic">📬</span><p>Người đọc tin và để lại email nhiều hơn khi blog có tên miền riêng, chuyên nghiệp. Cách chọn và cài đặt tên miền có trong ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a>.</p></div>
+</div></article>
+
+<!-- ===== 9 ===== -->
+<article class="chapter" id="c9"><div class="wrap">
+  <div class="ch-head"><div class="ch-num">9</div><div><h2>Mua bán blog</h2><div class="tag">Bán blog đã có thu nhập, hoặc mua – cải thiện – bán lại</div></div></div>
+  <div class="quick"><div class="quick-top"><span class="quick-label">Đọc nhanh</span><span class="pill later">Giai đoạn sau</span></div><p>Bán blog đã có thu nhập để nhận một khoản tiền lớn một lần. Mục tiêu dài hạn, không dành cho giai đoạn đầu.</p><p class="when"><strong>Phù hợp:</strong> Khi blog đã có thu nhập ổn định ít nhất 12 tháng.</p></div>
+  <figure class="ill"><svg viewBox="0 0 640 360" role="img" aria-label="Tin rao bán blog trên sàn với biểu đồ lợi nhuận" xmlns="http://www.w3.org/2000/svg"><rect class="bg" width="640" height="360"/><rect class="card" x="40" y="40" width="560" height="280" rx="16"/><rect class="soft" x="64" y="64" width="200" height="130" rx="10"/><rect class="ln" x="80" y="84" width="110" height="8" rx="3"/><rect class="ln" x="80" y="102" width="160" height="8" rx="3"/><rect class="ln" x="80" y="120" width="140" height="8" rx="3"/><rect class="ln" x="80" y="138" width="150" height="8" rx="3"/><rect class="ln" x="80" y="156" width="120" height="8" rx="3"/><text class="t" x="64" y="226" font-size="16">Blog ngách tài chính cá nhân</text><text class="m" x="64" y="248" font-size="12">Thành lập 2021 · 180 bài viết · 4 nguồn thu</text><rect class="acc" x="64" y="266" width="170" height="36" rx="10"/><text class="w" x="149" y="289" font-size="13" text-anchor="middle">Giá: $35.000</text><text class="m" x="300" y="82" font-size="12">Lợi nhuận 12 tháng</text><text class="t" x="300" y="108" font-size="22">$1.000/tháng</text><path transform="translate(0,-46)" d="M320,240 L342,234 L364,236 L386,225 L408,220 L430,222 L452,212 L474,206 L496,204 L518,196 L540,190 L562,184" class="accs"/><path transform="translate(0,-46)" d="M320,240 L342,234 L364,236 L386,225 L408,220 L430,222 L452,212 L474,206 L496,204 L518,196 L540,190 L562,184 L562,250 L320,250 Z" class="acc" opacity=".12"/><rect class="ln" x="320" y="204" width="250" height="1.5"/><text class="m" x="300" y="276" font-size="11">Hệ số định giá</text><text class="t" x="300" y="298" font-size="15">× 35</text><g transform="translate(470,268) rotate(-10)"><rect x="0" y="0" width="104" height="38" rx="8" style="fill:none;stroke:var(--c8);stroke-width:3"/><text x="52" y="25" font-size="15" text-anchor="middle" style="fill:var(--c8);font-family:Be Vietnam Pro,sans-serif;font-weight:900">ĐÃ BÁN</text></g></svg></figure>
+  <p>Một blog có lượng truy cập và thu nhập ổn định là một tài sản có thể định giá và chuyển nhượng. Trên thị trường quốc tế, giá bán thường được tính bằng một bội số của lợi nhuận trung bình hằng tháng.</p>
+  <div class="meter">
+    <div><small>Độ khó</small><strong>Khó</strong></div>
+    <div><small>Cần lượng truy cập</small><strong>Cao</strong></div>
+    <div><small>Mức thụ động</small><strong>Một lần</strong></div>
+  </div>
+  <h3>Điều gì làm tăng giá trị blog</h3>
+  <ul>
+    <li>Thu nhập ổn định hoặc tăng đều trong ít nhất 12 tháng.</li>
+    <li>Nhiều nguồn thu và nhiều nguồn traffic, không phụ thuộc một kênh.</li>
+    <li>Quy trình được ghi chép rõ ràng để người mua tiếp quản dễ dàng.</li>
+    <li>Danh sách email, tài khoản mạng xã hội đi kèm.</li>
+    <li>Không phụ thuộc vào thương hiệu cá nhân của chủ cũ.</li>
+  </ul>
+  <h3>Chiến lược “flip” blog</h3>
+  <p>Mua một blog cũ có nội dung tốt nhưng bị bỏ quên, cập nhật bài viết, tối ưu SEO và kiếm tiền tốt hơn, rồi bán lại sau 1–2 năm. Đây là chiến lược cho người đã có kinh nghiệm và vốn.</p>
+    <h3>Blog được định giá như thế nào</h3>
+  <p>Trên các sàn mua bán website quốc tế, giá thường bằng lợi nhuận ròng trung bình hằng tháng (12 tháng gần nhất) nhân với một hệ số, phổ biến khoảng 25–45 lần tùy độ ổn định và rủi ro.</p>
+  <div class="calc"><h4>Ví dụ định giá</h4>
+    <div class="row"><span>Lợi nhuận ròng trung bình</span><b>$1.000/tháng</b></div>
+    <div class="row"><span>Hệ số (blog ổn định, nhiều nguồn thu)</span><b>× 35</b></div>
+    <div class="total"><span>Giá trị ước tính</span><span>~ $35.000</span></div>
+    <p class="note">Hệ số thấp hơn nếu blog phụ thuộc một nguồn traffic, thu nhập giảm dần, hoặc gắn chặt với tên tuổi chủ cũ.</p>
+  </div>
+  <h3>Nơi mua bán</h3>
+  <div class="tools"><span>Empire Flippers</span><span>Flippa</span><span>Motion Invest</span><span>Hội nhóm chuyên ngành</span></div>
+  <p>Các sàn lớn có dịch vụ ký quỹ trung gian (escrow) giúp giảm rủi ro. Khi giao dịch riêng, tuyệt đối dùng trung gian thanh toán, không chuyển tiền trước.</p>
+  <h3>Checklist thẩm định khi mua blog</h3>
+  <ol>
+    <li>Yêu cầu truy cập trực tiếp (quyền xem) Google Analytics và Search Console, không chỉ ảnh chụp màn hình.</li>
+    <li>Kiểm tra lịch sử thu nhập qua tài khoản quảng cáo, affiliate.</li>
+    <li>Xem lịch sử trang trên Wayback Machine, kiểm tra blog có từng bị phạt.</li>
+    <li>Kiểm tra hồ sơ liên kết (backlink) có dấu hiệu mua bán link không.</li>
+    <li>Xác nhận nội dung không đạo văn và bạn được chuyển giao toàn bộ quyền.</li>
+  </ol>
+  <h3>Sai lầm thường gặp</h3>
+  <ul class="mistakes">
+    <li>Tin số liệu trong ảnh chụp màn hình — rất dễ làm giả.</li>
+    <li>Mua blog vừa tăng traffic đột biến trong vài tháng — thường là dấu hiệu không bền vững.</li>
+    <li>Người bán thay đổi quá nhiều trước khi bán khiến số liệu bị xáo trộn.</li>
+  </ul>
+  <div class="proscons">
+    <div class="pros"><h4>Ưu điểm</h4><ul><li>Nhận một khoản tiền lớn một lần</li><li>Giải phóng thời gian cho dự án mới</li></ul></div>
+    <div class="cons"><h4>Nhược điểm</h4><ul><li>Mất nguồn thu nhập định kỳ</li><li>Rủi ro lừa đảo khi giao dịch</li><li>Cần thẩm định kỹ khi mua</li></ul></div>
+  </div>
+  <div class="tip"><p><strong>Mẹo:</strong> Ngay cả khi chưa có ý định bán, hãy vận hành blog như thể sắp bán: ghi chép số liệu, quy trình và đa dạng nguồn thu. Blog như vậy cũng bền vững hơn khi bạn giữ lại.</p></div>
+</div></article>
+
+<!-- ===== BẢNG SO SÁNH ===== -->
+<section class="part" id="compare"><div class="wrap">
+  <h2>Bảng so sánh nhanh</h2>
+  <p>Dùng bảng này để chọn những nguồn hợp với bạn ở thời điểm hiện tại. Số sao thể hiện tiềm năng thu nhập khi làm tốt.</p>
+  <div class="table-scroll">
+  <table>
+    <thead><tr><th>Nguồn thu</th><th>Traffic cần</th><th>Công sức đầu</th><th>Thụ động</th><th>Tiềm năng</th></tr></thead>
+    <tbody>
+      <tr><td><span class="dot" style="background:var(--c1)"></span>Quảng cáo</td><td>Cao</td><td>Thấp</td><td>Rất cao</td><td class="stars">★★★☆☆</td></tr>
+      <tr><td><span class="dot" style="background:var(--c2)"></span>Affiliate</td><td>Vừa</td><td>Vừa</td><td>Cao</td><td class="stars">★★★★☆</td></tr>
+      <tr><td><span class="dot" style="background:var(--c3)"></span>Bài tài trợ</td><td>Vừa – cao</td><td>Thấp</td><td>Thấp</td><td class="stars">★★★☆☆</td></tr>
+      <tr><td><span class="dot" style="background:var(--c4)"></span>Sản phẩm số</td><td>Thấp – vừa</td><td>Vừa</td><td>Cao</td><td class="stars">★★★★☆</td></tr>
+      <tr><td><span class="dot" style="background:var(--c5)"></span>Khóa học</td><td>Vừa</td><td>Cao</td><td>Trung bình</td><td class="stars">★★★★★</td></tr>
+      <tr><td><span class="dot" style="background:var(--c6)"></span>Hội viên</td><td>Vừa</td><td>Cao</td><td>Thấp</td><td class="stars">★★★★☆</td></tr>
+      <tr><td><span class="dot" style="background:var(--c7)"></span>Dịch vụ</td><td>Rất thấp</td><td>Thấp</td><td>Không</td><td class="stars">★★★☆☆</td></tr>
+      <tr><td><span class="dot" style="background:var(--c8)"></span>Newsletter</td><td>Vừa</td><td>Vừa</td><td>Trung bình</td><td class="stars">★★★★☆</td></tr>
+      <tr><td><span class="dot" style="background:var(--c9)"></span>Bán blog</td><td>Cao</td><td>Rất cao</td><td>Một lần</td><td class="stars">★★★★★</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div></section>
+
+<!-- ===== LỘ TRÌNH ===== -->
+<section class="part" id="roadmap"><div class="wrap">
+  <h2>Lộ trình kết hợp theo giai đoạn</h2>
+  <p>Các nguồn thu hiệu quả nhất khi chúng hỗ trợ nhau: bài viết kéo người đọc, email giữ chân họ, sản phẩm và dịch vụ biến niềm tin thành thu nhập.</p>
+
+  <div class="stage">
+    <div class="lvl">Khởi động<span>0 – 6 tháng</span></div>
+    <div>Tập trung viết nội dung chất lượng và thu thập email. Nếu có chuyên môn, nhận dịch vụ ngay để có thu nhập sớm.
+      <div class="chips"><span class="chip" style="background:var(--c7)">Dịch vụ</span><span class="chip" style="background:var(--c8)">Newsletter</span><span class="chip" style="background:var(--c2)">Affiliate</span></div></div>
+  </div>
+  <div class="stage">
+    <div class="lvl">Tăng tốc<span>6 – 18 tháng</span></div>
+    <div>Khi traffic ổn định, thêm quảng cáo, ra mắt sản phẩm số đầu tiên và bắt đầu nhận bài tài trợ chọn lọc.
+      <div class="chips"><span class="chip" style="background:var(--c1)">Quảng cáo</span><span class="chip" style="background:var(--c4)">Sản phẩm số</span><span class="chip" style="background:var(--c3);color:#1B1F2A">Tài trợ</span></div></div>
+  </div>
+  <div class="stage">
+    <div class="lvl">Mở rộng<span>18 tháng trở đi</span></div>
+    <div>Đóng gói chuyên môn thành khóa học, xây cộng đồng hội viên. Khi blog vận hành ổn định, cân nhắc bán để bắt đầu dự án lớn hơn.
+      <div class="chips"><span class="chip" style="background:var(--c5)">Khóa học</span><span class="chip" style="background:var(--c6)">Hội viên</span><span class="chip" style="background:var(--c9)">Bán blog</span></div></div>
+  </div>
+</div></section>
+
+
+<!-- ===== KẾ HOẠCH 90 NGÀY ===== -->
+<section class="part" id="plan90"><div class="wrap">
+  <h2>Kế hoạch hành động 90 ngày</h2>
+  <p>Một kế hoạch mẫu cho blog mới hoặc blog chưa có thu nhập. Hãy điều chỉnh theo thời gian bạn có.</p>
+  <div class="week"><b>Tuần 1–2</b><ul><li>Chốt ngách và chân dung độc giả.</li><li>Dựng blog, cài Analytics và Search Console — dùng AI làm theo từng bước trong ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a>.</li><li>Nhờ AI gợi ý và nhóm 30 chủ đề bài viết, rồi kiểm tra lại bằng công cụ từ khóa.</li></ul></div>
+  <div class="week"><b>Tuần 3–4</b><ul><li>Viết 6–8 bài đầu tiên, ưu tiên bài giải đáp câu hỏi cụ thể.</li><li>Tạo quà tặng miễn phí và form đăng ký email.</li><li>Viết chuỗi 5 email chào mừng.</li></ul></div>
+  <div class="week"><b>Tuần 5–8</b><ul><li>Duy trì 2–3 bài/tuần.</li><li>Viết 2 bài review hoặc so sánh có link affiliate.</li><li>Tạo trang “Làm việc với tôi” nếu có chuyên môn để nhận dịch vụ.</li></ul></div>
+  <div class="week"><b>Tuần 9–12</b><ul><li>Xem bài nào được đọc nhiều nhất, viết thêm bài liên quan và liên kết nội bộ.</li><li>Gửi khảo sát cho danh sách email: người đọc cần gì nhất?</li><li>Phác thảo sản phẩm số đầu tiên dựa trên kết quả khảo sát.</li></ul></div>
+  <p style="margin-top:1rem">Sau 90 ngày, bạn sẽ có khoảng 25–35 bài viết, danh sách email đầu tiên, 1–2 nguồn thu đang chạy và ý tưởng sản phẩm đã được độc giả xác nhận.</p>
+</div></section>
+
+<!-- ===== FAQ ===== -->
+<section class="part" id="faq"><div class="wrap">
+  <h2>Câu hỏi thường gặp</h2>
+  <details><summary>Bao lâu thì blog bắt đầu có tiền?</summary><p>Với dịch vụ, có thể ngay trong vài tuần đầu. Với quảng cáo và affiliate dựa vào traffic từ Google, thường cần 6–12 tháng viết đều đặn vì bài mới cần thời gian để lên thứ hạng.</p></details>
+  <details><summary>Viết blog bằng tiếng Việt có kiếm được tiền không?</summary><p>Có. Quảng cáo với traffic Việt Nam có RPM thấp, nhưng các nguồn như dịch vụ, sản phẩm số, khóa học, affiliate với sàn TMĐT trong nước không phụ thuộc nhiều vào RPM. Blog tiếng Việt cũng có ít cạnh tranh hơn ở nhiều ngách.</p></details>
+  <details><summary>Có nên dùng AI để làm blog?</summary><p>Nên — nếu dùng đúng cách. AI rất giỏi ở các việc tốn thời gian: lên dàn ý, nghiên cứu, viết nháp, sửa câu chữ, soạn các trang kỹ thuật, viết email. Thứ AI không thay bạn được là trải nghiệm thật và góc nhìn riêng. Blog toàn bài AI viết hàng loạt, không ai biên tập, rất khó tạo niềm tin và dễ bị Google đánh giá thấp. Cách kết hợp hiệu quả nhất được hướng dẫn trong ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a>.</p></details>
+  <details><summary>Cần bao nhiêu bài viết mới bắt đầu kiếm tiền?</summary><p>Không có con số cố định, nhưng khoảng 30–50 bài chất lượng trong một ngách là mốc phổ biến để Google bắt đầu coi blog là nguồn đáng tin và để các mạng quảng cáo xét duyệt.</p></details>
+  <details><summary>Tôi chưa có blog, nên bắt đầu từ đâu?</summary><p>Bắt đầu bằng việc chọn ngách và dựng blog đúng cách. Ebook <a href="#offer"><span data-fill="name">Tạo Blog Bằng AI</span></a> hướng dẫn bạn từ chọn tên miền, cài hosting đến SEO, kèm bộ prompt mẫu để dùng AI ngay.</p></details>
+  <details><summary>Nên tập trung vào bao nhiêu nguồn thu cùng lúc?</summary><p>Giai đoạn đầu chỉ nên 2–3 nguồn. Làm tốt một nguồn trước rồi mở rộng sẽ hiệu quả hơn làm dở dang cả chín.</p></details>
+</div></section>
+
+
+<!-- ===== SẢN PHẨM CHÍNH ===== -->
+<section class="offer" id="offer">
+  <div class="offer-grid">
+    <div class="bookmock" aria-hidden="true">
+      <div class="bars"><i style="background:var(--c1)"></i><i style="background:var(--c2)"></i><i style="background:var(--c3)"></i><i style="background:var(--c4)"></i><i style="background:var(--c8)"></i></div>
+      <h3 data-fill="name">Tạo Blog Bằng AI</h3>
+      <small>Ebook · <span data-fill="author">Đào Xuân Quảng</span></small>
+    </div>
+    <div>
+      <p class="kicker">Bạn đã có bản đồ. Giờ là lúc lên đường.</p>
+      <h2>Dựng xong blog trong vài buổi tối — kể cả khi bạn chưa từng làm website.</h2>
+      <p>Bạn vừa biết 9 cách blog có thể mang lại thu nhập. Nhưng hãy thành thật: nếu tối nay bạn mở máy tính ra để bắt đầu, bạn sẽ làm gì đầu tiên?</p>
+      <p>Tên miền chọn thế nào cho đúng? Hosting là gì, mua loại nào, cấu hình ra sao? Kết nối tên miền với hosting thế nào? Làm sao để Google biết đến blog của mình? Ra lệnh cho AI thế nào mới ra kết quả? Đây chính là chỗ phần lớn mọi người dừng lại — không phải vì thiếu ý chí, mà vì có quá nhiều thứ không biết bắt đầu từ đâu.</p>
+      <p><strong data-fill="name">Tạo Blog Bằng AI</strong> gỡ nút thắt đó. Thay vì tự mày mò, bạn có AI làm trợ lý ở từng bước — và một cuốn sách chỉ cho bạn chính xác cần ra lệnh cho AI những gì.</p>
+
+      <div class="table-scroll" style="background:var(--card)">
+      <table>
+        <thead><tr><th>Việc cần làm</th><th>Tự mày mò</th><th>Với AI + ebook</th></tr></thead>
+        <tbody>
+          <tr><td>Hiểu hosting, tên miền, cấu hình</td><td>Đọc thuật ngữ khó hiểu</td><td style="color:var(--c8);font-weight:700">Giải thích dễ hiểu</td></tr>
+          <tr><td>Chọn tên miền</td><td>Phân vân, dễ chọn sai</td><td style="color:var(--c8);font-weight:700">Có tiêu chí rõ ràng</td></tr>
+          <tr><td>Cài tên miền và hosting</td><td>Xem hàng chục video rời rạc</td><td style="color:var(--c8);font-weight:700">Làm theo từng bước</td></tr>
+          <tr><td>SEO off-page</td><td>Không biết bắt đầu từ đâu</td><td style="color:var(--c8);font-weight:700">Có hướng dẫn cụ thể</td></tr>
+          <tr><td>Dùng AI tạo nội dung</td><td>Tự mò câu lệnh</td><td style="color:var(--c8);font-weight:700">Sao chép prompt, dán là ra</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 style="margin:2rem 0 .5rem;font-size:1.2rem">Bên trong ebook có gì</h3>
+      <!-- Danh sách nội dung ebook: sửa tại đây nếu mục lục thay đổi -->
+      <div class="inside-groups">
+        <p class="ig-title">Giai đoạn 1 · Nền tảng</p>
+        <ul class="inside">
+          <li><span class="ig-n">01</span><strong>Hiểu tầng kỹ thuật mà không cần học lập trình</strong> — tên miền, hosting, DNS, SSL, WordPress giải thích bằng ví dụ đời thường; cách chọn hosting cho người mới</li>
+          <li><span class="ig-n">02</span><strong>Chọn ngách bằng AI</strong> — tiêu chí một ngách tốt, cách kiểm tra nhu cầu và khả năng kiếm tiền</li>
+          <li><span class="ig-n">03</span><strong>Chọn tên miền</strong> — đặt tên dễ nhớ, chọn đuôi .com, .vn hay .com.vn, tránh lỗi phải đổi tên về sau</li>
+        </ul>
+        <p class="ig-title">Giai đoạn 2 · Dựng blog</p>
+        <ul class="inside">
+          <li><span class="ig-n">04</span><strong>Cài đặt tên miền và hosting từng bước</strong> — mua, trỏ tên miền, cài WordPress, bật SSL — có ảnh chụp từng bước</li>
+          <li><span class="ig-n">05</span><strong>Thiết lập WordPress</strong> — cài đặt cơ bản, giao diện, plugin cần thiết và các trang bắt buộc</li>
+          <li><span class="ig-n">06</span><strong>Kết nối Google</strong> — Search Console, Analytics, sitemap — để Google biết blog của bạn tồn tại</li>
+        </ul>
+        <p class="ig-title">Giai đoạn 3 · Nội dung và SEO</p>
+        <ul class="inside">
+          <li><span class="ig-n">07</span><strong>Nghiên cứu từ khóa và kế hoạch nội dung</strong> — hiểu người đọc đang tìm gì, lên kế hoạch 30 bài đầu tiên</li>
+          <li><span class="ig-n">08</span><strong>SEO on-page</strong> — tiêu đề, cấu trúc bài, liên kết nội bộ, hình ảnh, tốc độ</li>
+          <li><span class="ig-n">09</span><strong>Viết bài cùng AI</strong> — quy trình từ ý tưởng đến bài hoàn chỉnh, cách thêm trải nghiệm thật</li>
+          <li><span class="ig-n">10</span><strong>Những lưu ý khi dùng AI</strong> — tránh nội dung hàng loạt, sao chép, thông tin sai — các lỗi khiến blog bị Google phạt</li>
+          <li><span class="ig-n">11</span><strong>SEO off-page</strong> — mạng xã hội, cộng đồng, backlink tự nhiên và những thứ cần tránh</li>
+        </ul>
+        <p class="ig-title">Giai đoạn 4 · Vận hành và kiếm tiền</p>
+        <ul class="inside">
+          <li><span class="ig-n">12</span><strong>Bảo trì blog</strong> — cập nhật, sao lưu, bảo mật, theo dõi số liệu</li>
+          <li><span class="ig-n">13</span><strong>Lộ trình 30 ngày và nguồn thu đầu tiên</strong> — biết chính xác làm gì tiếp sau khi blog đã chạy</li>
+        </ul>
+        <p class="ig-title">Phụ lục</p>
+        <ul class="inside">
+          <li><strong>Bộ prompt mẫu</strong> — sắp theo từng chương — sao chép, dán vào AI là ra kết quả</li>
+          <li><strong>Xử lý lỗi thường gặp</strong> — web chưa lên, trắng trang, quên mật khẩu… và cách khắc phục</li>
+          <li><strong>Checklist tổng và từ điển thuật ngữ</strong> — đánh dấu tiến độ, tra nhanh từ lạ</li>
+        </ul>
+        <div class="bonus">
+          <p class="ig-title" style="margin-top:0">Quà tặng kèm</p>
+          <ul class="inside">
+            <li><strong>Checklist cuối mỗi chương</strong> — biết chắc mình đã làm xong trước khi sang bước mới</li>
+            <li><strong>Bí mật kiếm tiền từ nước ngoài</strong> — khi bạn đã xây xong blog và chọn đi theo hướng affiliate, Quảng sẽ tiết lộ cách Quảng đang kiếm tiền từ thị trường nước ngoài</li>
+            <li><strong>Nhóm hỗ trợ người mua</strong> — có nơi để hỏi khi bị kẹt</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="forwho">
+        <div><h4>Ebook này dành cho bạn nếu</h4>Bạn mới tìm hiểu về blog, muốn có thêm một nguồn thu nhập, nhưng chưa biết bắt đầu từ đâu và ngại phần kỹ thuật.</div>
+        <div><h4>Không dành cho bạn nếu</h4>Bạn tìm cách làm giàu nhanh mà không cần viết gì. Blog cần thời gian — AI chỉ giúp bạn đi nhanh hơn, không đi thay bạn.</div>
+      </div>
+
+      <h3 style="margin:2rem 0 .5rem;font-size:1.2rem">Có thể bạn đang nghĩ…</h3>
+      <details><summary>“Bây giờ mới bắt đầu có muộn không?”</summary><p>Người đọc vẫn tìm kiếm thông tin trên Google và hỏi AI mỗi ngày, và những câu trả lời đó vẫn đến từ các trang viết. Mỗi ngách luôn có chỗ cho người viết có trải nghiệm thật. Thời điểm tốt nhất để bắt đầu là khi bạn có công cụ giúp đi nhanh hơn — và đó chính là bây giờ.</p></details>
+      <details><summary>“Mình viết không hay.”</summary><p>Người đọc blog không cần văn hay, họ cần thông tin hữu ích và dễ hiểu. Ebook có bộ prompt mẫu: sao chép, dán vào AI là có ngay kết quả để bạn chỉnh lại, còn bạn chỉ cần mang vào trải nghiệm của chính mình.</p></details>
+      <details><summary>“Mình không rành công nghệ.”</summary><p>Ebook được viết cho chính bạn. Hosting, tên miền, cấu hình đều được giải thích bằng ngôn ngữ đời thường, và phần cài đặt có hướng dẫn từng bước để bạn làm theo.</p></details>
+      <details><summary>“Mình không có nhiều thời gian.”</summary><p>Đó là lý do nên dùng AI. Những việc tốn nhiều thời gian nhất — lên ý tưởng, viết nháp, soạn trang kỹ thuật — là những việc AI làm nhanh nhất.</p></details>
+      <details><summary>“Dùng AI viết blog có bị Google phạt không?”</summary><p>Google không phạt nội dung vì được hỗ trợ bởi AI, mà đánh giá thấp nội dung kém chất lượng, sản xuất hàng loạt. Ebook có riêng một phần về những lưu ý khi dùng AI, giúp bạn tránh các lỗi khiến blog bị phạt.</p></details>
+
+      <div id="testimonials"></div>
+
+      <div class="pricebox">
+        <p style="margin:0 0 .6rem">Một khóa học làm blog thường có giá từ vài trăm nghìn đến vài triệu đồng. Ebook này cho bạn quy trình cốt lõi với giá:</p>
+        <div><span class="new" data-fill="price">299.000đ</span></div>
+        <div style="color:var(--muted);font-size:.92rem">Một khoản đầu tư nhỏ để tránh nhiều tháng tự mày mò.</div>
+        <a class="btn" data-link href="https://daoxuanquang.com.vn/ebook-tao-blog">Có, tôi muốn tạo blog bằng AI →</a>
+        <p class="guarantee">Thanh toán một lần · Đọc trọn đời</p>
+      </div>
+      <p style="font-size:.98rem">Hãy hình dung: một tháng nữa, bạn có một blog đứng tên mình, mười bài viết đầu tiên đã lên mạng, form thu email đang chạy và một đường link affiliate đầu tiên đang chờ lượt bấm. Hoặc một tháng nữa, bạn vẫn đang “tìm hiểu thêm”. Khác biệt chỉ nằm ở việc bạn bắt đầu hôm nay hay không.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LỜI KẾT ===== -->
+<section class="part" id="end"><div class="wrap">
+  <h2>Lời kết & checklist hành động</h2>
+  <p>Kiếm tiền từ blog không phải là cuộc chạy nước rút. Những blog thành công nhất đều có chung một điểm: họ giải quyết vấn đề thật cho một nhóm người đọc cụ thể, kiên trì đủ lâu, và không đặt mọi quả trứng vào một giỏ.</p>
+  <p>Bắt đầu ngay tuần này với danh sách sau:</p>
+  <ul class="checklist">
+    <li>Dùng AI dựng blog đúng cách ngay từ đầu (xem <a href="#offer">ebook <span data-fill="name">Tạo Blog Bằng AI</span></a>).</li>
+    <li>Xác định rõ độc giả mục tiêu của blog là ai và họ đang gặp vấn đề gì.</li>
+    <li>Chọn 2–3 nguồn thu phù hợp nhất với giai đoạn hiện tại.</li>
+    <li>Tạo form đăng ký email và một món quà tặng miễn phí.</li>
+    <li>Viết một bài review hoặc so sánh sản phẩm bạn đang dùng — để AI lên dàn ý, bạn thêm trải nghiệm thật.</li>
+    <li>Tạo trang “Làm việc với tôi” hoặc “Hợp tác quảng cáo”.</li>
+    <li>Đặt lịch xuất bản cố định và theo dõi số liệu mỗi tháng.</li>
+  </ul>
+  <p>Chúc bạn viết bền, viết hay — và sống được bằng chính những con chữ của mình.</p>
+  <div class="authorbox"><div class="av" aria-hidden="true">Q</div><div><strong data-fill="author">Đào Xuân Quảng</strong><span>Tác giả ebook · Theo dõi các bài viết mới về blog và AI tại <a data-site href="https://daoxuanquang.com.vn" target="_blank" rel="noopener"><span data-fill="website">daoxuanquang.com.vn</span></a></span></div></div>
+  <p class="ps">P.S. Nếu bạn chỉ lướt xuống cuối trang: cuốn sách này cho bạn 9 cách kiếm tiền từ blog, nhưng cả 9 cách đều cần một blog được dựng đúng. Ebook <strong data-fill="name">Tạo Blog Bằng AI</strong> giúp bạn làm việc đó trong vài buổi tối. Chỉ <span data-fill="price">299.000đ</span>, thanh toán một lần — <a data-link href="https://daoxuanquang.com.vn/ebook-tao-blog">bắt đầu tại đây</a>.</p>
+</div></section>
+</main>
+
+<footer>
+  <div class="rainbow" style="max-width:12rem;margin:0 auto 1.25rem;border-radius:99px" aria-hidden="true"></div>
+  9 Nguồn Thu Nhập Từ Blog · Tác giả <span data-fill="author">Đào Xuân Quảng</span><br><a data-site href="https://daoxuanquang.com.vn" target="_blank" rel="noopener"><span data-fill="website">daoxuanquang.com.vn</span></a><br>
+  Nội dung mang tính tham khảo, không phải lời khuyên tài chính.
+</footer>
+
+<div class="sticky-cta" id="sticky" role="region" aria-label="Ebook Tạo Blog Bằng AI">
+  <span class="txt">Dựng xong blog trong vài buổi tối với ebook <strong data-fill="name">Tạo Blog Bằng AI</strong></span>
+  <a data-link href="https://daoxuanquang.com.vn/ebook-tao-blog" target="_blank" rel="noopener">Xem ebook</a>
+  <button type="button" aria-label="Đóng" onclick="this.parentNode.remove()">×</button>
+</div>
+<script is:inline>
+(function(){
+  var P = window.PRODUCT || {};
+  document.querySelectorAll('[data-fill]').forEach(function(el){
+    var v = P[el.getAttribute('data-fill')]; if (v) el.textContent = v;
+  });
+  document.querySelectorAll('[data-link]').forEach(function(a){
+    if (P.link) { a.href = P.link; a.target = "_blank"; a.rel = "noopener"; }
+  });
+  document.querySelectorAll('[data-site]').forEach(function(a){
+    if (P.website) a.href = 'https://' + P.website.replace(/^https?:\/\//,'');
+  });
+  var T = (P.testimonials || []).filter(function(t){ return t && t.text; });
+  var box = document.getElementById('testimonials');
+  if (box && T.length) {
+    var h = document.createElement('h3'); h.textContent = 'Người đọc nói gì'; h.style.cssText='margin:2rem 0 .5rem;font-size:1.2rem';
+    var wrap = document.createElement('div'); wrap.className = 'testi';
+    T.forEach(function(t){
+      var q = document.createElement('blockquote'); q.textContent = '“' + t.text + '”';
+      var c = document.createElement('cite'); c.textContent = '— ' + (t.name || '') + (t.role ? ', ' + t.role : '');
+      q.appendChild(c); wrap.appendChild(q);
+    });
+    box.appendChild(h); box.appendChild(wrap);
+  }
+  window.addEventListener('beforeprint', function(){ document.querySelectorAll('details').forEach(function(d){ d.setAttribute('open',''); }); });
+  var bar = document.getElementById('sticky'), offer = document.getElementById('offer');
+  var offerVisible = false;
+  if ('IntersectionObserver' in window && offer) {
+    new IntersectionObserver(function(e){ offerVisible = e[0].isIntersecting; update(); }).observe(offer);
+  }
+  function update(){
+    if (!document.body.contains(bar)) return;
+    var past = window.scrollY > window.innerHeight * 1.2;
+    bar.classList.toggle('show', past && !offerVisible);
+  }
+  window.addEventListener('scroll', update, {passive:true});
+})();
+</script>
+</body>
+</html>
