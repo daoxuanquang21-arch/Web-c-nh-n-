@@ -219,7 +219,186 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
             </div>
           </div>
 
+          <!-- REVENUE & PRODUCT ANALYTICS DASHBOARD -->
+          <div id="revenue-analytics-section" class="space-y-6 pt-2">
+            <!-- Header & Filter Toolbar -->
+            <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4 bg-slate-900/80 p-5 rounded-2xl border border-slate-800">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="text-xl">📊</span>
+                  <h3 class="text-lg sm:text-xl font-extrabold text-white">Thống Kê Doanh Thu Chi Tiết</h3>
+                  <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[11px] font-bold">Theo Tháng & Sản Phẩm</span>
+                </div>
+                <p class="text-xs text-slate-400">
+                  Phân tích dòng tiền thực tế, tỷ trọng đóng góp và số lượng ấn phẩm bán ra theo từng chu kỳ.
+                </p>
+              </div>
 
+              <!-- Filter Controls -->
+              <div class="flex flex-wrap items-center gap-2.5">
+                <div class="inline-flex rounded-xl p-1 bg-slate-950 border border-slate-800 text-xs">
+                  <button type="button" class="rev-filter-btn px-3 py-1.5 rounded-lg font-bold transition-all bg-emerald-600 text-white shadow cursor-pointer" data-filter="all">Tất cả</button>
+                  <button type="button" class="rev-filter-btn px-3 py-1.5 rounded-lg font-bold transition-all text-slate-400 hover:text-white cursor-pointer" data-filter="this-year">Năm nay</button>
+                  <button type="button" class="rev-filter-btn px-3 py-1.5 rounded-lg font-bold transition-all text-slate-400 hover:text-white cursor-pointer" data-filter="this-month">Tháng này</button>
+                  <button type="button" class="rev-filter-btn px-3 py-1.5 rounded-lg font-bold transition-all text-slate-400 hover:text-white cursor-pointer" data-filter="last-month">Tháng trước</button>
+                </div>
+
+                <!-- Custom Month Select -->
+                <select id="rev-month-select" class="px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-950 text-xs text-slate-200 focus:outline-none focus:border-brand-green cursor-pointer">
+                  <option value="all">📅 Toàn bộ các tháng</option>
+                </select>
+
+                <!-- Refresh & Link to CRM -->
+                <button id="rev-refresh-btn" type="button" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-all text-xs cursor-pointer" title="Làm mới số liệu">
+                  🔄
+                </button>
+                <button id="rev-goto-crm-btn" type="button" class="px-3.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500 hover:text-white text-cyan-400 border border-cyan-500/20 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm">
+                  <span>💳</span> Quản Trị Đơn Hàng
+                </button>
+              </div>
+            </div>
+
+            <!-- 4 Deep-dive Analytics KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <!-- KPI 1: Thực Thu -->
+              <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/40 border border-emerald-500/30 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Doanh Thu Đã Thu</span>
+                  <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 text-base">💰</span>
+                </div>
+                <div>
+                  <span id="rev-kpi-total" class="text-2xl sm:text-3xl font-black text-white font-mono block">0đ</span>
+                  <span id="rev-kpi-orders-count" class="text-[11px] text-slate-400 mt-1 block">Từ 0 đơn hàng đã hoàn tất</span>
+                </div>
+              </div>
+
+              <!-- KPI 2: AOV -->
+              <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950/40 border border-cyan-500/30 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Giá Trị TB / Đơn (AOV)</span>
+                  <span class="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 text-base">📈</span>
+                </div>
+                <div>
+                  <span id="rev-kpi-aov" class="text-2xl sm:text-3xl font-black text-white font-mono block">0đ</span>
+                  <span class="text-[11px] text-slate-400 mt-1 block">Doanh số trung bình / đơn thành công</span>
+                </div>
+              </div>
+
+              <!-- KPI 3: Top Sản Phẩm -->
+              <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-amber-950/40 border border-amber-500/30 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Top 1 Doanh Thu</span>
+                  <span class="p-2 rounded-xl bg-amber-500/10 text-amber-400 text-base">👑</span>
+                </div>
+                <div>
+                  <span id="rev-kpi-top-prod" class="text-sm sm:text-base font-bold text-white block truncate" title="Chưa có">—</span>
+                  <span id="rev-kpi-top-prod-sub" class="text-[11px] text-slate-400 mt-1 block">0đ (0% tổng doanh thu)</span>
+                </div>
+              </div>
+
+              <!-- KPI 4: Tỷ Lệ Thanh Toán -->
+              <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border border-indigo-500/30 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Tỷ Lệ Hoàn Tất</span>
+                  <span class="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 text-base">⚡</span>
+                </div>
+                <div>
+                  <span id="rev-kpi-rate" class="text-2xl sm:text-3xl font-black text-white block">100%</span>
+                  <span id="rev-kpi-rate-sub" class="text-[11px] text-slate-400 mt-1 block">0/0 đơn hàng được tạo</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Breakdown: 2 Columns (Theo Tháng vs Theo Sản Phẩm) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <!-- Left Column: Theo Tháng -->
+              <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <div class="flex items-center gap-2">
+                      <span class="text-lg">📅</span>
+                      <div>
+                        <h4 class="text-base font-bold text-white">Doanh Thu Theo Từng Tháng</h4>
+                        <p class="text-[11px] text-slate-400">Thống kê theo chu kỳ tháng phát sinh đơn hàng</p>
+                      </div>
+                    </div>
+                    <span id="rev-months-badge" class="px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 text-[11px] font-mono font-bold">
+                      0 tháng
+                    </span>
+                  </div>
+
+                  <!-- Monthly Items Container -->
+                  <div id="rev-monthly-list" class="space-y-3 pt-3">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-800/80 text-[11px] text-slate-500 flex items-center justify-between">
+                  <span>💡 Bấm "Xem đơn" để tra cứu ngay danh sách CRM của tháng tương ứng.</span>
+                </div>
+              </div>
+
+              <!-- Right Column: Theo Sản Phẩm -->
+              <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <div class="flex items-center gap-2">
+                      <span class="text-lg">📦</span>
+                      <div>
+                        <h4 class="text-base font-bold text-white">Doanh Thu Theo Từng Sản Phẩm</h4>
+                        <p class="text-[11px] text-slate-400">Xếp hạng ấn phẩm bán chạy nhất & tỷ trọng đóng góp</p>
+                      </div>
+                    </div>
+                    <span id="rev-products-badge" class="px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 text-[11px] font-mono font-bold">
+                      0 sản phẩm
+                    </span>
+                  </div>
+
+                  <!-- Product Items Container -->
+                  <div id="rev-product-list" class="space-y-3 pt-3">
+                    <!-- Populated dynamically -->
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-800/80 text-[11px] text-slate-500 flex items-center justify-between">
+                  <span>💡 Bấm "Lọc đơn" để xem danh sách khách hàng đã mua sản phẩm này.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lower Section: Giao Dịch Gần Đây & Hoạt Động Hệ Thống -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+              <!-- Recent Paid Orders -->
+              <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <div class="flex items-center gap-2">
+                    <span class="text-lg">💳</span>
+                    <h4 class="text-base font-bold text-white">Đơn Hàng Đã Thanh Toán Gần Đây</h4>
+                  </div>
+                  <button type="button" id="rev-view-all-orders-btn" class="text-xs text-brand-green hover:underline font-bold cursor-pointer">
+                    Xem tất cả đơn CRM →
+                  </button>
+                </div>
+                <div id="rev-recent-orders-list" class="space-y-2.5">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+
+              <!-- System Activities Feed -->
+              <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                  <div class="flex items-center gap-2">
+                    <span class="text-lg">⚡</span>
+                    <h4 class="text-base font-bold text-white">Hoạt Động Tương Tác Gần Đây</h4>
+                  </div>
+                  <span class="text-[11px] text-slate-500">Đơn hàng, Khảo sát, Bản tin</span>
+                </div>
+                <div id="recent-activity-list" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+                  <!-- Populated dynamically by renderRecentActivity() -->
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <!-- TAB CONTENT: POSTS -->
@@ -960,6 +1139,11 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
                 <option value="Đã hủy">Đã hủy</option>
               </select>
 
+              <!-- Revenue Dashboard Shortcut -->
+              <button id="btn-goto-revenue-analytics" type="button" class="px-3.5 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-400 border border-emerald-500/20 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm" title="Xem biểu đồ báo cáo doanh thu theo tháng và sản phẩm">
+                <span>📊</span> Báo Cáo Doanh Thu
+              </button>
+
               <!-- Export CSV button -->
               <button id="btn-export-orders-csv" type="button" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer">
                 <span>📥</span> Xuất Excel (CSV)
@@ -1555,8 +1739,478 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         });
         if (revenueTotal) revenueTotal.textContent = totalRev > 0 ? totalRev.toLocaleString('vi-VN') + 'đ' : '0đ';
 
-        // Render Recent Activity Feed
+        // Render Recent Activity Feed & Revenue Analytics
         renderRecentActivity();
+        renderRevenueAnalyticsDashboard();
+      }
+
+      // ==========================================
+      // REVENUE & PRODUCT ANALYTICS DASHBOARD ENGINE
+      // ==========================================
+      let activeRevPeriodFilter = 'all'; // 'all' | 'this-year' | 'this-month' | 'last-month' | 'YYYY-MM'
+
+      function parseOrderDateTime(ord: any): Date {
+        if (ord && typeof ord.timestamp === 'number' && !isNaN(ord.timestamp) && ord.timestamp > 0) {
+          return new Date(ord.timestamp);
+        }
+        if (ord && ord.date) {
+          if (!isNaN(Number(ord.date)) && Number(ord.date) > 1000000000) {
+            return new Date(Number(ord.date));
+          }
+          // Support DD/MM/YYYY or D/M/YYYY format (e.g. 16:57:00 9/10/2026 or 21:50:47 06/10/2026)
+          const dateMatch = String(ord.date).match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+          if (dateMatch) {
+            const day = parseInt(dateMatch[1], 10);
+            const month = parseInt(dateMatch[2], 10) - 1;
+            const year = parseInt(dateMatch[3], 10);
+            const timeMatch = String(ord.date).match(/(\d{1,2}):(\d{1,2})(:(\d{1,2}))?/);
+            let hour = 0, minute = 0, second = 0;
+            if (timeMatch) {
+              hour = parseInt(timeMatch[1], 10) || 0;
+              minute = parseInt(timeMatch[2], 10) || 0;
+              second = parseInt(timeMatch[4], 10) || 0;
+            }
+            return new Date(year, month, day, hour, minute, second);
+          }
+          const parsed = new Date(ord.date);
+          if (!isNaN(parsed.getTime())) return parsed;
+        }
+        return new Date();
+      }
+
+      function parseOrderRevenue(val: any): number {
+        if (typeof val === 'number') return val;
+        const cleaned = String(val || '0').replace(/[^0-9]/g, '');
+        return parseInt(cleaned, 10) || 0;
+      }
+
+      function renderRevenueAnalyticsDashboard() {
+        const kpiTotalEl = document.getElementById('rev-kpi-total');
+        const kpiOrdersCountEl = document.getElementById('rev-kpi-orders-count');
+        const kpiAovEl = document.getElementById('rev-kpi-aov');
+        const kpiTopProdEl = document.getElementById('rev-kpi-top-prod');
+        const kpiTopProdSubEl = document.getElementById('rev-kpi-top-prod-sub');
+        const kpiRateEl = document.getElementById('rev-kpi-rate');
+        const kpiRateSubEl = document.getElementById('rev-kpi-rate-sub');
+        const monthsBadgeEl = document.getElementById('rev-months-badge');
+        const productsBadgeEl = document.getElementById('rev-products-badge');
+        const monthlyListEl = document.getElementById('rev-monthly-list');
+        const productListEl = document.getElementById('rev-product-list');
+        const recentOrdersListEl = document.getElementById('rev-recent-orders-list');
+        const monthSelectEl = document.getElementById('rev-month-select') as HTMLSelectElement | null;
+
+        if (!monthlyListEl || !productListEl) return;
+
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth(); // 0-indexed
+
+        // 1. Gather all unique available months from the orders data
+        const availableMonthsMap = new Map<string, { label: string, year: number, month: number }>();
+        currentOrders.forEach((o: any) => {
+          const d = parseOrderDateTime(o);
+          const y = d.getFullYear();
+          const m = d.getMonth() + 1;
+          const key = `${y}-${m < 10 ? '0' + m : m}`;
+          if (!availableMonthsMap.has(key)) {
+            availableMonthsMap.set(key, { label: `Tháng ${m < 10 ? '0' + m : m}/${y}`, year: y, month: m });
+          }
+        });
+
+        // Update month select options if not populated or if items changed
+        if (monthSelectEl) {
+          const sortedMonthKeys = Array.from(availableMonthsMap.keys()).sort().reverse();
+          const prevVal = monthSelectEl.value;
+          monthSelectEl.innerHTML = `<option value="all">📅 Toàn bộ các tháng</option>` + 
+            sortedMonthKeys.map(k => {
+              const item = availableMonthsMap.get(k)!;
+              return `<option value="${k}">${item.label}</option>`;
+            }).join('');
+          if (sortedMonthKeys.includes(activeRevPeriodFilter)) {
+            monthSelectEl.value = activeRevPeriodFilter;
+          } else if (prevVal && sortedMonthKeys.includes(prevVal)) {
+            monthSelectEl.value = prevVal;
+          }
+        }
+
+        // 2. Filter orders by active period
+        const filteredOrders = currentOrders.filter((o: any) => {
+          if (activeRevPeriodFilter === 'all') return true;
+          const d = parseOrderDateTime(o);
+          const ordYear = d.getFullYear();
+          const ordMonth = d.getMonth(); // 0-indexed
+
+          if (activeRevPeriodFilter === 'this-year') {
+            return ordYear === currentYear;
+          }
+          if (activeRevPeriodFilter === 'this-month') {
+            return ordYear === currentYear && ordMonth === currentMonth;
+          }
+          if (activeRevPeriodFilter === 'last-month') {
+            const targetMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+            const targetYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+            return ordYear === targetYear && ordMonth === targetMonth;
+          }
+          // Specific YYYY-MM
+          const mKey = `${ordYear}-${(ordMonth + 1) < 10 ? '0' + (ordMonth + 1) : (ordMonth + 1)}`;
+          return mKey === activeRevPeriodFilter;
+        });
+
+        // 3. Compute Top KPI stats
+        let periodRevenue = 0;
+        let periodPaidCount = 0;
+        const totalCreatedCount = filteredOrders.length;
+
+        // Group by Month & Group by Product
+        const monthGroups = new Map<string, { key: string, label: string, year: number, month: number, revenue: number, paidCount: number, totalCount: number }>();
+        const productGroups = new Map<string, { name: string, price: string, revenue: number, paidCount: number, totalCount: number, icon: string }>();
+
+        filteredOrders.forEach((o: any) => {
+          const d = parseOrderDateTime(o);
+          const y = d.getFullYear();
+          const m = d.getMonth() + 1;
+          const monthKey = `${y}-${m < 10 ? '0' + m : m}`;
+          const monthLabel = `Tháng ${m < 10 ? '0' + m : m}/${y}`;
+
+          if (!monthGroups.has(monthKey)) {
+            monthGroups.set(monthKey, { key: monthKey, label: monthLabel, year: y, month: m, revenue: 0, paidCount: 0, totalCount: 0 });
+          }
+          const mGroup = monthGroups.get(monthKey)!;
+          mGroup.totalCount++;
+
+          const prodName = (o.product || 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI').trim();
+          if (!productGroups.has(prodName)) {
+            const matchedPr = currentProducts.find((p: any) => p.title === prodName || p.id === o.productId);
+            const icon = matchedPr?.icon || (prodName.includes('9 Nguồn') ? '📘' : '🚀');
+            const price = matchedPr?.price || o.amount || '0đ';
+            productGroups.set(prodName, { name: prodName, price, revenue: 0, paidCount: 0, totalCount: 0, icon });
+          }
+          const pGroup = productGroups.get(prodName)!;
+          pGroup.totalCount++;
+
+          const isPaid = o.status === 'Đã thanh toán' || o.status === 'Đã hoàn tất';
+          if (isPaid) {
+            const amt = parseOrderRevenue(o.amount);
+            periodRevenue += amt;
+            periodPaidCount++;
+            mGroup.revenue += amt;
+            mGroup.paidCount++;
+            pGroup.revenue += amt;
+            pGroup.paidCount++;
+          }
+        });
+
+        const aov = periodPaidCount > 0 ? Math.round(periodRevenue / periodPaidCount) : 0;
+        const conversionRate = totalCreatedCount > 0 ? Math.round((periodPaidCount / totalCreatedCount) * 100) : 100;
+
+        // Find Top 1 Product
+        let topProduct: any = null;
+        productGroups.forEach((p) => {
+          if (!topProduct || p.revenue > topProduct.revenue || (p.revenue === topProduct.revenue && p.paidCount > topProduct.paidCount)) {
+            topProduct = p;
+          }
+        });
+
+        // Update KPI Cards UI
+        if (kpiTotalEl) kpiTotalEl.textContent = periodRevenue > 0 ? periodRevenue.toLocaleString('vi-VN') + 'đ' : '0đ';
+        if (kpiOrdersCountEl) kpiOrdersCountEl.textContent = `Từ ${periodPaidCount} đơn hàng đã hoàn tất`;
+        if (kpiAovEl) kpiAovEl.textContent = aov > 0 ? aov.toLocaleString('vi-VN') + 'đ' : '0đ';
+        if (kpiRateEl) kpiRateEl.textContent = `${conversionRate}%`;
+        if (kpiRateSubEl) kpiRateSubEl.textContent = `${periodPaidCount}/${totalCreatedCount} đơn hàng được tạo`;
+
+        if (topProduct && topProduct.paidCount > 0) {
+          const share = periodRevenue > 0 ? Math.round((topProduct.revenue / periodRevenue) * 100) : 0;
+          if (kpiTopProdEl) {
+            kpiTopProdEl.textContent = topProduct.name;
+            kpiTopProdEl.title = topProduct.name;
+          }
+          if (kpiTopProdSubEl) {
+            kpiTopProdSubEl.textContent = `${topProduct.revenue.toLocaleString('vi-VN')}đ (${share}% tổng doanh thu)`;
+          }
+        } else {
+          if (kpiTopProdEl) kpiTopProdEl.textContent = 'Chưa có dữ liệu';
+          if (kpiTopProdSubEl) kpiTopProdSubEl.textContent = '0đ (0% tổng doanh thu)';
+        }
+
+        // 4. Render Monthly List
+        const sortedMonths = Array.from(monthGroups.values()).sort((a, b) => b.key.localeCompare(a.key));
+        if (monthsBadgeEl) monthsBadgeEl.textContent = `${sortedMonths.length} tháng ghi nhận`;
+
+        if (sortedMonths.length === 0) {
+          monthlyListEl.innerHTML = `
+            <div class="p-8 text-center bg-slate-950/40 rounded-xl border border-slate-800/80 text-slate-500 text-xs">
+              Chưa có đơn hàng nào trong kỳ thời gian được chọn.
+            </div>
+          `;
+        } else {
+          const maxMonthRev = Math.max(...sortedMonths.map(m => m.revenue), 1);
+          monthlyListEl.innerHTML = sortedMonths.map(m => {
+            const share = periodRevenue > 0 ? Math.round((m.revenue / periodRevenue) * 100) : 0;
+            const barWidth = Math.max(Math.round((m.revenue / maxMonthRev) * 100), 5);
+            const isCurrentM = (m.year === currentYear && m.month === (currentMonth + 1));
+            const monthAov = m.paidCount > 0 ? Math.round(m.revenue / m.paidCount) : 0;
+
+            return `
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-emerald-500/40 transition-all space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm font-extrabold text-white">${m.label}</span>
+                    ${isCurrentM ? '<span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-bold">Tháng này</span>' : ''}
+                  </div>
+                  <div class="text-right">
+                    <span class="text-base font-extrabold text-emerald-400 font-mono block">
+                      ${m.revenue.toLocaleString('vi-VN')}đ
+                    </span>
+                    <span class="text-[11px] text-slate-400">
+                      ${share}% tổng doanh thu
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Visual Progress Bar -->
+                <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gradient-to-r from-emerald-500 to-teal-400 h-full rounded-full transition-all duration-500" style="width: ${barWidth}%"></div>
+                </div>
+
+                <!-- Meta info & Action button -->
+                <div class="flex items-center justify-between text-xs pt-1">
+                  <div class="flex items-center gap-3 text-slate-400 text-[11px]">
+                    <span class="flex items-center gap-1">
+                      <span class="text-emerald-400 font-bold">✓ ${m.paidCount}</span> đơn đã trả
+                    </span>
+                    <span class="text-slate-600">•</span>
+                    <span>AOV: <strong class="text-slate-300 font-mono">${monthAov.toLocaleString('vi-VN')}đ</strong></span>
+                  </div>
+
+                  <button type="button" class="btn-filter-month-crm px-2.5 py-1 rounded-lg bg-emerald-500/10 hover:bg-emerald-500 hover:text-white text-emerald-400 text-[11px] font-bold transition-all cursor-pointer flex items-center gap-1" data-month="${m.label}" data-key="${m.key}">
+                    Xem đơn 🔍
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // 5. Render Product List
+        const sortedProducts = Array.from(productGroups.values()).sort((a, b) => b.revenue - a.revenue || b.paidCount - a.paidCount);
+        if (productsBadgeEl) productsBadgeEl.textContent = `${sortedProducts.length} sản phẩm`;
+
+        if (sortedProducts.length === 0) {
+          productListEl.innerHTML = `
+            <div class="p-8 text-center bg-slate-950/40 rounded-xl border border-slate-800/80 text-slate-500 text-xs">
+              Chưa có sản phẩm nào phát sinh doanh thu trong kỳ này.
+            </div>
+          `;
+        } else {
+          const maxProdRev = Math.max(...sortedProducts.map(p => p.revenue), 1);
+          productListEl.innerHTML = sortedProducts.map(p => {
+            const share = periodRevenue > 0 ? Math.round((p.revenue / periodRevenue) * 100) : 0;
+            const barWidth = Math.max(Math.round((p.revenue / maxProdRev) * 100), 5);
+
+            return `
+              <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-cyan-500/40 transition-all space-y-3">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-start gap-2.5 min-w-0">
+                    <span class="text-2xl p-2 rounded-xl bg-slate-900 border border-slate-800 shrink-0 mt-0.5">${p.icon}</span>
+                    <div class="min-w-0">
+                      <h5 class="text-sm font-bold text-white leading-snug line-clamp-2" title="${p.name}">
+                        ${p.name}
+                      </h5>
+                      <span class="text-[11px] text-slate-400 mt-0.5 block">
+                        Giá niêm yết: <strong class="text-amber-400 font-mono">${p.price}</strong>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="text-right shrink-0">
+                    <span class="text-base font-extrabold text-cyan-400 font-mono block">
+                      ${p.revenue.toLocaleString('vi-VN')}đ
+                    </span>
+                    <span class="text-[11px] text-slate-400">
+                      Đã bán <strong class="text-white">${p.paidCount}</strong> đơn (${share}%)
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Visual Progress Bar -->
+                <div class="w-full bg-slate-800/80 h-2 rounded-full overflow-hidden">
+                  <div class="bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 h-full rounded-full transition-all duration-500" style="width: ${barWidth}%"></div>
+                </div>
+
+                <!-- Footer with Action -->
+                <div class="flex items-center justify-between text-xs pt-1">
+                  <span class="text-[11px] text-slate-400">
+                    Tỷ trọng: <strong class="text-cyan-400 font-semibold">${share}%</strong> tổng doanh thu
+                  </span>
+
+                  <button type="button" class="btn-filter-product-crm px-2.5 py-1 rounded-lg bg-cyan-500/10 hover:bg-cyan-500 hover:text-white text-cyan-400 text-[11px] font-bold transition-all cursor-pointer flex items-center gap-1" data-product="${p.name}">
+                    Lọc đơn 🔍
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // 6. Render Recent Paid Orders in Overview
+        if (recentOrdersListEl) {
+          const paidOrders = filteredOrders
+            .filter((o: any) => o.status === 'Đã thanh toán' || o.status === 'Đã hoàn tất')
+            .sort((a: any, b: any) => parseOrderDateTime(b).getTime() - parseOrderDateTime(a).getTime())
+            .slice(0, 6);
+
+          if (paidOrders.length === 0) {
+            recentOrdersListEl.innerHTML = `
+              <div class="p-6 text-center text-slate-500 text-xs bg-slate-950/40 rounded-xl">
+                Chưa có đơn hàng thanh toán thành công nào.
+              </div>
+            `;
+          } else {
+            recentOrdersListEl.innerHTML = paidOrders.map(ord => {
+              const d = parseOrderDateTime(ord);
+              const timeStr = d.toLocaleString('vi-VN', { hour12: false, hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' });
+              const initial = (ord.customerName || 'K').trim().charAt(0).toUpperCase();
+
+              return `
+                <div class="p-3 rounded-xl bg-slate-950/50 border border-slate-800/80 hover:border-slate-700 flex items-center justify-between gap-3 transition-all">
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <span class="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 text-brand-green font-extrabold flex items-center justify-center text-xs shrink-0">
+                      ${initial}
+                    </span>
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-white truncate">${ord.customerName || 'Khách hàng'}</span>
+                        <span class="text-[10px] font-mono px-1.5 py-0.2 rounded bg-cyan-950/60 text-cyan-400 border border-cyan-800/40 cursor-pointer" onclick="navigator.clipboard.writeText('${ord.id}')" title="Copy mã đơn">${ord.id}</span>
+                      </div>
+                      <span class="text-[11px] text-slate-400 block truncate" title="${ord.product}">${ord.product || 'Ebook'}</span>
+                    </div>
+                  </div>
+
+                  <div class="text-right shrink-0">
+                    <span class="text-xs font-bold text-emerald-400 font-mono block">${ord.amount || '0đ'}</span>
+                    <span class="text-[10px] text-slate-500 font-mono block">${timeStr}</span>
+                  </div>
+                </div>
+              `;
+            }).join('');
+          }
+        }
+
+        // Attach event handlers for Month and Product jump to CRM
+        document.querySelectorAll('.btn-filter-month-crm').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const mKey = btn.getAttribute('data-key');
+            if (mKey) {
+              const [y, m] = mKey.split('-');
+              jumpToCrmWithFilter(`${m}/${y}`);
+            }
+          });
+        });
+
+        document.querySelectorAll('.btn-filter-product-crm').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const prod = btn.getAttribute('data-product');
+            if (prod) {
+              const kw = prod.includes('9 Nguồn') ? '9 Nguồn' : (prod.includes('Tạo Blog') ? 'Tạo Blog' : prod);
+              jumpToCrmWithFilter(kw);
+            }
+          });
+        });
+      }
+
+      function jumpToCrmWithFilter(searchTerm: string) {
+        const crmTabBtn = document.querySelector('.tab-btn[data-tab="orders"]') as HTMLButtonElement | null;
+        if (crmTabBtn) crmTabBtn.click();
+        const searchInput = document.getElementById('order-search-input') as HTMLInputElement | null;
+        if (searchInput) {
+          searchInput.value = searchTerm;
+          renderOrders();
+          searchInput.focus();
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Initialize Revenue Dashboard Listeners
+      function initRevenueDashboardListeners() {
+        // Quick filter buttons
+        document.querySelectorAll('.rev-filter-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.rev-filter-btn').forEach(b => {
+              b.classList.remove('bg-emerald-600', 'text-white', 'shadow');
+              b.classList.add('text-slate-400');
+            });
+            btn.classList.add('bg-emerald-600', 'text-white', 'shadow');
+            btn.classList.remove('text-slate-400');
+
+            const filter = btn.getAttribute('data-filter') || 'all';
+            activeRevPeriodFilter = filter;
+            const monthSelect = document.getElementById('rev-month-select') as HTMLSelectElement | null;
+            if (monthSelect && filter !== 'all') {
+              monthSelect.value = 'all';
+            }
+            renderRevenueAnalyticsDashboard();
+          });
+        });
+
+        // Month select dropdown
+        const revMonthSelect = document.getElementById('rev-month-select') as HTMLSelectElement | null;
+        if (revMonthSelect) {
+          revMonthSelect.addEventListener('change', () => {
+            const val = revMonthSelect.value;
+            if (val === 'all') {
+              activeRevPeriodFilter = 'all';
+            } else {
+              activeRevPeriodFilter = val;
+              document.querySelectorAll('.rev-filter-btn').forEach(b => {
+                b.classList.remove('bg-emerald-600', 'text-white', 'shadow');
+                b.classList.add('text-slate-400');
+              });
+            }
+            renderRevenueAnalyticsDashboard();
+          });
+        }
+
+        // Refresh button
+        const revRefreshBtn = document.getElementById('rev-refresh-btn');
+        if (revRefreshBtn) {
+          revRefreshBtn.addEventListener('click', async () => {
+            const orig = revRefreshBtn.textContent;
+            revRefreshBtn.textContent = '⏳';
+            await loadAllData();
+            revRefreshBtn.textContent = orig;
+            showToast('⚡ Đã cập nhật số liệu doanh thu mới nhất!');
+          });
+        }
+
+        // Go to CRM buttons
+        const revGotoCrmBtn = document.getElementById('rev-goto-crm-btn');
+        if (revGotoCrmBtn) {
+          revGotoCrmBtn.addEventListener('click', () => {
+            const crmTabBtn = document.querySelector('.tab-btn[data-tab="orders"]') as HTMLButtonElement | null;
+            if (crmTabBtn) crmTabBtn.click();
+          });
+        }
+
+        const revViewAllOrdersBtn = document.getElementById('rev-view-all-orders-btn');
+        if (revViewAllOrdersBtn) {
+          revViewAllOrdersBtn.addEventListener('click', () => {
+            const crmTabBtn = document.querySelector('.tab-btn[data-tab="orders"]') as HTMLButtonElement | null;
+            if (crmTabBtn) crmTabBtn.click();
+          });
+        }
+
+        // Button inside Orders tab jumping to Revenue Dashboard
+        const btnGotoRevenueAnalytics = document.getElementById('btn-goto-revenue-analytics');
+        if (btnGotoRevenueAnalytics) {
+          btnGotoRevenueAnalytics.addEventListener('click', () => {
+            const overviewTabBtn = document.querySelector('.tab-btn[data-tab="overview"]') as HTMLButtonElement | null;
+            if (overviewTabBtn) overviewTabBtn.click();
+            const targetSection = document.getElementById('revenue-analytics-section');
+            if (targetSection) {
+              targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        }
       }
 
       function renderRecentActivity() {
@@ -1576,13 +2230,13 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
         });
 
         currentOrders.forEach(ord => {
-          const orderDate = ord.timestamp ? new Date(ord.timestamp) : new Date(ord.date);
+          const orderDate = ord.timestamp ? new Date(ord.timestamp) : parseOrderDateTime(ord);
           allActivities.push({
             type: 'order',
             name: ord.customerName || ord.name || 'Khách hàng',
             email: ord.email,
             date: isNaN(orderDate.getTime()) ? new Date() : orderDate,
-            desc: `đặt mua "${ord.product || 'Ebook'}" (${ord.amount || '299.000đ'}).`
+            desc: `đặt mua "${ord.product || 'Ebook'}" (${ord.amount || '0đ'}).`
           });
         });
 
@@ -1633,11 +2287,11 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           return `
             <div class="flex items-start gap-3 p-3 rounded-xl hover:bg-slate-800/20 transition-all border border-transparent hover:border-slate-800/40">
               <span class="text-lg p-2 rounded-lg ${badgeClass}">${icon}</span>
-              <div class="flex-grow space-y-0.5">
-                <p class="text-xs font-bold text-slate-200">
+              <div class="flex-grow space-y-0.5 min-w-0">
+                <p class="text-xs font-bold text-slate-200 truncate">
                   ${act.name} <span class="font-normal text-slate-400">(${act.email})</span>
                 </p>
-                <p class="text-[11px] text-slate-400">${act.desc}</p>
+                <p class="text-[11px] text-slate-400 truncate">${act.desc}</p>
                 <span class="text-[9px] text-slate-500 font-mono block">${timeStr}</span>
               </div>
             </div>
@@ -3741,6 +4395,9 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           }
         });
       }
+
+      // Initialize Revenue Dashboard Listeners
+      initRevenueDashboardListeners();
 
       // Start auth check
       checkAuth();
