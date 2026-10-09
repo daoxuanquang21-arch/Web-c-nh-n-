@@ -269,8 +269,10 @@ form.reg button[disabled]{opacity:.7;cursor:wait}
 .thanks{display:none;background:#fff;color:var(--ink);border-radius:12px;padding:22px;text-align:center}
 .thanks b{display:block;font-size:20px;color:#0A8A5A;margin-bottom:6px}
 .pay{text-align:left;margin-top:14px;font-size:15px;line-height:1.7}
-.pay .r{display:flex;justify-content:space-between;gap:10px}
+.pay .r{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:4px 0}
 .pay .r b{text-align:right;color:var(--ink);font-size:15px;margin:0;display:inline}
+.pay .copy-btn{background:#EBF3FF;color:#1A56DB;border:1px solid #C3D9FF;border-radius:6px;font-size:12px;font-weight:700;padding:2px 8px;cursor:pointer;line-height:1.4}
+.pay .copy-btn:hover{background:#DCE8FC}
 .pay img{max-width:220px;margin:12px auto 0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
 .err{color:#FFB4B6;font-size:14px;margin:0;min-height:1em}
 .ps{max-width:860px;margin:44px auto 0;padding:0;color:#D8DDEA;font-size:17px;line-height:1.7}
@@ -595,10 +597,10 @@ footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align
           Bạn chuyển khoản theo thông tin dưới đây, ebook sẽ được gửi về email ngay khi nhận được.
           <div class="pay">
             <div class="r"><span>Ngân hàng</span><b data-fill="bank">MBBank</b></div>
-            <div class="r"><span>Số tài khoản</span><b data-fill="account">0000485725573</b></div>
+            <div class="r"><span>Số tài khoản</span><div style="display:flex;align-items:center;gap:6px"><b data-fill="account">0000485725573</b><button type="button" class="copy-btn" onclick="navigator.clipboard.writeText('0000485725573');this.textContent='Đã chép!';var b=this;setTimeout(function(){b.textContent='Sao chép'},2000)">Sao chép</button></div></div>
             <div class="r"><span>Chủ tài khoản</span><b data-fill="holder">DAO XUAN QUANG</b></div>
             <div class="r"><span>Số tiền</span><b data-fill="price">59.000đ</b></div>
-            <div class="r"><span>Nội dung</span><b data-fill="transferNote">9NGUON + SĐT</b></div>
+            <div class="r"><span>Nội dung</span><div style="display:flex;align-items:center;gap:6px"><b data-fill="transferNote">9NGUON + SĐT</b><button type="button" class="copy-btn" id="copy-note-btn" onclick="var t=document.querySelector('[data-fill=\'transferNote\']').textContent;navigator.clipboard.writeText(t);this.textContent='Đã chép!';var b=this;setTimeout(function(){b.textContent='Sao chép'},2000)">Sao chép</button></div></div>
             <div id="qr"></div>
           </div>
         </div>
@@ -682,7 +684,11 @@ footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align
     var done = function(){
       if (C.thankYouUrl) { location.href = C.thankYouUrl; return; }
       form.style.display = 'none'; 
-      document.getElementById('thanks').style.display = 'block';
+      var thanksEl = document.getElementById('thanks');
+      if (thanksEl) {
+        thanksEl.style.display = 'block';
+        thanksEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
         window.fbq('track', 'Lead', { content_name: '9 Nguồn Thu Nhập Từ Blog', value: 59000, currency: 'VND' });
       }

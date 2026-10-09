@@ -31,6 +31,7 @@ function saveOrders(orders: any[]): void {
 
 export const GET: APIRoute = async () => {
   try {
+    let orders = getOrders();
     let isDirty = false;
     orders.forEach((o: any) => {
       if (o.timestamp) {
