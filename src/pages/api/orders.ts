@@ -51,6 +51,15 @@ export const GET: APIRoute = async () => {
           isDirty = true;
         }
       }
+
+      // Xóa hoàn toàn dripCampaign nếu là đơn 59k / 9 Nguồn
+      const is59k = o.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || 
+                    (o.product && o.product.includes('9 Nguồn')) || 
+                    (o.amount && String(o.amount).includes('59.000'));
+      if (is59k && o.dripCampaign) {
+        delete o.dripCampaign;
+        isDirty = true;
+      }
     });
 
     if (isDirty) {
@@ -282,6 +291,13 @@ export const POST: APIRoute = async ({ request }) => {
         return new Response(JSON.stringify({ success: false, error: 'Không tìm thấy đơn hàng hoặc email khách.' }), { status: 400 });
       }
 
+      const is59k = order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || 
+                    (order.product && order.product.includes('9 Nguồn')) || 
+                    (order.amount && String(order.amount).includes('59.000'));
+      if (is59k) {
+        return new Response(JSON.stringify({ success: false, error: 'Đơn hàng 59.000đ (9 Nguồn) không áp dụng chuỗi Email 7 ngày.' }), { status: 400 });
+      }
+
       const day = parseInt(body.day, 10);
       if (isNaN(day) || day < 1 || day > 7) {
         return new Response(JSON.stringify({ success: false, error: 'Ngày gửi không hợp lệ (1-7).' }), { status: 400 });
@@ -323,6 +339,13 @@ export const POST: APIRoute = async ({ request }) => {
       const order = orders.find((o: any) => o.id === id);
       if (!order || !order.email) {
         return new Response(JSON.stringify({ success: false, error: 'Không tìm thấy đơn hàng hoặc email khách.' }), { status: 400 });
+      }
+
+      const is59k = order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || 
+                    (order.product && order.product.includes('9 Nguồn')) || 
+                    (order.amount && String(order.amount).includes('59.000'));
+      if (is59k) {
+        return new Response(JSON.stringify({ success: false, error: 'Đơn hàng 59.000đ (9 Nguồn) không áp dụng chuỗi Email 7 ngày.' }), { status: 400 });
       }
 
       try {

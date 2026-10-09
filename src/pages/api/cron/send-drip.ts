@@ -38,6 +38,13 @@ export const ALL: APIRoute = async ({ request }) => {
       // Chỉ gửi cho đơn đã thanh toán và có email
       if (order.status !== 'Đã thanh toán' || !order.email) continue;
 
+      // KHÔNG gửi chuỗi 7 ngày cho khách mua đơn 59k / 9 Nguồn Thu Nhập
+      const is59kOr9Nguon = 
+        order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' ||
+        (order.product && order.product.includes('9 Nguồn')) ||
+        (order.amount && String(order.amount).includes('59.000'));
+      if (is59kOr9Nguon) continue;
+
       const orderTime = order.timestamp || (order.date ? new Date(order.date).getTime() : now);
       // Tính số ngày trôi qua kể từ khi mua
       const diffTime = now - orderTime;

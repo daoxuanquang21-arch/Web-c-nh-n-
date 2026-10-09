@@ -142,6 +142,15 @@ export async function sendDripEmail(day: number, email: string, customerName: st
 export async function scheduleDripCampaignForOrder(order: any): Promise<any[]> {
   if (!order || !order.email) return [];
 
+  // BỎ QUA HOÀN TOÀN ĐƠN 59K / 9 NGUỒN THU NHẬP
+  const is59kOr9Nguon = 
+    order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' ||
+    (order.product && order.product.includes('9 Nguồn')) ||
+    (order.amount && String(order.amount).includes('59.000'));
+  if (is59kOr9Nguon) {
+    return [];
+  }
+
   const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quảng <ebook@daoxuanquang.com.vn>';
   const customerName = order.customerName || 'bạn';
   const baseDate = order.timestamp ? new Date(order.timestamp) : new Date();
