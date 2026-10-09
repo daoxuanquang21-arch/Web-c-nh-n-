@@ -82,7 +82,7 @@ export const POST: APIRoute = async ({ request }) => {
     const amountNum = 59000;
     const amountStr = '59.000đ';
     const cleanPhone = phone.replace(/[^0-9]/g, '');
-    const transferNote = cleanPhone ? `9NGUON ${cleanPhone}` : `9NGUON ${orderId}`;
+    const transferNote = cleanPhone ? `${orderId} 9NGUON ${cleanPhone}` : `${orderId} 9NGUON`;
 
     const newOrder = {
       id: orderId,

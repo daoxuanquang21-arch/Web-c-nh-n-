@@ -3242,6 +3242,11 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
               <!-- Cột 7: Thao tác -->
               <td class="p-4 text-right whitespace-nowrap">
                 <div class="flex items-center gap-1.5 justify-end">
+                  ${ord.status !== 'Đã thanh toán' && ord.status !== 'Đã hoàn tất' ? `
+                    <button data-id="${ord.id}" data-name="${ord.customerName || ord.id}" class="confirm-payment-btn px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-sm" title="Xác nhận khách đã chuyển khoản thành công">
+                      ✅ Duyệt TT
+                    </button>
+                  ` : ''}
                   <button data-id="${ord.id}" data-name="${ord.customerName || ord.id}" class="manage-drip-btn px-2.5 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500 hover:text-white text-orange-400 text-xs font-bold transition-all cursor-pointer flex items-center gap-1" title="Quản lý Chuỗi Email Chăm Sóc 7 Ngày">
                     📬 Chuỗi 7N
                   </button>
@@ -3264,6 +3269,42 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
       }
 
       function attachOrderEvents() {
+        // Confirm payment button
+        document.querySelectorAll('.confirm-payment-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name') || id;
+            if (!id) return;
+
+            const confirmed = window.confirm(`Xác nhận khách "${name}" (mã ${id}) đã chuyển khoản thành công?\n\nHệ thống sẽ chuyển trạng thái sang "Đã thanh toán" và tự động gửi email link Ebook tới khách.`);
+            if (!confirmed) return;
+
+            const origText = btn.innerHTML;
+            btn.innerHTML = '⏳ Đang duyệt...';
+            (btn as HTMLButtonElement).disabled = true;
+
+            try {
+              const res = await fetch('/api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'confirm_payment', id })
+              });
+              const result = await res.json();
+              if (result.success) {
+                showToast(result.message || 'Đã xác nhận thanh toán thành công!');
+                loadAllData();
+              } else {
+                showToast(result.error || 'Lỗi duyệt đơn', true);
+              }
+            } catch (err: any) {
+              showToast('Lỗi kết nối máy chủ: ' + err.message, true);
+            } finally {
+              btn.innerHTML = origText;
+              (btn as HTMLButtonElement).disabled = false;
+            }
+          });
+        });
+
         // Manage Drip Email button
         document.querySelectorAll('.manage-drip-btn').forEach(btn => {
           btn.addEventListener('click', () => {

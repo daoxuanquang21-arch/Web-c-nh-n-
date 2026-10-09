@@ -99,17 +99,22 @@ export const POST: APIRoute = async ({ request }) => {
         return new Response(JSON.stringify({ success: false, error: 'Không tìm thấy thông tin đơn hàng hoặc email khách.' }), { status: 400 });
       }
 
-      const readerUrl = 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
+      const is9Nguon = order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || 
+                       (order.product && order.product.includes('9 Nguồn'));
+      const readerUrl = is9Nguon 
+        ? 'https://daoxuanquang.com.vn/doc-sach/9-nguon-thu-nhap-tu-blog'
+        : 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
       const customerName = order.customerName || 'bạn';
-      const emailSubject = getOrderEmailSubject(customerName, true);
+      const emailSubject = getOrderEmailSubject(customerName, true, order.product);
       const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quảng <ebook@daoxuanquang.com.vn>';
 
       const emailHtml = renderOrderEmailHtml({
         customerName,
         readerUrl,
         maDon: order.id,
-        soTien: order.amount || '299.000đ',
-        ngayFormatted: order.date || new Date().toLocaleDateString('vi-VN')
+        soTien: order.amount || (is9Nguon ? '59.000đ' : '299.000đ'),
+        ngayFormatted: order.date || new Date().toLocaleDateString('vi-VN'),
+        productName: is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : undefined
       });
 
       try {
@@ -121,14 +126,83 @@ export const POST: APIRoute = async ({ request }) => {
           html: emailHtml
         });
         
-        // Update order notes
-        order.notes = (order.notes ? order.notes + ' | ' : '') + `Đã gửi lại email lúc ${new Date().toLocaleTimeString('vi-VN')}`;
+        // Tự động cập nhật trạng thái nếu đang chờ
+        if (order.status !== 'Đã thanh toán') {
+          order.status = 'Đã thanh toán';
+        }
+        if (order.notes && order.notes.includes('Đang chờ chuyển khoản')) {
+          order.notes = order.notes
+            .replace(/Đang chờ chuyển khoản[^\n|]*\s*\|\s*/gi, '')
+            .replace(/Đang chờ chuyển khoản[^\n|]*/gi, '')
+            .trim();
+        }
+
+        order.notes = (order.notes ? order.notes + ' | ' : '') + `Đã gửi ebook lúc ${new Date().toLocaleTimeString('vi-VN')}`;
         saveOrders(orders);
 
-        return new Response(JSON.stringify({ success: true, message: `Đã gửi lại Ebook thành công tới ${order.email}!` }), { status: 200 });
+        return new Response(JSON.stringify({ success: true, message: `Đã gửi Ebook thành công tới ${order.email}!`, order }), { status: 200 });
       } catch (mailErr: any) {
         return new Response(JSON.stringify({ success: false, error: 'Lỗi gửi mail: ' + mailErr.message }), { status: 500 });
       }
+    }
+
+    // 2.1. CONFIRM PAYMENT ACTION (Duyệt thanh toán 1-chạm)
+    if (action === 'confirm_payment') {
+      const order = orders.find((o: any) => o.id === id);
+      if (!order) {
+        return new Response(JSON.stringify({ success: false, error: 'Không tìm thấy đơn hàng cần duyệt.' }), { status: 404 });
+      }
+
+      order.status = 'Đã thanh toán';
+      if (order.notes && order.notes.includes('Đang chờ chuyển khoản')) {
+        order.notes = order.notes
+          .replace(/Đang chờ chuyển khoản[^\n|]*\s*\|\s*/gi, '')
+          .replace(/Đang chờ chuyển khoản[^\n|]*/gi, '')
+          .trim();
+      }
+      const nowStr = new Date().toLocaleTimeString('vi-VN', { hour12: false });
+      order.notes = (order.notes ? order.notes + ' | ' : '') + `Admin xác nhận TT lúc ${nowStr}`;
+
+      // Tự động gửi email bàn giao Ebook
+      if (order.email) {
+        const is9Nguon = order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || 
+                         (order.product && order.product.includes('9 Nguồn'));
+        const readerUrl = is9Nguon 
+          ? 'https://daoxuanquang.com.vn/doc-sach/9-nguon-thu-nhap-tu-blog'
+          : 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
+        const customerName = order.customerName || 'bạn';
+        const emailSubject = getOrderEmailSubject(customerName, false, order.product);
+        const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quảng <ebook@daoxuanquang.com.vn>';
+
+        const emailHtml = renderOrderEmailHtml({
+          customerName,
+          readerUrl,
+          maDon: order.id,
+          soTien: order.amount || (is9Nguon ? '59.000đ' : '299.000đ'),
+          ngayFormatted: order.date || new Date().toLocaleDateString('vi-VN'),
+          productName: is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : undefined
+        });
+
+        try {
+          await resend.emails.send({
+            from: fromSender,
+            to: order.email,
+            reply_to: 'daoxuanquang26102003@gmail.com',
+            subject: emailSubject,
+            html: emailHtml
+          });
+          order.notes += ' (Đã gửi email)';
+        } catch (e: any) {
+          console.warn('Lỗi gửi email xác nhận:', e);
+        }
+      }
+
+      saveOrders(orders);
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: `Đã xác nhận thanh toán & gửi Ebook tới ${order.email || order.customerName}!`,
+        order 
+      }), { status: 200 });
     }
 
     // 3. CREATE ACTION

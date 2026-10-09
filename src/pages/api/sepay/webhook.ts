@@ -105,15 +105,43 @@ export const POST: APIRoute = async ({ request }) => {
     let orders = getOrders();
     let targetOrder: any = null;
 
-    // Tìm đơn hàng theo mã đơn
+    // 3.1. Tìm theo orderCode (EB...)
     if (orderCode) {
       targetOrder = orders.find((o: any) => o.id && o.id.toUpperCase() === orderCode?.toUpperCase());
     }
 
-    // Nếu chưa tìm thấy theo orderCode, quét xem content có chứa mã đơn nào trong hệ thống không
+    // 3.2. Quét xem content có chứa mã đơn EB nào không
     if (!targetOrder && content) {
       const normalizedContent = content.toUpperCase();
       targetOrder = orders.find((o: any) => o.id && normalizedContent.includes(o.id.toUpperCase()));
+    }
+
+    // 3.3. Quét xem content có chứa số điện thoại khách hàng không (hỗ trợ cả 0702286928 và 702286928)
+    if (!targetOrder && content) {
+      const rawDigits = content.replace(/[^0-9]/g, '');
+      targetOrder = orders.find((o: any) => {
+        if (!o.phone) return false;
+        const cleanPhone = o.phone.replace(/[^0-9]/g, '');
+        if (cleanPhone.length >= 9) {
+          const noZeroPhone = cleanPhone.replace(/^0/, '');
+          return rawDigits.includes(cleanPhone) || rawDigits.includes(noZeroPhone);
+        }
+        return false;
+      });
+    }
+
+    // 3.4. Quét theo cú pháp chuyển khoản đã lưu trong notes (ví dụ: "Đang chờ chuyển khoản: 9NGUON ...")
+    if (!targetOrder && content) {
+      const compactContent = content.toUpperCase().replace(/\s+/g, '');
+      targetOrder = orders.find((o: any) => {
+        if (!o.notes) return false;
+        const noteMatch = o.notes.match(/Đang chờ chuyển khoản:\s*([^\n|]+)/i);
+        if (noteMatch) {
+          const expected = noteMatch[1].toUpperCase().replace(/\s+/g, '');
+          return compactContent.includes(expected) || (expected.length >= 6 && compactContent.includes(expected.slice(-6)));
+        }
+        return false;
+      });
     }
 
     // 4. Xử lý khi tìm thấy đơn hàng
@@ -147,11 +175,15 @@ export const POST: APIRoute = async ({ request }) => {
 
       saveOrders(orders);
 
+      const is9Nguon = targetOrder.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || 
+                       (targetOrder.product && targetOrder.product.includes('9 Nguồn'));
+      const defaultAmount = is9Nguon ? 59000 : 299000;
+
       // 5. Gửi sự kiện Purchase từ máy chủ qua Meta Conversions API (CAPI)
       try {
         const numericAmount = Number(
-          String(targetOrder.amount || transferAmount || 299000).replace(/[^\d]/g, '')
-        ) || 299000;
+          String(targetOrder.amount || transferAmount || defaultAmount).replace(/[^\d]/g, '')
+        ) || defaultAmount;
 
         const clientIp = request.headers.get('x-forwarded-for')?.split(',')[0].trim() || request.headers.get('x-real-ip') || undefined;
         const userAgent = request.headers.get('user-agent') || undefined;
@@ -164,7 +196,7 @@ export const POST: APIRoute = async ({ request }) => {
           phone: targetOrder.phone,
           clientIp,
           clientUserAgent: userAgent,
-          sourceUrl: 'https://daoxuanquang.com.vn/ebook-tao-blog'
+          sourceUrl: is9Nguon ? 'https://daoxuanquang.com.vn/9-nguon-thu-nhap-tu-blog' : 'https://daoxuanquang.com.vn/ebook-tao-blog'
         });
       } catch (capiErr) {
         console.warn('[SePay Webhook] Cảnh báo gửi Meta CAPI Purchase:', capiErr);
@@ -173,14 +205,17 @@ export const POST: APIRoute = async ({ request }) => {
       // 6. Tự động gửi Email giao Ebook cho khách hàng
       const customerName = targetOrder.customerName || 'bạn';
       const email = targetOrder.email;
-      const readerUrl = 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
-      const emailSubject = getOrderEmailSubject(customerName, false);
+      const readerUrl = is9Nguon 
+        ? 'https://daoxuanquang.com.vn/doc-sach/9-nguon-thu-nhap-tu-blog' 
+        : 'https://daoxuanquang.com.vn/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
+      const emailSubject = getOrderEmailSubject(customerName, false, targetOrder.product);
       const emailHtml = renderOrderEmailHtml({
         customerName,
         readerUrl,
         maDon: targetOrder.id,
-        soTien: targetOrder.amount || `${Number(transferAmount || 299000).toLocaleString('vi-VN')}đ`,
-        ngayFormatted: now.toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
+        soTien: targetOrder.amount || `${Number(transferAmount || defaultAmount).toLocaleString('vi-VN')}đ`,
+        ngayFormatted: now.toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' }),
+        productName: is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : undefined
       });
 
       const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quảng <ebook@daoxuanquang.com.vn>';
@@ -198,28 +233,29 @@ export const POST: APIRoute = async ({ request }) => {
         console.error('[SePay Webhook] Lỗi gửi email giao Ebook:', mailErr);
       }
 
-      // 6. Tự động kích hoạt chuỗi email chăm sóc 7 ngày liên tục
-      try {
-        const dripResults = await scheduleDripCampaignForOrder({
-          customerName,
-          email,
-          timestamp: Date.now()
-        });
+      // 7. Kích hoạt chuỗi email chăm sóc 7 ngày liên tục (cho Tạo Blog)
+      if (!is9Nguon) {
+        try {
+          const dripResults = await scheduleDripCampaignForOrder({
+            customerName,
+            email,
+            timestamp: Date.now()
+          });
 
-        // Cập nhật lại orders với dripCampaign
-        orders = getOrders();
-        const curIdx = orders.findIndex((o: any) => o.id === targetOrder.id);
-        if (curIdx !== -1) {
-          orders[curIdx].dripCampaign = {
-            status: 'active',
-            startedAt: Date.now(),
-            days: dripResults
-          };
-          saveOrders(orders);
+          orders = getOrders();
+          const curIdx = orders.findIndex((o: any) => o.id === targetOrder.id);
+          if (curIdx !== -1) {
+            orders[curIdx].dripCampaign = {
+              status: 'active',
+              startedAt: Date.now(),
+              days: dripResults
+            };
+            saveOrders(orders);
+          }
+          console.log(`[SePay Webhook] Đã kích hoạt chuỗi 7 ngày cho đơn ${targetOrder.id}`);
+        } catch (dripErr) {
+          console.warn('[SePay Webhook] Cảnh báo kích hoạt chuỗi 7 ngày:', dripErr);
         }
-        console.log(`[SePay Webhook] Đã kích hoạt chuỗi 7 ngày cho đơn ${targetOrder.id}`);
-      } catch (dripErr) {
-        console.warn('[SePay Webhook] Cảnh báo kích hoạt chuỗi 7 ngày:', dripErr);
       }
 
       return new Response(JSON.stringify({ 
@@ -232,20 +268,21 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // 7. Nếu không khớp đơn nào (ví dụ SePay bấm "Gửi thử Webhook" hoặc chuyển khoản không có mã đơn)
+    // 8. Nếu không khớp đơn nào (ví dụ SePay bấm "Gửi thử Webhook" hoặc chuyển khoản không có mã đơn)
     console.log('[SePay Webhook] Giao dịch không khớp mã đơn sẵn có hoặc là Webhook test:', { orderCode, content, transferAmount });
     
     // Nếu có tiền thật chuyển vào tài khoản VA mà không có mã đơn trước đó, tự tạo đơn mới để lưu vào CRM
-    if (transferAmount && Number(transferAmount) >= 299000) {
+    if (transferAmount && Number(transferAmount) >= 50000) {
       const now = new Date();
+      const is9Nguon = Number(transferAmount) < 200000;
       const newOrderId = orderCode || ('EB' + now.getFullYear().toString().slice(-2) + (now.getMonth() + 1).toString().padStart(2, '0') + Math.floor(1000 + Math.random() * 9000));
       const autoOrder = {
         id: newOrderId,
         customerName: 'Khách chuyển khoản SePay',
         email: 'chua-co-email@daoxuanquang.com.vn',
         phone: '',
-        product: 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
-        productId: 'ebook-tao-blog',
+        product: is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
+        productId: is9Nguon ? 'ebook-9-cach-tao-thu-nhap-tu-blog' : 'ebook-tao-blog',
         amount: `${Number(transferAmount).toLocaleString('vi-VN')}đ`,
         status: 'Đã thanh toán',
         paymentMethod: `SePay (${gateway || 'MBBank'}) - TK: ${accountNumber || subAccount || '0000485725573'}`,
