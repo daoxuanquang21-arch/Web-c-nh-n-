@@ -1,0 +1,717 @@
+---
+import MetaPixel from '../components/MetaPixel.astro';
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9 Nguồn Thu Nhập Từ Blog – Ebook của Đào Xuân Quảng</title>
+<meta name="description" content="Bạn không bỏ cuộc với blog vì viết dở. Bạn bỏ cuộc vì chỉ biết 1 trong 9 cách kiếm tiền. Ebook giá bằng một cốc cà phê.">
+<link rel="canonical" href="https://daoxuanquang.com.vn/9-nguon-thu-nhap-tu-blog" />
+<meta property="og:type" content="website">
+<meta property="og:title" content="9 Nguồn Thu Nhập Từ Blog – Ebook của Đào Xuân Quảng">
+<meta property="og:description" content="Bạn không bỏ cuộc với blog vì viết dở. Bạn bỏ cuộc vì chỉ biết 1 trong 9 cách kiếm tiền. Ebook giá bằng một cốc cà phê.">
+<meta property="og:url" content="https://daoxuanquang.com.vn/9-nguon-thu-nhap-tu-blog">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23D7141A%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2254%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3E9%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500;1,600&display=swap" rel="stylesheet">
+
+<MetaPixel />
+
+<!--
+  ===================== CẤU HÌNH =====================
+  Anh chỉ cần sửa các giá trị dưới đây, toàn trang tự cập nhật.
+  - deadline: hạn ưu đãi THẬT, dạng "2026-10-31T23:59:00+07:00".
+              Để trống "" thì ẩn đồng hồ đếm ngược.
+  - formAction: link nhận dữ liệu form (webhook, Google Apps Script...).
+  - thankYouUrl: trang cảm ơn riêng (để trống thì hiện thông tin chuyển khoản ngay trên trang).
+-->
+<script is:inline>
+window.CONFIG = {
+  price: "59.000đ",
+  bank: "MBBank",
+  account: "0000485725573",
+  holder: "DAO XUAN QUANG",
+  transferNote: "9NGUON + SĐT",
+  qrImage: "https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=59000&des=9NGUON&template=compact",
+  deadline: "",
+  author: "Đào Xuân Quảng",
+  website: "daoxuanquang.com.vn",
+  formAction: "/api/create-order-9nguon",
+  thankYouUrl: ""
+};
+</script>
+
+<style is:global is:inline>
+:root{
+  --night:#071433;
+  --red:#D7141A; --red-dark:#9E0E13; --orange:#F7941D; --yellow:#FFC93C; --cyan:#22B8F0;
+  --ink:#16131C; --muted:#5B5666; --line:#E3DFE8; --cream:#FFE3BF; --white:#FFFFFF;
+  --c1:#E63946; --c2:#F77F00; --c3:#D9A400; --c4:#2A9D8F; --c5:#3A86FF; --c6:#7B2CBF; --c7:#D63384; --c8:#06A77D; --c9:#1D3557;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:18px;line-height:1.65;color:var(--ink);background:var(--white)}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.narrow{max-width:860px;margin:0 auto;padding:0 20px}
+h1,h2,h3,.frame-title,.dashed-title,.truth p,.kicker,.final,.big{text-wrap:balance}
+p,li{text-wrap:pretty}
+h1,h2,h3{line-height:1.45;margin:0}
+mark{background:#FFE08A;color:inherit;padding:0 4px;border-radius:3px}
+.hero mark{background:var(--red);color:#fff}
+
+/* ===== Nút ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--red);color:#fff;text-decoration:none;font-weight:800;text-transform:uppercase;letter-spacing:.02em;
+  font-size:17px;padding:16px 40px;min-height:54px;border-radius:999px;border:3px solid #fff;cursor:pointer;transition:transform .15s ease,filter .15s ease;text-align:center}
+.btn:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.btn:active{transform:translateY(3px)}
+
+.cta-row{text-align:center;margin-top:36px}
+.cta-sub{display:block;font-size:14px;color:var(--muted);margin-top:12px}
+.hero .cta-sub{color:#BFC6D6}
+
+/* ===== Thanh trên cùng ===== */
+.topbar{position:sticky;top:0;z-index:50;background:var(--red);color:#fff}
+.topbar .in{max-width:1120px;margin:0 auto;padding:8px 20px;display:flex;align-items:center;justify-content:center;gap:10px 24px;flex-wrap:wrap}
+.topbar .lbl{font-style:italic;font-weight:800;font-size:18px}
+.topbar .now{font-weight:800;font-size:22px}
+.topbar a{background:var(--orange);color:#fff;text-decoration:none;font-weight:800;font-size:14px;text-transform:uppercase;padding:9px 22px;border-radius:8px;min-height:40px;display:inline-flex;align-items:center}
+@media (max-width:600px){.topbar .lbl{font-size:14px}.topbar .now{font-size:17px}}
+
+/* ===== Hero ===== */
+.hero{position:relative;overflow:hidden;color:#fff;padding:56px 0 64px;
+  background:var(--night)}
+.hero .pre{position:relative;text-align:center;font-weight:700;font-size:clamp(16px,1.6vw,19px);color:var(--yellow);margin:0 auto 14px;letter-spacing:.02em}
+.hero h1{position:relative;text-align:center;color:var(--cyan);font-weight:900;text-transform:uppercase;font-size:clamp(28px,4.3vw,54px);max-width:1060px;margin:0 auto 32px}
+.hero h1 span{color:#fff}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.9fr);gap:40px;align-items:center}
+.hero .sub{font-size:clamp(19px,2vw,25px);line-height:1.5;margin:0 0 26px;font-weight:500}
+.hero .sub b{color:var(--yellow)}
+.meta{list-style:none;padding:0;margin:0 0 32px;display:grid;gap:10px;font-weight:700;font-size:18px}
+.meta li{display:flex;gap:12px;align-items:center}
+.meta svg{flex:none;width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.cta-left{text-align:center}}
+
+.book{width:100%;max-width:340px;margin:0 auto;aspect-ratio:3/4;background:#FBF8F2;color:#231F18;border-radius:8px 18px 18px 8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;
+  transform:rotate(3deg)}
+.book .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.book .tiles span{aspect-ratio:1;border-radius:9px;color:#fff;font-weight:900;font-size:26px;padding:6px 9px}
+.book .tiles span:nth-child(1){background:var(--c1)}.book .tiles span:nth-child(2){background:var(--c2)}.book .tiles span:nth-child(3){background:var(--c3);color:#1B1F2A}
+.book .tiles span:nth-child(4){background:var(--c4)}.book .tiles span:nth-child(5){background:var(--c5)}.book .tiles span:nth-child(6){background:var(--c6)}
+.book .tiles span:nth-child(7){background:var(--c7)}.book .tiles span:nth-child(8){background:var(--c8)}.book .tiles span:nth-child(9){background:var(--c9)}
+.book .ttl{font-weight:900;font-size:30px;line-height:1.3}
+.book .by{font-size:13px;color:#6B6355;margin-top:6px}
+
+/* ===== Khung trắng ===== */
+.box-sec{padding:56px 0}
+.box{padding:8px 0}
+.box h2,.sec-title{text-align:center;text-transform:uppercase;font-weight:800;font-size:clamp(24px,3vw,36px);margin-bottom:28px}
+.xlist,.qlist,.vlist{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.xlist li,.vlist li{display:flex;gap:14px;align-items:flex-start;font-size:clamp(18px,1.9vw,21px)}
+.xlist li em{font-style:italic;color:var(--muted)}
+.ic{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;margin-top:1px}
+.ic svg{width:18px;height:18px;stroke:#fff;fill:none;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.ic.x{background:var(--red)}.ic.v{background:#1DB954}.ic.q{background:var(--red);font-weight:900;color:#fff;font-size:22px;width:44px;height:44px}
+.box .kicker{text-align:center;font-size:20px;margin:28px 0 0;font-weight:600}
+
+/* ===== Văn bản kể chuyện ===== */
+.plain p{margin:0 0 14px;font-size:clamp(18px,1.9vw,21px)}
+.plain .gap{height:10px}
+.plain strong{font-weight:800}
+.plain .big{font-size:clamp(22px,2.4vw,28px);font-weight:800;line-height:1.5}
+
+/* ===== Banner sự thật ===== */
+.truth{color:var(--ink);text-align:center;padding:72px 20px;background:#fff}
+.truth p{max-width:1000px;margin:0 auto;font-weight:800;text-transform:uppercase;font-size:clamp(22px,3vw,36px);line-height:1.65}
+.truth p span{color:var(--red)}
+
+/* ===== Cánh cửa ===== */
+.doors{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px;margin:28px 0}
+.doors span{aspect-ratio:3/5;border-radius:8px;display:grid;place-items:center;font-weight:900;font-size:22px;color:#fff}
+.doors span.off{background:#E8E4EC;color:#A8A2B2}
+@media (max-width:560px){.doors span{font-size:16px}}
+
+/* ===== Tối ===== */
+.dark{color:var(--ink);padding:72px 0;background:#fff}
+.dark h2{font-weight:900;text-transform:uppercase;font-size:clamp(26px,3vw,38px);margin-bottom:24px}
+.two{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:center}
+.dark .plain p{color:var(--ink)}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.imagine-card{border-radius:18px;background:#F3F0EA;padding:28px}
+.notif{background:#fff;color:var(--ink);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:center;margin-bottom:10px;font-size:15px;line-height:1.4}
+.notif:last-child{margin-bottom:0}
+.notif .dot{flex:none;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:17px}
+.notif b{display:block;font-size:15px}
+.notif small{color:var(--muted);font-size:13px}
+
+/* ===== Gạch đầu dòng mồi ===== */
+.fasc{list-style:none;padding:0;margin:0;display:grid;gap:0}
+.fasc li{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:16px 0;font-size:clamp(17px,1.8vw,20px);line-height:1.55}
+.fasc li:last-child{border-bottom:0}
+.fasc .n{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:20px}
+.fasc small{display:block;color:var(--muted);font-size:14px;margin-top:2px}
+
+/* ===== Lợi ích ===== */
+.benefits{color:var(--ink);padding:72px 0;background:#fff}
+.frame-title{margin:0 auto 40px;color:var(--ink);font-weight:800;text-transform:uppercase;font-size:clamp(24px,3vw,36px);text-align:center}
+.benefits .vlist li{font-size:19px;font-weight:500;align-items:center}
+.benefits .vlist{gap:26px}
+.figure{background:#F3F0EA;border-radius:16px;padding:24px 26px}
+.figure h3{font-size:17px;margin:0 0 8px;color:var(--red)}
+.figure .row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:16px}
+.figure .tot{display:flex;justify-content:space-between;margin-top:8px;font-weight:800;color:var(--red);font-size:19px}
+.figure .cap{font-size:13px;color:var(--muted);margin:12px 0 0;font-style:italic;text-align:center}
+
+/* ===== Câu hỏi ===== */
+.questions{padding:72px 0}
+.questions h2{color:var(--red);font-weight:900;text-transform:uppercase;text-align:center;font-size:clamp(24px,3.2vw,38px);margin-bottom:40px}
+.qlist{gap:22px;max-width:900px;margin:0 auto}
+.qlist li{display:flex;gap:18px;align-items:center;font-size:clamp(18px,1.8vw,21px)}
+.questions .after{max-width:860px;margin:36px auto 0;text-align:center;font-size:19px}
+
+/* ===== So sánh cốc cà phê ===== */
+.vs{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:stretch;margin:8px 0 0}
+.vs .side{padding:0}
+.vs .side h3{font-size:20px;margin-bottom:12px}
+.vs .side ul{margin:0;padding-left:20px;font-size:17px}
+.vs .side li{margin-bottom:6px}
+.vs .ebook h3{color:var(--red)}
+.vs .mid{display:grid;place-items:center;font-weight:900;font-size:22px;color:var(--muted)}
+@media (max-width:760px){.vs{grid-template-columns:1fr}.vs .mid{padding:4px 0}}
+
+/* ===== Ra quyết định ===== */
+.decide{color:var(--ink);padding:72px 0 64px;background:#fff}
+.decide h2{text-align:center;font-weight:900;text-transform:uppercase;font-size:clamp(26px,3.2vw,38px);margin-bottom:36px}
+.decide h3{text-align:center;font-weight:800;text-transform:uppercase;font-size:clamp(22px,2.4vw,30px);margin:44px 0 24px}
+.decide .plain p{color:var(--ink)}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.paths div{font-size:18px;line-height:1.7}
+.paths .a{color:var(--muted)}
+.paths .b{color:var(--ink)}.paths .b b{color:var(--red)}
+.paths b{display:block;font-size:19px;margin-bottom:8px}
+@media (max-width:700px){.paths{grid-template-columns:1fr}}
+.decide .final{text-align:center;font-weight:800;font-size:clamp(20px,2.2vw,28px);margin:28px 0 0}
+
+/* ===== Vì sao ===== */
+.why{color:var(--ink);padding:72px 0;background:#fff}
+.dashed-title{margin:0 auto 44px;color:var(--ink);font-weight:800;text-transform:uppercase;font-size:clamp(24px,3vw,36px);text-align:center}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.card{background:#F3F0EA;color:var(--ink);border-radius:16px;padding:18px 20px 24px;min-height:190px}
+.card .hd{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px}
+.card .hd .ic{width:42px;height:42px;background:var(--red)}
+.card h3{font-size:20px;font-weight:800;line-height:1.45;padding-top:6px}
+.card p{margin:0;font-size:16px;line-height:1.5;color:#3B3745}
+@media (max-width:860px){.cards{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.cards{grid-template-columns:1fr}}
+
+/* ===== Nội dung + FAQ (xổ xuống) ===== */
+.toc{background:#fff;padding:72px 0}
+.toc h2{color:var(--red);text-align:center;font-weight:900;font-size:clamp(28px,3.4vw,42px)}
+.toc .subt{text-align:center;font-weight:800;text-transform:uppercase;margin:6px 0 36px;font-size:18px}
+.acc{max-width:880px;margin:0 auto;display:grid;gap:16px}
+.acc details{background:#F3F0EA;border-radius:4px}
+.acc summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:18px 22px;font-weight:800;font-size:18px;min-height:64px}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .n{flex:none;width:34px;height:34px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:900;font-size:17px}
+.acc summary .t{flex:1}
+.acc summary .plus{flex:none;width:22px;height:22px;position:relative}
+.acc summary .plus::before,.acc summary .plus::after{content:"";position:absolute;left:0;top:10px;width:22px;height:3px;background:var(--ink);border-radius:2px;transition:transform .2s ease}
+.acc summary .plus::after{transform:rotate(90deg)}
+.acc details[open] summary .plus::after{transform:rotate(0)}
+.acc .body{padding:0 22px 20px 70px;font-size:17px;color:#3B3745}
+.acc .body ul{margin:0;padding-left:18px}
+.acc .body li{margin-bottom:4px}
+.acc .body p{margin:0}
+.faq{padding:72px 0;background:#fff}
+.faq .acc .body{padding:0 22px 20px 22px}
+.toc .after{max-width:900px;margin:36px auto 0;text-align:center;font-size:19px}
+
+/* ===== Đăng ký ===== */
+.register{position:relative;overflow:hidden;color:#fff;padding:64px 0 72px;background:var(--night)}
+.register::before,.register::after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;border:2px dashed rgba(255,255,255,.25);pointer-events:none}
+.register::before{left:-140px;top:-140px}.register::after{right:-140px;bottom:-140px}
+.register h2{text-align:center;color:var(--yellow);font-weight:900;text-transform:uppercase;font-size:clamp(24px,3vw,36px);margin-bottom:32px}
+.reg-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:40px;align-items:start}
+@media (max-width:900px){.reg-grid{grid-template-columns:1fr}}
+.reg-lead{font-weight:700;font-size:20px;line-height:1.6;margin:0 0 18px}
+.stack{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:8px;font-size:16px}
+.stack li{display:flex;gap:10px;align-items:flex-start}
+.stack li::before{content:"✓";color:#3EE08F;font-weight:900}
+.offer-row{display:flex;flex-wrap:wrap;gap:24px;align-items:center}
+.count .lb{font-weight:700;font-size:15px;margin-bottom:8px;text-align:center}
+.count .cells{display:flex;gap:8px}
+.count .cell{text-align:center}
+.count .cell b{display:grid;place-items:center;width:62px;height:58px;background:#fff;color:var(--ink);border-radius:10px;font-size:24px;font-weight:800}
+.count .cell span{display:block;font-size:13px;margin-top:4px;color:#D8DDEA}
+.pricebox{text-align:center}
+.pricebox .today{color:#FF6A6F;font-weight:900;text-transform:uppercase;font-size:20px;margin-bottom:10px}
+.pricebox .ring{border:3px solid var(--red);border-radius:999px;padding:18px 30px 16px;min-width:250px}
+.pricebox .cup{width:46px;height:46px;stroke:var(--yellow);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;margin:0 auto 6px;display:block}
+.pricebox .p{color:#FF4A50;font-weight:900;font-size:clamp(32px,4vw,44px);line-height:1.35}
+.pricebox .pn{font-size:13px;color:#C9D0DF;margin-top:6px}
+.coffee-note{background:rgba(255,201,60,.1);border:1.5px dashed var(--yellow);border-radius:14px;padding:16px 18px;font-size:17px;line-height:1.55;margin:0 0 22px}
+.coffee-note b{color:var(--yellow)}
+form.reg{display:grid;gap:10px}
+form.reg .fh{font-weight:800;font-size:19px;margin:0 0 4px}
+form.reg label.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+form.reg input{font:inherit;font-size:16px;width:100%;padding:14px;border-radius:6px;border:2px solid #C9D2E4;background:#fff;color:var(--ink);min-height:52px}
+form.reg input:focus{border-color:var(--cyan);outline:none}
+form.reg .note{font-size:13px;color:#C9D0DF;margin:0}
+form.reg button{margin-top:6px;width:100%;border:0;border-radius:6px;background:#F0453B;color:#fff;font:inherit;font-weight:800;text-transform:uppercase;font-size:16px;padding:16px;min-height:56px;cursor:pointer;transition:filter .15s ease}
+form.reg button:hover{filter:brightness(1.07)}
+form.reg button[disabled]{opacity:.7;cursor:wait}
+.thanks{display:none;background:#fff;color:var(--ink);border-radius:12px;padding:22px;text-align:center}
+.thanks b{display:block;font-size:20px;color:#0A8A5A;margin-bottom:6px}
+.pay{text-align:left;margin-top:14px;font-size:15px;line-height:1.7}
+.pay .r{display:flex;justify-content:space-between;gap:10px}
+.pay .r b{text-align:right;color:var(--ink);font-size:15px;margin:0;display:inline}
+.pay img{max-width:220px;margin:12px auto 0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.err{color:#FFB4B6;font-size:14px;margin:0;min-height:1em}
+.ps{max-width:860px;margin:44px auto 0;padding:0;color:#D8DDEA;font-size:17px;line-height:1.7}
+.ps p{margin:0 0 12px}
+.ps b{color:#fff}
+.ps a{color:var(--yellow);font-weight:800}
+
+footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align:center}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- ===== THANH TRÊN CÙNG ===== -->
+<div class="topbar" role="region" aria-label="Ưu đãi">
+  <div class="in">
+    <span class="lbl">Trọn bộ ebook chỉ bằng một cốc cà phê</span>
+    <span class="now" data-fill="price">59.000đ</span>
+    <a href="#dang-ky">Nhận ebook</a>
+  </div>
+</div>
+
+<!-- ===== 1. HERO: phá vỡ niềm tin cũ + lời hứa cụ thể ===== -->
+<header class="hero">
+  <div class="wrap">
+    <p class="pre">Dành cho người muốn có thu nhập từ blog nhưng chưa biết bắt đầu từ đâu</p>
+    <h1>Bạn không bỏ cuộc với blog vì viết dở. <span>Bạn bỏ cuộc vì chỉ biết 1 trong 9 cách kiếm tiền.</span></h1>
+    <div class="hero-grid">
+      <div>
+        <p class="sub">Trong ebook <b>“9 Nguồn Thu Nhập Từ Blog”</b>, Quảng mở ra cả 9 cánh cửa — trong đó có những cánh cửa <b>không cần hàng chục nghìn người đọc</b> mới bắt đầu có tiền. Đọc xong trong một buổi tối, bạn sẽ biết chính xác cánh cửa nào dành cho mình.</p>
+        <ul class="meta">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>9 chương · Ví dụ thu nhập bằng con số · Kế hoạch 90 ngày</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h12v6a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6z"/><path d="M17 10h1.5a2.5 2.5 0 0 1 0 5H17"/></svg>Giá bằng đúng một cốc cà phê</li>
+        </ul>
+        <div class="cta-left"><a class="btn" href="#dang-ky">Nhận ebook ngay</a><span class="cta-sub">Gửi thẳng về email của bạn</span></div>
+      </div>
+      <div class="book" aria-hidden="true">
+        <div class="tiles"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+        <div><div class="ttl">9 nguồn thu nhập từ blog</div><div class="by">Ebook · <span data-fill="author">Đào Xuân Quảng</span></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===== 2. NỖI ĐAU: nói đúng câu người đọc đang tự nói ===== -->
+<section class="box-sec">
+  <div class="narrow">
+    <div class="box">
+      <h2>Có câu nào dưới đây bạn từng tự nói với mình?</h2>
+      <ul class="xlist">
+        <li><span class="ic x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span><em>“Người ta kiếm được tiền từ blog… nhưng chắc họ có gì đó đặc biệt mà mình không có.”</em></span></li>
+        <li><span class="ic x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span><em>“Phải có hàng chục nghìn người đọc mới có tiền. Mình bắt đầu từ con số 0 thì đến bao giờ?”</em></span></li>
+        <li><span class="ic x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span><em>“Hosting, tên miền, SEO… nghe thôi đã thấy mệt.”</em></span></li>
+        <li><span class="ic x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span><em>“Giờ ai cũng xem video. Làm blog lúc này có phải là quá muộn rồi không?”</em></span></li>
+        <li><span class="ic x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span><em>“Mình đã đọc cả chục bài hướng dẫn. Càng đọc càng rối, vẫn chưa làm được gì.”</em></span></li>
+        <li><span class="ic x"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></span><span><em>“Để mình tìm hiểu thêm rồi tính…”</em> — và một năm trôi qua.</span></li>
+      </ul>
+      <p class="kicker">Nếu bạn gật đầu dù chỉ với một câu, hãy đọc tiếp. Vấn đề không nằm ở bạn.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3. KHUẤY ĐỘNG: chi phí ẩn của việc đi sai ===== -->
+<section class="box-sec" style="padding-top:0">
+  <div class="narrow">
+    <div class="box plain">
+      <h2>Đây là cách hầu hết người mới bỏ cuộc</h2>
+      <p>Họ nghe nói blog kiếm được tiền. Họ tìm hiểu, và câu trả lời đầu tiên họ gặp gần như luôn là: <strong>“gắn quảng cáo”</strong>.</p>
+      <p>Thế là họ viết. Một bài, mười bài, ba mươi bài. Đêm khuya sau giờ làm. Cuối tuần thay vì nghỉ ngơi.</p>
+      <p>Ba tháng sau, họ mở tài khoản quảng cáo ra xem.</p>
+      <p class="big">Vài chục nghìn đồng.</p>
+      <p>Không phải vì họ viết dở. Mà vì quảng cáo là con đường <mark>cần nhiều người đọc nhất</mark> trong cả 9 con đường — và với người đọc Việt Nam, mỗi nghìn lượt xem chỉ mang lại một khoản rất nhỏ.</p>
+      <p>Họ kết luận: <em>“Blog không kiếm được tiền.”</em> Rồi bỏ.</p>
+      <p>Điều đau nhất? Cánh cửa phù hợp với họ nằm ngay bên cạnh. Họ chỉ không biết nó tồn tại.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4. SỰ THẬT ===== -->
+<section class="truth">
+  <p>Bạn không cần viết hay hơn. Bạn không cần thêm người đọc.<br><span>Bạn cần nhìn thấy cả 9 cánh cửa trước khi chọn bước vào cánh nào.</span></p>
+</section>
+
+<!-- ===== 5. CƠ CHẾ: 1 cửa vs 9 cửa ===== -->
+<section class="box-sec">
+  <div class="narrow">
+    <div class="box plain">
+      <h2>Sự thật ít ai nói</h2>
+      <p>Hầu hết người mới chỉ nhìn thấy một cánh cửa:</p>
+      <div class="doors" aria-hidden="true"><span style="background:var(--c1)">1</span><span class="off">2</span><span class="off">3</span><span class="off">4</span><span class="off">5</span><span class="off">6</span><span class="off">7</span><span class="off">8</span><span class="off">9</span></div>
+      <p>Trong khi những người có thu nhập từ blog nhìn thấy cả chín:</p>
+      <div class="doors" aria-hidden="true"><span style="background:var(--c1)">1</span><span style="background:var(--c2)">2</span><span style="background:var(--c3);color:#1B1F2A">3</span><span style="background:var(--c4)">4</span><span style="background:var(--c5)">5</span><span style="background:var(--c6)">6</span><span style="background:var(--c7)">7</span><span style="background:var(--c8)">8</span><span style="background:var(--c9)">9</span></div>
+      <p><strong>Và họ biết một điều mà người mới không biết:</strong></p>
+      <p>– Có cánh cửa mở được <mark>ngay từ những bài viết đầu tiên</mark>.</p>
+      <p>– Có cánh cửa <mark>gần như không cần lượng truy cập</mark> — chỉ cần vài người đọc đúng đối tượng tin bạn.</p>
+      <p>– Có cánh cửa để dành cho giai đoạn sau, mở sớm chỉ tốn công vô ích.</p>
+      <div class="gap"></div>
+      <p>Chọn đúng thứ tự, mỗi nguồn thu sẽ <strong>đẩy nguồn thu tiếp theo</strong>. Chọn sai, bạn sẽ mất nhiều tháng cho một con đường chưa tới lượt mình.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6. VẼ TƯƠNG LAI ===== -->
+<section class="dark">
+  <div class="wrap two">
+    <div class="plain">
+      <h2>Hãy tưởng tượng…</h2>
+      <p>Một buổi sáng, bạn mở điện thoại trong lúc chờ cà phê.</p>
+      <p>Một thông báo hoa hồng — ai đó vừa mua hàng qua bài review bạn viết từ tháng trước.</p>
+      <p>Hai người mới đăng ký nhận bản tin của bạn trong đêm qua.</p>
+      <p>Một tin nhắn: <em>“Em đọc blog của anh/chị, em muốn thuê…”</em></p>
+      <div class="gap"></div>
+      <p>Bạn không làm gì đặc biệt hôm qua. Những bài viết cũ vẫn đang làm việc thay bạn.</p>
+      <p class="big">Đó là điều một blog <mark>được xây đúng cách</mark> có thể làm.</p>
+    </div>
+    <div class="imagine-card" aria-hidden="true">
+      <div class="notif"><span class="dot" style="background:var(--c2)">2</span><div><b>Hoa hồng mới từ tiếp thị liên kết</b><small>Bài: Review máy lọc không khí X</small></div></div>
+      <div class="notif"><span class="dot" style="background:var(--c8)">8</span><div><b>2 người đăng ký mới vào bản tin</b><small>Từ form cuối bài viết</small></div></div>
+      <div class="notif"><span class="dot" style="background:var(--c7)">7</span><div><b>“Em muốn thuê anh/chị viết bài…”</b><small>Từ trang Làm việc với tôi</small></div></div>
+      <div class="notif"><span class="dot" style="background:var(--c4)">4</span><div><b>Đơn hàng mới: Bộ template</b><small>Sản phẩm số của bạn</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7. GẠCH ĐẦU DÒNG MỒI (fascinations) ===== -->
+<section class="box-sec">
+  <div class="narrow">
+    <div class="box">
+      <h2>Bên trong ebook, bạn sẽ khám phá</h2>
+      <ul class="fasc">
+        <li><span class="n" style="background:var(--c1)">1</span><span>Vì sao <strong>cùng 50.000 lượt xem</strong>, có blog nhận khoảng 75 đô, có blog nhận tới 1.500 đô mỗi tháng — và yếu tố quyết định không phải là chất lượng bài viết.<small>Chương 1 · Quảng cáo hiển thị</small></span></li>
+        <li><span class="n" style="background:var(--c2)">2</span><span>Một phần nhỏ trong bài review mà thêm vào là người đọc <strong>tin bạn hơn</strong> — và đó lại là phần hầu hết người mới cố tình bỏ qua.<small>Chương 2 · Tiếp thị liên kết</small></span></li>
+        <li><span class="n" style="background:var(--c3);color:#1B1F2A">3</span><span>Vì sao <strong>5.000 người đọc đúng đối tượng</strong> có thể đáng giá với nhãn hàng hơn 50.000 người đọc ngẫu nhiên — và cách định giá bài tài trợ dựa trên điều đó.<small>Chương 3 · Bài viết tài trợ</small></span></li>
+        <li><span class="n" style="background:var(--c4)">4</span><span>“Bậc thang giá” 4 nấc đưa người đọc <strong>từ miễn phí đến trả tiền</strong> một cách tự nhiên, không cần “chốt sale”.<small>Chương 4 · Sản phẩm số</small></span></li>
+        <li><span class="n" style="background:var(--c5)">5</span><span>Cách <strong>biết trước khóa học có bán được không</strong> — trước khi bỏ ra hàng tháng trời quay video.<small>Chương 5 · Khóa học online</small></span></li>
+        <li><span class="n" style="background:var(--c6)">6</span><span>Một con số nhỏ mà cải thiện được thì <strong>tác dụng ngang với tăng gấp đôi lượng khách mới</strong>.<small>Chương 6 · Hội viên trả phí</small></span></li>
+        <li><span class="n" style="background:var(--c7)">7</span><span>Con đường có tiền <strong>nhanh nhất</strong> cho blog mới — gần như không cần lượng truy cập.<small>Chương 7 · Dịch vụ &amp; tư vấn</small></span></li>
+        <li><span class="n" style="background:var(--c8)">8</span><span>Việc mà gần như mọi blogger có thu nhập đều nói <strong>họ ước đã làm từ ngày đầu tiên</strong> — và chuỗi 5 email mẫu để bạn làm ngay.<small>Chương 8 · Email newsletter</small></span></li>
+        <li><span class="n" style="background:var(--c9)">9</span><span>Công thức người ta dùng để <strong>định giá một blog</strong> khi mua bán — và vì sao biết nó từ sớm giúp bạn xây blog bền hơn, kể cả khi không định bán.<small>Chương 9 · Mua bán blog</small></span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 8. LỢI ÍCH + BẰNG CHỨNG CỤ THỂ ===== -->
+<section class="benefits">
+  <div class="wrap">
+    <div class="frame-title">Không phải lý thuyết. Là con số.</div>
+    <div class="two">
+      <ul class="vlist">
+        <li><span class="ic v"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Mỗi nguồn thu có ví dụ tính thu nhập từng bước, để bạn biết cần bao nhiêu người đọc, bao nhiêu đơn hàng.</li>
+        <li><span class="ic v"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Mỗi chương chỉ rõ những sai lầm khiến người mới mất tiền, mất tài khoản hoặc bỏ cuộc giữa chừng.</li>
+        <li><span class="ic v"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Mỗi nguồn thu được đánh dấu rõ: “bắt đầu ngay” hay “để giai đoạn sau”.</li>
+        <li><span class="ic v"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Kết thúc bằng lộ trình theo giai đoạn và kế hoạch hành động 90 ngày, từng tuần một.</li>
+      </ul>
+      <div class="figure" aria-label="Ví dụ tính thu nhập trích từ ebook">
+        <h3>Trích chương 2: một bài review, mỗi tháng</h3>
+        <div class="row"><span>Lượt xem bài viết</span><b>10.000</b></div>
+        <div class="row"><span>5% bấm vào link giới thiệu</span><b>500 lượt</b></div>
+        <div class="row"><span>3% trong số đó mua hàng</span><b>15 đơn</b></div>
+        <div class="row"><span>Hoa hồng trung bình</span><b>150.000đ/đơn</b></div>
+        <div class="tot"><span>Từ một bài viết</span><span>~ 2,25 triệu</span></div>
+        <p class="cap">Số liệu minh họa để hiểu cách tính, không phải cam kết thu nhập. Chương 2 còn chỉ cách nâng tỷ lệ bấm từ 5% lên 8%.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9. CÂU HỎI ===== -->
+<section class="questions">
+  <div class="wrap">
+    <h2>4 câu hỏi khiến người mới<br>đứng yên hàng tháng trời</h2>
+    <ul class="qlist">
+      <li><span class="ic q" aria-hidden="true">?</span>Viết bài thì ai trả tiền cho mình?</li>
+      <li><span class="ic q" aria-hidden="true">?</span>Cần bao nhiêu người đọc mới bắt đầu có thu nhập?</li>
+      <li><span class="ic q" aria-hidden="true">?</span>Blog tiếng Việt, người đọc Việt Nam có kiếm được tiền không?</li>
+      <li><span class="ic q" aria-hidden="true">?</span>Nên làm nguồn thu nào trước, nguồn thu nào sau?</li>
+    </ul>
+    <p class="after">Không trả lời được bốn câu này, bạn sẽ tiếp tục đọc thêm, tìm hiểu thêm — và đứng yên. Ebook trả lời <strong>cả bốn câu</strong>, bằng ví dụ cụ thể, trong một buổi tối.</p>
+  </div>
+</section>
+
+<!-- ===== 10. NEO GIÁ: cốc cà phê vs ebook ===== -->
+<section class="box-sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="box">
+      <h2>Một cốc cà phê có thể đổi được gì?</h2>
+      <div class="vs">
+        <div class="side coffee">
+          <h3>Một cốc cà phê</h3>
+          <ul><li>Uống hết trong khoảng 15 phút</li><li>Tỉnh táo được vài tiếng</li><li>Ngày mai lại cần cốc khác</li></ul>
+        </div>
+        <div class="mid">hay</div>
+        <div class="side ebook">
+          <h3>Ebook 9 Nguồn Thu Nhập Từ Blog</h3>
+          <ul><li>Đọc xong trong một buổi tối</li><li>Biết rõ con đường hợp với mình</li><li>Tránh được những tháng đi sai đường</li><li>Mở lại đọc bất cứ lúc nào</li></ul>
+        </div>
+      </div>
+      <p class="kicker">Cùng một số tiền. Một bên giữ bạn tỉnh táo vài tiếng. Một bên giúp bạn đi đúng hướng ngay từ bước đầu tiên.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11. RA QUYẾT ĐỊNH ===== -->
+<section class="decide">
+  <div class="narrow">
+    <h2>Một tháng nữa, bạn sẽ ở đâu?</h2>
+    <div class="paths">
+      <div class="a"><b>Con đường thứ nhất</b>Bạn đóng trang này lại, tự nhủ “để tìm hiểu thêm”. Một tháng sau, bạn vẫn đang đọc những bài hướng dẫn rời rạc, vẫn chưa biết bắt đầu từ đâu. Và câu “giá mà mình bắt đầu sớm hơn” lại dài thêm một tháng.</div>
+      <div class="b"><b>Con đường thứ hai</b>Tối nay bạn đọc xong ebook. Bạn biết mình sẽ đi cánh cửa nào trước. Bạn làm theo kế hoạch tuần 1–2. Một tháng sau, bạn đã có những bài viết đầu tiên và nguồn thu đầu tiên đang được xây.</div>
+    </div>
+    <h3>Khác biệt giữa hai con đường?</h3>
+    <div class="plain center" style="text-align:center">
+      <p class="big">Một cốc cà phê và một buổi tối.</p>
+    </div>
+    <div class="cta-row"><a class="btn pulse" href="#dang-ky">Tôi chọn con đường thứ hai</a></div>
+  </div>
+</section>
+
+<!-- ===== 12. NỘI DUNG ===== -->
+<section class="toc">
+  <div class="wrap">
+    <h2>Nội dung ebook</h2>
+    <p class="subt">“9 Nguồn Thu Nhập Từ Blog”</p>
+    <div class="acc">
+      <details><summary><span class="n" style="background:var(--c1)">1</span><span class="t">Quảng cáo hiển thị</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>RPM là gì, vì sao cùng lượng người đọc mà thu nhập chênh nhau nhiều lần</li><li>Khi nào nên gắn quảng cáo, đặt ở đâu để không làm phiền người đọc</li><li>Những lỗi có thể khiến tài khoản bị khóa vĩnh viễn</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c2)">2</span><span class="t">Tiếp thị liên kết (Affiliate)</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Loại bài viết bán hàng hiệu quả nhất</li><li>Cấu trúc một bài review chuyển đổi tốt</li><li>Chọn sản phẩm nào để giới thiệu</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c3);color:#1B1F2A">3</span><span class="t">Bài viết tài trợ</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Cách thu hút nhãn hàng, làm media kit</li><li>Định giá dựa trên điều gì, các gói hợp tác nên có</li><li>Mẫu email chào hợp tác</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c4)">4</span><span class="t">Bán sản phẩm số</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Ý tưởng sản phẩm theo từng chủ đề blog</li><li>Xây “bậc thang giá” từ miễn phí đến cao cấp</li><li>Trang bán hàng cần có những gì</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c5)">5</span><span class="t">Khóa học online</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Công thức một khóa học bán được</li><li>Mở bán trước để kiểm chứng nhu cầu</li><li>Dàn bài mẫu và chọn nền tảng</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c6)">6</span><span class="t">Hội viên trả phí</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Ba mô hình hội viên phổ biến</li><li>Vì sao giữ chân hội viên quan trọng hơn tìm khách mới</li><li>Lịch nội dung mẫu cho hội viên</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c7)">7</span><span class="t">Dịch vụ &amp; tư vấn</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Dùng blog làm hồ sơ năng lực để nhận việc</li><li>Định giá theo giờ, theo dự án, theo tháng</li><li>“Đóng gói” dịch vụ và quy trình làm việc chuyên nghiệp</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c8)">8</span><span class="t">Email newsletter</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Ba cách kiếm tiền từ bản tin email</li><li>Xây danh sách email từ ngày đầu tiên</li><li>Chuỗi 5 email chào mừng mẫu</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--c9)">9</span><span class="t">Mua bán blog</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Điều gì làm tăng giá trị một blog</li><li>Công thức định giá blog</li><li>Checklist thẩm định khi mua</li></ul></div></details>
+      <details><summary><span class="n" style="background:var(--ink)">+</span><span class="t">Phần bổ sung</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><ul><li>Từ điển nhỏ cho người mới</li><li>Xây nền móng trước khi kiếm tiền</li><li>Bảng so sánh nhanh 9 nguồn thu</li><li>Lộ trình kết hợp theo giai đoạn</li><li>Kế hoạch hành động 90 ngày</li><li>Câu hỏi thường gặp &amp; checklist hành động</li></ul></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13. XỬ LÝ LỜI TỪ CHỐI ===== -->
+<section class="faq">
+  <div class="wrap">
+    <h2 class="sec-title">Có thể bạn đang nghĩ…</h2>
+    <div class="acc">
+      <details><summary><span class="t">“Thông tin này trên mạng đầy, cần gì mua?”</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><p>Đúng, thông tin thì nhiều. Nhưng nó nằm rải rác ở hàng chục bài viết, mỗi bài nói một kiểu, và chẳng bài nào cho bạn biết nên làm cái gì trước. Thứ bạn trả tiền ở đây là sự sắp xếp: 9 con đường trên một bản đồ, có thứ tự, có con số, có kế hoạch 90 ngày. Bạn tiết kiệm được những buổi tối tự ghép các mảnh lại với nhau.</p></div></details>
+      <details><summary><span class="t">“Mình chưa có blog, đọc có hiểu không?”</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><p>Ebook được viết cho chính người chưa từng đăng bài nào. Có cả từ điển nhỏ giải thích SEO, RPM, affiliate… bằng một câu đời thường. Thậm chí đọc trước khi có blog còn tốt hơn: bạn sẽ chọn chủ đề và cách xây blog đúng ngay từ đầu.</p></div></details>
+      <details><summary><span class="t">“Blog tiếng Việt có kiếm được tiền không?”</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><p>Có. Quảng cáo với người đọc Việt Nam đúng là trả thấp — đó chính là lý do nhiều người bỏ cuộc. Nhưng dịch vụ, sản phẩm số, khóa học và tiếp thị liên kết với các sàn trong nước không phụ thuộc nhiều vào điều đó. Ebook chỉ rõ con đường nào hợp với blog tiếng Việt.</p></div></details>
+      <details><summary><span class="t">“Bây giờ mới bắt đầu có muộn không?”</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><p>Người đọc vẫn tìm kiếm trên Google và hỏi AI mỗi ngày, và câu trả lời vẫn đến từ các trang viết. Thứ đang thiếu là nội dung có trải nghiệm thật — điều mà bài tổng hợp hàng loạt không thể sao chép. Thời điểm muộn nhất là khi bạn tiếp tục “để sau”.</p></div></details>
+      <details><summary><span class="t">“Mua xong mình nhận ebook bằng cách nào?”</span><span class="plus" aria-hidden="true"></span></summary>
+        <div class="body"><p>Bạn điền tên, email, số điện thoại ở form bên dưới, rồi chuyển khoản theo thông tin hiện ra. Ngay khi nhận được, ebook sẽ được gửi về email của bạn.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14. ĐĂNG KÝ ===== -->
+<section class="register" id="dang-ky">
+  <div class="wrap">
+    <h2>Nhận trọn bộ ebook<br>“9 Nguồn Thu Nhập Từ Blog”</h2>
+    <div class="reg-grid">
+      <div>
+        <p class="reg-lead">Bạn sẽ nhận được:</p>
+        <ul class="stack">
+          <li>9 chương về 9 nguồn thu nhập, mỗi chương kèm ví dụ tính thu nhập</li>
+          <li>Những sai lầm thường gặp ở từng nguồn thu</li>
+          <li>Bảng so sánh nhanh 9 nguồn thu trên một trang</li>
+          <li>Lộ trình kết hợp theo từng giai đoạn</li>
+          <li>Kế hoạch hành động 90 ngày, chia theo tuần</li>
+          <li>Từ điển nhỏ cho người mới</li>
+        </ul>
+        <p class="coffee-note">Quảng chủ động đặt giá chỉ bằng <b>một cốc cà phê</b> — để thứ duy nhất đứng giữa bạn và tấm bản đồ 9 con đường là quyết định của chính bạn.</p>
+        <div class="offer-row">
+          <div class="count" id="countdown" hidden>
+            <div class="lb">Ưu đãi kết thúc sau:</div>
+            <div class="cells">
+              <div class="cell"><b id="cd-d">00</b><span>Ngày</span></div>
+              <div class="cell"><b id="cd-h">00</b><span>Giờ</span></div>
+              <div class="cell"><b id="cd-m">00</b><span>Phút</span></div>
+              <div class="cell"><b id="cd-s">00</b><span>Giây</span></div>
+            </div>
+          </div>
+          <div class="pricebox">
+            <div class="today">Giá trọn bộ</div>
+            <div class="ring">
+              <svg class="cup" viewBox="0 0 48 48" aria-hidden="true"><path d="M9 18h26v10a12 12 0 0 1-12 12h-2A12 12 0 0 1 9 28z"/><path d="M35 21h3a5 5 0 0 1 0 10h-3.5"/><path d="M16 6c-2 3 2 5 0 8M23 6c-2 3 2 5 0 8M30 6c-2 3 2 5 0 8"/></svg>
+              <div class="p" data-fill="price">59.000đ</div>
+              <div class="pn">Thanh toán một lần · Đọc trọn đời</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <form class="reg" id="reg-form" novalidate>
+          <p class="fh">Ebook sẽ gửi về email bạn điền dưới đây</p>
+          <label class="sr" for="f-name">Họ và tên</label>
+          <input id="f-name" name="name" type="text" placeholder="Họ và tên" autocomplete="name" required>
+          <label class="sr" for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" placeholder="Email nhận ebook" autocomplete="email" required>
+          <label class="sr" for="f-phone">Số điện thoại</label>
+          <input id="f-phone" name="phone" type="tel" placeholder="Số điện thoại" autocomplete="tel" inputmode="tel" required>
+          <p class="note">Thông tin của bạn được giữ bảo mật, chỉ dùng để gửi ebook và các bài viết hữu ích.</p>
+          <p class="err" id="f-err" role="alert"></p>
+          <button type="submit">Nhận ebook ngay</button>
+        </form>
+        <div class="thanks" id="thanks" role="status">
+          <b>Cảm ơn bạn đã đặt mua!</b>
+          Bạn chuyển khoản theo thông tin dưới đây, ebook sẽ được gửi về email ngay khi nhận được.
+          <div class="pay">
+            <div class="r"><span>Ngân hàng</span><b data-fill="bank">MBBank</b></div>
+            <div class="r"><span>Số tài khoản</span><b data-fill="account">0000485725573</b></div>
+            <div class="r"><span>Chủ tài khoản</span><b data-fill="holder">DAO XUAN QUANG</b></div>
+            <div class="r"><span>Số tiền</span><b data-fill="price">59.000đ</b></div>
+            <div class="r"><span>Nội dung</span><b data-fill="transferNote">9NGUON + SĐT</b></div>
+            <div id="qr"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P.S. -->
+    <div class="ps">
+      <p><b>P.S.</b> Nếu bạn chỉ lướt xuống cuối trang, đây là điều quan trọng nhất: hầu hết người mới bỏ cuộc với blog không phải vì họ kém, mà vì họ chỉ biết một cách kiếm tiền — và đó thường là cách khó nhất cho người mới bắt đầu.</p>
+      <p><b>P.P.S.</b> Ebook này cho bạn bản đồ cả 9 con đường, kèm con số và kế hoạch 90 ngày, với giá bằng một cốc cà phê. Bạn có thể tiếp tục tự tìm hiểu, hoặc <a href="#dang-ky">nhận ebook</a> và biết câu trả lời ngay tối nay.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  Copyright © 2026 <span data-fill="website">daoxuanquang.com.vn</span> · Nội dung mang tính tham khảo, không phải lời khuyên tài chính.
+</footer>
+
+<script is:inline>
+(function(){
+  var C = window.CONFIG || {};
+  // Trình duyệt cũ chưa hỗ trợ text-wrap: nối 2 chữ cuối tiêu đề để không rơi 1 chữ xuống dòng
+  if (!(window.CSS && CSS.supports && CSS.supports('text-wrap', 'balance'))) {
+    document.querySelectorAll('h1,h2,h3,.frame-title,.dashed-title').forEach(function(el){
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), n, last = null;
+      while ((n = w.nextNode())) if (n.nodeValue.trim()) last = n;
+      if (last) last.nodeValue = last.nodeValue.replace(/\s+(\S+\s*)$/, ' $1');
+    });
+  }
+  document.querySelectorAll('[data-fill]').forEach(function(el){
+    var v = C[el.getAttribute('data-fill')]; if (v) el.textContent = v;
+  });
+  if (C.qrImage) { 
+    var q = document.createElement('img'); 
+    q.src = C.qrImage; 
+    q.alt = 'Mã QR chuyển khoản'; 
+    document.getElementById('qr').appendChild(q); 
+  }
+  // Đếm ngược (chỉ hiện khi có hạn thật)
+  if (C.deadline) {
+    var end = new Date(C.deadline).getTime();
+    if (!isNaN(end)) {
+      document.getElementById('countdown').hidden = false;
+      var pad = function(n){ return (n < 10 ? '0' : '') + n; };
+      var tick = function(){
+        var t = Math.max(0, end - Date.now());
+        document.getElementById('cd-d').textContent = pad(Math.floor(t / 864e5));
+        document.getElementById('cd-h').textContent = pad(Math.floor(t / 36e5) % 24);
+        document.getElementById('cd-m').textContent = pad(Math.floor(t / 6e4) % 60);
+        document.getElementById('cd-s').textContent = pad(Math.floor(t / 1e3) % 60);
+        if (t === 0) clearInterval(timer);
+      };
+      var timer = setInterval(tick, 1000); tick();
+    }
+  }
+  // Form đăng ký
+  var form = document.getElementById('reg-form'), err = document.getElementById('f-err');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = form.name.value.trim(), email = form.email.value.trim(), phone = form.phone.value.trim();
+    if (!name) { err.textContent = 'Vui lòng nhập họ và tên.'; form.name.focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Email chưa đúng, bạn kiểm tra lại giúp nhé.'; form.email.focus(); return; }
+    if (!/^[0-9+\s.]{9,15}$/.test(phone)) { err.textContent = 'Số điện thoại chưa đúng.'; form.phone.focus(); return; }
+    err.textContent = '';
+
+    var cleanPhone = phone.replace(/[^0-9]/g, '');
+    var currentNote = cleanPhone ? ('9NGUON ' + cleanPhone) : '9NGUON + SĐT';
+    
+    // Cập nhật nội dung chuyển khoản động theo SĐT
+    var noteEl = document.querySelector('[data-fill="transferNote"]');
+    if (noteEl) noteEl.textContent = currentNote;
+    
+    // Cập nhật mã QR động theo SĐT
+    var dynamicQr = 'https://qr.sepay.vn/img?acc=' + encodeURIComponent(C.account || '0000485725573') + '&bank=' + encodeURIComponent(C.bank || 'MBBank') + '&amount=59000&des=' + encodeURIComponent(currentNote) + '&template=compact';
+    var qrContainer = document.getElementById('qr');
+    if (qrContainer) {
+      qrContainer.innerHTML = '<img src="' + dynamicQr + '" alt="Mã QR chuyển khoản ' + currentNote + '" style="max-width:220px;margin:12px auto 0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">';
+    }
+
+    var done = function(){
+      if (C.thankYouUrl) { location.href = C.thankYouUrl; return; }
+      form.style.display = 'none'; 
+      document.getElementById('thanks').style.display = 'block';
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', { content_name: '9 Nguồn Thu Nhập Từ Blog', value: 59000, currency: 'VND' });
+      }
+    };
+
+    if (!C.formAction) { done(); return; }
+    var btn = form.querySelector('button'); 
+    btn.disabled = true; 
+    btn.textContent = 'Đang xử lý...';
+
+    var data = new FormData(form); 
+    data.append('source', 'landing-9-nguon-thu-nhap');
+
+    fetch(C.formAction, { method: 'POST', body: data })
+      .then(function(res){ return res.json(); })
+      .then(function(resData){
+        if (resData && resData.transferNote && noteEl) {
+          noteEl.textContent = resData.transferNote;
+        }
+        if (resData && resData.qrUrl && qrContainer) {
+          qrContainer.innerHTML = '<img src="' + resData.qrUrl + '" alt="Mã QR chuyển khoản" style="max-width:220px;margin:12px auto 0;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.1);">';
+        }
+        done();
+      })
+      .catch(function(){ 
+        done(); 
+      });
+  });
+})();
+</script>
+</body>
+</html>
