@@ -126,6 +126,10 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
               <span class="flex items-center gap-2">💳 Đơn hàng (CRM)</span>
               <span id="orders-nav-badge" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">0</span>
             </button>
+            <button data-tab="sepay-logs" class="shrink-0 flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn whitespace-nowrap">
+              <span class="flex items-center gap-2">⚡ Log Webhook SePay</span>
+              <span id="sepay-logs-badge" class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/30">0</span>
+            </button>
             <button data-tab="products" class="shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all hover:bg-slate-800/50 text-slate-300 hover:text-white cursor-pointer tab-btn whitespace-nowrap">
               📦 Sản phẩm
             </button>
@@ -1154,6 +1158,11 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
                 <span>🔄</span> Quét & Gửi Email Đến Hạn
               </button>
 
+              <!-- Trigger Payment Reminder Cron button -->
+              <button id="trigger-reminder-cron-btn" type="button" class="px-3.5 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500 hover:text-white text-amber-400 border border-amber-500/20 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer shadow-sm" title="Quét toàn bộ đơn hàng và gửi email nhắc thanh toán sau 30 phút và sau 24 giờ kèm mã QR">
+                <span>⏰</span> Quét & Nhắc Thanh Toán (30p/24h)
+              </button>
+
               <!-- Add New Order Button -->
               <button id="add-order-btn" type="button" class="px-4 py-2 rounded-xl bg-brand-green hover:bg-brand-green-dark text-white font-bold text-xs transition-all transform hover:scale-[1.02] shadow-md flex items-center gap-1.5 cursor-pointer">
                 <span>➕</span> Tạo Đơn Thủ Công
@@ -1323,6 +1332,97 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
           </div>
         </section>
 
+        <!-- TAB CONTENT: SEPAY WEBHOOK LOGS -->
+        <section id="tab-sepay-logs" class="tab-pane space-y-8 hidden">
+          <!-- KPI Summary Cards -->
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-orange-400 uppercase tracking-wider block">Tổng Webhook</span>
+                <span id="sepay-stat-total" class="text-2xl font-extrabold text-white font-mono block">0</span>
+              </div>
+              <span class="text-2xl p-2.5 rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">⚡</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider block">Khớp Thành Công</span>
+                <span id="sepay-stat-success" class="text-2xl font-extrabold text-white font-mono block">0</span>
+              </div>
+              <span class="text-2xl p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">✅</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-blue-400 uppercase tracking-wider block">Đã TT Trước Đó</span>
+                <span id="sepay-stat-already-paid" class="text-2xl font-extrabold text-white font-mono block">0</span>
+              </div>
+              <span class="text-2xl p-2.5 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">🔄</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+              <div class="space-y-1">
+                <span class="text-xs font-bold text-amber-400 uppercase tracking-wider block">Không Khớp / Test</span>
+                <span id="sepay-stat-unmatched" class="text-2xl font-extrabold text-white font-mono block">0</span>
+              </div>
+              <span class="text-2xl p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">⚠️</span>
+            </div>
+          </div>
+
+          <!-- Top bar: Title + Filter + Refresh/Clear buttons -->
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 bg-slate-900/60 p-5 rounded-2xl border border-slate-800/80">
+            <div>
+              <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
+                <span>⚡</span> Lịch Sử Webhook SePay & Đối Soát Giao Dịch
+              </h2>
+              <p class="text-slate-400 text-xs mt-1">
+                Kiểm tra chi tiết mọi giao dịch webhook SePay gửi về hệ thống, mã đơn bóc tách được (EB...) và trạng thái kích hoạt tự động.
+              </p>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-3">
+              <!-- Filter status -->
+              <select id="sepay-status-filter" class="px-3.5 py-2 rounded-xl border border-slate-800 bg-slate-950/70 text-xs text-slate-200 focus:outline-none focus:border-brand-green cursor-pointer">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="SUCCESS_ACTIVATED">Khớp & Kích hoạt thành công</option>
+                <option value="ALREADY_PAID">Đã thanh toán trước đó</option>
+                <option value="UNMATCHED">Không khớp mã đơn</option>
+              </select>
+
+              <!-- Refresh button -->
+              <button id="refresh-sepay-logs-btn" type="button" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer">
+                <span>🔄</span> Làm Mới Logs
+              </button>
+
+              <!-- Clear logs button -->
+              <button id="clear-sepay-logs-btn" type="button" class="px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-400 border border-rose-500/20 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer">
+                <span>🗑️</span> Xóa Logs
+              </button>
+            </div>
+          </div>
+
+          <!-- Table Card -->
+          <div class="rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-xl">
+            <div class="overflow-x-auto no-scrollbar">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-800 bg-slate-950/50 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                    <th class="p-4">Thời Gian & GD</th>
+                    <th class="p-4">Số Tiền & Cổng</th>
+                    <th class="p-4">Nội Dung Chuyển Khoản Gốc</th>
+                    <th class="p-4">Mã EB Bóc Tách</th>
+                    <th class="p-4">Khớp Đơn CRM</th>
+                    <th class="p-4">Kết Quả</th>
+                    <th class="p-4 text-right">Chi Tiết</th>
+                  </tr>
+                </thead>
+                <tbody id="sepay-logs-table-body" class="divide-y divide-slate-800/60 text-sm">
+                  <tr>
+                    <td colspan="7" class="p-8 text-center text-slate-500">Đang tải lịch sử webhook SePay...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
 
@@ -1433,6 +1533,7 @@ initialServerPosts.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pub
       const titles: Record<string, string> = {
         overview: '📊 Tổng quan Dashboard',
         orders: '💳 Quản Trị Khách Hàng & Đơn Hàng (CRM)',
+        'sepay-logs': '⚡ Lịch Sử Webhook SePay & Đối Soát Giao Dịch',
         posts: '✍️ Quản Lý Bài Viết',
         'seo-prompt': '🚀 Tiêu Chuẩn & Bộ Tạo Prompt SEO Blog v3.0 (Wepower Group)',
         subscribers: '📨 Đăng Ký Bản Tin',
@@ -1705,7 +1806,10 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
           } catch (e) {}
           renderOrders();
 
-          // 6. Update Stats Overview counts
+          // 6. Fetch SePay Webhook Logs
+          await loadSepayLogs();
+
+          // 7. Update Stats Overview counts
           updateOverviewStats();
         } catch (error) {
           console.error('Error loading API data:', error);
@@ -3878,11 +3982,22 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
                 ${ord.amount || '0đ'}
               </td>
 
-              <!-- Cột 5: Trạng thái -->
+              <!-- Cột 5: Trạng thái & Nhắc nhở -->
               <td class="p-4 whitespace-nowrap">
                 <span class="px-2.5 py-1 rounded text-[11px] font-bold uppercase tracking-wider ${statusClass}">
                   ${ord.status || 'Đã thanh toán'}
                 </span>
+                ${ord.status !== 'Đã thanh toán' && ord.status !== 'Đã hoàn tất' ? `
+                  <div class="mt-1 text-[10px]">
+                    ${ord.paymentReminders?.count ? `
+                      <span class="text-amber-400 font-semibold" title="Đã nhắc: ${ord.paymentReminders.reminded30m ? '30p' : ''} ${ord.paymentReminders.reminded24h ? '+ 24h' : ''}">
+                        ⏰ Đã nhắc ${ord.paymentReminders.count}/2
+                      </span>
+                    ` : `
+                      <span class="text-slate-500">Chưa nhắc TT</span>
+                    `}
+                  </div>
+                ` : ''}
               </td>
 
               <!-- Cột 6: Phương thức & Ghi chú -->
@@ -3899,6 +4014,9 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
                   ${ord.status !== 'Đã thanh toán' && ord.status !== 'Đã hoàn tất' ? `
                     <button data-id="${ord.id}" data-name="${ord.customerName || ord.id}" class="confirm-payment-btn px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-sm" title="Xác nhận khách đã chuyển khoản thành công">
                       ✅ Duyệt TT
+                    </button>
+                    <button data-id="${ord.id}" data-email="${ord.email}" class="send-reminder-btn px-2.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500 hover:text-white text-amber-400 text-xs font-bold transition-all cursor-pointer flex items-center gap-1 shadow-sm" title="Gửi email nhắc thanh toán kèm mã VietQR ngay bây giờ">
+                      ⏰ Nhắc TT
                     </button>
                   ` : ''}
                   ${!(ord.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || (ord.product && ord.product.includes('9 Nguồn')) || (ord.amount && String(ord.amount).includes('59.000'))) ? `
@@ -3954,6 +4072,37 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
               }
             } catch (err: any) {
               showToast('Lỗi kết nối máy chủ: ' + err.message, true);
+            } finally {
+              btn.innerHTML = origText;
+              (btn as HTMLButtonElement).disabled = false;
+            }
+          });
+        });
+
+        // Send Payment Reminder button
+        document.querySelectorAll('.send-reminder-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            const email = btn.getAttribute('data-email');
+            if (!id) return;
+            const confirmed = window.confirm(`Gửi email nhắc thanh toán kèm mã VietQR cho đơn ${id} (${email}) ngay bây giờ?`);
+            if (!confirmed) return;
+
+            const origText = btn.innerHTML;
+            btn.innerHTML = '⏳ Đang gửi...';
+            (btn as HTMLButtonElement).disabled = true;
+
+            try {
+              const res = await fetch(`/api/cron/remind-pending?orderId=${encodeURIComponent(id)}`);
+              const result = await res.json();
+              if (result.success) {
+                showToast(`Đã gửi email nhắc thanh toán tới ${email}!`);
+                await loadAllData();
+              } else {
+                showToast(result.message || result.error || 'Lỗi gửi nhắc', true);
+              }
+            } catch (err: any) {
+              showToast('Lỗi kết nối: ' + err.message, true);
             } finally {
               btn.innerHTML = origText;
               (btn as HTMLButtonElement).disabled = false;
@@ -4393,6 +4542,210 @@ Hãy viết bài viết hoàn chỉnh bằng HTML thuần dựa trên các thôn
             triggerDripCronBtn.innerHTML = origText;
             (triggerDripCronBtn as HTMLButtonElement).disabled = false;
           }
+        });
+      }
+
+      // Button trigger payment reminder cron
+      const triggerReminderCronBtn = document.getElementById('trigger-reminder-cron-btn');
+      if (triggerReminderCronBtn) {
+        triggerReminderCronBtn.addEventListener('click', async () => {
+          const confirmed = window.confirm('Quét toàn bộ đơn hàng đang chờ thanh toán và gửi email nhắc (sau 30p & sau 24h kèm mã QR)?');
+          if (!confirmed) return;
+
+          const origText = triggerReminderCronBtn.innerHTML;
+          triggerReminderCronBtn.innerHTML = '<span>⏳</span> Đang quét & gửi...';
+          (triggerReminderCronBtn as HTMLButtonElement).disabled = true;
+
+          try {
+            const res = await fetch('/api/cron/remind-pending');
+            const result = await res.json();
+            if (result.success) {
+              showToast(result.message || `Đã quét xong. Gửi thành công ${result.sentCount || 0} email nhắc thanh toán!`);
+              loadAllData();
+            } else {
+              showToast(result.error || 'Lỗi khi quét nhắc thanh toán', true);
+            }
+          } catch (err: any) {
+            showToast('Lỗi kết nối: ' + err.message, true);
+          } finally {
+            triggerReminderCronBtn.innerHTML = origText;
+            (triggerReminderCronBtn as HTMLButtonElement).disabled = false;
+          }
+        });
+      }
+
+      // SEPAY WEBHOOK LOGS CONTROLLERS
+      let currentSepayLogs: any[] = [];
+
+      async function loadSepayLogs() {
+        try {
+          const res = await fetch('/api/sepay/logs?t=' + Date.now());
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data && data.success && Array.isArray(data.logs)) {
+            currentSepayLogs = data.logs;
+
+            const badgeEl = document.getElementById('sepay-logs-badge');
+            if (badgeEl) badgeEl.textContent = String(data.total || 0);
+
+            const statTotal = document.getElementById('sepay-stat-total');
+            const statSuccess = document.getElementById('sepay-stat-success');
+            const statAlreadyPaid = document.getElementById('sepay-stat-already-paid');
+            const statUnmatched = document.getElementById('sepay-stat-unmatched');
+
+            if (statTotal) statTotal.textContent = String(data.total || 0);
+            if (statSuccess) statSuccess.textContent = String(data.successCount || 0);
+            if (statAlreadyPaid) statAlreadyPaid.textContent = String(data.alreadyPaidCount || 0);
+            if (statUnmatched) statUnmatched.textContent = String(data.unmatchedCount || 0);
+
+            renderSepayLogsTable();
+          }
+        } catch (e) {
+          console.error('Lỗi tải sepay logs:', e);
+        }
+      }
+
+      function renderSepayLogsTable() {
+        const tbody = document.getElementById('sepay-logs-table-body');
+        const filterEl = document.getElementById('sepay-status-filter') as HTMLSelectElement | null;
+        if (!tbody) return;
+
+        const filterVal = filterEl ? filterEl.value : 'all';
+        let list = [...currentSepayLogs];
+
+        if (filterVal === 'SUCCESS_ACTIVATED') {
+          list = list.filter(l => l.resultStatus === 'SUCCESS_ACTIVATED');
+        } else if (filterVal === 'ALREADY_PAID') {
+          list = list.filter(l => l.resultStatus === 'ALREADY_PAID');
+        } else if (filterVal === 'UNMATCHED') {
+          list = list.filter(l => l.resultStatus?.includes('UNMATCHED') || l.resultStatus === 'TEST_OR_IGNORED');
+        }
+
+        if (list.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="7" class="p-8 text-center text-slate-500">
+                ${currentSepayLogs.length === 0 
+                  ? 'Chưa có dữ liệu webhook nào từ SePay. Khi SePay gửi webhook giao dịch, dữ liệu sẽ tự động xuất hiện tại đây.' 
+                  : 'Không có bản ghi webhook nào khớp với bộ lọc đã chọn.'}
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = list.map(l => {
+          let badgeClass = 'bg-slate-800 text-slate-300';
+          let statusText = 'Khác';
+
+          if (l.resultStatus === 'SUCCESS_ACTIVATED') {
+            badgeClass = 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+            statusText = '✅ Khớp đơn EB & Kích hoạt';
+          } else if (l.resultStatus === 'ALREADY_PAID') {
+            badgeClass = 'bg-blue-500/10 text-blue-400 border border-blue-500/20';
+            statusText = '🔄 Đã thanh toán trước đó';
+          } else if (l.resultStatus === 'UNMATCHED_CREATED_NEW') {
+            badgeClass = 'bg-purple-500/10 text-purple-400 border border-purple-500/20';
+            statusText = '✨ Tự tạo đơn mới';
+          } else if (l.resultStatus === 'TEST_OR_IGNORED') {
+            badgeClass = 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
+            statusText = '⚠️ Test / Bỏ qua';
+          } else if (l.resultStatus === 'UNAUTHORIZED') {
+            badgeClass = 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
+            statusText = '⛔ Sai xác thực';
+          } else if (l.resultStatus === 'ERROR') {
+            badgeClass = 'bg-rose-500/10 text-rose-400 border border-rose-500/20';
+            statusText = '❌ Lỗi hệ thống';
+          }
+
+          const rawJsonSafe = encodeURIComponent(JSON.stringify(l.rawPayload || l, null, 2));
+
+          return `
+            <tr class="hover:bg-slate-900/40 transition-all align-top">
+              <td class="p-4 whitespace-nowrap text-xs">
+                <span class="text-slate-200 font-bold block">${l.dateFormatted || new Date(l.timestamp).toLocaleString('vi-VN')}</span>
+                <span class="text-[11px] font-mono text-slate-500 block">GD #${l.transactionId || '—'}</span>
+              </td>
+              <td class="p-4 whitespace-nowrap text-xs font-mono font-bold">
+                <span class="text-emerald-400 block">${l.transferAmount ? Number(l.transferAmount).toLocaleString('vi-VN') + 'đ' : '0đ'}</span>
+                <span class="text-[11px] text-slate-400 font-normal block">${l.gateway || 'MBBank'}</span>
+              </td>
+              <td class="p-4 text-xs max-w-xs">
+                <p class="font-mono text-slate-300 break-words line-clamp-2" title="${l.content || ''}">${l.content || '—'}</p>
+              </td>
+              <td class="p-4 whitespace-nowrap text-xs font-mono">
+                ${l.extractedOrderCode ? `
+                  <span class="px-2 py-0.5 rounded bg-orange-950/60 text-orange-400 border border-orange-800/40 font-bold">
+                    ${l.extractedOrderCode}
+                  </span>
+                ` : `<span class="text-slate-600">—</span>`}
+              </td>
+              <td class="p-4 whitespace-nowrap text-xs">
+                ${l.matchedOrderId ? `
+                  <span class="font-mono font-bold text-cyan-400 block">${l.matchedOrderId}</span>
+                  <span class="text-[11px] text-slate-400 block truncate max-w-[130px]" title="${l.customerEmail || ''}">${l.customerName || l.customerEmail || ''}</span>
+                ` : `<span class="text-slate-600">—</span>`}
+              </td>
+              <td class="p-4 whitespace-nowrap text-xs">
+                <span class="px-2.5 py-1 rounded text-[11px] font-bold ${badgeClass} inline-block">
+                  ${statusText}
+                </span>
+                <p class="text-[10.5px] text-slate-400 mt-1 max-w-[200px] truncate" title="${l.message || ''}">${l.message || ''}</p>
+              </td>
+              <td class="p-4 text-right whitespace-nowrap text-xs">
+                <button type="button" class="view-sepay-raw-btn px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer" data-json="${rawJsonSafe}">
+                  👁️ JSON
+                </button>
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        tbody.querySelectorAll('.view-sepay-raw-btn').forEach(b => {
+          b.addEventListener('click', () => {
+            const safe = b.getAttribute('data-json') || '';
+            try {
+              const parsed = decodeURIComponent(safe);
+              alert('DỮ LIỆU GỐC SEPAY WEBHOOK:\n\n' + parsed);
+            } catch (_) {}
+          });
+        });
+      }
+
+      const refreshSepayLogsBtn = document.getElementById('refresh-sepay-logs-btn');
+      if (refreshSepayLogsBtn) {
+        refreshSepayLogsBtn.addEventListener('click', async () => {
+          showToast('Đang tải lại lịch sử webhook SePay...');
+          await loadSepayLogs();
+        });
+      }
+
+      const clearSepayLogsBtn = document.getElementById('clear-sepay-logs-btn');
+      if (clearSepayLogsBtn) {
+        clearSepayLogsBtn.addEventListener('click', async () => {
+          const confirmed = window.confirm('Bạn có chắc chắn muốn xóa toàn bộ lịch sử log SePay?');
+          if (!confirmed) return;
+          try {
+            const res = await fetch('/api/sepay/logs', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ action: 'clear' })
+            });
+            const data = await res.json();
+            if (data.success) {
+              showToast('Đã xóa sạch log SePay!');
+              await loadSepayLogs();
+            }
+          } catch (e: any) {
+            showToast('Lỗi: ' + e.message, true);
+          }
+        });
+      }
+
+      const sepayStatusFilter = document.getElementById('sepay-status-filter');
+      if (sepayStatusFilter) {
+        sepayStatusFilter.addEventListener('change', () => {
+          renderSepayLogsTable();
         });
       }
 

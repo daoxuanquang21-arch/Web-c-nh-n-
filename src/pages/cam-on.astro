@@ -1,0 +1,174 @@
+---
+// Trang cảm ơn thanh toán thành công
+export const prerender = false;
+
+import fs from 'fs';
+import path from 'path';
+
+const url = new URL(Astro.request.url);
+const orderId = url.searchParams.get('id')?.trim() || '';
+
+let orderData: any = null;
+if (orderId) {
+  try {
+    const ordersFilePath = path.resolve('./src/data/orders.json');
+    if (fs.existsSync(ordersFilePath)) {
+      const orders = JSON.parse(fs.readFileSync(ordersFilePath, 'utf-8') || '[]');
+      orderData = orders.find((o: any) => o.id && o.id.toUpperCase() === orderId.toUpperCase());
+    }
+  } catch (e) {}
+}
+
+const is9Nguon = orderData?.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' || 
+                 (orderData?.product && orderData.product.includes('9 Nguồn')) ||
+                 (orderData?.amount && String(orderData.amount).includes('59.000'));
+
+const productName = orderData?.product || (is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI');
+const readerUrl = is9Nguon ? '/doc-sach/9-nguon-thu-nhap-tu-blog' : '/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
+const customerName = orderData?.customerName || 'bạn';
+const customerEmail = orderData?.email || '';
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thanh toán thành công! | Đào Xuân Quảng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: #F8FAFC;
+      color: #0F172A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px 16px;
+    }
+    .card {
+      background: #FFFFFF;
+      max-width: 500px;
+      width: 100%;
+      border-radius: 24px;
+      border: 1px solid #E2E8F0;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+      padding: 36px 24px 28px;
+      text-align: center;
+    }
+    .icon {
+      width: 80px;
+      height: 80px;
+      background: #ECFDF5;
+      color: #10B981;
+      border: 3px solid #A7F3D0;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.2);
+    }
+    h1 {
+      font-size: 26px;
+      font-weight: 900;
+      color: #065F46;
+      margin-bottom: 8px;
+    }
+    p {
+      font-size: 15px;
+      color: #475569;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .info-box {
+      background: #F1F5F9;
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      text-align: left;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    .btn-read {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #10B981;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 15px 36px;
+      border-radius: 99px;
+      box-shadow: 0 8px 22px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+    .btn-read:hover {
+      background: #059669;
+      transform: translateY(-2px);
+    }
+    .btn-home {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 13.5px;
+      color: #64748B;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .btn-home:hover { color: #0F172A; }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="icon">✓</div>
+  <h1>Thanh toán thành công!</h1>
+  <p>
+    Cảm ơn <strong>{customerName}</strong>! Hệ thống đã nhận được tiền và kích hoạt quyền truy cập Ebook của bạn.
+  </p>
+
+  <div class="info-box">
+    {orderId && (
+      <div class="info-row">
+        <span style="color:#64748B;">Mã đơn hàng:</span>
+        <strong>{orderId}</strong>
+      </div>
+    )}
+    <div class="info-row">
+      <span style="color:#64748B;">Sản phẩm:</span>
+      <strong>{productName}</strong>
+    </div>
+    {customerEmail && (
+      <div class="info-row">
+        <span style="color:#64748B;">Email nhận sách:</span>
+        <strong style="color:#059669;">{customerEmail}</strong>
+      </div>
+    )}
+  </div>
+
+  <a href={readerUrl} class="btn-read">
+    📖 Mở Đọc Ebook Ngay Bây Giờ &rarr;
+  </a>
+
+  <div style="font-size:12.5px;color:#64748B;margin-top:16px;">
+    💡 Ebook và đường link đã được tự động gửi tới email của bạn (vui lòng kiểm tra thêm mục Spam/Quảng cáo nếu chưa thấy).
+  </div>
+
+  <a href="/" class="btn-home">&larr; Quay lại trang chủ</a>
+</div>
+
+</body>
+</html>

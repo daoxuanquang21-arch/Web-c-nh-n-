@@ -10,6 +10,7 @@ export const prerender = false;
 
 const EXPECTED_API_KEY = 'daoxuanquangvip.com.vn';
 const ordersFilePath = path.resolve('./src/data/orders.json');
+const sepayLogsFilePath = path.resolve('./src/data/sepay-logs.json');
 
 const FALLBACK_KEY = Buffer.from('cmVfZk1MeEFyaXJfQUdZdFJqUjFqNm1NR0Vvb2c2UVhZampB', 'base64').toString('utf-8');
 const RESEND_API_KEY = process.env.RESEND_API_KEY || FALLBACK_KEY;
@@ -35,6 +36,94 @@ function saveOrders(orders: any[]): void {
   }
 }
 
+/**
+ * Ghi log webhook SePay vào file src/data/sepay-logs.json để người dùng xem trực tiếp
+ */
+function appendSepayLog(logEntry: {
+  resultStatus: 'SUCCESS_ACTIVATED' | 'ALREADY_PAID' | 'UNMATCHED_CREATED_NEW' | 'TEST_OR_IGNORED' | 'UNAUTHORIZED' | 'ERROR';
+  gateway?: string;
+  transactionId?: string | number;
+  referenceCode?: string;
+  accountNumber?: string;
+  transferType?: string;
+  transferAmount?: number | string;
+  content?: string;
+  extractedOrderCode?: string | null;
+  matchedOrderId?: string | null;
+  customerName?: string;
+  customerEmail?: string;
+  message: string;
+  rawPayload?: any;
+}): void {
+  try {
+    let logs: any[] = [];
+    if (fs.existsSync(sepayLogsFilePath)) {
+      const raw = fs.readFileSync(sepayLogsFilePath, 'utf-8');
+      logs = JSON.parse(raw || '[]');
+    }
+
+    const now = new Date();
+    const formattedDate = now.toLocaleString('vi-VN', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      hour12: false
+    });
+
+    const fullEntry = {
+      id: 'LOG_' + Date.now() + '_' + Math.floor(100 + Math.random() * 900),
+      timestamp: Date.now(),
+      dateFormatted: formattedDate,
+      ...logEntry
+    };
+
+    logs.unshift(fullEntry);
+    // Giữ tối đa 100 log gần nhất
+    if (logs.length > 100) {
+      logs = logs.slice(0, 100);
+    }
+
+    fs.writeFileSync(sepayLogsFilePath, JSON.stringify(logs, null, 2), 'utf-8');
+  } catch (err) {
+    console.error('[SePay Webhook] Lỗi khi ghi sepay-logs.json:', err);
+  }
+}
+
+/**
+ * Hàm trích xuất mã đơn hàng EB... từ trường code hoặc nội dung chuyển khoản content
+ * Xử lý mọi biến thể: "EB26107823", "EB 26107823", "EB-26107823", "EB.26107823", "MBVCB.1234.EB26107823.CT"
+ */
+function extractOrderCode(code?: any, content?: any): string | null {
+  // 1. Kiểm tra từ code của SePay nếu có
+  if (code && typeof code === 'string' && code.trim()) {
+    const clean = code.trim().toUpperCase().replace(/[\s\-_.]/g, '');
+    const m = clean.match(/EB\d{4,12}/);
+    if (m) return m[0];
+  }
+
+  // 2. Kiểm tra từ nội dung giao dịch content
+  if (content && typeof content === 'string') {
+    // 2.1 Bắt pattern "EB" có khoảng trắng hoặc ký tự phân cách trước số: "EB 26107823", "EB-26107823", "EB.26107823"
+    const spacedMatch = content.match(/EB[\s\-_.:]*(\d{4,12})/i);
+    if (spacedMatch) {
+      return ('EB' + spacedMatch[1]).toUpperCase();
+    }
+
+    // 2.2 Bắt pattern "EB\d+" bất kỳ vị trí nào
+    const directMatch = content.match(/(EB\d{4,12})/i) || content.match(/(EB\d+)/i);
+    if (directMatch) {
+      return directMatch[1].toUpperCase();
+    }
+
+    // 2.3 Chuẩn hóa loại bỏ toàn bộ khoảng trắng và ký tự đặc biệt, sau đó tìm EB...
+    const compact = content.toUpperCase().replace(/[^A-Z0-9]/g, '');
+    const compactMatch = compact.match(/EB\d{4,12}/);
+    if (compactMatch) {
+      return compactMatch[0];
+    }
+  }
+
+  return null;
+}
+
 export const GET: APIRoute = async () => {
   return new Response(JSON.stringify({
     success: true,
@@ -49,11 +138,12 @@ export const GET: APIRoute = async () => {
 };
 
 export const POST: APIRoute = async ({ request }) => {
+  let rawPayload: any = null;
   try {
     // 1. Phân tích dữ liệu JSON webhook từ SePay
     const authHeader = request.headers.get('authorization') || '';
-    const payload = await request.json();
-    console.log('[SePay Webhook] Nhận dữ liệu webhook:', JSON.stringify(payload));
+    rawPayload = await request.json();
+    console.log('[SePay Webhook] Nhận dữ liệu webhook:', JSON.stringify(rawPayload));
 
     const {
       id: transactionId,
@@ -65,7 +155,7 @@ export const POST: APIRoute = async ({ request }) => {
       transferType,
       transferAmount,
       referenceCode
-    } = payload;
+    } = rawPayload;
 
     // 2. Xác thực tính hợp lệ: API key khớp HOẶC đúng số tài khoản MBBank 0000485725573
     const isMatchingAccount = 
@@ -80,6 +170,18 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (!isValidKey && !isMatchingAccount) {
       console.warn('[SePay Webhook] Lỗi xác thực: Authorization header không hợp lệ:', authHeader);
+      appendSepayLog({
+        resultStatus: 'UNAUTHORIZED',
+        gateway,
+        transactionId,
+        referenceCode,
+        accountNumber,
+        transferType,
+        transferAmount,
+        content,
+        message: 'Từ chối webhook: Sai thông tin xác thực API key và số tài khoản',
+        rawPayload
+      });
       return new Response(JSON.stringify({ 
         success: false, 
         error: 'Unauthorized: Sai thông tin xác thực' 
@@ -91,6 +193,18 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Bỏ qua nếu là giao dịch tiền ra (out)
     if (transferType && transferType.toLowerCase() === 'out') {
+      appendSepayLog({
+        resultStatus: 'TEST_OR_IGNORED',
+        gateway,
+        transactionId,
+        referenceCode,
+        accountNumber,
+        transferType,
+        transferAmount,
+        content,
+        message: 'Bỏ qua giao dịch tiền ra (transferType = out)',
+        rawPayload
+      });
       return new Response(JSON.stringify({ success: true, message: 'Bỏ qua giao dịch tiền ra' }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
@@ -98,21 +212,14 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // 3. Trích xuất mã đơn hàng từ `code` hoặc `content`
-    let orderCode: string | null = (code && typeof code === 'string' && code.trim()) ? code.trim() : null;
-
-    if (!orderCode && content && typeof content === 'string') {
-      const match = content.match(/\b(EB\d{4,12})\b/i) || content.match(/(EB\d+)/i);
-      if (match) {
-        orderCode = match[1].toUpperCase();
-      }
-    }
+    const orderCode = extractOrderCode(code, content);
 
     let orders = getOrders();
     let targetOrder: any = null;
 
     // 3.1. Tìm theo orderCode (EB...)
     if (orderCode) {
-      targetOrder = orders.find((o: any) => o.id && o.id.toUpperCase() === orderCode?.toUpperCase());
+      targetOrder = orders.find((o: any) => o.id && o.id.toUpperCase() === orderCode.toUpperCase());
     }
 
     // 3.2. Quét xem content có chứa mã đơn EB nào không
@@ -121,7 +228,17 @@ export const POST: APIRoute = async ({ request }) => {
       targetOrder = orders.find((o: any) => o.id && normalizedContent.includes(o.id.toUpperCase()));
     }
 
-    // 3.3. Quét xem content có chứa số điện thoại khách hàng không (hỗ trợ cả 0702286928 và 702286928)
+    // 3.3. Quét dạng compact (xóa toàn bộ khoảng trắng, dấu gạch nối, dấu chấm)
+    if (!targetOrder && content) {
+      const compactContent = content.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      targetOrder = orders.find((o: any) => {
+        if (!o.id) return false;
+        const compactId = o.id.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        return compactContent.includes(compactId);
+      });
+    }
+
+    // 3.4. Quét xem content có chứa số điện thoại khách hàng không (hỗ trợ cả 0702286928 và 702286928)
     if (!targetOrder && content) {
       const rawDigits = content.replace(/[^0-9]/g, '');
       targetOrder = orders.find((o: any) => {
@@ -135,7 +252,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    // 3.4. Quét theo cú pháp chuyển khoản đã lưu trong notes (ví dụ: "Đang chờ chuyển khoản: 9NGUON ...")
+    // 3.5. Quét theo cú pháp chuyển khoản đã lưu trong notes (ví dụ: "Đang chờ chuyển khoản: 9NGUON ...")
     if (!targetOrder && content) {
       const compactContent = content.toUpperCase().replace(/\s+/g, '');
       targetOrder = orders.find((o: any) => {
@@ -155,6 +272,23 @@ export const POST: APIRoute = async ({ request }) => {
 
       // Nếu đơn hàng đã thanh toán trước đó
       if (targetOrder.status === 'Đã thanh toán') {
+        appendSepayLog({
+          resultStatus: 'ALREADY_PAID',
+          gateway,
+          transactionId,
+          referenceCode,
+          accountNumber,
+          transferType,
+          transferAmount,
+          content,
+          extractedOrderCode: orderCode,
+          matchedOrderId: targetOrder.id,
+          customerName: targetOrder.customerName,
+          customerEmail: targetOrder.email,
+          message: `Đơn hàng ${targetOrder.id} đã được kích hoạt thanh toán trước đó`,
+          rawPayload
+        });
+
         return new Response(JSON.stringify({ 
           success: true, 
           message: `Đơn hàng ${targetOrder.id} đã được kích hoạt thanh toán trước đó.` 
@@ -225,6 +359,7 @@ export const POST: APIRoute = async ({ request }) => {
 
       const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quảng <ebook@daoxuanquang.com.vn>';
 
+      let emailSentSuccess = false;
       try {
         const sendResult = await resend.emails.send({
           from: fromSender,
@@ -234,6 +369,7 @@ export const POST: APIRoute = async ({ request }) => {
           html: emailHtml
         });
         console.log(`[SePay Webhook] Đã gửi email giao Ebook tới ${email}:`, sendResult);
+        emailSentSuccess = true;
       } catch (mailErr: any) {
         console.error('[SePay Webhook] Lỗi gửi email giao Ebook:', mailErr);
       }
@@ -262,6 +398,24 @@ export const POST: APIRoute = async ({ request }) => {
           console.warn('[SePay Webhook] Cảnh báo kích hoạt chuỗi 7 ngày:', dripErr);
         }
       }
+
+      // 8. Ghi log thành công
+      appendSepayLog({
+        resultStatus: 'SUCCESS_ACTIVATED',
+        gateway,
+        transactionId,
+        referenceCode,
+        accountNumber,
+        transferType,
+        transferAmount,
+        content,
+        extractedOrderCode: orderCode,
+        matchedOrderId: targetOrder.id,
+        customerName: targetOrder.customerName,
+        customerEmail: targetOrder.email,
+        message: `Khớp đơn hàng ${targetOrder.id} thành công! Đã chuyển trạng thái Đã thanh toán và gửi email giao ebook tới ${email} (Kết quả gửi mail: ${emailSentSuccess ? 'Thành công' : 'Lỗi/Chờ gửi lại'})`,
+        rawPayload
+      });
 
       return new Response(JSON.stringify({ 
         success: true, 
@@ -297,6 +451,37 @@ export const POST: APIRoute = async ({ request }) => {
       };
       orders.unshift(autoOrder);
       saveOrders(orders);
+
+      appendSepayLog({
+        resultStatus: 'UNMATCHED_CREATED_NEW',
+        gateway,
+        transactionId,
+        referenceCode,
+        accountNumber,
+        transferType,
+        transferAmount,
+        content,
+        extractedOrderCode: orderCode,
+        matchedOrderId: newOrderId,
+        customerName: autoOrder.customerName,
+        customerEmail: autoOrder.email,
+        message: `Giao dịch có tiền (${Number(transferAmount).toLocaleString('vi-VN')}đ) nhưng không tìm thấy đơn cũ. Đã tự động tạo đơn mới ${newOrderId}`,
+        rawPayload
+      });
+    } else {
+      appendSepayLog({
+        resultStatus: 'TEST_OR_IGNORED',
+        gateway,
+        transactionId,
+        referenceCode,
+        accountNumber,
+        transferType,
+        transferAmount,
+        content,
+        extractedOrderCode: orderCode,
+        message: 'Giao dịch không khớp mã đơn nào hoặc là webhook test từ SePay (số tiền < 50k hoặc không khớp)',
+        rawPayload
+      });
     }
 
     return new Response(JSON.stringify({ 
@@ -309,6 +494,12 @@ export const POST: APIRoute = async ({ request }) => {
 
   } catch (error: any) {
     console.error('[SePay Webhook] Lỗi hệ thống:', error);
+    appendSepayLog({
+      resultStatus: 'ERROR',
+      message: `Lỗi xử lý webhook: ${error.message}`,
+      rawPayload
+    });
+
     return new Response(JSON.stringify({ 
       success: false, 
       error: error.message 

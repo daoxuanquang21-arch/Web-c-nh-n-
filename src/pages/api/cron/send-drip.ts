@@ -121,12 +121,22 @@ export const ALL: APIRoute = async ({ request }) => {
       saveOrders(orders);
     }
 
+    // Tự động kiểm tra và gửi email nhắc thanh toán cho các đơn đang chờ thanh toán (30m và 24h)
+    let reminderResults: any = null;
+    try {
+      const { checkAndSendPaymentReminders } = await import('../../../utils/paymentReminderService');
+      reminderResults = await checkAndSendPaymentReminders();
+    } catch (remindErr) {
+      console.warn('Lỗi kiểm tra nhắc nhở thanh toán trong cron:', remindErr);
+    }
+
     return new Response(JSON.stringify({
       success: true,
       timestamp: new Date().toISOString(),
       sentCount: updatedCount,
       logs: sentLogs,
-      message: `Đã xử lý xong. Đã gửi ${updatedCount} email chăm sóc.`
+      paymentReminders: reminderResults,
+      message: `Đã xử lý xong. Đã gửi ${updatedCount} email chăm sóc và ${reminderResults?.sentCount || 0} email nhắc thanh toán.`
     }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
