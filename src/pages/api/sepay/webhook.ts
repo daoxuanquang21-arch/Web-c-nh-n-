@@ -329,12 +329,13 @@ export const POST: APIRoute = async ({ request }) => {
 
         await sendMetaCapiPurchase({
           orderId: targetOrder.id,
+          customerName: targetOrder.customerName,
           amount: numericAmount,
           currency: 'VND',
           email: targetOrder.email,
           phone: targetOrder.phone,
           clientIp,
-          clientUserAgent: userAgent,
+          userAgent: userAgent,
           sourceUrl: is9Nguon ? 'https://daoxuanquang.com.vn/9-nguon-thu-nhap-tu-blog' : 'https://daoxuanquang.com.vn/ebook-tao-blog'
         });
       } catch (capiErr) {

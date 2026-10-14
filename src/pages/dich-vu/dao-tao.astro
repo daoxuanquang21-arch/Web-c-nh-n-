@@ -958,6 +958,32 @@ const faqs = [
           submitBtn.innerHTML = 'Đang gửi thông tin...';
         }
 
+        // Kích hoạt Meta Pixel So khớp nâng cao thủ công & Bắn InitiateCheckout + Lead
+        if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+          if (typeof (window as any).setMetaAdvancedMatching === 'function') {
+            (window as any).setMetaAdvancedMatching({
+              name: payload.name,
+              email: payload.email,
+              phone: payload.contact
+            });
+          } else {
+            var d = (payload.contact || '').replace(/\D/g, '');
+            if (d.startsWith('0')) d = '84' + d.slice(1);
+            var parts = (payload.name || '').trim().toLowerCase().split(/\s+/).filter(Boolean);
+            var fn = parts.length > 0 ? parts[parts.length - 1] : '';
+            var ln = parts.length > 1 ? parts.slice(0, parts.length - 1).join(' ') : '';
+            (window as any).fbq('init', '1586370109096379', { em: (payload.email || '').trim().toLowerCase(), ph: d, fn: fn, ln: ln, country: 'vn' });
+          }
+          (window as any).fbq('track', 'InitiateCheckout', {
+            content_name: 'Khảo sát Đào tạo Solopreneur AI 1-1',
+            currency: 'VND'
+          });
+          (window as any).fbq('track', 'Lead', {
+            content_name: 'Khảo sát Đào tạo Solopreneur AI 1-1',
+            currency: 'VND'
+          });
+        }
+
         try {
           // 1. Submit to local leads API
           await fetch('/api/leads', {

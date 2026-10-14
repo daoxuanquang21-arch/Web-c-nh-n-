@@ -447,6 +447,21 @@ const faqs = [
         const email = emailInput.value;
         if (!name || !email) return;
 
+        // Kích hoạt Meta Pixel So khớp nâng cao thủ công & Bắn sự kiện Lead
+        if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+          if (typeof (window as any).setMetaAdvancedMatching === 'function') {
+            (window as any).setMetaAdvancedMatching({ name, email });
+          } else {
+            var parts = name.trim().toLowerCase().split(/\s+/).filter(Boolean);
+            var fn = parts.length > 0 ? parts[parts.length - 1] : '';
+            var ln = parts.length > 1 ? parts.slice(0, parts.length - 1).join(' ') : '';
+            (window as any).fbq('init', '1586370109096379', { em: email.trim().toLowerCase(), fn: fn, ln: ln, country: 'vn' });
+          }
+          (window as any).fbq('track', 'Lead', {
+            content_name: 'Đăng ký nhận bài viết (Newsletter)'
+          });
+        }
+
         try {
           await fetch('/api/subscribe', {
             method: 'POST',

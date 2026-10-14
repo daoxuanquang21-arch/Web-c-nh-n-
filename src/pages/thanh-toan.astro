@@ -4,6 +4,7 @@ export const prerender = false;
 
 import fs from 'fs';
 import path from 'path';
+import MetaPixel from '../components/MetaPixel.astro';
 
 const url = new URL(Astro.request.url);
 const orderId = url.searchParams.get('id')?.trim() || '';
@@ -30,6 +31,7 @@ const numericAmount = is9Nguon ? 59000 : 299000;
 const productName = orderData?.product || (is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI');
 const customerName = orderData?.customerName || '';
 const customerEmail = orderData?.email || '';
+const customerPhone = orderData?.phone || '';
 const isAlreadyPaid = orderData?.status === 'Đã thanh toán';
 const transferNote = orderId || 'EB2610';
 const readerUrl = is9Nguon ? '/doc-sach/9-nguon-thu-nhap-tu-blog' : '/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
@@ -44,6 +46,7 @@ const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${nu
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Thanh toán đơn hàng {orderId ? `#${orderId}` : ''} | Đào Xuân Quảng</title>
   <meta name="description" content="Trang thanh toán chuyển khoản nhanh qua VietQR cho đơn hàng Ebook." />
+  <MetaPixel />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
@@ -488,12 +491,15 @@ const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${nu
           <div>
             <button type="button" id="btn-download-qr" class="btn-download-qr">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-              <span>Tải ảnh QR về máy</span>
+              <span>Lưu mã QR vào Thư viện ảnh</span>
             </button>
           </div>
 
           <div class="mobile-tip">
-            💡 <b>Thanh toán nhanh trên điện thoại:</b> Bấm <b>Tải ảnh QR về máy</b> &rarr; Mở app ngân hàng (MBBank, Vietcombank, Techcombank, VPBank...) &rarr; Chọn chức năng <b>Quét QR từ ảnh</b> là xong ngay!
+            💡 <b>Mẹo lưu QR vào Thư viện ảnh (để mở App ngân hàng quét):</b><br />
+            • <b>Cách 1 (Nhanh nhất):</b> <u>Chạm giữ 1 giây</u> vào ảnh QR ở trên &rarr; Chọn <b>"Lưu vào Ảnh"</b>.<br />
+            • <b>Cách 2:</b> Bấm nút <b>"Lưu mã QR vào Thư viện ảnh"</b> &rarr; Chọn <b>"Lưu hình ảnh"</b>.<br />
+            • <b>Cách 3:</b> Hoặc sao chép Số tài khoản + Nội dung CK bên dưới để chuyển khoản thủ công.
           </div>
         </div>
 
@@ -598,7 +604,7 @@ const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${nu
 
 </div>
 
-<script is:inline define:vars={{ orderId, isAlreadyPaid, qrUrl, transferNote, readerUrl }}>
+<script is:inline define:vars={{ orderId, isAlreadyPaid, qrUrl, transferNote, readerUrl, customerName, customerEmail, customerPhone, productName, numericAmount }}>
   (function(){
     // 1. Xử lý nút Sao chép cho mọi dòng
     document.querySelectorAll('.btn-copy').forEach(function(btn){
@@ -639,34 +645,66 @@ const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${nu
       showCopied(btn);
     }
 
-    // 2. Xử lý tải ảnh mã QR về máy điện thoại
+    // 2. Xử lý tải ảnh mã QR về máy điện thoại (Hỗ trợ Web Share API vào Thư viện ảnh)
     var downloadBtn = document.getElementById('btn-download-qr');
     if (downloadBtn) {
       downloadBtn.addEventListener('click', function(){
         var btn = this;
         var origHtml = btn.innerHTML;
-        btn.innerHTML = '<span>Đang tải ảnh...</span>';
+        btn.innerHTML = '<span>Đang mở lưu ảnh...</span>';
 
         fetch(qrUrl)
           .then(function(res){ return res.blob(); })
           .then(function(blob){
-            var blobUrl = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = 'vietqr-' + (orderId || 'ebook') + '.jpg';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 2000);
-            btn.innerHTML = '<span>Đã lưu ảnh QR! ✓</span>';
-            setTimeout(function(){ btn.innerHTML = origHtml; }, 2000);
+            var filename = 'vietqr-' + (orderId || 'ebook') + '.png';
+
+            // Cách 1: Web Share API trên mobile (iOS Safari & Android Chrome) -> mở bảng lưu thẳng vào "Ảnh" (Photos)
+            if (navigator.canShare) {
+              try {
+                var file = new File([blob], filename, { type: blob.type || 'image/png' });
+                if (navigator.canShare({ files: [file] })) {
+                  navigator.share({
+                    files: [file],
+                    title: 'Mã QR thanh toán',
+                    text: 'Mã QR thanh toán đơn hàng ' + (orderId || '')
+                  }).then(function(){
+                    btn.innerHTML = '<span>Đã mở menu lưu ảnh! ✓</span>';
+                    setTimeout(function(){ btn.innerHTML = origHtml; }, 2500);
+                  }).catch(function(err){
+                    if (err && err.name !== 'AbortError') {
+                      fallbackSaveFile(blob, filename, btn, origHtml);
+                    } else {
+                      btn.innerHTML = origHtml;
+                    }
+                  });
+                  return;
+                }
+              } catch(e) {
+                // Tiếp tục xuống fallback
+              }
+            }
+
+            // Cách 2: Tải file thông thường
+            fallbackSaveFile(blob, filename, btn, origHtml);
           })
           .catch(function(){
-            // Fallback mở trực tiếp tab ảnh
             window.open(qrUrl, '_blank');
             btn.innerHTML = origHtml;
           });
       });
+    }
+
+    function fallbackSaveFile(blob, filename, btn, origHtml) {
+      var blobUrl = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 2000);
+      btn.innerHTML = '<span>Đã tải ảnh về máy! ✓</span>';
+      setTimeout(function(){ btn.innerHTML = origHtml; }, 2500);
     }
 
     // 3. Tự động kiểm tra trạng thái đơn hàng (Polling) mỗi 2.5 giây
@@ -684,6 +722,22 @@ const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${nu
       }, 2500);
     }
 
+    var cName = customerName || '';
+    var cEmail = customerEmail || '';
+    var cPhone = customerPhone || '';
+    var pName = productName || 'Ebook';
+    var numAmount = numericAmount || 299000;
+
+    // Thiết lập So khớp nâng cao thủ công (Manual Advanced Matching) ngay khi mở trang thanh toán
+    if (typeof window !== 'undefined' && typeof window.setMetaAdvancedMatching === 'function') {
+      window.setMetaAdvancedMatching({
+        name: cName,
+        email: cEmail,
+        phone: cPhone,
+        orderId: orderId
+      });
+    }
+
     function showSuccess(data) {
       var checkoutView = document.getElementById('checkout-view');
       var successView = document.getElementById('success-view');
@@ -698,12 +752,20 @@ const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${nu
         successView.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
 
-      // Track Meta Pixel Purchase nếu có
+      // Track Meta Pixel Purchase kèm So khớp nâng cao
       if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        if (typeof window.setMetaAdvancedMatching === 'function') {
+          window.setMetaAdvancedMatching({
+            name: cName,
+            email: (data && data.email) || cEmail,
+            phone: cPhone,
+            orderId: orderId
+          });
+        }
         window.fbq('track', 'Purchase', {
-          content_name: 'Ebook',
+          content_name: pName || 'Ebook',
           currency: 'VND',
-          value: data?.amount ? Number(String(data.amount).replace(/[^\d]/g, '')) : 299000
+          value: data?.amount ? Number(String(data.amount).replace(/[^\d]/g, '')) : numAmount
         }, { eventID: orderId });
       }
     }

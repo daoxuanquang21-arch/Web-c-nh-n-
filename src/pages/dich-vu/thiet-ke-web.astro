@@ -421,7 +421,7 @@ const faqs = [
             <h3 class="text-2xl sm:text-3xl font-bold text-brand-navy-deep">Bắt đầu sở hữu website chuyên nghiệp của bạn</h3>
             <p class="text-sm sm:text-base text-brand-text mt-2">Hãy để lại thông tin liên hệ, tôi sẽ trực tiếp tư vấn lộ trình xây dựng website thương hiệu tối ưu nhất cho bạn trong 24h.</p>
           </div>
-          <form action="https://formspree.io/f/xvggpzoz" method="POST" class="space-y-6 max-w-xl mx-auto">
+          <form id="web-consult-form" action="https://formspree.io/f/xvggpzoz" method="POST" class="space-y-6 max-w-xl mx-auto">
             <div class="grid sm:grid-cols-2 gap-6">
               <div>
                 <label for="name" class="block text-xs font-bold text-brand-navy-deep uppercase tracking-wider mb-2">Họ & Tên *</label>
@@ -483,4 +483,44 @@ const faqs = [
       }
     }))
   })} />
+
+  <script>
+    const setupWebConsultForm = () => {
+      const form = document.getElementById('web-consult-form') as HTMLFormElement | null;
+      if (!form) return;
+
+      form.addEventListener('submit', () => {
+        const nameInput = form.querySelector('[name="name"]') as HTMLInputElement | null;
+        const phoneInput = form.querySelector('[name="phone"]') as HTMLInputElement | null;
+        const emailInput = form.querySelector('[name="email"]') as HTMLInputElement | null;
+
+        const name = nameInput ? nameInput.value.trim() : '';
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        const email = emailInput ? emailInput.value.trim() : '';
+
+        if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+          if (typeof (window as any).setMetaAdvancedMatching === 'function') {
+            (window as any).setMetaAdvancedMatching({ name, phone, email });
+          } else {
+            var d = phone.replace(/\D/g, '');
+            if (d.startsWith('0')) d = '84' + d.slice(1);
+            var parts = name.trim().toLowerCase().split(/\s+/).filter(Boolean);
+            var fn = parts.length > 0 ? parts[parts.length - 1] : '';
+            var ln = parts.length > 1 ? parts.slice(0, parts.length - 1).join(' ') : '';
+            (window as any).fbq('init', '1586370109096379', { em: email.trim().toLowerCase(), ph: d, fn: fn, ln: ln, country: 'vn' });
+          }
+          (window as any).fbq('track', 'InitiateCheckout', {
+            content_name: 'Đăng Ký Tư Vấn Thiết Kế Website',
+            currency: 'VND'
+          });
+          (window as any).fbq('track', 'Lead', {
+            content_name: 'Đăng Ký Tư Vấn Thiết Kế Website',
+            currency: 'VND'
+          });
+        }
+      });
+    };
+    setupWebConsultForm();
+    document.addEventListener('astro:page-load', setupWebConsultForm);
+  </script>
 </Layout>

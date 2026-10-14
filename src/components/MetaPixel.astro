@@ -32,6 +32,109 @@ const pixelId = import.meta.env.PUBLIC_META_PIXEL_ID || process.env.META_PIXEL_I
       );
       fbq('init', pixelId);
       fbq('track', 'PageView');
+
+      window.__META_PIXEL_ID__ = pixelId;
+
+      /**
+       * Chuẩn hóa dữ liệu khách hàng theo đúng tiêu chuẩn Meta Manual Advanced Matching:
+       * - em: email chữ thường, loại bỏ khoảng trắng thừa
+       * - ph: số điện thoại chỉ chứa số, có mã quốc gia Việt Nam (84...)
+       * - fn: tên gọi (từ cuối cùng), chữ thường, loại bỏ ký tự đặc biệt
+       * - ln: họ & tên đệm, chữ thường
+       * - country: 'vn' (mã quốc gia 2 ký tự)
+       * - external_id: mã đơn hàng hoặc ID khách hàng
+       */
+      window.normalizeMetaUserData = function (raw) {
+        if (!raw || typeof raw !== 'object') return {};
+        var ud = {};
+
+        // 1. Email (em)
+        if (raw.email) {
+          var em = String(raw.email).trim().toLowerCase();
+          if (em.indexOf('@') > 0) {
+            ud.em = em;
+          }
+        }
+
+        // 2. Số điện thoại (ph) -> chuẩn hóa đầu 84 của Việt Nam
+        if (raw.phone) {
+          var digits = String(raw.phone).replace(/\D/g, '');
+          if (digits.length >= 8) {
+            if (digits.indexOf('0') === 0) {
+              digits = '84' + digits.slice(1);
+            } else if (digits.indexOf('84') !== 0 && digits.length <= 10) {
+              digits = '84' + digits;
+            }
+            ud.ph = digits;
+          }
+        }
+
+        // 3. Họ và Tên (fn: Tên gọi, ln: Họ & tên đệm)
+        if (raw.name) {
+          var cleanName = String(raw.name).trim().toLowerCase().replace(/[^\p{L}\s]/gu, '');
+          var parts = cleanName.split(/\s+/).filter(Boolean);
+          if (parts.length === 1) {
+            ud.fn = parts[0];
+          } else if (parts.length > 1) {
+            ud.fn = parts[parts.length - 1]; // Tên chính (First name)
+            ud.ln = parts.slice(0, parts.length - 1).join(' '); // Họ & tên đệm (Last name)
+          }
+        }
+
+        // 4. Quốc gia mặc định Việt Nam
+        ud.country = 'vn';
+
+        // 5. External ID (nếu có, ví dụ orderId)
+        if (raw.externalId || raw.orderId) {
+          ud.external_id = String(raw.externalId || raw.orderId).trim();
+        }
+
+        return ud;
+      };
+
+      /**
+       * Kích hoạt So khớp nâng cao thủ công (Manual Advanced Matching):
+       * Khởi tạo lại Pixel với user data để Meta gắn vào mọi sự kiện tiếp theo.
+       */
+      window.setMetaAdvancedMatching = function (userRaw) {
+        if (typeof window === 'undefined' || typeof window.fbq !== 'function') return null;
+        var pId = window.__META_PIXEL_ID__ || pixelId;
+        var userData = window.normalizeMetaUserData(userRaw);
+        window.fbq('init', pId, userData);
+        return userData;
+      };
+
+      /**
+       * Tiện ích bắn sự kiện sau khi gửi form kèm So khớp nâng cao
+       */
+      window.trackMetaFormEvents = function (options) {
+        if (typeof window === 'undefined' || typeof window.fbq !== 'function') return;
+        options = options || {};
+        var userRaw = options.user || {};
+        var userData = window.setMetaAdvancedMatching(userRaw);
+
+        var eventId = options.orderId || options.eventId || '';
+
+        // Bắn InitiateCheckout nếu có
+        if (options.initiateCheckout !== false) {
+          window.fbq('track', 'InitiateCheckout', {
+            content_name: options.contentName || 'Sản phẩm Ebook',
+            content_type: 'product',
+            value: Number(options.value) || 0,
+            currency: options.currency || 'VND',
+            num_items: options.numItems || 1
+          }, eventId ? { eventID: 'init_' + eventId } : {});
+        }
+
+        // Bắn Lead
+        if (options.lead !== false) {
+          window.fbq('track', 'Lead', {
+            content_name: options.contentName || 'Đăng ký nhận thông tin',
+            value: Number(options.value) || 0,
+            currency: options.currency || 'VND'
+          }, eventId ? { eventID: 'lead_' + eventId } : {});
+        }
+      };
     </script>
     <noscript>
       <img

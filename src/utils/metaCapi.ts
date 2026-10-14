@@ -2,6 +2,7 @@ import crypto from 'crypto';
 
 export interface MetaCapiPurchasePayload {
   orderId: string;
+  customerName?: string;
   email?: string;
   phone?: string;
   amount?: number;
@@ -9,6 +10,7 @@ export interface MetaCapiPurchasePayload {
   contentName?: string;
   clientIp?: string;
   userAgent?: string;
+  clientUserAgent?: string;
   sourceUrl?: string;
 }
 
@@ -75,12 +77,30 @@ export async function sendMetaCapiPurchase(params: MetaCapiPurchasePayload): Pro
       if (hashedPh) userData.ph = [hashedPh];
     }
 
+    if (params.customerName) {
+      const cleanName = params.customerName.trim().toLowerCase().replace(/[^\p{L}\s]/gu, '');
+      const parts = cleanName.split(/\s+/).filter(Boolean);
+      if (parts.length === 1) {
+        userData.fn = [hashSha256(parts[0])];
+      } else if (parts.length > 1) {
+        userData.fn = [hashSha256(parts[parts.length - 1])];
+        userData.ln = [hashSha256(parts.slice(0, parts.length - 1).join(' '))];
+      }
+    }
+
+    userData.country = [hashSha256('vn')];
+
+    if (params.orderId) {
+      userData.external_id = [hashSha256(params.orderId)];
+    }
+
     if (params.clientIp) {
       userData.client_ip_address = params.clientIp;
     }
 
-    if (params.userAgent) {
-      userData.client_user_agent = params.userAgent;
+    const ua = params.userAgent || params.clientUserAgent;
+    if (ua) {
+      userData.client_user_agent = ua;
     }
 
     const eventData: Record<string, any> = {

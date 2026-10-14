@@ -654,10 +654,13 @@ footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align
               <div class="pay-qr-box">
                 <div id="qr"></div>
                 <button type="button" id="btn-dl-qr-9nguon" class="btn-dl-qr">
-                  📥 Tải ảnh QR về máy
+                  📥 Lưu mã QR vào Thư viện ảnh
                 </button>
                 <div class="tip-dl-mobile">
-                  💡 <b>Thanh toán nhanh:</b> Bấm <b>Tải ảnh QR về máy</b> &rarr; Mở App ngân hàng quét mã từ thư viện ảnh là xong trong 5 giây!
+                  💡 <b>Mẹo lưu QR vào Thư viện ảnh (để mở App ngân hàng quét):</b><br />
+                  • <b>Cách 1 (Nhanh nhất):</b> <u>Chạm giữ 1 giây</u> vào ảnh QR ở trên &rarr; Chọn <b>"Lưu vào Ảnh"</b>.<br />
+                  • <b>Cách 2:</b> Bấm nút <b>"Lưu mã QR vào Thư viện ảnh"</b> &rarr; Chọn <b>"Lưu hình ảnh"</b>.<br />
+                  • Hoặc bấm "Sao chép" Số TK và Nội dung CK ở trên để chuyển khoản thủ công.
                 </div>
               </div>
 
@@ -750,6 +753,33 @@ footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align
     if (!/^[0-9+\s.]{9,15}$/.test(phone)) { err.textContent = 'Số điện thoại chưa đúng.'; form.phone.focus(); return; }
     err.textContent = '';
 
+    // Kích hoạt So khớp nâng cao thủ công (Manual Advanced Matching) và bắn InitiateCheckout + Lead
+    var metaUser = { name: name, email: email, phone: phone };
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      if (typeof window.setMetaAdvancedMatching === 'function') {
+        window.setMetaAdvancedMatching(metaUser);
+      } else {
+        var d = phone.replace(/\D/g, '');
+        if (d.startsWith('0')) d = '84' + d.slice(1);
+        var parts = name.trim().toLowerCase().split(/\s+/).filter(Boolean);
+        var fn = parts.length > 0 ? parts[parts.length - 1] : '';
+        var ln = parts.length > 1 ? parts.slice(0, parts.length - 1).join(' ') : '';
+        window.fbq('init', '1586370109096379', { em: email.trim().toLowerCase(), ph: d, fn: fn, ln: ln, country: 'vn' });
+      }
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: 'Ebook: 9 Nguồn Thu Nhập Từ Blog',
+        content_type: 'product',
+        value: 59000,
+        currency: 'VND',
+        num_items: 1
+      });
+      window.fbq('track', 'Lead', {
+        content_name: 'Ebook: 9 Nguồn Thu Nhập Từ Blog',
+        value: 59000,
+        currency: 'VND'
+      });
+    }
+
     var cleanPhone = phone.replace(/[^0-9]/g, '');
     var currentNote = cleanPhone ? ('9NGUON ' + cleanPhone) : '9NGUON + SĐT';
     
@@ -808,6 +838,9 @@ footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align
               pollTimer = null;
 
               if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+                if (typeof window.setMetaAdvancedMatching === 'function') {
+                  window.setMetaAdvancedMatching({ name: name, email: customerEmail || email, phone: phone, orderId: orderId });
+                }
                 window.fbq('track', 'Purchase', {
                   content_name: 'Ebook: 9 Nguồn Thu Nhập Từ Blog',
                   content_type: 'product',
@@ -840,8 +873,8 @@ footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align
         thanksEl.style.display = 'block';
         thanksEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', { content_name: '9 Nguồn Thu Nhập Từ Blog', value: 59000, currency: 'VND' });
+      if (orderId && typeof window !== 'undefined' && typeof window.setMetaAdvancedMatching === 'function') {
+        window.setMetaAdvancedMatching({ name: name, email: customerEmail || email, phone: phone, orderId: orderId });
       }
       if (orderId) {
         startPolling(orderId, customerEmail);
@@ -876,6 +909,66 @@ footer{background:#2A2933;color:#C9C6D2;padding:28px 0;font-size:14px;text-align
         done(null, email); 
       });
   });
+
+  // Xử lý nút lưu mã QR vào thư viện ảnh cho 9 Nguồn
+  var btnDl9 = document.getElementById('btn-dl-qr-9nguon');
+  if (btnDl9) {
+    btnDl9.addEventListener('click', function(){
+      var url = currentQrUrl || (C && C.qrImage) || '';
+      if (!url) return;
+      var btn = this;
+      var origText = btn.textContent;
+      btn.textContent = '⏳ Đang mở lưu ảnh...';
+
+      fetch(url)
+        .then(function(res){ return res.blob(); })
+        .then(function(blob){
+          var filename = 'vietqr-9nguon-' + (currentOrderId || 'ebook') + '.png';
+
+          if (navigator.canShare) {
+            try {
+              var file = new File([blob], filename, { type: blob.type || 'image/png' });
+              if (navigator.canShare({ files: [file] })) {
+                navigator.share({
+                  files: [file],
+                  title: 'Mã QR thanh toán',
+                  text: 'Mã QR thanh toán 9 Nguồn Thu Nhập ' + (currentOrderId || '')
+                }).then(function(){
+                  btn.textContent = '✓ Đã mở menu lưu ảnh!';
+                  setTimeout(function(){ btn.textContent = origText; }, 2500);
+                }).catch(function(err){
+                  if (err && err.name !== 'AbortError') {
+                    fallbackDl9(blob, filename, btn, origText);
+                  } else {
+                    btn.textContent = origText;
+                  }
+                });
+                return;
+              }
+            } catch(e) {}
+          }
+
+          fallbackDl9(blob, filename, btn, origText);
+        })
+        .catch(function(){
+          window.open(url, '_blank');
+          btn.textContent = origText;
+        });
+    });
+  }
+
+  function fallbackDl9(blob, filename, btn, origText) {
+    var blobUrl = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 2000);
+    btn.textContent = '✓ Đã tải ảnh về máy!';
+    setTimeout(function(){ btn.textContent = origText; }, 2500);
+  }
 })();
 </script>
 </body>
