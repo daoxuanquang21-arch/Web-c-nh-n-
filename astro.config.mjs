@@ -15,7 +15,17 @@ export default defineConfig({
   security: {
     checkOrigin: false,
   },
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: (page) =>
+        !page.includes('/admin') &&
+        !page.includes('/cam-on') &&
+        !page.includes('/thanh-toan') &&
+        !page.includes('/doc-sach') &&
+        !page.includes('/api')
+    }),
+  ],
   devToolbar: {
     enabled: false,
   },

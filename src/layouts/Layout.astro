@@ -47,6 +47,81 @@ for (const cat of categories) {
     }
   }
 }
+
+// Technical SEO: Schema.org Structured Data (JSON-LD) for Articles & Breadcrumbs
+const pathParts = currentPath.split('/').filter(Boolean);
+const categorySlug = pathParts[0] || '';
+const catNames: Record<string, string> = {
+  ai: 'AI',
+  marketing: 'Marketing',
+  'cuoc-song': 'Cuộc sống'
+};
+const categoryName = catNames[categorySlug] || 'Blog';
+const cleanHeadline = (title || '').replace(/\s*\|\s*Blog của Quảng.*$/i, '').trim();
+
+const articleSchema = isArticlePage ? {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonicalURL}#article`,
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": canonicalURL.toString()
+      },
+      "headline": cleanHeadline,
+      "description": description,
+      "image": new URL(finalImage, Astro.site || 'https://daoxuanquang.com.vn').toString(),
+      "datePublished": articleDate || new Date().toISOString(),
+      "dateModified": articleDate || new Date().toISOString(),
+      "author": {
+        "@type": "Person",
+        "@id": "https://daoxuanquang.com.vn/#person",
+        "name": "Đào Xuân Quảng",
+        "url": "https://daoxuanquang.com.vn"
+      },
+      "publisher": {
+        "@type": "Person",
+        "@id": "https://daoxuanquang.com.vn/#person",
+        "name": "Đào Xuân Quảng",
+        "url": "https://daoxuanquang.com.vn",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://daoxuanquang.com.vn/favicon.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalURL.toString()
+      },
+      "inLanguage": "vi-VN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${canonicalURL}#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Trang chủ",
+          "item": "https://daoxuanquang.com.vn"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": categoryName,
+          "item": `https://daoxuanquang.com.vn/${categorySlug}`
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": cleanHeadline
+        }
+      ]
+    }
+  ]
+} : null;
+
 ---
 
 <!doctype html>
@@ -222,6 +297,12 @@ for (const cat of categories) {
         });
       }
     </script>
+  
+    <!-- Technical SEO: Article & Breadcrumb Schema -->
+    {articleSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    )}
+
   </head>
   <body class="flex flex-col min-h-screen bg-white text-slate-800 dark:bg-dark-bg dark:text-slate-200 transition-colors duration-300 overflow-x-hidden">
     <!-- Navbar -->

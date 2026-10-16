@@ -1,5 +1,8 @@
 User-agent: *
 Disallow: /admin
 Disallow: /api/
+Disallow: /cam-on
+Disallow: /thanh-toan
+Disallow: /doc-sach/
 
 Sitemap: https://daoxuanquang.com.vn/sitemap-index.xml
