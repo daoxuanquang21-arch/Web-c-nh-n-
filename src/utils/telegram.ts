@@ -26,11 +26,18 @@ interface PaidOrderNotification {
   isAutoSentMail?: boolean;
 }
 
+import https from 'https';
+import dns from 'dns';
+
+try {
+  dns.setDefaultResultOrder('ipv4first');
+} catch (_) {}
+
 const FALLBACK_BOT_TOKEN = '8770157034:AAF-sLPCKgyZg24DTM-dDC2M8T90GaPUiYc';
 const FALLBACK_CHAT_ID = '5689167243';
 
 /**
- * Gửi tin nhắn qua Telegram Bot API (sử dụng định dạng HTML)
+ * Gửi tin nhắn qua Telegram Bot API (sử dụng IPv4 trực tiếp để tránh lỗi mạng IPv6 trên VPS)
  */
 export async function sendTelegramMessage(htmlMessage: string): Promise<boolean> {
   const rawToken = process.env.TELEGRAM_BOT_TOKEN;
@@ -44,30 +51,63 @@ export async function sendTelegramMessage(htmlMessage: string): Promise<boolean>
     return false;
   }
 
-  try {
-    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+  return new Promise((resolve) => {
+    try {
+      const payload = JSON.stringify({
         chat_id: chatId,
         text: htmlMessage,
         parse_mode: 'HTML',
         disable_web_page_preview: true
-      })
-    });
+      });
 
-    const result = await response.json();
-    if (!result.ok) {
-      console.error('[Telegram] Lỗi gửi tin nhắn Telegram:', result.description);
-      return false;
+      const req = https.request({
+        hostname: 'api.telegram.org',
+        port: 443,
+        path: `/bot${botToken}/sendMessage`,
+        method: 'POST',
+        family: 4, // Ép dùng IPv4 giải quyết triệt để lỗi ETIMEDOUT trên Linux
+        timeout: 10000,
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payload)
+        }
+      }, (res) => {
+        let body = '';
+        res.on('data', chunk => body += chunk);
+        res.on('end', () => {
+          try {
+            const data = JSON.parse(body);
+            if (data.ok) {
+              console.log('[Telegram] Gửi thông báo Telegram thành công!');
+              resolve(true);
+            } else {
+              console.error('[Telegram] Telegram API báo lỗi:', data.description);
+              resolve(false);
+            }
+          } catch (_) {
+            resolve(false);
+          }
+        });
+      });
+
+      req.on('error', (err) => {
+        console.error('[Telegram] Ngoại lệ khi gọi Telegram API:', err.message);
+        resolve(false);
+      });
+
+      req.on('timeout', () => {
+        req.destroy();
+        console.error('[Telegram] Timeout khi gửi tin nhắn Telegram');
+        resolve(false);
+      });
+
+      req.write(payload);
+      req.end();
+    } catch (error) {
+      console.error('[Telegram] Lỗi không xác định:', error);
+      resolve(false);
     }
-    console.log('[Telegram] Gửi thông báo Telegram thành công!');
-    return true;
-  } catch (error) {
-    console.error('[Telegram] Ngoại lệ khi gọi Telegram API:', error);
-    return false;
-  }
+  });
 }
 
 /**
