@@ -55,7 +55,6 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
 
     let yesterdayTotalRevenue = 0;
     let yesterdayPaidCount = 0;
-    let yesterdayPendingCount = 0;
 
     let ebookTaoBlogCount = 0;
     let ebookTaoBlogRevenue = 0;
@@ -71,49 +70,46 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
     let monthPaidCount = 0;
 
     for (const order of orders) {
+      // Chỉ quan tâm các đơn ĐÃ THANH TOÁN
+      if (order.status !== 'Đã thanh toán') continue;
+
       const orderTs = order.timestamp || (order.date ? new Date(order.date).getTime() : 0);
       if (!orderTs) continue;
 
       const orderDateStr = getDateStringVn(orderTs);
       const orderMonthStr = getMonthStringVn(orderTs);
       const amountNum = parseAmount(order.amount);
-      const isPaid = order.status === 'Đã thanh toán';
 
       // 1. Thống kê lũy kế tháng hiện tại
-      if (orderMonthStr === currentMonthStr && isPaid) {
+      if (orderMonthStr === currentMonthStr) {
         monthTotalRevenue += amountNum;
         monthPaidCount += 1;
       }
 
       // 2. Thống kê riêng cho ngày hôm qua
       if (orderDateStr === yesterdayDateStr) {
-        if (isPaid) {
-          yesterdayPaidCount += 1;
-          yesterdayTotalRevenue += amountNum;
+        yesterdayPaidCount += 1;
+        yesterdayTotalRevenue += amountNum;
 
-          const is9Nguon = 
-            order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' ||
-            (order.product && String(order.product).includes('9 Nguồn')) ||
-            amountNum <= 99000;
+        const is9Nguon = 
+          order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' ||
+          (order.product && String(order.product).includes('9 Nguồn')) ||
+          amountNum <= 99000;
 
-          const isTaoBlog = 
-            order.productId === 'ebook-tao-blog' ||
-            (order.product && String(order.product).includes('Tạo Blog')) ||
-            amountNum >= 200000;
+        const isTaoBlog = 
+          order.productId === 'ebook-tao-blog' ||
+          (order.product && String(order.product).includes('Tạo Blog')) ||
+          amountNum >= 200000;
 
-          if (is9Nguon) {
-            ebook9NguonCount += 1;
-            ebook9NguonRevenue += amountNum;
-          } else if (isTaoBlog) {
-            ebookTaoBlogCount += 1;
-            ebookTaoBlogRevenue += amountNum;
-          } else {
-            otherCount += 1;
-            otherRevenue += amountNum;
-          }
+        if (is9Nguon) {
+          ebook9NguonCount += 1;
+          ebook9NguonRevenue += amountNum;
+        } else if (isTaoBlog) {
+          ebookTaoBlogCount += 1;
+          ebookTaoBlogRevenue += amountNum;
         } else {
-          // Đơn chưa thanh toán
-          yesterdayPendingCount += 1;
+          otherCount += 1;
+          otherRevenue += amountNum;
         }
       }
     }
@@ -124,7 +120,6 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
 📅 <b>Hôm qua (${yesterdayDateStr}):</b>
 💵 <b>Doanh thu:</b> <b>${yesterdayTotalRevenue.toLocaleString('vi-VN')}đ</b>
 ✅ <b>Đơn thành công:</b> <b>${yesterdayPaidCount} đơn</b>
-⏳ <b>Đơn chưa thanh toán:</b> <b>${yesterdayPendingCount} đơn</b>
 
 📦 <b>Chi tiết sản phẩm hôm qua:</b>
 • <b>Ebook Tạo Blog (299k):</b> ${ebookTaoBlogCount} đơn (${ebookTaoBlogRevenue.toLocaleString('vi-VN')}đ)
@@ -145,7 +140,6 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
         yesterdayDate: yesterdayDateStr,
         yesterdayRevenue: yesterdayTotalRevenue,
         yesterdayPaidCount,
-        yesterdayPendingCount,
         monthTotalRevenue,
         monthPaidCount
       }
