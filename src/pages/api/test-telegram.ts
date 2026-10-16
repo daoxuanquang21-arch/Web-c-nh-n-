@@ -44,10 +44,20 @@ Mỗi khi có:
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
     });
   } catch (err: any) {
+    let dnsResult = null;
+    try {
+      const dns = await import('dns/promises');
+      dnsResult = await dns.lookup('api.telegram.org');
+    } catch (e: any) {
+      dnsResult = { error: e.message, code: e.code };
+    }
+
     return new Response(JSON.stringify({
       success: false,
       errorName: err.name,
       errorMessage: err.message,
+      errorCause: err.cause ? (err.cause.message || err.cause.code || String(err.cause)) : null,
+      dnsLookup: dnsResult,
       botTokenUsed: botToken ? botToken.slice(0, 10) + '...' : null,
       chatIdUsed: chatId
     }), {
