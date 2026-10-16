@@ -17,20 +17,39 @@ Mỗi khi có:
 ⏰ <i>${new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}</i>
 `.trim();
 
-  const isSuccess = await sendTelegramMessage(testMessage);
+  const botToken = process.env.TELEGRAM_BOT_TOKEN || '8770157034:AAF-sLPCKgyZg24DTM-dDC2M8T90GaPUiYc';
+  const chatId = process.env.TELEGRAM_CHAT_ID || '5689167243';
 
-  if (isSuccess) {
+  try {
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: testMessage,
+        parse_mode: 'HTML',
+        disable_web_page_preview: true
+      })
+    });
+
+    const data = await response.json();
     return new Response(JSON.stringify({
-      success: true,
-      message: 'Đã gửi tin nhắn thử nghiệm thành công tới Telegram của bạn!'
+      success: data.ok,
+      telegramResponse: data,
+      botTokenUsed: botToken ? botToken.slice(0, 10) + '...' : null,
+      chatIdUsed: chatId
     }), {
-      status: 200,
+      status: data.ok ? 200 : 500,
       headers: { 'Content-Type': 'application/json; charset=utf-8' }
     });
-  } else {
+  } catch (err: any) {
     return new Response(JSON.stringify({
       success: false,
-      message: 'Không thể gửi tin nhắn. Vui lòng kiểm tra lại Bot Token và Chat ID, đồng thời đảm bảo bạn đã bấm "Start" với Bot trên Telegram!'
+      errorName: err.name,
+      errorMessage: err.message,
+      botTokenUsed: botToken ? botToken.slice(0, 10) + '...' : null,
+      chatIdUsed: chatId
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json; charset=utf-8' }

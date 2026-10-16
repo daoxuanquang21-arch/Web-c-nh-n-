@@ -33,8 +33,11 @@ const FALLBACK_CHAT_ID = '5689167243';
  * Gửi tin nhắn qua Telegram Bot API (sử dụng định dạng HTML)
  */
 export async function sendTelegramMessage(htmlMessage: string): Promise<boolean> {
-  const botToken = process.env.TELEGRAM_BOT_TOKEN || FALLBACK_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID || FALLBACK_CHAT_ID;
+  const rawToken = process.env.TELEGRAM_BOT_TOKEN;
+  const rawChatId = process.env.TELEGRAM_CHAT_ID;
+
+  const botToken = (rawToken && rawToken.trim()) ? rawToken.trim() : FALLBACK_BOT_TOKEN;
+  const chatId = (rawChatId && rawChatId.trim()) ? rawChatId.trim() : FALLBACK_CHAT_ID;
 
   if (!botToken || !chatId) {
     console.warn('[Telegram] Thiếu TELEGRAM_BOT_TOKEN hoặc TELEGRAM_CHAT_ID. Bỏ qua gửi thông báo.');
