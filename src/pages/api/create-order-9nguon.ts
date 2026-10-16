@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import fs from 'fs';
 import path from 'path';
+import { notifyTelegramNewOrder } from '../../utils/telegram';
 
 export const prerender = false;
 
@@ -88,6 +89,21 @@ export const POST: APIRoute = async ({ request }) => {
     const orders = getOrders();
     orders.unshift(newOrder);
     saveOrders(orders);
+
+    // Bắn thông báo Telegram có đơn hàng mới (Chờ thanh toán)
+    try {
+      await notifyTelegramNewOrder({
+        orderId,
+        customerName: name,
+        email,
+        phone,
+        product: newOrder.product,
+        amount: amountStr,
+        date: newOrder.date
+      });
+    } catch (teleErr) {
+      console.warn('[Telegram] Lỗi gửi thông báo đơn mới (9 Nguồn):', teleErr);
+    }
 
     const qrUrl = `https://qr.sepay.vn/img?acc=0000485725573&bank=MBBank&amount=${amountNum}&des=${encodeURIComponent(transferNote)}&template=compact`;
 

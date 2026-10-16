@@ -5,6 +5,7 @@ import path from 'path';
 import { renderOrderEmailHtml, getOrderEmailSubject } from '../../../utils/orderEmailTemplate';
 import { scheduleDripCampaignForOrder } from '../../../utils/dripEmails';
 import { sendMetaCapiPurchase } from '../../../utils/metaCapi';
+import { notifyTelegramPaymentSuccess } from '../../../utils/telegram';
 
 export const prerender = false;
 
@@ -400,7 +401,25 @@ export const POST: APIRoute = async ({ request }) => {
         }
       }
 
-      // 8. Ghi log thành công
+      // 8. Bắn thông báo Telegram: Khách ĐÃ thanh toán thành công
+      try {
+        await notifyTelegramPaymentSuccess({
+          orderId: targetOrder.id,
+          customerName: targetOrder.customerName,
+          email: targetOrder.email,
+          phone: targetOrder.phone,
+          product: targetOrder.product || (is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI'),
+          amount: transferAmount || targetOrder.amount || defaultAmount,
+          gateway: gateway || 'MBBank (SePay)',
+          transactionId: String(referenceCode || transactionId || ''),
+          paidAt: targetOrder.paidAt,
+          isAutoSentMail: emailSentSuccess
+        });
+      } catch (teleErr) {
+        console.warn('[Telegram] Lỗi gửi thông báo thanh toán thành công:', teleErr);
+      }
+
+      // 9. Ghi log thành công
       appendSepayLog({
         resultStatus: 'SUCCESS_ACTIVATED',
         gateway,
@@ -452,6 +471,23 @@ export const POST: APIRoute = async ({ request }) => {
       };
       orders.unshift(autoOrder);
       saveOrders(orders);
+
+      try {
+        await notifyTelegramPaymentSuccess({
+          orderId: newOrderId,
+          customerName: autoOrder.customerName,
+          email: autoOrder.email,
+          phone: autoOrder.phone,
+          product: autoOrder.product,
+          amount: transferAmount || 0,
+          gateway: gateway || 'MBBank (SePay)',
+          transactionId: String(referenceCode || transactionId || ''),
+          paidAt: autoOrder.date,
+          isAutoSentMail: false
+        });
+      } catch (teleErr) {
+        console.warn('[Telegram] Lỗi gửi thông báo autoOrder:', teleErr);
+      }
 
       appendSepayLog({
         resultStatus: 'UNMATCHED_CREATED_NEW',
