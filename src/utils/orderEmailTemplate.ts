@@ -85,41 +85,7 @@ Ebook của bạn đã sẵn sàng. Mở đọc ngay trên máy tính hoặc đi
     </tr></table>
   </td></tr>
 
-  ${!is9Nguon ? `
-  <!-- 4. LÀM NGAY: THỬ THÁCH 2 TIẾNG (DÀNH CHO TẠO BLOG) -->
-  <tr><td class="px" style="font-family:Arial,Helvetica,sans-serif;padding:32px 36px 0;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FFF1E8;border-left:4px solid #EA580C;border-radius:0 16px 16px 0;">
-      <tr><td style="font-family:Arial,Helvetica,sans-serif;padding:24px 24px 0;">
-        <p style="font-family:Arial,Helvetica,sans-serif;margin:0;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#EA580C;">Bắt đầu ngay bây giờ · 2 tiếng</p>
-        <p style="font-family:Arial,Helvetica,sans-serif;margin:6px 0 0;font-size:20px;line-height:28px;font-weight:700;color:#1F1A17;">Đừng để sang mai. Làm “Thử thách 2 tiếng” ngay hôm nay.</p>
-        <p style="font-family:Arial,Helvetica,sans-serif;margin:10px 0 0;font-size:15px;line-height:24px;color:#3E3631;">Hứng khởi lúc vừa mua là thứ dễ mất nhất. Để sang mai là bắt đầu chần chừ. Đừng đọc hết cả cuốn rồi mới làm: <b style="font-family:Arial,Helvetica,sans-serif;color:#1F1A17;">mở ra và làm luôn</b>.</p>
-      </td></tr>
-      <tr><td style="font-family:Arial,Helvetica,sans-serif;padding:18px 24px 0;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td width="40" valign="top" style="font-family:Arial,Helvetica,sans-serif;padding:0 0 14px;"><div style="font-family:Arial,Helvetica,sans-serif;width:28px;height:28px;line-height:28px;border-radius:50%;background:#EA580C;color:#FFFFFF;font-size:14px;font-weight:700;text-align:center;">1</div></td>
-          <td valign="top" style="font-family:Arial,Helvetica,sans-serif;padding:3px 0 14px;font-size:15px;line-height:23px;color:#3E3631;">Lấy sẵn <b style="font-family:Arial,Helvetica,sans-serif;color:#1F1A17;">thẻ thanh toán quốc tế</b> (để mua tên miền và VPS) và <b style="font-family:Arial,Helvetica,sans-serif;color:#1F1A17;">CCCD</b>.</td>
-        </tr>
-        <tr>
-          <td width="40" valign="top" style="font-family:Arial,Helvetica,sans-serif;padding:0 0 14px;"><div style="font-family:Arial,Helvetica,sans-serif;width:28px;height:28px;line-height:28px;border-radius:50%;background:#EA580C;color:#FFFFFF;font-size:14px;font-weight:700;text-align:center;">2</div></td>
-          <td valign="top" style="font-family:Arial,Helvetica,sans-serif;padding:3px 0 14px;font-size:15px;line-height:23px;color:#3E3631;">Mở ebook, vào <b style="font-family:Arial,Helvetica,sans-serif;color:#1F1A17;">trang 2 (Lời mở đầu)</b>, đọc phần <i>“Thử thách 2 tiếng”</i>.</td>
-        </tr>
-        <tr>
-          <td width="40" valign="top" style="font-family:Arial,Helvetica,sans-serif;padding:0 0 0;"><div style="font-family:Arial,Helvetica,sans-serif;width:28px;height:28px;line-height:28px;border-radius:50%;background:#EA580C;color:#FFFFFF;font-size:14px;font-weight:700;text-align:center;">3</div></td>
-          <td valign="top" style="font-family:Arial,Helvetica,sans-serif;padding:3px 0 0;font-size:15px;line-height:23px;color:#3E3631;">Sao chép prompt đầu tiên, dán vào Agent Coding và <b style="font-family:Arial,Helvetica,sans-serif;color:#1F1A17;">làm theo từng bước</b>.</td>
-        </tr>
-        </table>
-      </td></tr>
-      <tr><td style="font-family:Arial,Helvetica,sans-serif;padding:20px 24px 24px;">
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-          <td style="font-family:Arial,Helvetica,sans-serif;background:#FFFFFF;border:1px solid #F5D6C2;border-radius:12px;padding:16px 18px;font-size:15px;line-height:24px;color:#3E3631;">
-            <span style="font-family:Arial,Helvetica,sans-serif;color:#EA580C;font-weight:700;">2 tiếng sau:</span> bạn có tên miền mang tên mình và blog đầu tiên chạy thật.
-          </td>
-        </tr></table>
-      </td></tr>
-    </table>
-  </td></tr>
-  ` : `
+  ${is9Nguon ? `
   <!-- HƯỚNG DẪN ĐỌC CHO 9 NGUỒN -->
   <tr><td class="px" style="font-family:Arial,Helvetica,sans-serif;padding:32px 36px 0;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FFF1E8;border-left:4px solid #EA580C;border-radius:0 16px 16px 0;">
@@ -130,7 +96,7 @@ Ebook của bạn đã sẵn sàng. Mở đọc ngay trên máy tính hoặc đi
       </td></tr>
     </table>
   </td></tr>
-  `}
+  ` : ''}
 
   <!-- 5. HỖ TRỢ -->
   <tr><td class="px" style="font-family:Arial,Helvetica,sans-serif;padding:28px 36px 0;">
