@@ -690,6 +690,204 @@ sang bước tiếp theo.</pre>
   document.addEventListener('keydown',function(e){if(e.key==='Escape')lb.hidden=true;});
 })();
 
+// SePay Modal & Order Form Checkout
+(function(){
+  var form = document.getElementById('order-form');
+  if(!form) return;
+  var submitBtn = form.querySelector('button[type="submit"]');
+  var modal = document.getElementById('sepay-modal');
+  var modalCloseBtn = document.getElementById('sepay-modal-close-btn');
+  var modalPending = document.getElementById('sepay-modal-pending');
+  var modalSuccess = document.getElementById('sepay-modal-success');
+  var qrImg = document.getElementById('sepay-qr-img');
+  var valCode = document.getElementById('sepay-val-code');
+  var btnCopyCode = document.getElementById('btn-copy-code');
+  var successOrderId = document.getElementById('sepay-success-order-id');
+  var successEmail = document.getElementById('sepay-success-email');
+  var formOk = document.getElementById('form-ok');
+
+  var pollTimer = null;
+
+  function setErr(id, msg){
+    var errEl = document.getElementById('e-'+id);
+    var fEl = document.getElementById('f-'+id);
+    if(errEl) errEl.textContent = msg;
+    if(fEl) fEl.setAttribute('aria-invalid', msg ? 'true':'false');
+    return !msg;
+  }
+
+  // Xử lý sao chép (mã giao dịch, STK...)
+  document.querySelectorAll('.btn-copy').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var text = btn.getAttribute('data-copy') || '';
+      if(!text) return;
+      navigator.clipboard.writeText(text).then(function(){
+        var origText = btn.textContent;
+        btn.textContent = 'Đã chép! ✓';
+        btn.classList.add('copied');
+        setTimeout(function(){
+          btn.textContent = origText;
+          btn.classList.remove('copied');
+        }, 1800);
+      }).catch(function(){
+        prompt('Sao chép thông tin:', text);
+      });
+    });
+  });
+
+  var btnDownloadQr = document.getElementById('sepay-btn-download-qr');
+  var currentQrUrl = '';
+  var currentOrderId = '';
+
+  if (btnDownloadQr) {
+    btnDownloadQr.addEventListener('click', function(){
+      if (!currentQrUrl) return;
+      var btn = this;
+      var origHtml = btn.innerHTML;
+      btn.innerHTML = '<span>Đang tải ảnh...</span>';
+
+      fetch(currentQrUrl)
+        .then(function(res){ return res.blob(); })
+        .then(function(blob){
+          var filename = 'vietqr-' + (currentOrderId || 'ebook') + '.png';
+          var blobUrl = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(function(){ URL.revokeObjectURL(blobUrl); }, 2000);
+          btn.innerHTML = '<span>Đã tải ảnh về máy! ✓</span>';
+          setTimeout(function(){ btn.innerHTML = origHtml; }, 2500);
+        })
+        .catch(function(){
+          window.open(currentQrUrl, '_blank');
+          btn.innerHTML = origHtml;
+        });
+    });
+  }
+
+  // Đóng Modal
+  function closeModal(){
+    if(modal) modal.hidden = true;
+    if(pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+  }
+
+  if(modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+  if(modal) {
+    modal.addEventListener('click', function(e){
+      if(e.target === modal) closeModal();
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal && !modal.hidden) closeModal();
+  });
+
+  // Xử lý gửi Form
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+
+    var name = (form.name ? form.name.value : '').trim();
+    var phone = (form.phone ? form.phone.value : '').replace(/\s+/g,'');
+    var email = (form.email ? form.email.value : '').trim();
+    var ok = true;
+
+    ok = setErr('name', name.length < 2 ? 'Vui lòng nhập họ và tên.' : '') && ok;
+    ok = setErr('phone', /^(\+84|0)\d{9,10}$/.test(phone) ? '' : 'Số điện thoại chưa đúng định dạng.') && ok;
+    ok = setErr('email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Email chưa đúng định dạng.') && ok;
+
+    if(!ok) return;
+
+    // GA4 & Meta Pixel tracking
+    if(typeof window !== 'undefined' && typeof window.gtag === 'function'){
+      window.gtag('event', 'begin_checkout', {
+        currency: 'VND',
+        value: 299000,
+        items: [{
+          item_id: 'ebook-tao-blog',
+          item_name: 'Ebook Làm Website Bằng AI',
+          price: 299000,
+          quantity: 1
+        }]
+      });
+    }
+
+    var origBtnText = submitBtn.innerHTML;
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>Đang tạo mã VietQR...</span>';
+
+    // Gọi API tạo đơn hàng SePay
+    fetch('/api/create-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, phone: phone, email: email })
+    })
+    .then(function(res){ return res.json(); })
+    .then(function(data){
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnText;
+
+      if(!data.success){
+        alert(data.error || 'Có lỗi xảy ra khi tạo mã thanh toán. Vui lòng thử lại!');
+        return;
+      }
+
+      // Lưu trữ url QR và orderId hiện tại
+      currentQrUrl = data.qrUrl;
+      currentOrderId = data.orderId;
+
+      // Đưa dữ liệu vào Modal
+      if(qrImg) qrImg.src = data.qrUrl;
+      if(valCode) valCode.textContent = data.orderId;
+      if(btnCopyCode) btnCopyCode.setAttribute('data-copy', data.orderId);
+
+      // Hiển thị phần Chờ thanh toán
+      if(modalPending) modalPending.hidden = false;
+      if(modalSuccess) modalSuccess.hidden = true;
+      if(modal) modal.hidden = false;
+
+      // Hủy poll cũ nếu có
+      if(pollTimer) clearInterval(pollTimer);
+
+      // Bắt đầu kiểm tra trạng thái thanh toán tự động (mỗi 2 giây)
+      pollTimer = setInterval(function(){
+        fetch('/api/check-order?id=' + encodeURIComponent(data.orderId) + '&t=' + Date.now())
+          .then(function(r){ return r.json(); })
+          .then(function(st){
+            if(st && st.paid){
+              clearInterval(pollTimer);
+              pollTimer = null;
+
+              // Chuyển sang màn hình thành công
+              if(modalPending) modalPending.hidden = true;
+              if(modalSuccess) modalSuccess.hidden = false;
+              if(successOrderId) successOrderId.textContent = data.orderId;
+              if(successEmail) successEmail.textContent = email;
+              if(formOk) formOk.hidden = false;
+              form.reset();
+
+              // Tự động chuyển tới trang cảm ơn sau 2.5s
+              setTimeout(function(){
+                window.location.href = '/cam-on?id=' + encodeURIComponent(data.orderId) + '&email=' + encodeURIComponent(email);
+              }, 2500);
+            }
+          })
+          .catch(function(){});
+      }, 2000);
+
+    })
+    .catch(function(err){
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = origBtnText;
+      alert('Không thể kết nối đến máy chủ thanh toán. Vui lòng thử lại!');
+    });
+
+  });
+
+})();
+
 </script>
 </body>
 </html>
