@@ -3,7 +3,6 @@ import { Resend } from 'resend';
 import fs from 'fs';
 import path from 'path';
 import { renderOrderEmailHtml, getOrderEmailSubject } from '../../../utils/orderEmailTemplate';
-import { scheduleDripCampaignForOrder } from '../../../utils/dripEmails';
 import { sendMetaCapiPurchase } from '../../../utils/metaCapi';
 import { notifyTelegramPaymentSuccess } from '../../../utils/telegram';
 
@@ -376,32 +375,7 @@ export const POST: APIRoute = async ({ request }) => {
         console.error('[SePay Webhook] Lỗi gửi email giao Ebook:', mailErr);
       }
 
-      // 7. Kích hoạt chuỗi email chăm sóc 7 ngày liên tục (cho Tạo Blog)
-      if (!is9Nguon) {
-        try {
-          const dripResults = await scheduleDripCampaignForOrder({
-            customerName,
-            email,
-            timestamp: Date.now()
-          });
-
-          orders = getOrders();
-          const curIdx = orders.findIndex((o: any) => o.id === targetOrder.id);
-          if (curIdx !== -1) {
-            orders[curIdx].dripCampaign = {
-              status: 'active',
-              startedAt: Date.now(),
-              days: dripResults
-            };
-            saveOrders(orders);
-          }
-          console.log(`[SePay Webhook] Đã kích hoạt chuỗi 7 ngày cho đơn ${targetOrder.id}`);
-        } catch (dripErr) {
-          console.warn('[SePay Webhook] Cảnh báo kích hoạt chuỗi 7 ngày:', dripErr);
-        }
-      }
-
-      // 8. Bắn thông báo Telegram: Khách ĐÃ thanh toán thành công
+      // 7. Bắn thông báo Telegram: Khách ĐÃ thanh toán thành công
       try {
         await notifyTelegramPaymentSuccess({
           orderId: targetOrder.id,

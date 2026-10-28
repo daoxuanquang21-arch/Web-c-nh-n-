@@ -70,28 +70,7 @@ export const DRIP_METADATA: Record<number, DripEmailMeta> = {
  * Render nội dung HTML cho một ngày cụ thể trong chuỗi 7 ngày
  */
 export function renderDripEmail(day: number, customerName: string): { day: number; subject: string; html: string } | null {
-  if (day < 1 || day > 7) return null;
-
-  const templatePath = path.resolve(`./src/data/email-templates/ngay-${day}.html`);
-  if (!fs.existsSync(templatePath)) {
-    console.error(`Không tìm thấy template HTML cho ngày ${day} tại: ${templatePath}`);
-    return null;
-  }
-
-  const safeName = customerName?.trim() || 'bạn';
-  let html = fs.readFileSync(templatePath, 'utf-8');
-
-  // Thay thế placeholder tên khách
-  html = html.replace(/\{\{TEN_KHACH\}\}/g, safeName);
-
-  const meta = DRIP_METADATA[day];
-  const subject = (meta?.subject || `Ngày ${day} · Tạo Blog cùng Quảng`).replace(/\{\{TEN_KHACH\}\}/g, safeName);
-
-  return {
-    day,
-    subject,
-    html
-  };
+  return null;
 }
 
 /**
@@ -140,59 +119,5 @@ export async function sendDripEmail(day: number, email: string, customerName: st
  * Lên lịch 7 email trên Resend cho một đơn hàng
  */
 export async function scheduleDripCampaignForOrder(order: any): Promise<any[]> {
-  if (!order || !order.email) return [];
-
-  // BỎ QUA HOÀN TOÀN ĐƠN 59K / 9 NGUỒN THU NHẬP
-  const is59kOr9Nguon = 
-    order.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' ||
-    (order.product && order.product.includes('9 Nguồn')) ||
-    (order.amount && String(order.amount).includes('59.000'));
-  if (is59kOr9Nguon) {
-    return [];
-  }
-
-  const fromSender = process.env.RESEND_FROM || 'Đào Xuân Quảng <ebook@daoxuanquang.com.vn>';
-  const customerName = order.customerName || 'bạn';
-  const baseDate = order.timestamp ? new Date(order.timestamp) : new Date();
-
-  const results: any[] = [];
-
-  for (let day = 1; day <= 7; day++) {
-    const emailData = renderDripEmail(day, customerName);
-    if (!emailData) continue;
-
-    const scheduledDate = calculateScheduleDate(day, baseDate);
-    const scheduledIso = scheduledDate.toISOString();
-
-    try {
-      // Gửi lệnh lên lịch qua Resend với scheduledAt
-      const res = await resend.emails.send({
-        from: fromSender,
-        to: order.email,
-        reply_to: 'daoxuanquang26102003@gmail.com',
-        subject: emailData.subject,
-        html: emailData.html,
-        scheduledAt: scheduledIso
-      });
-
-      results.push({
-        day,
-        title: DRIP_METADATA[day]?.badge || `Ngày ${day}`,
-        scheduledFor: scheduledIso,
-        status: res.error ? 'failed' : 'scheduled',
-        resendId: res.data?.id || null,
-        error: res.error?.message || null
-      });
-    } catch (err: any) {
-      results.push({
-        day,
-        title: DRIP_METADATA[day]?.badge || `Ngày ${day}`,
-        scheduledFor: scheduledIso,
-        status: 'pending',
-        error: err.message
-      });
-    }
-  }
-
-  return results;
+  return [];
 }
