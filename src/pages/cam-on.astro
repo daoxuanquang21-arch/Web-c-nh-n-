@@ -23,178 +23,229 @@ const is9Nguon = orderData?.productId === 'ebook-9-cach-tao-thu-nhap-tu-blog' ||
                  (orderData?.product && orderData.product.includes('9 Nguồn')) ||
                  (orderData?.amount && String(orderData.amount).includes('59.000'));
 
-const productName = orderData?.product || (is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI');
+const productName = orderData?.product || (is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook “Làm Website Bằng AI”');
 const readerUrl = is9Nguon ? '/doc-sach/9-nguon-thu-nhap-tu-blog' : '/doc-sach/tao-blog-co-may-ban-hang-tu-dong';
 const customerName = orderData?.customerName || 'bạn';
-const customerEmail = orderData?.email || '';
+const customerEmail = orderData?.email || url.searchParams.get('email')?.trim() || '';
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow" />
-  <title>Thanh toán thành công! | Đào Xuân Quảng</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cảm ơn bạn · Làm Website Bằng AI</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#14183E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23B8532F%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2254%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EB%3C/text%3E%3C/svg%3E">
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-03YQDCZWTY"></script>
-  <script is:inline define:vars={{ orderId, is9Nguon }}>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-03YQDCZWTY"></script>
+<script is:inline define:vars={{ orderId, is9Nguon }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    gtag('config', 'G-03YQDCZWTY');
-    gtag('config', 'G-LNV2YN50E0');
+  gtag('config', 'G-03YQDCZWTY');
+  gtag('config', 'G-LNV2YN50E0');
 
-    if (orderId) {
-      gtag('event', 'purchase', {
-        transaction_id: orderId,
-        value: is9Nguon ? 59000 : 299000,
-        currency: 'VND',
-        items: [{
-          item_id: is9Nguon ? 'ebook-9-cach-tao-thu-nhap-tu-blog' : 'ebook-tao-blog',
-          item_name: is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Tạo Blog – Cỗ máy bán hàng tự động bằng AI',
-          price: is9Nguon ? 59000 : 299000,
-          quantity: 1
-        }]
-      });
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      background: #F8FAFC;
-      color: #0F172A;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px 16px;
-    }
-    .card {
-      background: #FFFFFF;
-      max-width: 500px;
-      width: 100%;
-      border-radius: 24px;
-      border: 1px solid #E2E8F0;
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
-      padding: 36px 24px 28px;
-      text-align: center;
-    }
-    .icon {
-      width: 80px;
-      height: 80px;
-      background: #ECFDF5;
-      color: #10B981;
-      border: 3px solid #A7F3D0;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 24px rgba(16, 185, 129, 0.2);
-    }
-    h1 {
-      font-size: 26px;
-      font-weight: 900;
-      color: #065F46;
-      margin-bottom: 8px;
-    }
-    p {
-      font-size: 15px;
-      color: #475569;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-    .info-box {
-      background: #F1F5F9;
-      border-radius: 14px;
-      padding: 14px 18px;
-      margin-bottom: 24px;
-      font-size: 14px;
-      text-align: left;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-    .info-row:last-child { margin-bottom: 0; }
-    .btn-read {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #10B981;
-      color: #FFFFFF;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 800;
-      padding: 15px 36px;
-      border-radius: 99px;
-      box-shadow: 0 8px 22px rgba(16, 185, 129, 0.35);
-      transition: all 0.2s ease;
-      width: 100%;
-    }
-    .btn-read:hover {
-      background: #059669;
-      transform: translateY(-2px);
-    }
-    .btn-home {
-      display: inline-block;
-      margin-top: 14px;
-      font-size: 13.5px;
-      color: #64748B;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .btn-home:hover { color: #0F172A; }
-  </style>
+  if (orderId) {
+    gtag('event', 'purchase', {
+      transaction_id: orderId,
+      value: is9Nguon ? 59000 : 299000,
+      currency: 'VND',
+      items: [{
+        item_id: is9Nguon ? 'ebook-9-cach-tao-thu-nhap-tu-blog' : 'ebook-tao-blog',
+        item_name: is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Làm Website Bằng AI',
+        price: is9Nguon ? 59000 : 299000,
+        quantity: 1
+      }]
+    });
+  }
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,800&family=Patrick+Hand&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#14183E;--ink:#1F2340;--txt:#3B3F5C;--green:#22C55E;--green-d:#16A34A;--hl:#FFE94D;--cream:#FFF9E6;
+--h:'Montserrat',system-ui,sans-serif;--hand:'Patrick Hand','Comic Sans MS',cursive;--ps:'Dancing Script',cursive}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--h);color:var(--txt);background:#fff;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid #3B82F6;outline-offset:3px}
+h1,h2,h3{margin:0;color:var(--ink);text-wrap:balance}
+.w{max-width:760px;margin:0 auto;padding:0 20px}
+.bar{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--navy);color:#fff;font-size:13px;letter-spacing:.08em;padding:10px 14px}
+.bar-ic{width:18px;height:18px}
+.hero{text-align:center;padding:52px 0 44px;background:#fff;background-image:linear-gradient(#EEF0F6 1px,transparent 1px),linear-gradient(90deg,#EEF0F6 1px,transparent 1px);background-size:28px 28px}
+.ok-ic{width:76px;height:76px;margin:0 auto 14px;filter:drop-shadow(0 8px 16px rgba(34,197,94,.35))}
+.kick{font-family:var(--hand);font-size:26px;color:var(--green-d);margin:0 0 6px}
+h1{font-weight:900;font-size:clamp(28px,4.6vw,42px);line-height:1.3}
+h1 mark{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit;padding:0 4px}
+.lead{max-width:560px;margin:16px auto 0;font-size:18px}
+.sent{display:inline-block;margin:18px 0 0;background:#F0FDF4;border:1px solid #BBF7D0;color:#166534;padding:8px 14px;border-radius:999px;font-size:15px;word-break:break-all}
+.order-pill{display:inline-block;margin-top:8px;font-size:13px;color:#64748B;background:#F1F5F9;padding:4px 10px;border-radius:6px}
+.next{padding:56px 0;background:var(--cream)}
+.next h2{text-align:center;font-weight:900;font-size:clamp(24px,3.6vw,32px);line-height:1.3;margin-bottom:30px}
+.next h2 span{color:var(--green-d)}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.st{position:relative;display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;background:#fff;border:2px solid var(--ink);border-radius:6px;padding:20px 20px 20px 22px;box-shadow:5px 5px 0 var(--ink)}
+.st-n{position:absolute;top:-13px;left:-13px;width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;font-weight:900;display:grid;place-items:center;border:2px solid var(--ink);font-size:15px}
+.st-i{width:56px;height:56px;border-radius:50%;background:#EFF6FF;color:var(--navy);display:grid;place-items:center}
+.st-i svg{width:30px;height:30px}
+.st h3{font-size:19px;font-weight:800;margin:2px 0 4px}
+.st p{margin:0;font-size:16px}
+.btn-read-inline{display:inline-flex;align-items:center;gap:6px;background:var(--navy);color:#fff;font-size:14px;font-weight:700;padding:8px 16px;border-radius:6px;text-decoration:none;margin-top:10px}
+.btn-read-inline:hover{background:#1E3A8A}
+.cta{text-align:center;margin-top:34px}
+.zbtn{display:inline-flex;align-items:center;gap:10px;background:var(--green);color:#fff;text-decoration:none;font-weight:900;font-size:19px;padding:16px 30px;border-radius:2px;box-shadow:0 4px 0 var(--green-d);max-width:100%}
+.zbtn:hover{background:var(--green-d)}
+.zi{width:22px;height:22px;flex:none}
+.cta-s{margin:10px 0 0;font-size:14px;color:#6B7280}
+.help{padding:44px 0 8px}
+.help-box{border:2px dashed #F59E0B;background:#FFFBEB;border-radius:6px;padding:22px 24px}
+.help-box h3{font-size:19px;font-weight:800;margin-bottom:6px}
+.help-box p{margin:0 0 6px}
+.help-l{font-size:15px;word-break:break-word}
+.help-l a{color:var(--navy);font-weight:700}
+.note{padding:40px 0 64px}
+.note-g{display:grid;grid-template-columns:160px 1fr;gap:28px;align-items:start}
+.note-g img{width:160px;height:160px;object-fit:cover;border:6px solid #fff;box-shadow:0 10px 24px rgba(0,0,0,.18);transform:rotate(-3deg)}
+.note-g p{margin:0 0 12px}
+.sig{font-family:var(--ps);font-size:34px;color:var(--navy);margin-top:4px!important;line-height:1.2}
+.back-home{display:block;text-align:center;margin:30px auto 10px;color:#6B7280;text-decoration:none;font-size:14px;font-weight:600}
+.back-home:hover{color:var(--navy)}
+@media(max-width:600px){
+ body{font-size:16px}
+ .hero{padding:40px 0 34px}
+ .st{grid-template-columns:1fr;gap:10px;padding:22px 18px 18px}
+ .st-i{width:48px;height:48px}
+ .zbtn{font-size:16px;padding:15px 20px}
+ .note-g{grid-template-columns:1fr;justify-items:center;text-align:left}
+ .note-g img{width:130px;height:130px}
+}
+</style>
 </head>
 <body>
 
-<div class="card">
-  <div class="icon">✓</div>
-  <h1>Thanh toán thành công!</h1>
-  <p>
-    Cảm ơn <strong>{customerName}</strong>! Hệ thống đã nhận được tiền và kích hoạt quyền truy cập Ebook của bạn.
-  </p>
-
-  <div class="info-box">
-    {orderId && (
-      <div class="info-row">
-        <span style="color:#64748B;">Mã đơn hàng:</span>
-        <strong>{orderId}</strong>
-      </div>
-    )}
-    <div class="info-row">
-      <span style="color:#64748B;">Sản phẩm:</span>
-      <strong>{productName}</strong>
-    </div>
-    {customerEmail && (
-      <div class="info-row">
-        <span style="color:#64748B;">Email nhận sách:</span>
-        <strong style="color:#059669;">{customerEmail}</strong>
-      </div>
-    )}
-  </div>
-
-  <a href={readerUrl} class="btn-read">
-    📖 Mở Đọc Ebook Ngay Bây Giờ &rarr;
-  </a>
-
-  <div style="font-size:12.5px;color:#64748B;margin-top:16px;">
-    💡 Ebook và đường link đã được tự động gửi tới email của bạn (vui lòng kiểm tra thêm mục Spam/Quảng cáo nếu chưa thấy).
-  </div>
-
-  <a href="/" class="btn-home">&larr; Quay lại trang chủ</a>
+<div class="bar">
+  <svg class="bar-ic" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#22C55E"/><path d="M19 33l9 9 17-19" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <b>THANH TOÁN THÀNH CÔNG</b>
 </div>
 
+<main>
+<section class="hero">
+  <div class="w">
+    <svg class="ok-ic" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#22C55E"/><path d="M19 33l9 9 17-19" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p class="kick">Cảm ơn {customerName} đã tin tưởng!</p>
+    <h1>Ebook “{productName}” đang trên đường tới <mark>hộp thư của bạn</mark></h1>
+    <p class="lead">Chào mừng bạn. Từ hôm nay, phần kỹ thuật không còn là lý do để bạn đứng ngoài nữa.</p>
+    
+    <p class="sent" id="sent" style={customerEmail ? "display:inline-block;" : "display:none;"}>
+      Đã gửi tới: <b id="sent-email">{customerEmail}</b>
+    </p>
+
+    {orderId && (
+      <div>
+        <span class="order-pill">Mã đơn hàng: <strong>{orderId}</strong></span>
+      </div>
+    )}
+  </div>
+</section>
+
+<section class="next">
+  <div class="w">
+    <h2><span>3 việc</span> bạn nên làm ngay bây giờ</h2>
+    <ol class="steps">
+      <li class="st">
+        <span class="st-n">1</span>
+        <div class="st-i">
+          <svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="11" width="36" height="26" rx="3"/><path d="M7 13l17 13 17-13"/></svg>
+        </div>
+        <div>
+          <h3>Mở email</h3>
+          <p>Ebook vừa được gửi tới email bạn điền lúc đặt mua. Không thấy trong <b>Hộp thư đến</b>? Xem thêm mục <b>Spam</b> hoặc <b>Quảng cáo</b>, rồi bấm “Không phải spam” để những email sau tới đúng chỗ.</p>
+        </div>
+      </li>
+
+      <li class="st">
+        <span class="st-n">2</span>
+        <div class="st-i">
+          <svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10h12a4 4 0 0 1 4 4v24a3 3 0 0 0-3-3H8zM40 10H28a4 4 0 0 0-4 4v24a3 3 0 0 1 3-3h13z"/></svg>
+        </div>
+        <div>
+          <h3>Tải ebook, bắt đầu Bài 1</h3>
+          <p>Đừng để ebook nằm trong máy. Mở <b>Bài 1</b> ngay hôm nay, sao chép prompt, dán vào Agent Coding và làm theo. Bước đầu tiên luôn là bước khó nhất.</p>
+          <div>
+            <a href={readerUrl} class="btn-read-inline">📖 Đọc online ngay bây giờ &rarr;</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="st">
+        <span class="st-n">3</span>
+        <div class="st-i">
+          <svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h32v20H20l-8 7v-7H8z"/><path d="M16 20h16M16 25h10"/></svg>
+        </div>
+        <div>
+          <h3>Kết bạn Zalo với Quảng</h3>
+          <p>Lưu Zalo của mình để <b>kẹt ở đâu, nhắn ngay chỗ đó</b>. Bạn không phải tự loay hoay một mình.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="cta">
+      <a class="zbtn" href="https://zalo.me/0702286928" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="zi"><path d="M4 5h16v11H10l-5 4v-4H4z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>
+        KẾT BẠN ZALO VỚI QUẢNG
+      </a>
+      <p class="cta-s">Zalo: 0702 286 928</p>
+    </div>
+  </div>
+</section>
+
+<section class="help">
+  <div class="w">
+    <div class="help-box">
+      <h3>Sau 15 phút vẫn chưa nhận được email?</h3>
+      <p>Đừng lo. Nhắn Zalo cho mình kèm <b>email bạn đã dùng khi đặt mua</b>{orderId ? <span> (Mã đơn: <b>{orderId}</b>)</span> : ''}, mình gửi lại cho bạn ngay.</p>
+      <div class="help-l">
+        👉 Zalo hỗ trợ: <a href="https://zalo.me/0702286928" target="_blank" rel="noopener">0702 286 928</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="note">
+  <div class="w note-g">
+    <img src="/images/ebook/cam-on-quang.jpg" alt="Đào Xuân Quảng" width="160" height="160">
+    <div>
+      <p>Mình từng bỏ cuộc 5 lần vì kẹt kỹ thuật. Nên mình hiểu cảm giác mở một thứ mới ra và không biết bắt đầu từ đâu.</p>
+      <p>Lần này bạn có prompt cho từng bước, và có mình ở ngay đây. <b>Cứ làm theo từng bài, kẹt chỗ nào nhắn mình chỗ đó.</b></p>
+      <p>Hẹn gặp bạn ở website đầu tiên của bạn.</p>
+      <p class="sig">Đào Xuân Quảng</p>
+    </div>
+  </div>
+</section>
+
+<a href="/" class="back-home">&larr; Quay lại trang chủ daoxuanquang.com.vn</a>
+</main>
+
+<script is:inline>
+(function(){
+  try {
+    var e = new URLSearchParams(location.search).get('email');
+    if (e) {
+      var el = document.getElementById('sent-email');
+      if (el) el.textContent = e;
+      var box = document.getElementById('sent');
+      if (box) box.style.display = 'inline-block';
+    }
+  } catch(_) {}
+})();
+</script>
 </body>
 </html>
