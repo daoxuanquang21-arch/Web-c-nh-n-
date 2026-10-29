@@ -4,6 +4,7 @@ export const prerender = false;
 
 import fs from 'fs';
 import path from 'path';
+import MetaPixel from '../components/MetaPixel.astro';
 
 const url = new URL(Astro.request.url);
 const orderId = url.searchParams.get('id')?.trim() || '';
@@ -39,9 +40,12 @@ const customerEmail = orderData?.email || url.searchParams.get('email')?.trim() 
 <meta name="theme-color" content="#14183E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%23B8532F%22/%3E%3Ctext x=%2250%22 y=%2268%22 font-size=%2254%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EB%3C/text%3E%3C/svg%3E">
 
+<!-- Meta Pixel -->
+<MetaPixel />
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-03YQDCZWTY"></script>
-<script is:inline define:vars={{ orderId, is9Nguon }}>
+<script is:inline define:vars={{ orderId, is9Nguon, customerName, customerEmail }}>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -61,6 +65,18 @@ const customerEmail = orderData?.email || url.searchParams.get('email')?.trim() 
         quantity: 1
       }]
     });
+
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Purchase', {
+        content_name: is9Nguon ? 'Ebook: 9 Nguồn Thu Nhập Từ Blog' : 'Ebook Làm Website Bằng AI',
+        content_type: 'product',
+        value: is9Nguon ? 59000 : 299000,
+        currency: 'VND',
+        num_items: 1
+      }, {
+        eventID: orderId
+      });
+    }
   }
 </script>
 

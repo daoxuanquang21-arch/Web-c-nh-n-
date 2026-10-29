@@ -814,6 +814,16 @@ sang bước tiếp theo.</pre>
       });
     }
 
+    if(typeof window !== 'undefined' && typeof window.fbq === 'function'){
+      window.fbq('track', 'InitiateCheckout', {
+        content_name: 'Ebook Làm Website Bằng AI',
+        content_type: 'product',
+        value: 299000,
+        currency: 'VND',
+        num_items: 1
+      });
+    }
+
     var origBtnText = submitBtn.innerHTML;
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span>Đang tạo mã VietQR...</span>';
@@ -859,6 +869,33 @@ sang bước tiếp theo.</pre>
             if(st && st.paid){
               clearInterval(pollTimer);
               pollTimer = null;
+
+              // Ghi nhận sự kiện Purchase qua Meta Pixel & GA4
+              if(typeof window !== 'undefined' && typeof window.fbq === 'function'){
+                window.fbq('track', 'Purchase', {
+                  content_name: 'Ebook Làm Website Bằng AI',
+                  content_type: 'product',
+                  value: 299000,
+                  currency: 'VND',
+                  num_items: 1
+                }, {
+                  eventID: data.orderId
+                });
+              }
+
+              if(typeof window !== 'undefined' && typeof window.gtag === 'function'){
+                window.gtag('event', 'purchase', {
+                  transaction_id: data.orderId,
+                  value: 299000,
+                  currency: 'VND',
+                  items: [{
+                    item_id: 'ebook-tao-blog',
+                    item_name: 'Ebook Làm Website Bằng AI',
+                    price: 299000,
+                    quantity: 1
+                  }]
+                });
+              }
 
               // Chuyển sang màn hình thành công
               if(modalPending) modalPending.hidden = true;
