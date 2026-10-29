@@ -21,6 +21,17 @@ import MetaPixel from '../components/MetaPixel.astro';
 
 <MetaPixel />
 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-03YQDCZWTY"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-03YQDCZWTY');
+  gtag('config', 'G-LNV2YN50E0');
+</script>
+
 <!--
   ===================== CẤU HÌNH =====================
   Anh chỉ cần sửa các giá trị dưới đây, toàn trang tự cập nhật.
