@@ -26,6 +26,52 @@ function parseAmount(amount: any): number {
   return parseInt(cleaned, 10) || 0;
 }
 
+/**
+ * Kiểm tra xem đơn hàng đã được thanh toán / hoàn tất chưa
+ * Đồng bộ chuẩn với Admin: hỗ trợ cả "Đã thanh toán" và "Đã hoàn tất"
+ */
+function isOrderPaid(status: string): boolean {
+  if (!status) return false;
+  const s = status.trim().toLowerCase();
+  return s === 'đã thanh toán' || s === 'đã hoàn tất' || s === 'completed' || s === 'paid';
+}
+
+/**
+ * Chuyển chuỗi ngày giờ định dạng Việt Nam "HH:mm:ss DD/MM/YYYY" hoặc "DD/MM/YYYY" thành timestamp
+ */
+function parseVnDateStrToTimestamp(str: string): number {
+  if (!str || typeof str !== 'string') return 0;
+  const m = str.match(/(\d{1,2}):(\d{1,2}):(\d{1,2})\s+(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) {
+    const [, h, min, s, day, month, year] = m.map(Number);
+    return new Date(Date.UTC(year, month - 1, day, h - 7, min, s)).getTime();
+  }
+  const m2 = str.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m2) {
+    const [, day, month, year] = m2.map(Number);
+    return new Date(Date.UTC(year, month - 1, day, 0, 0, 0)).getTime();
+  }
+  return 0;
+}
+
+/**
+ * Lấy mốc thời gian chuẩn xác nhất của đơn hàng (ưu tiên thời điểm paidAt khi tiền về)
+ */
+function getOrderEffectiveTimestamp(order: any): number {
+  if (order.paidAt) {
+    const paidTs = parseVnDateStrToTimestamp(order.paidAt);
+    if (paidTs > 0) return paidTs;
+  }
+  if (order.timestamp && typeof order.timestamp === 'number') {
+    return order.timestamp;
+  }
+  if (order.date) {
+    const dateTs = parseVnDateStrToTimestamp(order.date);
+    if (dateTs > 0) return dateTs;
+  }
+  return 0;
+}
+
 function getDateStringVn(timestamp: number): string {
   return new Date(timestamp).toLocaleDateString('vi-VN', {
     timeZone: 'Asia/Ho_Chi_Minh',
@@ -47,14 +93,17 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
     const orders = getOrders();
     const now = Date.now();
 
-    // Xác định ngày hôm qua theo giờ Việt Nam (GMT+7)
-    // 24 tiếng trước tính từ hiện tại
+    // Xác định ngày hôm nay và hôm qua theo giờ Việt Nam (GMT+7)
+    const todayDateStr = getDateStringVn(now);
     const yesterdayTimestamp = now - 24 * 60 * 60 * 1000;
     const yesterdayDateStr = getDateStringVn(yesterdayTimestamp);
     const currentMonthStr = getMonthStringVn(now);
 
     let yesterdayTotalRevenue = 0;
     let yesterdayPaidCount = 0;
+
+    let todayTotalRevenue = 0;
+    let todayPaidCount = 0;
 
     let ebookTaoBlogCount = 0;
     let ebookTaoBlogRevenue = 0;
@@ -70,23 +119,29 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
     let monthPaidCount = 0;
 
     for (const order of orders) {
-      // Chỉ quan tâm các đơn ĐÃ THANH TOÁN
-      if (order.status !== 'Đã thanh toán') continue;
+      // 1. Chỉ tính các đơn ĐÃ THANH TOÁN / ĐÃ HOÀN TẤT
+      if (!isOrderPaid(order.status)) continue;
 
-      const orderTs = order.timestamp || (order.date ? new Date(order.date).getTime() : 0);
+      const orderTs = getOrderEffectiveTimestamp(order);
       if (!orderTs) continue;
 
       const orderDateStr = getDateStringVn(orderTs);
       const orderMonthStr = getMonthStringVn(orderTs);
       const amountNum = parseAmount(order.amount);
 
-      // 1. Thống kê lũy kế tháng hiện tại
+      // 2. Thống kê lũy kế tháng hiện tại
       if (orderMonthStr === currentMonthStr) {
         monthTotalRevenue += amountNum;
         monthPaidCount += 1;
       }
 
-      // 2. Thống kê riêng cho ngày hôm qua
+      // 3. Thống kê cho hôm nay (nếu có phát sinh)
+      if (orderDateStr === todayDateStr) {
+        todayPaidCount += 1;
+        todayTotalRevenue += amountNum;
+      }
+
+      // 4. Thống kê chi tiết cho ngày hôm qua
       if (orderDateStr === yesterdayDateStr) {
         yesterdayPaidCount += 1;
         yesterdayTotalRevenue += amountNum;
@@ -99,6 +154,7 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
         const isTaoBlog = 
           order.productId === 'ebook-tao-blog' ||
           (order.product && String(order.product).includes('Tạo Blog')) ||
+          (order.product && String(order.product).includes('Website')) ||
           amountNum >= 200000;
 
         if (is9Nguon) {
@@ -124,7 +180,11 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
 📦 <b>Chi tiết sản phẩm hôm qua:</b>
 • <b>Ebook Tạo Blog (299k):</b> ${ebookTaoBlogCount} đơn (${ebookTaoBlogRevenue.toLocaleString('vi-VN')}đ)
 • <b>Ebook 9 Nguồn (59k):</b> ${ebook9NguonCount} đơn (${ebook9NguonRevenue.toLocaleString('vi-VN')}đ)${otherCount > 0 ? `\n• <b>Khác:</b> ${otherCount} đơn (${otherRevenue.toLocaleString('vi-VN')}đ)` : ''}
+${todayPaidCount > 0 ? `
 ━━━━━━━━━━━━━━━━━━
+⚡ <b>Hôm nay (${todayDateStr} tính đến hiện tại):</b>
+💵 <b>Doanh thu:</b> <b>${todayTotalRevenue.toLocaleString('vi-VN')}đ</b> (${todayPaidCount} đơn)
+` : ''}━━━━━━━━━━━━━━━━━━
 📈 <b>Lũy kế Tháng ${currentMonthStr}:</b>
 💰 <b>Tổng doanh thu:</b> <b>${monthTotalRevenue.toLocaleString('vi-VN')}đ</b>
 🎯 <b>Tổng đơn hoàn tất:</b> <b>${monthPaidCount} đơn</b>
@@ -140,6 +200,8 @@ export async function generateAndSendDailyReport(): Promise<{ success: boolean; 
         yesterdayDate: yesterdayDateStr,
         yesterdayRevenue: yesterdayTotalRevenue,
         yesterdayPaidCount,
+        todayRevenue: todayTotalRevenue,
+        todayPaidCount,
         monthTotalRevenue,
         monthPaidCount
       }
